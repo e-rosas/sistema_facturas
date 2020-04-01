@@ -25,6 +25,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('IVA_applied', 13, 4);
             $table->decimal('subtotal', 13, 4);
             $table->decimal('total', 13, 4);
+            $table->decimal('amount_paid', 13, 4);
             $table->decimal('amount_due', 13, 4);
             $table->tinyInteger('type')->default(0);
             $table->text('comments')->nullable();
