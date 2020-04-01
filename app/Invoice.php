@@ -57,6 +57,11 @@ class Invoice extends Model
         return number_format($value, 4);
     }
 
+    public function getExchangeRateAttribute($value)
+    {
+        return number_format($value, 4);
+    }
+
     public function getSubtotalAttribute($value)
     {
         return number_format($value, 4);
