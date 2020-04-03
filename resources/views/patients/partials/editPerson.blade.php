@@ -1,8 +1,8 @@
-<form role="form" method="post" action="{{ route('persondata.update') }}"  autocomplete="off">
+<form role="form" method="post" action="{{ route('patient.update') }}"  autocomplete="off">
     @csrf 
     @method('patch')
-    {{--  person_data --}}
-    <input type="hidden"  readonly  name="person_data_id" id="input-person_data_id" class="form-control"
+    {{--  patient --}}
+    <input type="hidden"  readonly  name="patient_id" id="input-patient_id" class="form-control"
     value="" required>
     {{--  Names  --}}
     <div class="row">
@@ -72,15 +72,15 @@
 </form>
 @push('js')
 <script>
-    function updatePersonData(id,last_name, maiden_name, name, birth_date, address, city, state, 
+    function updatePatient(id, name, birth_date, address, city, state, 
     postal_code, phone_number, email){
         $.ajax({
-            url: "{{route('persondata.update')}}",
+            url: "{{route('patient.update')}}",
             dataType: 'json',
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "person_data_id" : id
+                "patient_id" : id
             },
         success: function (response) {                
                                                
@@ -89,11 +89,9 @@
             return false;
     }
     
-    function PersonData(id,last_name, maiden_name, name, birth_date, address, city, state, 
+    function Patient(id, name, birth_date, address, city, state, 
     postal_code, phone_number, email){
-        document.getElementById("input-person_data_id").value = id;
-        document.getElementById("input-last_name").value = last_name;
-        document.getElementById("input-maiden_name").value = maiden_name;
+        document.getElementById("input-patient_id").value = id;
         document.getElementById("input-name").value = name;
         document.getElementById("input-birth_date").value = birth_date;
         document.getElementById("input-address").value = address;

@@ -53,7 +53,7 @@
                             <tbody>
                                 @foreach ($patients as $patient)
                                     <tr>
-                                        <td>{{ $patient->fullName() }}</td>
+                                        <td>{{ $patient->full_name }}</td>
                                         <td>
                                             <a href="mailto:{{$patient->email}}">{{$patient->email}}</a>
                                         </td>
@@ -76,8 +76,8 @@
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>   --}}   
-                                                        <a class="dropdown-item" href="{{ route('pacientes.show', $patient) }}">{{ __('View') }}</a>
-                                                        <a data-person="{{ $patient->id }}" class="edit-person dropdown-item" data-toggle="modal" data-target="#modal-person_data">{{ __('Edit') }}</a> 
+                                                        <a class="dropdown-item" href="{{ route('pacientes.show', $patient) }}">Ver</a>
+                                                        <a data-person="{{ $patient->id }}" class="edit-person dropdown-item" data-toggle="modal" data-target="#modal-person_data">Editar</a> 
                                                 </div>
                                             </div>
                                         </td>

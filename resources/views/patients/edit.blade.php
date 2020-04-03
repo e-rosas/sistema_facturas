@@ -4,11 +4,11 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h5 class="heading-small text-muted mb-4">{{ __('Information') }}</h5>
+                        <h5 class="heading-small text-muted mb-4">Información</h5>
 
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        @include('components.editPerson')
+                        @include('patients.partials.editPerson')
                     </div>
                 </div>
             </div>
@@ -18,9 +18,9 @@
 @push('js')
 <script>
 
-    function getInsureeData(id){
+    function getPatientData(id){
         $.ajax({
-            url: "{{route('insurees.find')}}",
+            url: "{{route('patients.find')}}",
             dataType: 'json',
             type:"post",
             data: {
@@ -37,9 +37,9 @@
     }
     
     $(document).ready(function(){
-        $('#insurees_table').on("click", ".edit-person", function(event) {
+        $('#patients-table').on("click", ".edit-person", function(event) {
             var id = $(this).data('person');
-            getInsureeData(id);
+            getPatientData(id);
 
 
         })

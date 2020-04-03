@@ -1,7 +1,7 @@
 <!-- For defining autocomplete -->
 <div class="row">
-  <select id='person_data_id' class="custom-select form-control" name="person_data_id"> 
-    <option value='0'>{{ __('Select patient') }}</option>
+  <select id='patient_id' class="custom-select form-control" name="patient_id"> 
+    <option value='0'>Seleccionar paciente</option>
   </select>
 </div>
 
@@ -15,7 +15,7 @@ $(document).ready(function(){
 
     
 
-  $("#person_data_id").select2({
+  $("#patient_id").select2({
     minimumInputLength: 3,
     ajax: { 
       url: "{{route('patients.search')}}",
