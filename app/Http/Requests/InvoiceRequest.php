@@ -24,8 +24,9 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'series' => 'required|max:255',
-            'number' => 'required|max:255',
+            'series' => 'max:255',
+            'number' => 'max:255',
+            'code' => 'required|max:255',
             'status' => 'max:255',
             'concept' => 'max:255',
             'currency' => 'max:255',

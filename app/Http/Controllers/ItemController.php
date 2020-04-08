@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InsurerRequest;
-use App\Insurer;
+use App\Category;
+use App\Item;
 use Illuminate\Http\Request;
 
-class InsurerController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class InsurerController extends Controller
      */
     public function index()
     {
-        $insurers = Insurer::paginate();
+        $items = \App\Item::with('category')->paginate(15);
 
-        return view('insurers.index', compact('insurers'));
+        return view('items.index', compact('items'));
     }
 
     /**
@@ -27,7 +27,9 @@ class InsurerController extends Controller
      */
     public function create()
     {
-        return view('insurers.create');
+        $categories = Category::take(10)->get();
+
+        return view('items.create', compact('categories'));
     }
 
     /**
@@ -35,12 +37,12 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(InsurerRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validate();
-        Insurer::create($validated);
+        $validated = $this->validateItem();
+        Item::create($validated);
 
-        return redirect()->route('insurers.index')->withStatus(__('Insurer successfully created.'));
+        return redirect()->route('items.index')->withStatus(__('Item successfully created.'));
     }
 
     /**
@@ -48,7 +50,7 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Insurer $insurer)
+    public function show(Item $item)
     {
     }
 
@@ -57,7 +59,7 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Insurer $insurer)
+    public function edit(Item $item)
     {
     }
 
@@ -66,7 +68,7 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insurer $insurer)
+    public function update(Request $request, Item $item)
     {
     }
 
@@ -75,7 +77,12 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insurer $insurer)
+    public function destroy(Item $item)
     {
+    }
+
+    protected function validateItem()
+    {
+        return request()->validate(Item::$rules);
     }
 }

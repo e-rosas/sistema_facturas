@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InsurerRequest;
-use App\Insurer;
+use App\ItemService;
 use Illuminate\Http\Request;
 
-class InsurerController extends Controller
+class ItemServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class InsurerController extends Controller
      */
     public function index()
     {
-        $insurers = Insurer::paginate();
-
-        return view('insurers.index', compact('insurers'));
+        //
     }
 
     /**
@@ -27,55 +24,62 @@ class InsurerController extends Controller
      */
     public function create()
     {
-        return view('insurers.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InsurerRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validate();
-        Insurer::create($validated);
-
-        return redirect()->route('insurers.index')->withStatus(__('Insurer successfully created.'));
+        //
     }
 
     /**
      * Display the specified resource.
      *
+     * @param  \App\ItemService  $itemService
      * @return \Illuminate\Http\Response
      */
-    public function show(Insurer $insurer)
+    public function show(ItemService $itemService)
     {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \App\ItemService  $itemService
      * @return \Illuminate\Http\Response
      */
-    public function edit(Insurer $insurer)
+    public function edit(ItemService $itemService)
     {
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ItemService  $itemService
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insurer $insurer)
+    public function update(Request $request, ItemService $itemService)
     {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param  \App\ItemService  $itemService
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insurer $insurer)
+    public function destroy(ItemService $itemService)
     {
+        //
     }
 }

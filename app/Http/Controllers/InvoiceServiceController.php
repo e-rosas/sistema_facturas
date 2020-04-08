@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InsurerRequest;
-use App\Insurer;
+use App\InvoiceService;
 use Illuminate\Http\Request;
 
-class InsurerController extends Controller
+class InvoiceServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,6 @@ class InsurerController extends Controller
      */
     public function index()
     {
-        $insurers = Insurer::paginate();
-
-        return view('insurers.index', compact('insurers'));
     }
 
     /**
@@ -27,7 +23,6 @@ class InsurerController extends Controller
      */
     public function create()
     {
-        return view('insurers.create');
     }
 
     /**
@@ -35,12 +30,8 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(InsurerRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validate();
-        Insurer::create($validated);
-
-        return redirect()->route('insurers.index')->withStatus(__('Insurer successfully created.'));
     }
 
     /**
@@ -48,7 +39,7 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Insurer $insurer)
+    public function show(InvoiceService $invoiceService)
     {
     }
 
@@ -57,7 +48,7 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Insurer $insurer)
+    public function edit(InvoiceService $invoiceService)
     {
     }
 
@@ -66,7 +57,7 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insurer $insurer)
+    public function update(Request $request, InvoiceService $invoiceService)
     {
     }
 
@@ -75,7 +66,16 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insurer $insurer)
+    public function destroy(InvoiceService $invoiceService)
     {
+    }
+
+    public function getInvoiceServices(Request $request)
+    {
+        $invoice_id = $request->invoice_id;
+        $services = InvoiceService::where('invoice_id', '=', $invoice_id)->get();
+
+        echo json_encode($services);
+        exit;
     }
 }

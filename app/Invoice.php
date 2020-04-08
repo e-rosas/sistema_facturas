@@ -9,19 +9,22 @@ class Invoice extends Model
     public $fillable = [
         'series',
         'number',
+        'code',
         'concept',
         'currency',
         'method',
         'comments',
         'status',
         'date',
-        'IVA',
-        'IVA_applied',
-        'subtotal',
+        'tax',
+        'dtax',
+        'sub_total',
+        'sub_total_discounted',
         'total',
-        'exchange_rate',
+        'total_with_discounts',
         'amount_paid',
         'amount_due',
+        'exchange_rate',
         'type',
         'patient_id',
     ];
@@ -30,6 +33,7 @@ class Invoice extends Model
         'patient_id' => 'integer',
         'series' => 'string',
         'number' => 'string',
+        'code' => 'string',
         'concept' => 'string',
         'currency' => 'string',
         'date' => 'date',
@@ -47,12 +51,12 @@ class Invoice extends Model
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 
-    public function getIVAAttribute($value)
+    public function getTaxAttribute($value)
     {
         return number_format($value, 4);
     }
 
-    public function getIVAAppliedAttribute($value)
+    public function getDtaxAttribute($value)
     {
         return number_format($value, 4);
     }
@@ -104,9 +108,31 @@ class Invoice extends Model
         }
     }
 
+    public function status()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Complementeo de pago pendiente.';
+
+                break;
+            case 1:
+                return 'Un solo pago completo.';
+
+                break;
+            default:
+                // code...
+                break;
+        }
+    }
+
     public function patient()
     {
         return $this->belongsTo('App\Patient');
+    }
+
+    public function services()
+    {
+        return $this->hasMany('App\InvoiceService');
     }
 
     public function payments()
