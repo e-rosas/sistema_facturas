@@ -4,7 +4,7 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h6 class="heading-small text-muted mb-4">{{ __('Add payment') }}</h6>
+                        <h6 class="heading-small text-muted mb-4">Nuevo pago</h6>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">

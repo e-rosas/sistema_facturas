@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PatientRequest;
+use App\Http\Requests\UpdatePatientRequest;
+use App\Insurer;
+use App\Invoice;
 use App\Patient;
 use Illuminate\Http\Request;
 
@@ -14,7 +18,9 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        $patients = Patient::with(['insurer'])->paginate(15);
+
+        return view('patients.index', compact('patients'));
     }
 
     /**
@@ -24,7 +30,9 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        $insurers = Insurer::take(10)->get();
+
+        return view('patients.create', compact('insurers'));
     }
 
     /**
@@ -33,9 +41,13 @@ class PatientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PatientRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Patient::create($validated);
+
+        return redirect()->route('patients.index')->withStatus(__('Paciente registrado exitosamente.'));
+
     }
 
     /**
@@ -46,7 +58,11 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        $invoices = Invoice::with('services')
+            ->where('patient_id', $patient->id)
+            ->paginate(5);
+
+        return view('patients.show', compact('patient', 'invoices'));
     }
 
     /**
@@ -67,9 +83,13 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(UpdatePatientRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $patient = Patient::findOrFail($validated);
+        $patient->fill($validated);
+        $patient->save();
+        return back()->withStatus(__('Datos de paciente modificados exitosamente.'));
     }
 
     /**

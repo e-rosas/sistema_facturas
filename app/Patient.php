@@ -28,6 +28,13 @@ class Patient extends Model
         return $this->hasMany('App\Invoice');
     }
 
+    
+    public function insurer()
+    {
+        return $this->belongsTo('App\Insurer');
+    }
+    
+
     public function addressDetails()
     {
         return $this->city.', '.$this->state.'.  '.$this->postal_code;

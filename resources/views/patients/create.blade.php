@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => Pacientes])
+@extends('layouts.app', ['title' => 'Pacientes'])
 
 @section('content')
     @include('layouts.headers.header', ['title' => 'Registrar paciente'])   
@@ -13,7 +13,7 @@
                                 <h3 class="mb-0">Pacientes</h3>
                             </div>
                             <div class="col-4 col-auto text-right">
-                                <a href="{{ route('insurees.index') }}" class="btn btn-sm btn-primary">Regresar a la lista</a>
+                                <a href="{{ route('patients.index') }}" class="btn btn-sm btn-primary">Regresar a la lista</a>
                             </div>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                         <form method="post" action="{{ route('patients.store') }}" autocomplete="off">
                             @csrf
                             @include('patients.partials.register')
-                        <div class="form-inline">
+                        <div class="form-row">
                             <div class="form-group col-md-6 col-auto">
                                 <label for="insurer_id" class="col-auto col-form-label">Aseguranza</label>
                                 <select class="custom-select form-control{{ $errors->has('insurer_id') ? ' is-invalid' : '' }}" name="insurer_id">

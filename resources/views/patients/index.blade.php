@@ -18,7 +18,7 @@
                         </div>
                     </div>
 
-                    <form  method="post" action="{{ route('patients.busqueda') }}" >
+                    <form  method="post" action="{{ route('patients.search') }}" >
                         @csrf
                         <div class="form-group col-md-12 col-auto">
                             <label for="example-search-input" class="form-control-label">Buscar</label>
@@ -76,7 +76,7 @@
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>   --}}   
-                                                        <a class="dropdown-item" href="{{ route('pacientes.show', $patient) }}">Ver</a>
+                                                        <a class="dropdown-item" href="{{ route('patients.show', $patient) }}">Ver</a>
                                                         <a data-person="{{ $patient->id }}" class="edit-person dropdown-item" data-toggle="modal" data-target="#modal-person_data">Editar</a> 
                                                 </div>
                                             </div>

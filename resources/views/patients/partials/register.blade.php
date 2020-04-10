@@ -3,7 +3,7 @@
             <div class="pl-lg-4">
                 {{--  Names  --}}
                 <div class="row">
-                    <div class="form-group{{ $errors->has('full_name') ? ' has-danger' : '' }} col-md-4 col-auto">
+                    <div class="col-lg-12 form-group{{ $errors->has('full_name') ? ' has-danger' : '' }}">
                         <label class="form-control-label" for="input-full_name">Nombre</label>
                         <input type="text" name="full_name" id="input-full_name" class="form-control form-control-alternative{{ $errors->has('full_name') ? ' is-invalid' : '' }}" placeholder="Nombre" value="{{ old('full_name') }}" required autofocus>
 
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }} col-md-8 col-auto">
                         <label class="form-control-label" for="input-address">Dirección</label>
-                        <input type="text" name="address" id="input-address" class="form-control form-control-alternative{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="{{ __('Address') }}" value="{{ old('address') }}" required>
+                        <input type="text" name="address" id="input-address" class="form-control form-control-alternative{{ $errors->has('address') ? ' is-invalid' : '' }}" placeholder="Dirección" value="{{ old('address') }}" required>
                     
                         @if ($errors->has('address'))
                             <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-city">Ciudad</label>
-                        <input type="text" name="city" id="input-city" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="{{ __('City') }}" value="{{ old('city') }}" required>
+                        <input type="text" name="city" id="input-city" class="form-control form-control-alternative{{ $errors->has('city') ? ' is-invalid' : '' }}" placeholder="Ciudad" value="{{ old('city') }}" required>
                     
                         @if ($errors->has('city'))
                             <span class="invalid-feedback" role="alert">
@@ -55,7 +55,7 @@
                     </div>
                     <div class="form-group{{ $errors->has('state') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-state">Estado</label>
-                        <input type="text" name="state" id="input-state" class="form-control form-control-alternative{{ $errors->has('state') ? ' is-invalid' : '' }}" placeholder="{{ __('State') }}" value="{{ old('state') }}" required>
+                        <input type="text" name="state" id="input-state" class="form-control form-control-alternative{{ $errors->has('state') ? ' is-invalid' : '' }}" placeholder="Estado" value="{{ old('state') }}" required>
                     
                         @if ($errors->has('state'))
                             <span class="invalid-feedback" role="alert">
@@ -65,7 +65,7 @@
                     </div>
                     <div class="form-group{{ $errors->has('postal_code') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-postal_code">Código Postal</label>
-                        <input type="text" name="postal_code" id="input-postal_code" class="form-control form-control-alternative{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" placeholder="{{ __('Postal code') }}" value="{{ old('postal_code') }}" required>
+                        <input type="text" name="postal_code" id="input-postal_code" class="form-control form-control-alternative{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" placeholder="Código Postal" value="{{ old('postal_code') }}" required>
                     
                         @if ($errors->has('postal_code'))
                             <span class="invalid-feedback" role="alert">
@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} col-md-6 col-auto">
                         <label class="form-control-label" for="input-phone_number">Teléfono</label>
-                        <input type="text" name="phone_number" id="input-phone_number" class="form-control form-control-alternative{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" placeholder="{{ __('Phone number') }}" value="{{ old('phone_number') }}">
+                        <input type="text" name="phone_number" id="input-phone_number" class="form-control form-control-alternative{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" placeholder="Teléfono" value="{{ old('phone_number') }}">
                     
                         @if ($errors->has('phone_number'))
                             <span class="invalid-feedback" role="alert">
@@ -87,8 +87,8 @@
                         @endif
                     </div>
                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} col-md-6 col-auto">
-                        <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
-                        <input type="text" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Optional email') }}" value="{{ old('email') }}">
+                        <label class="form-control-label" for="input-email">Correo</label>
+                        <input type="text" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Correo" value="{{ old('email') }}">
     
                         @if ($errors->has('email'))
                             <span class="invalid-feedback" role="alert">

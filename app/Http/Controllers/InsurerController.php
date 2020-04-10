@@ -37,7 +37,7 @@ class InsurerController extends Controller
      */
     public function store(InsurerRequest $request)
     {
-        $validated = $request->validate();
+        $validated = $request->validated();
         Insurer::create($validated);
 
         return redirect()->route('insurers.index')->withStatus(__('Insurer successfully created.'));

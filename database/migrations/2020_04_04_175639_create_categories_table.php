@@ -14,6 +14,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('nombre')->default('Pendiente');
             $table->timestamps();
         });
     }

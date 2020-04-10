@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'welcome');
+
+Route::get('/', 'HomeController@welcome')->name('welcome');
 
 Auth::routes();
 
@@ -22,7 +23,30 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('insurers', 'InsurerController');
     Route::resource('invoices', 'InvoiceController', ['except' => ['update']]);
-    Route::resource('patients', 'PatientController');
+    Route::resource('patients', 'PatientController', ['except' => ['update']]);
+    Route::resource('categories', 'CategoryController');
+    Route::resource('items', 'ItemController');
+    Route::resource('services', 'ServiceController', ['except' => ['update']]);
+
+    Route::patch('patient/update', ['as' => 'patient.update', 'uses' => 'PatientController@update']);
+    Route::patch('service/update', ['as' => 'service.update', 'uses' => 'ServiceController@update']);
+    Route::patch('invoices/updatepatient', ['as' => 'invoice.updatepatient', 'uses' => 'InvoiceController@updatePatient']);
+    Route::patch('invoice/update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
+    Route::post('invoice/services', 'InvoiceServiceController@getInvoiceServices')->name('invoiceservices.get');
+    Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
+    Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
+    Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
+    Route::post('services/find', 'SearchProductController@findService')->name('services.find');
+
+    Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
+    Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
+    Route::post('patients/search', 'SearchPatientController@searchPatient')->name('patients.search');
+    Route::post('patients/find', 'SearchPatientController@findPatient')->name('patients.find');
+    Route::post('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
+
+
+    Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');
+    Route::post('items/find', 'SearchProductController@findItem')->name('items.find');
 
     Route::get('payments', 'PaymentController@index')->name('payments.index');
     Route::post('payments/add', 'PaymentController@store')->name('payments.store');
@@ -30,11 +54,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('payments/update', 'PaymentController@update')->name('payments.update');
     Route::delete('payments/destroy', 'PaymentController@delete')->name('payments.destroy');
 
-    Route::get('credits', 'CallController@index')->name('credits.index');
-    Route::post('credits/add', 'CallController@store')->name('credits.store');
-    Route::post('credits/find', 'CallController@find')->name('credits.find');
-    Route::patch('credits/update', 'CallController@update')->name('credits.update');
-    Route::delete('credits/destroy', 'CallController@delete')->name('credits.destroy');
+    Route::get('credits', 'CreditController@index')->name('credits.index');
+    Route::post('credits/add', 'CreditController@store')->name('credits.store');
+    Route::post('credits/find', 'CreditController@find')->name('credits.find');
+    Route::patch('credits/update', 'CreditController@update')->name('credits.update');
+    Route::delete('credits/destroy', 'CreditController@delete')->name('credits.destroy');
+
+    Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
 
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

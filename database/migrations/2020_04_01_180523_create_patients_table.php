@@ -22,7 +22,7 @@ class CreatePatientsTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             $table->string('insurance_id')->unique();
-            $table->unsignedInteger('insurer_id');
+            $table->unsignedBigInteger('insurer_id');
             $table->foreign('insurer_id')->references('id')->on('insurers')->cascadeOnDelete();
             $table->timestamps();
         });

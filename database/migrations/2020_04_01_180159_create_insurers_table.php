@@ -14,7 +14,7 @@ class CreateInsurersTable extends Migration
         Schema::create('insurers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('code');
+            $table->string('code')->default('Pendiente');
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();

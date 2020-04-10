@@ -53,7 +53,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> Inicio
+                        <i class="ni ni-tv-2 text-green"></i> Inicio
                     </a>
                 </li>
 
@@ -69,17 +69,32 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('payments.index') }}">
-                        <i class="ni ni-key-25 text-red"></i> Facturas
+                        <i class="fas fa-file-invoice-dollar text-red"></i> Facturas
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('payments.index') }}">
-                        <i class="ni ni-key-25 text-info"></i> Pagos
+                        <i class="fas fa-dollar-sign text-info"></i> Pagos
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('creditos.index') }}">
-                        <i class="ni ni-circle-08 text-pink"></i> Notas de credito
+                    <a class="nav-link" href="{{ route('credits.index') }}">
+                        <i class="fas fa-money-check-alt text-purple"></i> Notas de credito
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('services.index') }}">
+                        <i class="fas fa-procedures text-yellow"></i> Servicios
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('items.index') }}">
+                        <i class="fas fa-prescription-bottle text-pink"></i> Articulos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('categories.index') }}">
+                        <i class="fas fa-cube text-warning"></i> Categorias
                     </a>
                 </li>
             </ul>
