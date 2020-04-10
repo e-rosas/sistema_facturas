@@ -21,7 +21,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('insurers', 'InsurerController');
+    Route::resource('insurers', 'InsurerController', ['except' => ['update']]);
     Route::resource('invoices', 'InvoiceController', ['except' => ['update']]);
     Route::resource('patients', 'PatientController', ['except' => ['update']]);
     Route::resource('categories', 'CategoryController');
@@ -60,7 +60,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('credits/update', 'CreditController@update')->name('credits.update');
     Route::delete('credits/destroy', 'CreditController@delete')->name('credits.destroy');
 
-    Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
+    //Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
+
+
+    Route::patch('insurers/update', 'InsurerController@update')->name('insurers.update');
+    Route::post('insurers/find', 'InsurerController@find')->name('insurers.find');
 
     Route::resource('user', 'UserController', ['except' => ['show']]);
     Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

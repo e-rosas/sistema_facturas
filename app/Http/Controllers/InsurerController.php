@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InsurerRequest;
+use App\Http\Requests\UpdateInsurer;
 use App\Insurer;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,7 @@ class InsurerController extends Controller
         $validated = $request->validated();
         Insurer::create($validated);
 
-        return redirect()->route('insurers.index')->withStatus(__('Insurer successfully created.'));
+        return redirect()->route('insurers.index')->withStatus(__('Asegurada registrada exitosamentes.'));
     }
 
     /**
@@ -66,8 +67,14 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insurer $insurer)
+    public function update(UpdateInsurer $request)
     {
+        $validated = $request->validated();
+        $insurer = Insurer::findOrFail($validated['insurer_id']);
+
+        $insurer->fill($validated);
+        $insurer->save();
+        return response('OK', 200);
     }
 
     /**
@@ -77,5 +84,13 @@ class InsurerController extends Controller
      */
     public function destroy(Insurer $insurer)
     {
+    }
+    public function find(Request $request)
+    {
+        $insurer_id = $request->insurer_id;
+        $insurer = Insurer::findOrFail($insurer_id) ;
+
+        echo json_encode($insurer);
+        exit;
     }
 }
