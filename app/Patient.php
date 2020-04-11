@@ -33,6 +33,13 @@ class Patient extends Model
     {
         return $this->belongsTo('App\Insurer');
     }
+
+    
+    public function person_stats()
+    {
+        return $this->hasOne('App\PersonStats');
+    }
+    
     
 
     public function addressDetails()
