@@ -12,28 +12,28 @@ class CalculatePersonStats
     public $amount_due = 0;
     public $amount_due_without_discounts = 0;
 
-    public function getAllInvoices($person_data_id)
+    public function getAllInvoices($patient_id)
     {
-        $allInvoices = Invoice::where('person_data_id', '=', $person_data_id)->get();
+        $allInvoices = Invoice::where('patient_id', $patient_id)->get();
         $total_invoices = new CalculateTotalsOfInvoices($allInvoices);
         $total_invoices->calculateTotals();
 
         return $total_invoices;
     }
 
-    public function getAllPayments($person_data_id)
+    public function getAllPayments($patient_id)
     {
-        $allPayments = Payment::where('person_data_id', '=', $person_data_id)->get();
+        $allPayments = Payment::where('patient_id', $patient_id)->get();
         $total_payments = new CalculateTotalsOfPayments($allPayments);
         $total_payments->calculateTotals();
 
         return $total_payments;
     }
 
-    public function calculateAmounts($person_data_id)
+    public function calculateAmounts($patient_id)
     {
-        $this->total_invoices = $this->getAllInvoices($person_data_id);
-        $this->total_payments = $this->getAllPayments($person_data_id);
+        $this->total_invoices = $this->getAllInvoices($patient_id);
+        $this->total_payments = $this->getAllPayments($patient_id);
         $this->amount_due =
             $this->total_invoices->total_with_discounts - $this->total_payments->amount_paid;
 

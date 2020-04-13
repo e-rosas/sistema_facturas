@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaymentRequest;
+use App\Http\Resources\PaymentResource;
 use App\Payment;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,12 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::with('person_data', 'invoice')
+            ->orderBy('date', 'desc')
+            ->paginate(15)
+        ;
+
+        return view('payments.index', compact('payments'));
     }
 
     /**
@@ -33,9 +40,20 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PaymentRequest $request)
     {
-        //
+        $validated = $request->validated();
+        //New action: Verify that paid amount does not exceed it's respective person_stats due amount
+
+        Payment::create($validated);
+
+        $payments = Payment::with('invoice')
+            ->where('person_data_id', $request->person_data_id)
+            ->orderBy('date', 'desc')
+            ->paginate(15)
+        ;
+
+        return PaymentResource::collection($payments);
     }
 
     /**

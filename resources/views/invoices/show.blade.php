@@ -10,6 +10,7 @@
                 @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Debe', 'value' => $invoice->amount_due])
                 @include('components.invoiceStatsCard', ['id' => 'invoice-status','title' => 'Estatus', 'value' => $invoice->status()])
             </div>
+            
         </div>
         <div class="row">
             @include('components.patientInfo', ['patient' => $invoice->patient])

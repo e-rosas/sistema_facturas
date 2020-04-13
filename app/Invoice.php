@@ -2,10 +2,23 @@
 
 namespace App;
 
+use App\Events\InvoiceEvent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Invoice extends Model
 {
+    use Notifiable;
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'saved' => InvoiceEvent::class,
+        'updated' => InvoiceEvent::class,
+        'deleted' => InvoiceEvent::class,
+    ];
     public $fillable = [
         'series',
         'number',
