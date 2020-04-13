@@ -3,15 +3,13 @@
         <div class="row justify-content-center">
             <div class="col-lg-3 order-lg-2">
                 <div class="card">
-                    <a href="#">
-                        <h2>{{ __('Insurer') }}</h2>
-                    </a>
+                    <h2>Aseguranza</h2>
                 </div>
             </div>
         </div>
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
             <div class="d-flex justify-content-center">
-                <a href="#" class="btn btn-sm btn-info mr-4">{{ __('View') }}</a>
+                <a href=" {{ route('insurers.show', $insurer) }} " class="btn btn-sm btn-info mr-4">Ver</a>
             </div>
         </div>
         <div class="card-body pt-0 pt-md-4">

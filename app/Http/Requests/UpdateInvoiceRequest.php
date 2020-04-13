@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InvoiceRequest extends FormRequest
+class UpdateInvoiceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class InvoiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,6 +24,7 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         return [
+            'invoice_id' => 'required',
             'series' => 'max:255',
             'number' => 'max:255',
             'code' => 'required|max:255',
@@ -32,6 +33,7 @@ class InvoiceRequest extends FormRequest
             'method' => 'max:255',
             'date' => 'date',
             'comments' => 'max:1000',
+            'exchange_rate' => 'numeric|required|between:0,999999999.999',
             'tax' => 'numeric|required|between:0,999999999.999',
             'dtax' => 'numeric|required|between:0,999999999.999',
             'sub_total' => 'numeric|required|between:0,999999999.999',

@@ -1,7 +1,7 @@
 <!-- For defining autocomplete -->
 <div class="row">
   <select id='service_id' class="custom-select form-control{{ $errors->has('service_id') ? ' is-invalid' : '' }}" name="service_id"> 
-    <option value='0'>{{ __('Select service') }}</option>
+    <option value='0'>Seleccionar servicio</option>
   </select>
 </div>
 

@@ -47,9 +47,9 @@
                             <div class="form-row">
                                 {{--  number --}}
                                 <div class="col-md-2 col-auto form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-number">Folio</label>
+                                    <label class="form-control-label" for="input-number">Folio CONTPAQ</label>
                                     <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}" 
-                                    placeholder="Folio" value="{{ old('number') }}">
+                                    placeholder="Folio" value="Pendiente">
 
                                     @if ($errors->has('number'))
                                         <span class="invalid-feedback" role="alert">
@@ -111,7 +111,7 @@
                                 </div>
                                 
                                 {{--  exchange_rate --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
+                                {{--  <div class="col-md-3 col-auto form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-exchange_rate">Cambio</label>
                                     <input type="number" name="exchange_rate" id="input-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
                                     placeholder="Cambio" value="{{ old('exchange_rate') }}" required>
@@ -121,14 +121,14 @@
                                             <strong>{{ $errors->first('exchange_rate') }}</strong>
                                         </span>
                                     @endif
-                                </div>
+                                </div>  --}}
                             </div>
                             <div class="form-row">
                                 {{--  code --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-code">Numero</label>
+                                    <label class="form-control-label" for="input-code">Número</label>
                                     <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}" 
-                                    placeholder="Numero" value="{{ old('code') }}">
+                                    placeholder="Número" value="{{ old('code') }}">
 
                                     @if ($errors->has('code'))
                                         <span class="invalid-feedback" role="alert">
@@ -138,8 +138,8 @@
                                 </div>
                                 
                                 {{--  date  --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-date">{{ __('Date') }}</label>
+                                <div class="col-md-4 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-date">Fecha</label>
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
@@ -152,14 +152,26 @@
                                         </span>
                                     @endif
                                 </div>
+                                {{--  amount_due  --}}
+                                <div class="col-md-4 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-amount_due">Debe</label>
+                                    <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}" 
+                                    placeholder="0" value="{{ old('amount_due') }}" readonly>
+
+                                    @if ($errors->has('amount_due'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('amount_due') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 
                             </div>
                             <div class="form-row">
                                 {{--  tax  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('tax') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-tax">{{ __('Tax') }}</label>
+                                    <label class="form-control-label" for="input-tax">IVA</label>
                                     <input type="numeric" name="tax" id="input-tax" class="form-control form-control-alternative{{ $errors->has('tax') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Tax') }}" value="{{ old('tax') }}" readonly>
+                                    placeholder="0" value="{{ old('tax') }}" readonly>
                             
                                     @if ($errors->has('tax'))
                                         <span class="invalid-feedback" role="alert">
@@ -171,9 +183,9 @@
                                 
                                 {{--  sub_total  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('sub_total') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-sub_total">{{ __('Subtotal') }}</label>
+                                    <label class="form-control-label" for="input-sub_total">Subtotal</label>
                                     <input type="numeric" name="sub_total" id="input-sub_total" class="form-control form-control-alternative{{ $errors->has('sub_total') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Subtotal') }}" value="{{ old('sub_total') }}" readonly>
+                                    placeholder="0" value="{{ old('sub_total') }}" readonly>
                             
                                     @if ($errors->has('sub_total'))
                                         <span class="invalid-feedback" role="alert">
@@ -186,9 +198,9 @@
                             
                                 {{--  total  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('total') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-total">{{ __('Total') }}</label>
+                                    <label class="form-control-label" for="input-total">Total</label>
                                     <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Total') }}" value="{{ old('total') }}" readonly>
+                                    placeholder="0" value="{{ old('total') }}" readonly>
                             
                                     @if ($errors->has('total'))
                                         <span class="invalid-feedback" role="alert">
@@ -202,21 +214,21 @@
                             <div class="form-row">
                                 {{--  dtax  --}}
                                 <div class="col-md-4 col-auto form-group">
-                                    <label class="form-control-label" for="input-dtax">{{ __('Tax with discounts') }}</label>
+                                    <label class="form-control-label" for="input-dtax">IVA con descuento</label>
                                     <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative" 
                                     placeholder="0" value="0" readonly>
                                 </div>
                                 {{--  sub_total_discounts  --}}
                                 <div class="col-md-4 col-auto form-group">
-                                    <label class="form-control-label" for="input-sub_total_discounts">{{ __('Subtotal with discounts') }}</label>
+                                    <label class="form-control-label" for="input-sub_total_discounts">sub_total con descuento</label>
                                     <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative" 
                                     placeholder="0" value="0" readonly>
                                 </div>
                                 {{--  total_with_discounts  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('total_with_discounts') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-total_with_discounts">{{ __('Total with discounts') }}</label>
+                                    <label class="form-control-label" for="input-total_with_discounts">Total con descuento</label>
                                     <input type="numeric" name="total_with_discounts" id="input-total_with_discounts" class="form-control form-control-alternative{{ $errors->has('total_with_discounts') ? ' is-invalid' : '' }}" 
-                                    placeholder="{{ __('Total with discounts') }}" value="{{ old('total_with_discounts') }}" readonly>
+                                    placeholder="0" value="{{ old('total_with_discounts') }}" readonly>
                             
                                     @if ($errors->has('total_with_discounts'))
                                         <span class="invalid-feedback" role="alert">
@@ -225,10 +237,18 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-row">                            
-                                {{-- Confirm --}}
-                                <div class="text-right col-md-11 col-auto">
-                                    <button type="button" id="save" class="btn btn-success  text-right">{{ __('Save') }}</button>
+                            <div class="form-row">
+                                {{--  comments --}}
+                                <div class="col-md-12 col-auto form-group{{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-comments">Observaciones</label>
+                                    <input type="text" name="comments" id="input-comments" class="form-control form-control-alternative{{ $errors->has('comments') ? ' is-invalid' : '' }}" 
+                                    placeholder="Observaciones" value="{{ old('comments') }}">
+
+                                    @if ($errors->has('comments'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('comments') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </form>
@@ -243,47 +263,44 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-services-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">{{ __('Services') }}</h3>
+                                <h3 class="mb-0">Servicios</h3>
                             </div>
                             <div class="col-4 col-auto text-right">
-                                <a href="{{ route('services.create') }}" class="btn btn-sm btn-primary">{{ __('Add Service') }}</a>
+                                <a href="{{ route('services.create') }}" class="btn btn-sm btn-primary">Registrar un nuevo servicio</a>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         {{-- Selecting service --}}
                         <div class="col-xl-12 order-xl-1">
-                                @component('components.searchServices')
-                                
-                                @endcomponent                          
+                                @include('components.searchServices')                        
                         </div>
                         <br />
                         <div class="form-row">
                             {{--  date  --}}
-                            <div class="col-lg-2 col-auto">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                    </div>
-                                    <input name="date_service" id="input-date_service" class="form-control form-control-alternative"  type="date" required>
-                                </div>
+                            <div class="col-lg-6 col-auto">
+                                <label class="form-control-label" for="input-date_service">Fecha de servicio</label>
+                                <input name="date_service" id="input-date_service" class="form-control form-control-alternative"  type="date" required>
                             </div>
                             {{--  price  --}}
                             <div class="col-lg-2 col-auto form-group">
-                                <input type="numeric"  name="quantity" id="custom-price" class="form-control form-control-alternative" 
-                                placeholder="Price" required>
+                                <label class="form-control-label" for="custom-price">Precio</label>
+                                <input type="numeric"  name="service-price" id="custom-price" class="form-control form-control-alternative" 
+                                placeholder="0" required>
                             
                             </div>
                             {{--  discounted-price  --}}
                             <div class="col-lg-2 col-auto form-group">
-                                <input type="numeric" min="1" name="quantity" id="custom-discounted-price" class="form-control form-control-alternative" 
-                                placeholder="Discounted"  required>
+                                <label class="form-control-label" for="custom-discounted-price">Descuento</label>
+                                <input type="numeric" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
+                                placeholder="0"  required>
                             
                             </div>
                             {{--  quantity  --}}
-                            <div class="col-lg-2 col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
+                            <div class="col-lg-1 col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-quantity">Cantidad</label>
                                 <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" 
-                                placeholder="Quantity" value=1 required>
+                                placeholder="1" value=1 required>
                             
                                 @if ($errors->has('quantity'))
                                     <span class="invalid-feedback" role="alert">
@@ -292,8 +309,9 @@
                                 @endif
                             </div>
                             {{-- Add --}}
-                            <div class=" col-lg-2 col-md-3 form-group col-auto text-right">
-                                <button type="button" id="add_service" class="btn btn-outline-success">{{ __('Add') }}</button>
+                            <div class=" col-lg-1 col-md-3 form-group col-auto text-right">
+                                <label class="form-control-label"></label>
+                                <button type="button" id="add_service" class="btn btn-outline-success btn-lg">Agregar</button>
                             </div>
                         </div>
                         
@@ -303,14 +321,14 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col"></th>
-                                        <th scope="col">{{ __('Date') }}</th>
-                                        <th scope="col">{{ __('Description') }}</th>
-                                        <th scope="col">{{ __('Price') }}</th>
-                                        <th scope="col">{{ __('Discounted Price') }}</th>
-                                        <th scope="col">{{ __('Quantity') }}</th>
-                                        <th scope="col">{{ __('Total Price') }}</th>
-                                        <th scope="col">{{ __('Total Discounted Price') }}</th>
-                                        <th scope="col">{{ __('Items') }}</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Precio</th>
+                                        <th scope="col">Descuento</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Total Descontado</th>
+                                        <th scope="col">Articulos</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -322,12 +340,12 @@
                         <br />
                         <div class="form-row">                            
                             {{-- Remove --}}
-                            <div class="text-right col-md-1 col-auto">
-                                <button type="button" id="remove_selected" class="btn btn-danger btn-sm">{{ __('Remove selected') }}</button>
+                            <div class="col-md-3 col-auto">
+                                <button type="button" id="remove_selected" class="btn btn-danger btn-sm">Remover servicio seleccionado</button>
                             </div>
                             {{-- Confirm --}}
-                            <div class="text-right col-md-11 col-auto">
-                                <button type="button" id="save" class="btn btn-success  text-right">{{ __('Save') }}</button>
+                            <div class="text-right col-md-9 col-auto">
+                                <button type="button" id="save" class="btn btn-success text-right">Confirmar</button>
                             </div>
                         </div>
                     </div>                    
@@ -600,8 +618,8 @@
                 discounted_price, quantity, services.length, tax);
     }
 
-    function sendInvoice(patient_id, series, number, concept, currency, 
-        method,  date, subtotal, exchange_rate, comments){
+    function sendInvoice(patient_id, series, number, concept, code, currency, 
+        method,  date, comments){
         $.ajax({
             url: "{{route('invoices.store')}}",
             type:"post",
@@ -613,35 +631,9 @@
                 "number" : number,
                 "series" : series,
                 "concept" : concept,
-                "subtotal" : subtotal,
+                "code": code,
                 "currency" : currency,
                 "method" : method,
-                "exchange_rate" : exchange_rate,
-            },
-        success: function (response) {
-            setTimeout(function() {
-                window.location.href = response;
-              }, 1000);
-                                                   
-            }
-        });
-            return false;
-    }
-
-
-    function sendCart(person_data_id, date, amount_due, amount_paid,
-         comments, number){
-        $.ajax({
-            url: "{{route('invoices.store')}}",
-            type:"post",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "person_data_id" : person_data_id,
-                "date" : date,
-                "amount_due" : 0,
-                "amount_paid" : 0,
-                "comments" : comments,
-                "number" : number,
                 "services" : this.services,
                 "total" : total,
                 "sub_total" : sub_total,
@@ -649,13 +641,13 @@
                 "total_with_discounts" : total_with_discounts,
                 "tax" : tax,
                 "dtax" : dtax,
-                "status": "due"
+                "amount_due" : total_with_discounts,
+                "amount_paid" : 0,
             },
         success: function (response) {
             setTimeout(function() {
                 window.location.href = response;
-              }, 1000);
-                                                   
+              }, 1000);              
             }
         });
             return false;
@@ -780,24 +772,22 @@
 
         
         $("#save").click(function(){
-            var subtotal = Number(document.getElementById("input-subtotal").value); 
-            var exchange_rate = Number(document.getElementById("input-exchange_rate").value); 
             if(services.length > 0 ) {
                 var patient_id= $("#patient_id").children("option:selected").val();
                 var date = document.getElementById("input-date").value; 
-                var total = Number(document.getElementById("input-total").value); 
+                var code = document.getElementById("input-code").value; 
                 var comments = document.getElementById("input-comments").value;
                 var number = document.getElementById("input-number").value;  
                 var series = document.getElementById("input-series").value; 
                 var concept = document.getElementById("input-concept").value; 
                 var currency = document.getElementById("input-currency").value; 
                 var method = document.getElementById("input-method").value; 
-                sendInvoice(patient_id, series, number, concept, currency, 
-                    method,  date, subtotal, exchange_rate, comments);
+                sendInvoice(patient_id, series, number, concept, code, currency, 
+                    method,  date,  comments);
             }
             
             else {
-                alert("Ingrese subtotal y tipo de cambio.");
+                alert("Falta agregar servicios a la factura.");
             }
             
 

@@ -4,18 +4,9 @@
     @include('layouts.headers.header', ['title' => __('View Invoice')])
     <div class="container-fluid mt--7">
         <div class="row">
-            @component('components.patientInfo', ['person_data' => $invoice->person_data])
+            @include('components.patientInfo', ['patient' => $invoice->patient])
 
-            @endcomponent
-            {{--  Insuree ?  --}} 
-            @if ($invoice->person_data->insured == 0)
-                @component('components.patientInfo', ['person_data' => $invoice->findInsuree()])
-
-                @endcomponent        
-            @endif
-            @component('components.insurerInfo', ['insurer' => $invoice->findInsurer()])
-
-            @endcomponent
+            @include('components.insurerInfo', ['insurer' => $invoice->patient->insurer])
         </div>
         <div class="row">
             {{--  Details  --}}
@@ -24,14 +15,15 @@
         <div class="nav-wrapper">
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i> {{ __('Services') }} </a>
+                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tab-services-tab" data-toggle="tab" href="#tab-services" 
+                        role="tab" aria-controls="tab-services" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Services</a>
                 </li>
             </ul>
         </div>
         <div class="card shadow">
             <div class="card-body">
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                    <div class="tab-pane fade show active" id="tab-services" role="tabpanel" aria-labelledby="tab-services-tab">
                         @component('components.servicesTable', ['services'=>$invoice->services])
                             
                         @endcomponent

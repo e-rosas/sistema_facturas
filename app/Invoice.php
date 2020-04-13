@@ -39,9 +39,9 @@ class Invoice extends Model
         'date' => 'date',
         'comments' => 'string',
         'status' => 'string',
-        'IVA' => 'decimal:13',
-        'IVA_applied' => 'decimal:13',
-        'subtotal' => 'decimal:13',
+        'tax' => 'decimal:13',
+        'dtax' => 'decimal:13',
+        'sub_total' => 'decimal:13',
         'total' => 'decimal:13',
         'exchange_rate' => 'decimal:13',
         'amount_paid' => 'decimal:13',
@@ -102,6 +102,10 @@ class Invoice extends Model
                 return 'Un solo pago completo.';
 
                 break;
+            case 2:
+                return 'Pendiente de pago';
+
+                break;
             default:
                 // code...
                 break;
@@ -112,11 +116,23 @@ class Invoice extends Model
     {
         switch ($this->status) {
             case 0:
-                return 'Complementeo de pago pendiente.';
+                return 'Complemento de pago pendiente.';
 
                 break;
             case 1:
                 return 'Un solo pago completo.';
+
+                break;
+            case 2:
+                return 'Pendiente de pago.';
+
+                break;
+            case 3:
+                return 'Pendiente de asignar articulos.';
+
+                break;
+            case 4:
+                return 'Pendiente de facturar.';
 
                 break;
             default:
