@@ -34,13 +34,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('invoice/update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
     Route::post('invoice/services', 'InvoiceServiceController@getInvoiceServices')->name('invoiceservices.get');
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
-    Route::post('patients/search', 'SearchPatientController@search')->name('patients.search');
+    Route::post('patients/searchIndex', 'SearchPatientController@searchPatient')->name('patients.search');
+    Route::post('patients/search', 'SearchPatientController@search')->name('patients.searchName');
     Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
     Route::post('services/find', 'SearchProductController@findService')->name('services.find');
 
     Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
     Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
-    Route::post('patients/search', 'SearchPatientController@searchPatient')->name('patients.search');
     Route::post('patients/find', 'SearchPatientController@findPatient')->name('patients.find');
     Route::post('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 

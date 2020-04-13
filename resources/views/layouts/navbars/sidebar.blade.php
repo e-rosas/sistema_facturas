@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('payments.index') }}">
+                    <a class="nav-link" href="{{ route('invoices.index') }}">
                         <i class="fas fa-file-invoice-dollar text-red"></i> Facturas
                     </a>
                 </li>

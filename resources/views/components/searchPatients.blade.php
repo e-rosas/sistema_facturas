@@ -18,8 +18,8 @@ $(document).ready(function(){
   $("#patient_id").select2({
     minimumInputLength: 3,
     ajax: { 
-      url: "{{route('patients.search')}}",
-        type:'post',
+      url: "{{route('patients.searchName')}}",
+      type:'post',
       dataType: 'json',
       delay: 250,
       data: function (params) {
