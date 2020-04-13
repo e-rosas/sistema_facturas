@@ -30,7 +30,7 @@
         </tbody>
     </table>
 </div>
-@include('payments.partials.editModal', ['person_data_id'=>$person_data_id])
+@include('payments.partials.editModal', ['patient_id'=>$patient_id])
 @push('js')
 <script>
     function DisplayPayments(data){

@@ -115,7 +115,7 @@
             type:"patch",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "person_data_id": {{ $person_data_id }},
+                "patient_id": {{ $patient_id }},
                 "payment_id": id,
                 "number": number,
                 "amount": amount,

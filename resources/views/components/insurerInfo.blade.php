@@ -1,15 +1,10 @@
-<div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+<div class="col-xl-6 order-xl-2 mb-5 mb-xl-0">
     <div class="card card-profile shadow">
-        <div class="row justify-content-center">
-            <div class="col-lg-3 order-lg-2">
-                <div class="card">
-                    <h2>Aseguranza</h2>
+        <div class="card-header bg-warning border-0">
+            <div class="row">
+                <div class="col-8 col-auto">
+                    <h3 style="color:white" class="card-title text-uppercase  mb-0">Aseguranza</h3>
                 </div>
-            </div>
-        </div>
-        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-            <div class="d-flex justify-content-center">
-                <a href=" {{ route('insurers.show', $insurer) }} " class="btn btn-sm btn-info mr-4">Ver</a>
             </div>
         </div>
         <div class="card-body pt-0 pt-md-4">
@@ -18,7 +13,7 @@
                     {{ $insurer->name }}<span class="font-weight-light"></span>
                 </h3>
                 <div class="h4 font-weight-300">
-                    <span> {{ $insurer->code }} </span>
+                   <span><a  href=" {{ route('insurers.show', $insurer) }} " class="mr-4">{{ $insurer->code }}</a></span>
                 </div>
                 <div class="h4 font-weight-300">
                     <span> {{ $insurer->address }} </span>

@@ -7,9 +7,9 @@
                     <p id="{{$id ?? ''}}" class="h2 font-weight-bold mb-0">{{ $value }}</p>
                 </div>
                 <div class="col-auto">
-                <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
+                    <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
                 </div>
             </div>
 

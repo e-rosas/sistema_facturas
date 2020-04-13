@@ -34,25 +34,22 @@
                 <div class="col-md-12 col-auto text-right">
                     <button type="button" id="add-personal-discount-button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
                     <br />
-                    @component('components.discountsModal',['person_data_id'=>$person_data->id, 'stats'=>$stats])
+                    @include('components.discountsModal',['person_data_id'=>$person_data->id, 'stats'=>$stats])
 
-                    @endcomponent
+                    
                 </div>
-                @component('components.discountsTable', ['discounts'=>$person_data->discounts()->paginate(15)])
+                @include('components.discountsTable', ['discounts'=>$person_data->discounts()->paginate(15)])
 
-                @endcomponent
+                
             </div>
             <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                 <div class="col-md-12 col-auto text-right">
                     <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Add') }}</i></button>
                     <br />
-                    @component('components.callsModal',['person_data'=>$person_data])
-
-                    @endcomponent
+                    @include('components.callsModal',['person_data'=>$person_data])
                 </div>
-                @component('components.callsTable', ['calls'=>$person_data->calls()->paginate(15)])
+                @include('components.callsTable', ['calls'=>$person_data->calls()->paginate(15)])
 
-                @endcomponent
                  @include('calls.partials.editCallModal', ['person_data_id' => $person_data->id])
             </div>
             <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">

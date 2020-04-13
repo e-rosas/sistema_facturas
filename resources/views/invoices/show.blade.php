@@ -1,8 +1,16 @@
-@extends('layouts.app', ['title' => __('Invoice')])
+@extends('layouts.app', ['title' => 'Factura'])
 
 @section('content')
-    @include('layouts.headers.header', ['title' => __('View Invoice')])
+    @include('layouts.headers.header', ['title' => 'Factura ' . $invoice->code])
     <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-12 mb-5 mb-xl-0 card-group">
+                @include('components.invoiceStatsCard', ['id' => 'total','title' => 'Total', 'value' => $invoice->total_with_discounts])
+                @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' => 'Pagado', 'value' => $invoice->amount_paid])
+                @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Debe', 'value' => $invoice->amount_due])
+                @include('components.invoiceStatsCard', ['id' => 'invoice-status','title' => 'Estatus', 'value' => $invoice->status()])
+            </div>
+        </div>
         <div class="row">
             @include('components.patientInfo', ['patient' => $invoice->patient])
 
@@ -16,7 +24,15 @@
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0 active" id="tab-services-tab" data-toggle="tab" href="#tab-services" 
-                        role="tab" aria-controls="tab-services" aria-selected="true"><i class="ni ni-cloud-upload-96 mr-2"></i>Services</a>
+                        role="tab" aria-controls="tab-services" aria-selected="true"><i class="fas fa-procedures mr-2"></i>Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tab-payment-tab" data-toggle="tab" href="#tab-payment" 
+                        role="tab" aria-controls="tab-payment" aria-selected="false"><i class="fas fa-dollar-sign  mr-2"></i>Pagos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tab-credit-tab" data-toggle="tab" href="#tab-credit"
+                         role="tab" aria-controls="tab-credit" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>Nota de Credito</a>
                 </li>
             </ul>
         </div>
@@ -24,9 +40,23 @@
             <div class="card-body">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="tab-services" role="tabpanel" aria-labelledby="tab-services-tab">
-                        @component('components.servicesTable', ['services'=>$invoice->services])
-                            
-                        @endcomponent
+                        @include('components.servicesTable', ['services'=>$invoice->services])
+                    </div>
+                    <div class="tab-pane fade" id="tab-payment" role="tabpanel" aria-labelledby="tab-payment-tab">
+                        <div class="col-md-12 col-auto text-right">
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Agregar</i></button>
+                            <br />
+                            {{--  @include('payments.partials.addModal',['patient_id'=>$patient->id])  --}}
+                        </div>
+                        @include('payments.partials.table', ['payments'=>$invoice->payments, 'patient_id'=>$invoice->patient->id])
+                    </div>
+                    <div class="tab-pane fade" id="tab-credit" role="tabpanel" aria-labelledby="tab-credit-tab">
+                        <div class="col-md-12 col-auto text-right">
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Agregar</i></button>
+                            <br />
+                            {{--  @include('payments.partials.addModal',['patient_id'=>$patient->id])  --}}
+                        </div>
+                        @include('payments.partials.table', ['payments'=>$invoice->payments, 'patient_id'=>$invoice->patient->id])
                     </div>
                 </div>
             </div>
