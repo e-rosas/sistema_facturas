@@ -727,11 +727,6 @@
         document.getElementById("input-date").value = today;
         document.getElementById("input-date_service").value = today;
 
-        $("#person_data_id").change(function(){
-
-            var selectedService= $(this).children("option:selected").val();
-    
-        });
 
         $("#add_service").click(function(){
             var quantity = Number(document.getElementById("input-quantity").value);

@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('service/update', ['as' => 'service.update', 'uses' => 'ServiceController@update']);
     Route::patch('invoices/updatepatient', ['as' => 'invoice.updatepatient', 'uses' => 'InvoiceController@updatePatient']);
     Route::patch('invoice/update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
-    Route::post('invoice/services', 'InvoiceServiceController@getInvoiceServices')->name('invoiceservices.get');
+    Route::post('invoice/services', 'InvoiceServiceController@getInvoiceServices')->name('invoice.services');
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('patients/searchIndex', 'SearchPatientController@searchPatient')->name('patients.search');
     Route::post('patients/search', 'SearchPatientController@search')->name('patients.searchName');

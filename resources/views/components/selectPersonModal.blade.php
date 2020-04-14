@@ -32,16 +32,3 @@
         </div>
     </div>
 </div>
-
-@push('js')
-
-<script>
-    $("#save_call").click(function(){
-            
-        
-
-
-    });
-</script>
-    
-@endpush
