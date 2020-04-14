@@ -14,11 +14,11 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('invoice_id');
-            $table->string('series');
             $table->string('number');
             $table->decimal('exchange_rate', 13, 4);
             $table->decimal('amount_paid', 13, 4);
-            $table->string('concept')->default('Complemento de pago');
+            $table->string('method')->default('Por definir');
+            $table->tinyInteger('concept')->default(0);
             $table->date('date');
             $table->text('comments')->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();

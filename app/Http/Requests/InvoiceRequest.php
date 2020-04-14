@@ -29,7 +29,6 @@ class InvoiceRequest extends FormRequest
             'code' => 'required|max:255',
             'concept' => 'max:255',
             'currency' => 'max:255',
-            'method' => 'max:255',
             'date' => 'date',
             'comments' => 'max:1000',
             'tax' => 'numeric|required|between:0,999999999.999',

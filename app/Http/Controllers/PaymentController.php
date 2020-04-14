@@ -45,9 +45,11 @@ class PaymentController extends Controller
     public function store(PaymentRequest $request)
     {
         $validated = $request->validated();
+
         //New action: Verify that paid amount does not exceed due amount
-        $validatePayment = new VerifyPaymentAmount($validated['amount'], $validated['invoice_id']);
+        $validatePayment = new VerifyPaymentAmount($validated['amount_paid'], $validated['invoice_id']);
         if($validatePayment->verifyPayment()){
+            $validated['number'] = $validated['invoice_number'] .'- P' . rand(1, 1000);
             Payment::create($validated);
         }
 
@@ -92,7 +94,8 @@ class PaymentController extends Controller
         $validated = $request->validated();
         $id = $validated['payment_id'];
         $payment = Payment::findOrFail($id);
-        $validatePayment = new VerifyPaymentAmount($validated['amount'], $payment->invoice_id);
+        
+        $validatePayment = new VerifyPaymentAmount($validated['amount_paid'], $payment->invoice_id);
         if($validatePayment->verifyPayment()){
             $payment->fill($validated);
             $payment->save();

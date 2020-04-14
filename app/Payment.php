@@ -13,6 +13,7 @@ class Payment extends Model
         'amount_paid',
         'series',
         'number',
+        'method',
         'comments',
         'exchange_rate',
         'concept',
@@ -45,5 +46,21 @@ class Payment extends Model
     public function invoice()
     {
         return $this->belongsTo('App\Invoice');
+    }
+    public function concept()
+    {
+        switch ($this->concept) {
+            case 0:
+                return 'Complemento de pago.';
+
+                break;
+            case 1:
+                return 'Complemento de pago unico.';
+
+                break;
+            default:
+                // code...
+                break;
+        }
     }
 }

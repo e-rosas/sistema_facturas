@@ -31,12 +31,12 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">{{ __('Number') }}</th>
-                                    <th scope="col">{{ __('Invoice') }}</th>
-                                    <th scope="col">{{ __('Date') }}</th>
-                                    <th scope="col">{{ __('D.O.S') }}</th>
-                                    <th scope="col">{{ __('Amount') }}</th>
-                                    <th scope="col">{{ __('Comments') }}</th>
+                                    <th scope="col">No. de Pago</th>
+                                    <th scope="col">Factura</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Concepto</th>
+                                    <th scope="col">Metodo</th>
                                     {{-- <th scope="col">{{ __('Actions') }}</th> --}}
                                 </tr>
                             </thead>
@@ -49,11 +49,11 @@
                                                 {{ $payment->invoice->number}}
                                             </a>
                                         </td>
-                                        <td>{{ $payment->date->format('M-d-Y')}}</td>
+                                        <td>{{ $payment->date->format('d-m-Y')}}</td>
 
-                                        <td>{{ $payment->date_service->format('M-d-Y')}}</td>
-                                        <td>{{ $payment->amount}}</td>
-                                        <td>{{ $payment->comments}}</td>
+                                        <td>{{ $payment->amount_paid }}</td>
+                                        <td>{{ $payment->concept()}}</td>
+                                        <td>{{ $payment->method}}</td>
                                         {{-- <td class="td-actions text-right">
                                             <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $payment->id }})">
                                                     <i class="fas fa-pencil-alt fa-2 "></i>

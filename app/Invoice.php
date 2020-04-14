@@ -25,7 +25,6 @@ class Invoice extends Model
         'code',
         'concept',
         'currency',
-        'method',
         'comments',
         'status',
         'date',
@@ -129,7 +128,7 @@ class Invoice extends Model
     {
         switch ($this->status) {
             case 0:
-                return 'Complemento de pago pendiente.';
+                return 'Nota de credito pendiente.';
 
                 break;
             case 1:

@@ -19,7 +19,6 @@ class CreateInvoicesTable extends Migration
             $table->string('code')->unique();
             $table->string('concept')->default('Factura dólares Aseguranza');
             $table->string('currency')->default('USD');
-            $table->string('method')->default('Por definir');
             $table->date('date');
             $table->decimal('exchange_rate', 13, 4);
 
