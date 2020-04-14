@@ -110,18 +110,7 @@
                                     @endif
                                 </div>
                                 
-                                {{--  exchange_rate --}}
-                                {{--  <div class="col-md-3 col-auto form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-exchange_rate">Cambio</label>
-                                    <input type="number" name="exchange_rate" id="input-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
-                                    placeholder="Cambio" value="{{ old('exchange_rate') }}" required>
-
-                                    @if ($errors->has('exchange_rate'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('exchange_rate') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>  --}}
+                                
                             </div>
                             <div class="form-row">
                                 {{--  code --}}

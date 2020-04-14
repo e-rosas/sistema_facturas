@@ -132,7 +132,7 @@ class Invoice extends Model
 
                 break;
             case 1:
-                return 'Un solo pago completo.';
+                return 'Completada.';
 
                 break;
             case 2:

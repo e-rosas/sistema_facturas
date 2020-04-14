@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Actions;
-use app\Invoice;
-use Carbon\Carbon;
+
+use App\Invoice;
 
 class VerifyPaymentAmount
 {
@@ -17,6 +17,11 @@ class VerifyPaymentAmount
     {
         $new_amount_due = $this->invoice->amount_due - $this->amount;
         if($new_amount_due >= 0){
+            if($this->invoice->type == 2 && $new_amount_due ==0){
+                $this->invoice->type = 1;
+                $this->invoice->status = 1;
+                $this->invoice->save();
+            }
             return true;
         }
         else {

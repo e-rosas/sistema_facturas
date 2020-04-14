@@ -47,7 +47,7 @@
                         <div class="col-md-12 col-auto text-right">
                             <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Agregar</i></button>
                             <br />
-                            {{--  @include('payments.partials.addModal',['patient_id'=>$patient->id])  --}}
+                             @include('payments.partials.addModal',['invoice'=>$invoice]) 
                         </div>
                         @include('payments.partials.table', ['payments'=>$invoice->payments, 'patient_id'=>$invoice->patient->id])
                     </div>

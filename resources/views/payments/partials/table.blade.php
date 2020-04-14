@@ -47,7 +47,6 @@
                 +  "</tr>";
         }
         $('#payments_table tbody').html(output);
-        setPaymentCount();
     }
     function Delete(id){
         var r = confirm("Are you sure?");

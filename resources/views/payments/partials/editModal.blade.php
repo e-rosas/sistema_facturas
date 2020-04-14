@@ -135,7 +135,6 @@
 
 
     $(document).ready(function(){
-        setPaymentCount();
         $("#update-payment").click(function(){
             var payment_id = document.getElementById("update-payment-id").value;
             var number = document.getElementById("update-payment-number").value;

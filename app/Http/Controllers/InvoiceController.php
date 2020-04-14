@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Resources\InvoiceResource;
 use App\Invoice;
 use App\InvoiceService;
 use App\ItemService;
@@ -161,5 +162,11 @@ class InvoiceController extends Controller
         }
         echo json_encode($response);
         exit;
+    }
+    public function find(Request $request)
+    {
+        $invoice = Invoice::findOrFail($request->invoice_id);
+
+        return new InvoiceResource($invoice);
     }
 }

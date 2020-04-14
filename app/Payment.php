@@ -11,12 +11,10 @@ class Payment extends Model
     use Notifiable;
     public $fillable = [
         'amount_paid',
-        'series',
         'number',
         'method',
         'comments',
         'exchange_rate',
-        'concept',
         'date',
         'invoice_id',
     ];
