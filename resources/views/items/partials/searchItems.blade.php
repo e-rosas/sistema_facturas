@@ -1,9 +1,8 @@
 <!-- For defining autocomplete -->
-<div class="col-auto">
-  <select id='item_id' class="custom-select form-control" name="item_id"> 
-    <option value='0'>{{ __('Select item') }}</option>
+  <select id='item_id' class="custom-select form-control" name="item_id" style="width: 80%"> 
+    <option value='0'>Seleccionar artículo</option>
   </select>
-</div>
+
 
 @push('js')
 <!-- Script -->

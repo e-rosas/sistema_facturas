@@ -4,21 +4,39 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h5 class="heading-small text-muted mb-4">{{ __('Service items') }}</h5>
+                        <h5 class="heading-small text-muted mb-4">Artículos del servicio</h5>
                         {{--  Items --}}
                         {{-- Selecting item --}}
-                        <div class="row">
-                            <div class="col-auto">
+                        <div class="form-row">
+                            <div class="col-xl-12 order-xl-1">
                                 @include('items.partials.searchItems')
                             </div>
+                        </div>
+                        <div class="form-row">
+                            {{--  price  --}}
+                            <div class="col-lg-3 col-auto form-group">
+                                <label class="form-control-label" for="custom-product-price">Precio</label>
+                                <input type="numeric"  name="product-price" id="custom-product-price" class="form-control form-control-alternative" 
+                                placeholder="0" required>
+                            
+                            </div>
+                            {{--  discounted-price  --}}
+                            <div class="col-lg-3 col-auto form-group">
+                                <label class="form-control-label" for="custom-product-discounted-price">Descuento</label>
+                                <input type="numeric" min="1" name="product-discounted-price" id="custom-product-discounted-price" class="form-control form-control-alternative" 
+                                placeholder="0"  required>
+                            
+                            </div>
                             {{--  quantity  --}}
-                            <div class=" col-auto form-group">
+                            <div class=" col-lg-3 form-group">
+                                <label class="form-control-label" for="input-product-quantity">Cantidad</label>
                                 <input type="numeric" min="1" name="product-quantity" id="input-product-quantity" class="form-control form-control-alternative" 
                                 placeholder="1" value="1" required>                          
                             </div>
                             {{-- Add --}}
-                            <div class="col-auto">
-                                <button type="button" id="add_item" class="btn btn-outline-success">{{ __('Add') }}</button>
+                            <div class="col-lg-1">
+                                <label class="form-control-label"></label>
+                                <button type="button" id="add_item" class="btn btn-outline-success">Agregar</button>
                             </div>
                         </div>
                     </div>

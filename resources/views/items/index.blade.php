@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Item Management')])
+@extends('layouts.app', ['title' => 'Artículos'])
 
 @section('content')
     @include('layouts.headers.cards')
@@ -10,10 +10,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Items') }}</h3>
+                                <h3 class="mb-0">Artículos</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('items.create') }}" class="btn btn-sm btn-primary">{{ __('Add Item') }}</a>
+                                <a href="{{ route('items.create') }}" class="btn btn-sm btn-primary">Registrar nuevo artículo</a>
                             </div>
                         </div>
                     </div>
@@ -33,13 +33,13 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">{{ __('Code') }}</th>
-                                    <th scope="col">{{ __('Description') }}</th>
-                                    <th scope="col">{{ __('Price') }}</th>
-                                    <th scope="col">{{ __('Discounted Price') }}</th>
-                                    <th scope="col">{{ __('Type') }}</th>
-                                    <th scope="col">{{ __('SAT') }}</th>
-                                    <th scope="col">{{ __('Category') }}</th>
+                                    <th scope="col">Código</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Descuento</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">IVA</th>
+                                    <th scope="col">Categoria</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -51,9 +51,9 @@
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->discounted_price }}</td>
                                         <td>{{ $item->type }}</td>
-                                        <td>{{ $item->SAT }}</td>
+                                        <td>{{ $item->iva() }}</td>
                                         <td>{{ $item->category->name }}</td>
-                                        <td class="text-right">
+                                        {{-- <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
@@ -68,10 +68,10 @@
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>    
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> --}}  
+                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> 
                                                 </div>
                                             </div>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

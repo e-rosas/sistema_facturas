@@ -40,9 +40,12 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validateItem();
+        if (isset($request['tax'])) {
+            $validated['tax'] = 1;
+        }
         Item::create($validated);
 
-        return redirect()->route('items.index')->withStatus(__('Item successfully created.'));
+        return redirect()->route('items.index')->withStatus(__('Artículo registrado exitosamente.'));
     }
 
     /**

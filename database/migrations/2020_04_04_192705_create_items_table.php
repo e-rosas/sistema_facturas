@@ -19,7 +19,6 @@ class CreateItemsTable extends Migration
             $table->decimal('price', 13, 4);
             $table->decimal('discounted_price', 13, 4);
             $table->string('type');
-            $table->string('SAT')->default('NOT SET')->nullable();
             $table->boolean('tax')->default(0);
             $table->unsignedBigInteger('category_id');
 

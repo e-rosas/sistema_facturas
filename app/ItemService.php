@@ -89,4 +89,8 @@ class ItemService extends Model
     {
         return $this->belongsTo('App\InvoiceService');
     }
+    public function clave()
+    {
+        return 'A'.$this->code;
+    }
 }

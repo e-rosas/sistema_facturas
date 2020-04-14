@@ -20,10 +20,8 @@ class Item extends Model
         'code' => 'required|max:255',
         'description' => 'required|max:255',
         'type' => 'max:255',
-        'SAT' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999|lte:price',
-        'tax' => 'boolean',
         'category_id' => 'required|numeric',
     ];
     protected $casts = [
@@ -31,7 +29,6 @@ class Item extends Model
         'code' => 'string',
         'description' => 'string',
         'type' => 'string',
-        'SAT' => 'string',
         'price' => 'decimal:13',
         'discounted_price' => 'decimal:13',
         'tax' => 'boolean',
@@ -51,6 +48,15 @@ class Item extends Model
     public function getDiscountedPriceAttribute($value)
     {
         return number_format($value, 3);
+    }
+    public function iva()
+    {
+        if($this->tax){
+            return "Sí";
+        }
+        else {
+            return 'No';
+        }
     }
 
     public function clave()

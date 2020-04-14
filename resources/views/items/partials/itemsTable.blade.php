@@ -3,12 +3,12 @@
     <table id="items_table" class="table align-items-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Description') }}</th>
-                <th scope="col">{{ __('Price') }}</th>
-                <th scope="col">{{ __('Discounted Price') }}</th>
-                <th scope="col">{{ __('Quantity') }}</th>
-                <th scope="col">{{ __('Total') }}</th>
-                <th scope="col">{{ __('Discounted Total') }}</th>                
+                <th scope="col">Descripción</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Descuento</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+                <th scope="col">Total Descuento</th>                
             </tr>
         </thead>
         <tbody>
