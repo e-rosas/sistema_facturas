@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\VerifyPaymentAmount;
 use App\Http\Requests\PaymentRequest;
+use App\Http\Requests\UpdatePaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Payment;
 use Illuminate\Http\Request;
@@ -16,7 +18,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::with('person_data', 'invoice')
+        $payments = Payment::with('invoice')
             ->orderBy('date', 'desc')
             ->paginate(15)
         ;
@@ -43,12 +45,14 @@ class PaymentController extends Controller
     public function store(PaymentRequest $request)
     {
         $validated = $request->validated();
-        //New action: Verify that paid amount does not exceed it's respective person_stats due amount
-
-        Payment::create($validated);
+        //New action: Verify that paid amount does not exceed due amount
+        $validatePayment = new VerifyPaymentAmount($validated['amount'], $validated['invoice_id']);
+        if($validatePayment->verifyPayment()){
+            Payment::create($validated);
+        }
 
         $payments = Payment::with('invoice')
-            ->where('person_data_id', $request->person_data_id)
+            ->where('invoice_id', $request->invoice_id)
             ->orderBy('date', 'desc')
             ->paginate(15)
         ;
@@ -81,23 +85,46 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(UpdatePaymentRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $id = $validated['payment_id'];
+        $payment = Payment::findOrFail($id);
+        $validatePayment = new VerifyPaymentAmount($validated['amount'], $payment->invoice_id);
+        if($validatePayment->verifyPayment()){
+            $payment->fill($validated);
+            $payment->save();
+        }
+        
+
+        $payments = Payment::with('invoice')
+            ->where('invoice_id', $payment->invoice_id)
+            ->orderBy('date', 'desc')
+            ->paginate(15)
+        ;
+
+        return PaymentResource::collection($payments);
+    }
+    public function delete(Request $request)
+    {
+        $payment = Payment::find($request['payment_id']);
+        $invoice_id = $payment->invoice_id;
+        $payment->delete();
+
+        $payments = Payment::with('invoice')->where('invoice_id', $invoice_id)
+            ->orderBy('date', 'desc')
+            ->paginate(15)
+        ;
+
+        return PaymentResource::collection($payments);
+    }
+    public function find(Request $request)
+    {
+        $payment = Payment::findOrFail($request->payment_id);
+
+        return new PaymentResource($payment);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Payment  $payment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Payment $payment)
-    {
-        //
-    }
 }

@@ -24,7 +24,7 @@ class CalculateTotalsOfPayments
      */
     public function getAmount_paid()
     {
-        return number_format($this->amount_paid, 3);
+        return number_format($this->amount_paid, 4);
     }
 
     public function calculateTotals()

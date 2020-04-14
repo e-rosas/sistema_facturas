@@ -2,6 +2,8 @@
 
 namespace App\Actions;
 
+use App\Payment;
+
 class CalculateTotalsOfInvoices
 {
     public $total = 0;
@@ -48,6 +50,14 @@ class CalculateTotalsOfInvoices
     public function calculateTotals()
     {
         foreach ($this->invoices as $invoice) {
+            $allPayments = Payment::where('invoice_id', $invoice->id)->get();
+            $total_payments = new CalculateTotalsOfPayments($allPayments);
+            $total_payments->calculateTotals();
+
+            $invoice->amount_paid = $total_payments->amount_paid;
+            $invoice->amount_due = (float) str_replace(',', '', $invoice->amount_due) - $total_payments->amount_paid;
+            $invoice->save();
+
             $this->total += (float) str_replace(',', '', $invoice->total);
             $this->total_with_discounts += (float) str_replace(',', '', $invoice->total_with_discounts);
             $this->amount_due += (float) str_replace(',', '', $invoice->amount_due);

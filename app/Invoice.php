@@ -15,9 +15,9 @@ class Invoice extends Model
      * @var array
      */
     protected $dispatchesEvents = [
-        'saved' => InvoiceEvent::class,
+        'saved' => InvoiceEvent::class,/* 
         'updated' => InvoiceEvent::class,
-        'deleted' => InvoiceEvent::class,
+        'deleted' => InvoiceEvent::class, */
     ];
     public $fillable = [
         'series',
