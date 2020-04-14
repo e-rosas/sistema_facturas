@@ -29,7 +29,6 @@ $(document).ready(function(){
         };
       },
       processResults: function (response) {
-        console.log(response);
         document.getElementById("custom-price").value = parseFloat(response[0].price.replace(/,/g,'')); 
         document.getElementById("custom-discounted-price").value =parseFloat(response[0].discounted_price.replace(/,/g,'')); 
         return {

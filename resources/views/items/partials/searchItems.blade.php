@@ -28,6 +28,8 @@ $(document).ready(function(){
         };
       },
       processResults: function (response) {
+        document.getElementById("custom-product-price").value = parseFloat(response[0].price.replace(/,/g,'')); 
+        document.getElementById("custom-product-discounted-price").value =parseFloat(response[0].discounted_price.replace(/,/g,'')); 
         return {
           results: response
         };

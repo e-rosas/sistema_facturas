@@ -50,6 +50,8 @@ class SearchProductController extends Controller
             $response[] = [
                 'id' => $item->id,
                 'text' => $item->code.' '.$item->description,
+                'price' => $item->price,
+                'discounted_price' => $item->discounted_price,
             ];
         }
         echo json_encode($response);

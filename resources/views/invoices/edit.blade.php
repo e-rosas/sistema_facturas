@@ -632,7 +632,7 @@
             return false;
     }
 
-    function getItem(service_id, item_id, quantity){
+    function getItem(service_id, item_id, quantity, price, discounted_price){
         $.ajax({
             url: "{{route('items.find')}}",
             dataType: 'json',
@@ -643,7 +643,7 @@
             },
         success: function (response) {                
                 addItemToService(service_id, response.id, response.description, 
-                    response.price, response.discounted_price, response.tax, quantity, services.length);                                    
+                    price, discounted_price, response.tax, quantity, services.length);                                    
             }
         });
             return false;
@@ -790,8 +790,10 @@
         $("#add_item").click(function(){
             var quantity = Number(document.getElementById("input-product-quantity").value);
             if(quantity > 0){
+                var price = document.getElementById("custom-product-price").value;
+                var discounted_price = document.getElementById("custom-product-discounted-price").value;
                 var item_id= $("#item_id").children("option:selected").val();
-                getItem(selectedServiceId, item_id, quantity);
+                getItem(selectedServiceId, item_id, quantity, price, discounted_price);
             }
             
         });
