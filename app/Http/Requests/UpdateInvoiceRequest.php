@@ -13,7 +13,7 @@ class UpdateInvoiceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -32,7 +32,6 @@ class UpdateInvoiceRequest extends FormRequest
             'currency' => 'max:255',
             'date' => 'date',
             'comments' => 'max:1000',
-            'exchange_rate' => 'numeric|required|between:0,999999999.999',
             'tax' => 'numeric|required|between:0,999999999.999',
             'dtax' => 'numeric|required|between:0,999999999.999',
             'sub_total' => 'numeric|required|between:0,999999999.999',

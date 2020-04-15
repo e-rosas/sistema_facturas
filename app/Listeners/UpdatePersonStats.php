@@ -32,11 +32,9 @@ class UpdatePersonStats
      */
     public function payment($event)
     {
-        $patient_id = $event->payment->patient_id;
+        $patient_id = $event->payment->invoice->patient_id;
         $this->updateStats($patient_id);
     }
-
-
 
     public function subscribe($events)
     {

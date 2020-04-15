@@ -9,6 +9,7 @@ class Item extends Model
     public $fillable = [
         'code',
         'description',
+        'descripcion',
         'price',
         'discounted_price',
         'type',
@@ -19,6 +20,7 @@ class Item extends Model
     public static $rules = [
         'code' => 'required|max:255',
         'description' => 'required|max:255',
+        'descripcion' => 'max:255',
         'type' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999|lte:price',
@@ -49,14 +51,14 @@ class Item extends Model
     {
         return number_format($value, 3);
     }
+
     public function iva()
     {
-        if($this->tax){
-            return "Sí";
+        if ($this->tax) {
+            return 'Sí';
         }
-        else {
-            return 'No';
-        }
+
+        return 'No';
     }
 
     public function clave()

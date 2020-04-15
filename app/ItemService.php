@@ -24,6 +24,7 @@ class ItemService extends Model
         'invoice_service_id' => 'required',
         'item_id' => 'required',
         'description' => 'max:255',
+        'descripcion' => 'max:255',
         'itax' => 'numeric|required|between:0,999999999.999',
         'idtax' => 'numeric|required|between:0,999999999.999',
         'sub_total_price' => 'numeric|required|between:0,999999999.999',
@@ -89,6 +90,7 @@ class ItemService extends Model
     {
         return $this->belongsTo('App\InvoiceService');
     }
+
     public function clave()
     {
         return 'A'.$this->code;

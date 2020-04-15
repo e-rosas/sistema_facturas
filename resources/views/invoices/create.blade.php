@@ -369,7 +369,7 @@
         total_price = 0;
         total_discounted_price = 0;
         created_at = new Date();
-        constructor(service_id, description, price, discounted_price, quantity, id, created_at) {
+        constructor(service_id, description, price, discounted_price, quantity, id, created_at, descripcion) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -380,6 +380,7 @@
             this.total_price = quantity * price;
             this.total_discounted_price = quantity * discounted_price;
             this.id = id;
+            this.descripcion = descripcion;
             this.date2 = getCorrectDate(created_at);
             this.created_at = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
         }
@@ -389,7 +390,7 @@
         }
 
         // Add to cart
-        addItemToCart(item_id, description, price, discounted_price, quantity, id, taxable) {
+        addItemToCart(item_id, description, price, discounted_price, quantity, id, taxable, descripcion) {
             for(var item in this.items) {
                 if(this.items[item].item_id === item_id) {
                     this.items[item].quantity += Number(quantity);
@@ -398,7 +399,7 @@
                 }
             }
             
-            var item = new Item(item_id, description, price, discounted_price, quantity, id, taxable);
+            var item = new Item(item_id, description, price, discounted_price, quantity, id, taxable, descripcion);
             this.items.push(item);   
             displayItems(this);  
         }
@@ -453,7 +454,7 @@
         quantity = 1;
         itax = 0;
         idtax = 0;
-        constructor(item_id, description, price, discounted_price, quantity, id, taxable) {
+        constructor(item_id, description, price, discounted_price, quantity, id, taxable, descripcion) {
             this.item_id = item_id;
             this.description = description;
             this.price = parseFloat(price.replace(/,/g,''));
@@ -462,7 +463,8 @@
             this.sub_total_price = quantity * price;
             this.sub_total_discounted_price = quantity * discounted_price;
             this.id = id;
-            this.taxable = taxable
+            this.taxable = taxable;
+            this.descripcion = descripcion;
             this.calcTotals();          
         }
 
@@ -489,7 +491,7 @@
     total_with_discounts = 0;
 
     // Add to cart
-    function addServiceToCart(service_id, description, price, discounted_price, quantity, id) {
+    function addServiceToCart(service_id, description, price, discounted_price, quantity, id, descripcion) {
         for(var service in this.services) {
             if(this.services[service].id === id) {
                 this.services[service].quantity += Number(quantity);
@@ -500,7 +502,7 @@
 
         var created_at = document.getElementById("input-date_service").value;
         
-        var service = new Service(service_id, description, price, discounted_price, quantity, id, created_at);
+        var service = new Service(service_id, description, price, discounted_price, quantity, id, created_at, descripcion);
         this.services.push(service);   
         displayCart();  
     }
@@ -575,7 +577,7 @@
             },
         success: function (response) {                
                 addServiceToCart(response.id, response.description, 
-                    price, discounted_price, quantity, services.length);                                    
+                    price, discounted_price, quantity, services.length, response.descripcion);                                    
             }
         });
             return false;
@@ -592,7 +594,7 @@
             },
         success: function (response) {                
                 addItemToService(service_id, response.id, response.description, 
-                    price, discounted_price, response.tax, quantity, services.length);                                    
+                    price, discounted_price, response.tax, quantity, services.length, response.descripcion);                                    
             }
         });
             return false;

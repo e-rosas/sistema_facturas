@@ -34,6 +34,7 @@ class InvoiceService extends Model
         'total_price' => 'numeric|required|between:0,999999999.999',
         'total_discounted_price' => 'numeric|required|between:0,999999999.999',
         'description' => 'max:255',
+        'descripcion' => 'max:255',
         'quantity' => 'numeric|required',
         'created_at' => 'date',
     ];

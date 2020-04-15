@@ -11,6 +11,7 @@ class Service extends Model
     public $fillable = [
         'code',
         'description',
+        'descripcion',
         'price',
         'discounted_price',
         'category_id',
@@ -18,6 +19,7 @@ class Service extends Model
     public static $rules = [
         'code' => 'required|max:255',
         'description' => 'required|max:255',
+        'description' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999',
         'category_id' => 'required|numeric',

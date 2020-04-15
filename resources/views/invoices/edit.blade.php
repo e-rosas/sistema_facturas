@@ -659,10 +659,10 @@
     }
 
     function sendInvoice(patient_id, series, number, concept, code, currency, 
-        method,  date, comments){
+        date, comments){
         $.ajax({
-            url: "{{route('invoices.store')}}",
-            type:"post",
+            url: "{{route('invoice.update')}}",
+            type:"patch",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "invoice_id": {!! $invoice->id !!},
@@ -674,7 +674,6 @@
                 "concept" : concept,
                 "code": code,
                 "currency" : currency,
-                "method" : method,
                 "services" : this.services,
                 "total" : total,
                 "sub_total" : sub_total,
@@ -820,10 +819,9 @@
                 var number = document.getElementById("input-number").value;  
                 var series = document.getElementById("input-series").value; 
                 var concept = document.getElementById("input-concept").value; 
-                var currency = document.getElementById("input-currency").value; 
-                var method = document.getElementById("input-method").value; 
-                sendInvoice(patient_id, series, number, concept, code, currency, 
-                    method,  date,  comments);
+                var currency = document.getElementById("input-currency").value;
+                sendInvoice(patient_id, series, number, concept, code, currency,
+                 date,  comments);
             }
             
             else {
