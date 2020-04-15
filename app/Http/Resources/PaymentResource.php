@@ -18,7 +18,7 @@ class PaymentResource extends JsonResource
         return [
             'id' => $this->id,
             'invoice' => $this->invoice->code,
-            'amount' => $this->amount,
+            'amount_paid' => $this->amount,
             'number' => $this->number,
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->date->format('Y-m-d'),

@@ -3,25 +3,22 @@
 namespace App\Actions;
 
 use App\Invoice;
-use App\Payment;
 
 class CalculatePersonStats
 {
     public $total_invoices;
-    public $total_payments;
     public $amount_due = 0;
     public $amount_due_without_discounts = 0;
 
     public function getAllInvoices($patient_id)
     {
         $allInvoices = Invoice::where('patient_id', $patient_id)->get();
+
         $total_invoices = new CalculateTotalsOfInvoices($allInvoices);
         $total_invoices->calculateTotals();
 
         return $total_invoices;
     }
-
-
 
     public function calculateAmounts($patient_id)
     {
@@ -48,11 +45,12 @@ class CalculatePersonStats
     {
         return number_format($this->amount_due_without_discounts, 3);
     }
+
     /**
      * Get the value of amount_due.
      */
     public function getAmountPaid()
     {
-        return $this->total_payments->amount_paid;
+        return $this->total_invoices->amount_paid;
     }
 }

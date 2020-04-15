@@ -15,7 +15,7 @@
                 <tr>
                     <td>{{ $payment->number}}</td>
                     <td>{{ $payment->date->format('M-d-Y')}}</td>
-                    <td>{{ $payment->amount}}</td>
+                    <td>{{ $payment->amount_paid}}</td>
                     <td>{{ $payment->comments}}</td>
                      <td class="td-actions text-right">
                         <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $payment->id }})">

@@ -30,7 +30,7 @@ class CalculateTotalsOfPayments
     public function calculateTotals()
     {
         foreach ($this->payments as $payment) {
-            $this->amount_paid += (float) str_replace(',', '', $payment->amount);
+            $this->amount_paid += (float) str_replace(',', '', $payment->amount_paid);
         }
     }
 
