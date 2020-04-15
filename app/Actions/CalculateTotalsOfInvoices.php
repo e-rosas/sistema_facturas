@@ -56,8 +56,9 @@ class CalculateTotalsOfInvoices
             $total_payments->calculateTotals();
 
             $invoice->amount_paid = $total_payments->amount_paid;
-            $invoice->amount_due = (float) str_replace(',', '', $invoice->amount_due) - $total_payments->amount_paid;
+            $invoice->amount_due = (float) str_replace(',', '', $invoice->total_with_discounts) - $total_payments->amount_paid;
             $invoice->save();
+
             $this->amount_paid += $total_payments->amount_paid;
             $this->total += (float) str_replace(',', '', $invoice->total);
             $this->total_with_discounts += (float) str_replace(',', '', $invoice->total_with_discounts);

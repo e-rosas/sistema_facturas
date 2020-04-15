@@ -3,11 +3,11 @@
     <table id="payments_table" class="table align-services-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Number') }}</th>
-                <th scope="col">{{ __('Date') }}</th>
-                <th scope="col">{{ __('Amount') }}</th>
-                <th scope="col">{{ __('Comments') }}</th>
-                <th scope="col">{{ __('Actions') }}</th>
+                <th scope="col">No. de Pago</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Comentarios</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -30,7 +30,7 @@
         </tbody>
     </table>
 </div>
-@include('payments.partials.editModal', ['patient_id'=>$patient_id])
+@include('payments.partials.editModal')
 @push('js')
 <script>
     function DisplayPayments(data){
@@ -40,7 +40,7 @@
             output += "<tr value="+payments[i].id+">"
                 + "<td>" + payments[i].number + "</td>"
                 + "<td>" + payments[i].date + "</td>"
-                + "<td>" + payments[i].amount + "</td>"
+                + "<td>" + payments[i].amount_paid + "</td>"
                 + "<td>" + payments[i].comments + "</td>"
                 +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="showEditModal(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
                 +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
@@ -49,7 +49,7 @@
         $('#payments_table tbody').html(output);
     }
     function Delete(id){
-        var r = confirm("Are you sure?");
+        var r = confirm("Eliminar el pago?");
         if(r){
             $.ajax({
                 url: "{{route('payments.destroy')}}",

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\InvoiceEvent;
 use App\Http\Requests\InvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
-use App\Http\Resources\InvoiceResource;
+use App\Http\Resources\InvoiceStatsResource;
 use App\Invoice;
 use App\InvoiceService;
 use App\ItemService;
@@ -37,7 +38,8 @@ class InvoiceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(InvoiceRequest $request)
@@ -62,13 +64,11 @@ class InvoiceController extends Controller
         }
 
         return route('invoices.show', [$invoice]);
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
     public function show(Invoice $invoice)
@@ -81,7 +81,6 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
     public function edit(Invoice $invoice)
@@ -94,8 +93,9 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Invoice  $invoice
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Invoice             $invoice
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateInvoiceRequest $request)
@@ -122,6 +122,7 @@ class InvoiceController extends Controller
         }
 
         $invoice->save();
+        event(new InvoiceEvent($invoice));
 
         return route('invoices.show', [$invoice]);
     }
@@ -129,13 +130,12 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
     public function destroy(Invoice $invoice)
     {
-        //
     }
+
     public function search(Request $request)
     {
         $search = $request->search;
@@ -145,6 +145,7 @@ class InvoiceController extends Controller
 
         return view('invoices.index', compact('invoices'));
     }
+
     public function searchNumber(Request $request)
     {
         $search = $request->search;
@@ -163,10 +164,11 @@ class InvoiceController extends Controller
         echo json_encode($response);
         exit;
     }
+
     public function find(Request $request)
     {
         $invoice = Invoice::findOrFail($request->invoice_id);
 
-        return new InvoiceResource($invoice);
+        return new InvoiceStatsResource($invoice);
     }
 }

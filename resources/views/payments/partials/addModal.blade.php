@@ -23,6 +23,21 @@
                                     @endif
                                 </div>
                             </div> --}}
+                            {{--  Date  --}}
+                            <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="date" name="date" id="payment-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                    value="{{ old('date') }}" required>
+                                    @if ($errors->has('date'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('date') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                             {{--  amount  --}}
                             <div class="form-group{{ $errors->has('amount_paid') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-amount">Cantidad</label>
@@ -38,8 +53,8 @@
                             {{--  exchange_rate --}}
                             <div class="form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-exchange_rate">Cambio</label>
-                                <input type="number" name="exchange_rate" id="payment-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
-                                placeholder="Cambio" value="{{ old('exchange_rate') }}" required>
+                                <input type="numeric" name="exchange_rate" id="payment-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
+                                placeholder="Cambio" value=23 required>
 
                                 @if ($errors->has('exchange_rate'))
                                     <span class="invalid-feedback" role="alert">
@@ -59,21 +74,7 @@
                                     </span>
                                 @endif
                             </div>
-                            {{--  Date  --}}
-                            <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
-                                <div class="input-group input-group-alternative">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                    </div>
-                                    <input type="date" name="date" id="payment-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                    value="{{ old('date') }}" required>
-                                    @if ($errors->has('date'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('date') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
+                            
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
