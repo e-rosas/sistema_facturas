@@ -527,13 +527,20 @@
         var created_at = document.getElementById("input-date_service").value;
         
         var service = new Service(service_id, description, price, discounted_price, quantity, id, created_at);
-        this.services.push(service);   
+        this.services.push(service);
         displayCart();  
     }
-    function addServiceToCartFromInvoice(service_id, description, price, discounted_price, quantity, id, created_at) {
+    function addServiceToCartFromInvoice(service_id, description, price, discounted_price, quantity, id, created_at, items) {
         
-        var service = new Service(service_id, description, parseFloat(price.replace(/,/g,'')), parseFloat(discounted_price.replace(/,/g,'')), quantity, services.length, created_at);
-        this.services.push(service);   
+        var service = new Service(service_id, description, parseFloat(price.replace(/,/g,'')), 
+            parseFloat(discounted_price.replace(/,/g,'')), quantity, services.length, created_at);
+        for(var i in items){
+            var tax = false;
+            if(items[i].itax > 0) tax = true;
+            service.addItemToCart(items[i].item_id, items[i].description,items[i].price, items[i].discounted_price, 
+            items[i].quantity, services.length, tax);
+        }
+        this.services.push(service);
         displayCart();  
     }
     // Remove service from cart
@@ -606,7 +613,8 @@
         success: function (response) {
             for(var i = 0; i < response.length; i++){
                 addServiceToCartFromInvoice(response[i].service_id, response[i].description, 
-                    response[i].price, response[i].discounted_price, response[i].quantity, response[i].id, response[i].created_at);   
+                    response[i].price, response[i].discounted_price, response[i].quantity, 
+                    response[i].id, response[i].created_at, response[i].items);   
             }
             displayCart();                
                                                  

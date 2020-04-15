@@ -73,7 +73,8 @@ class InvoiceServiceController extends Controller
     public function getInvoiceServices(Request $request)
     {
         $invoice_id = $request->invoice_id;
-        $services = InvoiceService::where('invoice_id',  $invoice_id)->get();
+        $services = InvoiceService::with('items')
+            ->where('invoice_id', $invoice_id)->get();
 
         echo json_encode($services);
         exit;
