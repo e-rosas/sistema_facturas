@@ -9,7 +9,8 @@ class InvoiceStatsResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function toArray($request)
@@ -20,6 +21,8 @@ class InvoiceStatsResource extends JsonResource
             'type' => $this->type(),
             'amount_paid' => $this->amount_paid,
             'amount_due' => $this->amount_due,
+            'status_n' => $this->status,
+            'type_n' => $this->type,
         ];
     }
 }

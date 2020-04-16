@@ -12,7 +12,6 @@
                             <div class="col-8 col-auto">
                                 <h3 class="mb-0">Notas de crédito</h3>
                             </div>
-                            
                         </div>
                     </div>
                     
@@ -54,6 +53,7 @@
                                     <th scope="col">Factura</th>
                                     <th scope="col">Concepto</th>
                                     <th scope="col">Saldo</th>
+                                    <th scope="col">Cambio</th>
                                     <th scope="col">Observaciones</th>                                    
                                     {{-- <th scope="col"></th> --}}
                                 </tr>
@@ -68,9 +68,10 @@
                                                 {{ $credit->invoice->number}}
                                             </a>
                                         </td>
-                                        <td>{{ $credit->concept }}</td>
+                                        <td>{{ $credit->concept() }}</td>
                                         <td>{{ $credit->amount_due }}</td>
-                                        <td>{{ $credit->comments ? '' }}</td>
+                                        <td>{{ $credit->exchange_rate }}</td>
+                                        <td>{{ $credit->comments  }}</td>
                                         
                                     </tr>
                                 @endforeach

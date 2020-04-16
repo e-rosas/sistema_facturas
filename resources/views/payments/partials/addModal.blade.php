@@ -29,7 +29,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
-                                    <input type="date" name="date" id="payment-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                    <input type="date" name="date" id="payment-date" onchange="handler(event)" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
                                     value="{{ old('date') }}" required>
                                     @if ($errors->has('date'))
                                         <span class="invalid-feedback" role="alert">
@@ -104,6 +104,25 @@
 @push('js')
 
 <script>
+    function handler(e){
+        var date = document.getElementById("payment-date").value;
+        //getExchangeRate(date);
+      }
+    function getExchangeRate(date){
+        /*$.ajax({
+            url: "{{route('exchange')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "date": date,
+            },
+        success: function (response) {
+            document.getElementById("payment-exchange_rate").value = response.value;
+            }
+        });
+        return false;*/
+    }
     function sendPayment(method, exchange_rate, amount, date, comments){
         $.ajax({
             url: "{{route('payments.store')}}",
@@ -126,7 +145,7 @@
 
             }
         });
-            return false;
+        return false;
     }
 
     function displayStats(){
@@ -143,16 +162,15 @@
             document.getElementById("amount-paid").innerHTML = response.data.amount_paid;
             document.getElementById("amount-due").innerHTML = response.data.amount_due;
             document.getElementById("invoice-status").innerHTML = response.data.status;
-            /**if(response.data.status == 1){
-                document.getElementById("personal-due").innerHTML = response.data.personal_amount_due;
-                document.getElementById("stats-status").innerHTML = 'Personal discount';
-                document.getElementById("add-personal-discount-button").style.display = 'none';
+            document.getElementById("invoice-type").innerHTML = response.data.type;
+            if(response.data.status_n == 1 || response.data.status_n == 3 || response.data.status_n == 4){
+                document.getElementById("add-payment").style.display = 'none';
+                document.getElementById("add-credit").style.display = 'none';
             }
-            else if(response.data.status == 0){
-                document.getElementById("personal-due").innerHTML = 'NA';
-                document.getElementById("stats-status").innerHTML = 'Insurance discount';
-                document.getElementById("add-personal-discount-button").style.display = 'block';
-            }**/
+            else if(response.data.status_n == 2 || response.data.status_n == 0){
+                document.getElementById("add-payment").style.display = 'block';
+                document.getElementById("add-credit").style.display = 'block';
+            }
 
 
             }
@@ -170,8 +188,11 @@
 
         var comments = document.getElementById("payment-comments").value;
 
-        if(amount > 0){
+        if(amount > 0 && exchange_rate > 0){
             sendPayment(method , exchange_rate, amount, date, comments);
+        }
+        else {
+            alert("Falta introducir cantidad de pago y/o tipo de cambio.")
         }
 
 

@@ -33,7 +33,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0" id="tab-credit-tab" data-toggle="tab" href="#tab-credit"
-                         role="tab" aria-controls="tab-credit" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>Nota de Credito</a>
+                         role="tab" aria-controls="tab-credit" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>Nota de Crédito</a>
                 </li>
             </ul>
         </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="tab-pane fade" id="tab-payment" role="tabpanel" aria-labelledby="tab-payment-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Agregar</i></button>
+                            <button id="add-payment" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Agregar</i></button>
                             <br />
                              @include('payments.partials.addModal',['invoice'=>$invoice])
                         </div>
@@ -53,9 +53,10 @@
                     </div>
                     <div class="tab-pane fade" id="tab-credit" role="tabpanel" aria-labelledby="tab-credit-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Agregar</i></button>
+                            <button id="add-credit" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-credit">Registrar</i></button>
                             <br />
-                            {{--  @include('payments.partials.addModal',['patient_id'=>$patient->id])  --}}
+                            @include('credits.partials.details', ['credit'=>$invoice->credit])
+                            @include('credits.partials.addModal')
                         </div>
                     </div>
                 </div>

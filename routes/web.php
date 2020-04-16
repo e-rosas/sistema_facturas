@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', 'HomeController@index')->name('welcome');
 
 Auth::routes();
@@ -45,9 +44,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('patients/find', 'SearchPatientController@findPatient')->name('patients.find');
     Route::post('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 
-
     Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');
     Route::post('items/find', 'SearchProductController@findItem')->name('items.find');
+
+    Route::post('items/find', 'SearchProductController@findItem')->name('exchange');
 
     Route::get('payments', 'PaymentController@index')->name('payments.index');
     Route::post('payments/add', 'PaymentController@store')->name('payments.store');
@@ -62,7 +62,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('credits/destroy', 'CreditController@delete')->name('credits.destroy');
 
     //Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
-
 
     Route::patch('insurers/update', 'InsurerController@update')->name('insurers.update');
     Route::post('insurers/find', 'InsurerController@find')->name('insurers.find');

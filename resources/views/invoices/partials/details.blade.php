@@ -34,7 +34,7 @@
                 {{--  type --}}
                 <div class="col-md-2 col-auto form-group">
                     <label class="form-control-label" for="label-type">Tipo</label>
-                    <label id="label-type">{{ $invoice->type() }}</label>
+                    <label id="invoice-type">{{ $invoice->type() }}</label>
                 </div>
                 {{--  status --}}
                 <div class="col-md-3 col-auto form-group">

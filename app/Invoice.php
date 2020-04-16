@@ -138,7 +138,7 @@ class Invoice extends Model
 
                 break;
             case 3:
-                return 'Pendiente de asignar articulos.';
+                return 'Pendiente de asignar productos.';
 
                 break;
             case 4:
