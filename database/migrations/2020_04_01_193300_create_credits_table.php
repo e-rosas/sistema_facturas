@@ -12,12 +12,11 @@ class CreateCreditsTable extends Migration
     public function up()
     {
         Schema::create('credits', function (Blueprint $table) {
-            $table->unsignedBigInteger('invoice_id');
-            $table->string('series');
-            $table->string('number');
-            $table->decimal('original_amount_due', 13, 4);
+            $table->unsignedBigInteger('invoice_id')->primary();
+            $table->string('series')->default('E');
+            $table->string('number', 80)->unique();
             $table->decimal('amount_due', 13, 4);
-            $table->string('concept')->default('Nota de credito');
+            $table->decimal('exchange_rate', 13, 4);
             $table->date('date');
             $table->text('comments')->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();

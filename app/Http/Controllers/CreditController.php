@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Credit;
+use App\Events\InvoiceEvent;
+use App\Http\Requests\CreditRequest;
+use App\Http\Resources\CreditResource;
+use App\Invoice;
 use Illuminate\Http\Request;
 
 class CreditController extends Controller
@@ -14,7 +18,12 @@ class CreditController extends Controller
      */
     public function index()
     {
-        //
+        $credits = Credit::with('invoice')
+            ->orderBy('date', 'desc')
+            ->paginate(15)
+        ;
+
+        return view('credits.index', compact('credits'));
     }
 
     /**
@@ -24,62 +33,63 @@ class CreditController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreditRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $invoice = Invoice::where('id', $validated['invoice_id'])->first();
+        if (1 != $invoice->type && 0 == $invoice->status) {
+            $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 1000);
+            event(new InvoiceEvent($invoice)); //update invoice stats
+            $validated['amount_due'] = $invoice->amount_due;
+            $credit = Credit::create($validated);
+            $invoice->status = 1;
+            $invoice->type = 0;
+            $invoice->save();
+
+            return new CreditResource($credit);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Credit  $credit
      * @return \Illuminate\Http\Response
      */
     public function show(Credit $credit)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Credit  $credit
      * @return \Illuminate\Http\Response
      */
     public function edit(Credit $credit)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Credit  $credit
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Credit $credit)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Credit  $credit
      * @return \Illuminate\Http\Response
      */
     public function destroy(Credit $credit)
     {
-        //
     }
 }

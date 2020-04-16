@@ -24,14 +24,12 @@ class CreditRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount_due' => 'required|numeric|between:0,999999999.999',
-            'original_amount_due' => 'numeric|required|between:0,999999999.999',
             'comments' => 'max:1000',
-            'concept' => 'max:250',
             'series' => 'max:250',
-            'number' => 'required',
             'date' => 'date',
             'invoice_id' => 'required',
+            'invoice_number' => 'required',
+            'exchange_rate' => 'numeric|required|between:0,99.999',
         ];
     }
 }

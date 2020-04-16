@@ -45,6 +45,7 @@ class Payment extends Model
     {
         return $this->belongsTo('App\Invoice');
     }
+
     public function concept()
     {
         switch ($this->concept) {
@@ -53,7 +54,7 @@ class Payment extends Model
 
                 break;
             case 1:
-                return 'Complemento de pago unico.';
+                return 'Complemento de pago único.';
 
                 break;
             default:

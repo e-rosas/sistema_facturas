@@ -33,13 +33,13 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(PaymentRequest $request)
@@ -48,8 +48,10 @@ class PaymentController extends Controller
 
         //New action: Verify that paid amount does not exceed due amount
         $validatePayment = new VerifyPaymentAmount($validated['amount_paid'], $validated['invoice_id']);
-        if($validatePayment->verifyPayment()){
-            $validated['number'] = $validated['invoice_number'] .'- P' . rand(1, 1000);
+        $concept = $validatePayment->verifyPayment();
+        $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 1000);
+        if ($concept < 2) {
+            $validated['concept'] = $concept;
             Payment::create($validated);
         }
 
@@ -65,23 +67,19 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function show(Payment $payment)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
     public function edit(Payment $payment)
     {
-        //
     }
 
     /**
@@ -94,13 +92,12 @@ class PaymentController extends Controller
         $validated = $request->validated();
         $id = $validated['payment_id'];
         $payment = Payment::findOrFail($id);
-        
+
         $validatePayment = new VerifyPaymentAmount($validated['amount_paid'], $payment->invoice_id);
-        if($validatePayment->verifyPayment()){
+        if ($validatePayment->verifyPayment()) {
             $payment->fill($validated);
             $payment->save();
         }
-        
 
         $payments = Payment::with('invoice')
             ->where('invoice_id', $payment->invoice_id)
@@ -110,6 +107,7 @@ class PaymentController extends Controller
 
         return PaymentResource::collection($payments);
     }
+
     public function delete(Request $request)
     {
         $payment = Payment::find($request['payment_id']);
@@ -123,11 +121,11 @@ class PaymentController extends Controller
 
         return PaymentResource::collection($payments);
     }
+
     public function find(Request $request)
     {
         $payment = Payment::findOrFail($request->payment_id);
 
         return new PaymentResource($payment);
     }
-
 }

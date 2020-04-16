@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Call management')])
+@extends('layouts.app', ['title' => 'Notas de crédito'])
 
 @section('content')
     @include('layouts.headers.cards')
@@ -10,7 +10,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">{{ __('Calls') }}</h3>
+                                <h3 class="mb-0">Notas de crédito</h3>
                             </div>
                             
                         </div>
@@ -26,56 +26,61 @@
                             </div>
                         @endif
                     </div>
-
-                    <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">{{ __('Number') }}</th>
-                                    <th scope="col">{{ __('Claim') }}</th>
-                                    <th scope="col">{{ __('Date') }}</th>
-                                    <th scope="col">{{ __('Invoice number') }}</th>
-                                    <th scope="col">{{ __('Invoice status') }}</th>
-                                    <th scope="col">{{ __('Patient') }}</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($calls as $call)
-                                    <tr>
-                                        <td>{{ $call->number}}</td>
-                                        <td>{{ $call->claim}}</td>                                       
-                                        <td>{{ $call->date->format('m-d-Y') }}</td>
-                                        <td>{{ $call->invoice->number }}</td>
-                                        <td>{{ $call->invoice->status }}</td>
-                                        <td>{{ $call->person_data->fullName() }}</td>
-                                        <td class="text-right">
+                    {{-- <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('call.destroy', $call) }}" method="post">
+                                                        <form action="{{ route('credit.destroy', $credit) }}" method="post">
                                                             @csrf
                                                             @method('delete')
                                                             
-                                                            <a class="dropdown-item" href="{{ route('call.edit', $call) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this call?") }}') ? this.parentElement.submit() : ''">
+                                                            <a class="dropdown-item" href="{{ route('credit.edit', $credit) }}">{{ __('Edit') }}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this credit?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
-                                                        </form>    --}}  
+                                                        </form> 
                                                         <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
                                                 </div>
                                             </div>
+                                        </td> --}}
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Número</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Factura</th>
+                                    <th scope="col">Concepto</th>
+                                    <th scope="col">Saldo</th>
+                                    <th scope="col">Observaciones</th>                                    
+                                    {{-- <th scope="col"></th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($credits as $credit)
+                                    <tr>
+                                        <td>{{ $credit->number}}</td>                                              
+                                        <td>{{ $credit->date->format('d-m-Y') }}</td>
+                                        <td>
+                                            <a href="{{ route('invoices.show', $credit->invoice) }}">
+                                                {{ $credit->invoice->number}}
+                                            </a>
                                         </td>
+                                        <td>{{ $credit->concept }}</td>
+                                        <td>{{ $credit->amount_due }}</td>
+                                        <td>{{ $credit->comments ? '' }}</td>
+                                        
                                     </tr>
                                 @endforeach
+                                
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $calls->links() }}
+                            {{ $credits->links() }}
                         </nav>
                     </div>
                 </div>

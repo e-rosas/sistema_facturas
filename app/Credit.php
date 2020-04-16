@@ -11,8 +11,7 @@ class Credit extends Model
         'series',
         'number',
         'comments',
-        'original_amount_due',
-        'concept',
+        'exchange_rate',
         'date',
         'invoice_id',
     ];
@@ -24,13 +23,13 @@ class Credit extends Model
         return number_format($value, 4);
     }
 
-    public function getOriginalAmountDueAttribute($value)
-    {
-        return number_format($value, 4);
-    }
-
     public function invoice()
     {
         return $this->belongsTo('App\Invoice');
+    }
+
+    public function concept()
+    {
+        return 'Nota de crédito '.$this->date->year;
     }
 }

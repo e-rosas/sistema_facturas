@@ -25,7 +25,7 @@ class PaymentRequest extends FormRequest
     {
         return [
             'amount_paid' => 'required|numeric|between:0,999999999.999',
-            'exchange_rate' => 'numeric|required|between:0,999999999.999',
+            'exchange_rate' => 'numeric|required|between:0,99.999',
             'comments' => 'max:1000',
             'method' => 'max:255',
             'invoice_number' => 'required',
