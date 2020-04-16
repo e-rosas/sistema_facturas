@@ -16,7 +16,7 @@ class CreateInvoicesTable extends Migration
             $table->unsignedBigInteger('patient_id');
             $table->string('series')->nullable();
             $table->string('number')->nullable();
-            $table->string('code')->unique();
+            $table->string('code', 50)->unique();
             $table->string('concept')->default('Factura dólares Aseguranza');
             $table->string('currency')->default('USD');
             $table->date('date');

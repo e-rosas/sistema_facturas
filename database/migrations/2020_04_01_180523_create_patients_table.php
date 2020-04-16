@@ -13,7 +13,7 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('full_name')->index();
+            $table->string('full_name', 180)->index();
             $table->date('birth_date')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
@@ -21,7 +21,7 @@ class CreatePatientsTable extends Migration
             $table->integer('postal_code')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
-            $table->string('insurance_id')->unique();
+            $table->string('insurance_id', 30)->unique();
             $table->unsignedBigInteger('insurer_id');
             $table->foreign('insurer_id')->references('id')->on('insurers')->cascadeOnDelete();
             $table->timestamps();

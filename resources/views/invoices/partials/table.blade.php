@@ -27,9 +27,9 @@
                     <td>{{ $invoice->date->format('d-m-Y') }}</td>
                     <td>{{ $invoice->type() }}</td>
                     <td>{{ $invoice->status() }}</td>
-                    <td>{{ $invoice->subtotal }}</td>
-                    <td>{{ $invoice->IVA_applied }}</td>
-                    <td>{{ $invoice->total }}</td>
+                    <td>{{ $invoice->sub_total_discounted }}</td>
+                    <td>{{ $invoice->dtax }}</td>
+                    <td>{{ $invoice->total_with_discounts }}</td>
                     <td class="text-right">
                         <div class="dropdown">
                             <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
