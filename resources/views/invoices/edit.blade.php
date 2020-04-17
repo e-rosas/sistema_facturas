@@ -401,7 +401,8 @@
         items_total_price = 0;
         items_total_discounted_price = 0;
 
-        constructor(service_id, description, price, discounted_price, quantity, id, created_at) {
+        constructor(service_id, description, price, discounted_price, quantity, id, 
+            created_at, descripcion, code) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -412,6 +413,8 @@
             this.total_price = quantity * price;
             this.total_discounted_price = quantity * discounted_price;
             this.id = id;
+            this.descripcion = descripcion;
+            this.code = code;
             this.date2 = getCorrectDate(created_at);
             this.created_at = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
         }
@@ -421,7 +424,8 @@
         }
 
         // Add to cart
-        addItemToCart(item_id, description, price, discounted_price, quantity, id, taxable) {
+        addItemToCart(item_id, description, price, discounted_price, quantity, 
+            id, taxable, descripcion, code) {
             for(var item in this.items) {
                 if(this.items[item].item_id === item_id) {
                     this.items[item].quantity += Number(quantity);
@@ -430,7 +434,8 @@
                 }
             }
             
-            var item = new Item(item_id, description, price, discounted_price, quantity, id, taxable);
+            var item = new Item(item_id, description, price, discounted_price, quantity, 
+                id, taxable, descripcion, code);
             this.items.push(item);   
             displayItems(this);  
         }
@@ -490,7 +495,8 @@
         quantity = 1;
         itax = 0;
         idtax = 0;
-        constructor(item_id, description, price, discounted_price, quantity, id, taxable) {
+        constructor(item_id, description, price, discounted_price, quantity,
+             id, taxable, descripcion, code) {
             this.item_id = item_id;
             this.description = description;
             this.price = parseFloat(price.replace(/,/g,''));
@@ -500,6 +506,8 @@
             this.sub_total_discounted_price = quantity * discounted_price;
             this.id = id;
             this.taxable = taxable
+            this.descripcion = descripcion;
+            this.code = code;
             this.calcTotals();          
         }
 
@@ -526,7 +534,8 @@
     total_with_discounts = 0;
 
      // Add to cart
-     function addServiceToCart(service_id, description, price, discounted_price, quantity, id) {
+     function addServiceToCart(service_id, description, price, discounted_price,
+         quantity, id, descripcion, code) {
         for(var service in this.services) {
             if(this.services[service].id === id) {
                 this.services[service].quantity += Number(quantity);
@@ -537,14 +546,17 @@
 
         var created_at = document.getElementById("input-date_service").value;
         
-        var service = new Service(service_id, description, price, discounted_price, quantity, id, created_at);
+        var service = new Service(service_id, description, price, discounted_price,
+         quantity, id, created_at, descripcion, code);
         this.services.push(service);
         displayCart();  
     }
-    function addServiceToCartFromInvoice(service_id, description, price, discounted_price, quantity, id, created_at, items) {
+    function addServiceToCartFromInvoice(service_id, description, price, discounted_price,
+         quantity, id, created_at, items, descripcion, code) {
         
         var service = new Service(service_id, description, parseFloat(price.replace(/,/g,'')), 
-            parseFloat(discounted_price.replace(/,/g,'')), quantity, services.length, created_at);
+            parseFloat(discounted_price.replace(/,/g,'')), quantity, 
+                services.length, created_at, descripcion, code);
         for(var i in items){
             var tax = false;
             if(items[i].itax > 0) tax = true;
@@ -625,7 +637,8 @@
             for(var i = 0; i < response.length; i++){
                 addServiceToCartFromInvoice(response[i].service_id, response[i].description, 
                     response[i].price, response[i].discounted_price, response[i].quantity, 
-                    response[i].id, response[i].created_at, response[i].items);   
+                    response[i].id, response[i].created_at, response[i].items, 
+                    response[i].descripcion, response[i].code);   
             }
             displayCart();                
                                                  
@@ -645,7 +658,8 @@
             },
         success: function (response) {                
                 addServiceToCart(response.id, response.description, 
-                    price, discounted_price, quantity, services.length);                                    
+                    price, discounted_price, quantity, services.length,
+                    response.descripcion, response.code);                                    
             }
         });
             return false;
@@ -662,19 +676,21 @@
             },
         success: function (response) {                
                 addItemToService(service_id, response.id, response.description, 
-                    price, discounted_price, tax, quantity, services.length);                                    
+                    price, discounted_price, tax, quantity,
+                     services.length, response.descripcion, response.code);                                    
             }
         });
             return false;
     }
 
-    function addItemToService(service_id, item_id, description, price, discounted_price, tax, quantity, id){
+    function addItemToService(service_id, item_id, description, price, discounted_price,
+         tax, quantity, id, descripcion, code){
 
         //Find service in array
         var service = this.services.find(s => s.id == service_id);
 
         service.addItemToCart(item_id, description, price, 
-                discounted_price, quantity, services.length, tax);
+                discounted_price, quantity, services.length, tax, descripcion, code);
     }
 
     function sendInvoice(patient_id, series, number, concept, code, currency, 

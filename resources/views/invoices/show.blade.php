@@ -41,6 +41,11 @@
             <div class="card-body">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="tab-services" role="tabpanel" aria-labelledby="tab-services-tab">
+                        <div class="col-md-12 col-auto text-right">
+                            <button id="view-services" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-services">Lista</i></button>
+                            <br />
+                             @include('invoices.partials.servicesModal',['invoice'=>$invoice])
+                        </div>
                         @include('components.servicesTable', ['services'=>$invoice->services])
                     </div>
                     <div class="tab-pane fade" id="tab-payment" role="tabpanel" aria-labelledby="tab-payment-tab">

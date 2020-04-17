@@ -31,7 +31,7 @@
             </div>
             
             <div class="h4 font-weight-300">
-                <span id="credit-comments"> {{ $credit->comments }} </span>
+                <span id="credit-comments"> {{ $credit->comments ?? '' }} </span>
             </div>
         </div>
     </div>

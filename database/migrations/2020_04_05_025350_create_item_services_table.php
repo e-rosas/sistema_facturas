@@ -15,6 +15,7 @@ class CreateItemServicesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('invoice_service_id');
             $table->unsignedBigInteger('item_id');
+            $table->string('code');
             $table->string('description');
             $table->string('descripcion')->default('Pendiente');
             $table->decimal('price', 13, 4);

@@ -8,16 +8,20 @@
                         <div class="form-row">
                             <div class="col-md-4 ">
                                 <h3 class="text-uppercase text-default ls-1 mb-1">Total de servicios: 
-                                    <span class="text-primary">{{ $invoice->total_with_discounts }}</span>
+                                    <span class="text-success">{{ $invoice->total_with_discounts }}</span>
                                 </h3>
                             </div>
                         </div>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         @foreach ($invoice->services as $service)
-                            
+                            <h5 class="text-uppercase text-default ls-1 mb-1">Servicio: 
+                                <span class="text-primary">{{ $service->code .' '.  $service->description }}</span>
+                            </h5>
                             <div class="form-row">
-
+                                @foreach ($service->items as $item)
+                                    <span class="font-weight-light">{{ $item->code .' '.  $item->description . ' Cantidad: ' . $item->quantity }}</span>
+                                @endforeach
                             </div>
                         @endforeach
                         

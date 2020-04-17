@@ -18,7 +18,7 @@
         <div class="card-body pt-0 pt-md-4">    
             <div class="text-center">
                 <h3>
-                    {{ $patient->full_name }}<span class="font-weight-light"></span>
+                    {{ $patient->full_name }}
                     
                 </h3>
                 <div class="h4 font-weight-300">

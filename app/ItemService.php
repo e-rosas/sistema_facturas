@@ -8,6 +8,7 @@ class ItemService extends Model
 {
     public $fillable = [
         'invoice_service_id',
+        'code',
         'description',
         'descripcion',
         'item_id',
@@ -24,6 +25,7 @@ class ItemService extends Model
     public static $rules = [
         'invoice_service_id' => 'required',
         'item_id' => 'required',
+        'code' => 'max:255',
         'description' => 'max:255',
         'descripcion' => 'max:255',
         'itax' => 'numeric|required|between:0,999999999.999',

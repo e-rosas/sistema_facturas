@@ -15,6 +15,7 @@ class CreateInvoiceServicesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('invoice_id');
             $table->unsignedBigInteger('service_id');
+            $table->string('code');
             $table->string('description');
             $table->string('descripcion')->default('Pendiente');
             $table->decimal('price', 13, 4);
