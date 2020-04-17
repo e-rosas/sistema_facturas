@@ -89,7 +89,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('items.index') }}">
-                        <i class="fas fa-prescription-bottle text-pink"></i> Articulos
+                        <i class="fas fa-prescription-bottle text-pink"></i> Productos
                     </a>
                 </li>
                 <li class="nav-item">

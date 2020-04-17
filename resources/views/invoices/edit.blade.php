@@ -393,8 +393,14 @@
         sub_total = 0;
         sub_total_discounted = 0;
         total_price = 0;
-        total_discounted_price = 0;
+        total_discounted_price = 0;      
         created_at = new Date();
+
+        items_sub_total = 0;
+        items_sub_total_discounted = 0;
+        items_total_price = 0;
+        items_total_discounted_price = 0;
+
         constructor(service_id, description, price, discounted_price, quantity, id, created_at) {
             this.service_id = service_id;
             this.description = description;
@@ -462,14 +468,19 @@
             this.total_price = this.sub_total;
             this.total_discounted_price = this.sub_total_discounted;
 
+            this.items_sub_total = 0;
+            this.items_sub_total_discounted = 0;
+            this.items_total_price = 0;
+            this.items_total_discounted_price = 0;
+
             for(var item in this.items) {
                 this.items[item].calcTotals();
                 this.tax += this.items[item].itax;
                 this.dtax += this.items[item].idtax;
-                this.sub_total += this.items[item].sub_total_price;
-                this.sub_total_discounted += this.items[item].sub_total_discounted_price;
-                this.total_price += this.items[item].total_price;
-                this.total_discounted_price += this.items[item].total_discounted_price;
+                this.items_sub_total += this.items[item].sub_total_price;
+                this.items_sub_total_discounted += this.items[item].sub_total_discounted_price;
+                this.items_total_price += this.items[item].total_price;
+                this.items_total_discounted_price += this.items[item].total_discounted_price;
             }
         }
         
@@ -640,7 +651,7 @@
             return false;
     }
 
-    function getItem(service_id, item_id, quantity, price, discounted_price){
+    function getItem(service_id, item_id, quantity, price, discounted_price, tax){
         $.ajax({
             url: "{{route('items.find')}}",
             dataType: 'json',
@@ -651,7 +662,7 @@
             },
         success: function (response) {                
                 addItemToService(service_id, response.id, response.description, 
-                    price, discounted_price, response.tax, quantity, services.length);                                    
+                    price, discounted_price, tax, quantity, services.length);                                    
             }
         });
             return false;
@@ -717,6 +728,19 @@
     function displayItems(service) {
         displayCart(); //displayCart -> totalCart -> totalItemsCart
         var output = "";
+        document.getElementById("modal-service-description").innerHTML = service.description;
+        document.getElementById("modal-service-discounted_total").innerHTML = service.total_discounted_price;
+        if(service.items_total_discounted_price > service.total_discounted_price){
+            document.getElementById("modal-items-discounted_total").className = "text-danger"; 
+            document.getElementById("save").disabled = true;
+        }
+        else if(service.items_total_discounted_price < service.total_discounted_price) {
+            document.getElementById("modal-items-discounted_total").className = "text-yellow";
+        }
+        else {
+            document.getElementById("modal-items-discounted_total").className = "text-success"; 
+        }
+        document.getElementById("modal-items-discounted_total").innerHTML = service.items_total_discounted_price;
         for(var i in service.items) {
           output += "<tr value="+service.items[i].id+">"
             + "<td>" + service.items[i].description + "</td>"
@@ -799,8 +823,9 @@
             if(quantity > 0){
                 var price = document.getElementById("custom-product-price").value;
                 var discounted_price = document.getElementById("custom-product-discounted-price").value;
-                var item_id= $("#item_id").children("option:selected").val();
-                getItem(selectedServiceId, item_id, quantity, price, discounted_price);
+                var item_id = $("#item_id").children("option:selected").val();
+                var tax = document.getElementById("custom-product-tax").checked;
+                getItem(selectedServiceId, item_id, quantity, price, discounted_price, tax);
             }
             
         });

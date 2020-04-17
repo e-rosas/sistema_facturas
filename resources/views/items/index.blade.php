@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Artículos'])
+@extends('layouts.app', ['title' => 'Productos'])
 
 @section('content')
     @include('layouts.headers.cards')
@@ -10,10 +10,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Artículos</h3>
+                                <h3 class="mb-0">Productos</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('items.create') }}" class="btn btn-sm btn-primary">Registrar nuevo artículo</a>
+                                <a href="{{ route('items.create') }}" class="btn btn-sm btn-primary">Registrar nuevo producto</a>
                             </div>
                         </div>
                     </div>

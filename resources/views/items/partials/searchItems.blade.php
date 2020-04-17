@@ -1,6 +1,6 @@
 <!-- For defining autocomplete -->
   <select id='item_id' class="custom-select form-control" name="item_id" style="width: 80%"> 
-    <option value='0'>Seleccionar artículo</option>
+    <option value='0'>Seleccionar producto</option>
   </select>
 
 
@@ -30,6 +30,7 @@ $(document).ready(function(){
       processResults: function (response) {
         document.getElementById("custom-product-price").value = parseFloat(response[0].price.replace(/,/g,'')); 
         document.getElementById("custom-product-discounted-price").value =parseFloat(response[0].discounted_price.replace(/,/g,'')); 
+        document.getElementById("custom-product-tax").checked = response[0].tax;
         return {
           results: response
         };
