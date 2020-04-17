@@ -106,11 +106,11 @@
 <script>
     function handler(e){
         var date = document.getElementById("payment-date").value;
-        //getExchangeRate(date);
+        getExchangeRate(date);
       }
     function getExchangeRate(date){
-        /*$.ajax({
-            url: "{{route('exchange')}}",
+        $.ajax({
+            url: "{{route('rate.find')}}",
             dataType: 'json',
             type:"post",
             data: {
@@ -118,10 +118,10 @@
                 "date": date,
             },
         success: function (response) {
-            document.getElementById("payment-exchange_rate").value = response.value;
+            document.getElementById("payment-exchange_rate").value = response;
             }
         });
-        return false;*/
+        return false;
     }
     function sendPayment(method, exchange_rate, amount, date, comments){
         $.ajax({

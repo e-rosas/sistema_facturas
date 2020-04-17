@@ -12,7 +12,7 @@ class CreateRatesTable extends Migration
     public function up()
     {
         Schema::create('rates', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->date('date');
             $table->decimal('value', 13, 4);
             $table->timestamps();
