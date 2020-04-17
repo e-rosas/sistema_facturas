@@ -23,7 +23,7 @@
     <div class="card-body">
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                @include('insurees.partials.invoicesTable', ['invoices' => $invoices])
+                @include('invoices.partials.invoicesTable', ['invoices' => $invoices])
                 <div class="card-footer py-4">
                     <nav class="d-flex justify-content-end" aria-label="...">
                         {{ $invoices->links() }}

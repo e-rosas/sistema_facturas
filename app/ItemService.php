@@ -9,6 +9,7 @@ class ItemService extends Model
     public $fillable = [
         'invoice_service_id',
         'description',
+        'descripcion',
         'item_id',
         'itax',
         'idtax',
