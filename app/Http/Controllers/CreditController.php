@@ -44,7 +44,7 @@ class CreditController extends Controller
     {
         $validated = $request->validated();
         $invoice = Invoice::where('id', $validated['invoice_id'])->first();
-        if (1 != $invoice->type && (2 == $invoice->status)) { //different than one unique payment, and
+        if (1 != $invoice->type && (0 == $invoice->status)) { //different than one unique payment, and
             $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 1000);
             event(new InvoiceEvent($invoice)); //update invoice stats
             $validated['amount_due'] = $invoice->amount_due;

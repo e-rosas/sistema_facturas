@@ -158,7 +158,7 @@
                 "invoice_id": {{ $invoice->id }},
             },
         success: function (response) {
-            document.getElementById("label-type").innerHTML = response.data.type;
+            document.getElementById("invoice-type").innerHTML = response.data.type;
             document.getElementById("amount-paid").innerHTML = response.data.amount_paid;
             document.getElementById("amount-due").innerHTML = response.data.amount_due;
             document.getElementById("invoice-status").innerHTML = response.data.status;

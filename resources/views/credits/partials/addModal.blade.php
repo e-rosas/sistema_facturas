@@ -104,7 +104,7 @@
     }
 
     function displayCredit(data){
-
+        document.getElementById("credit-date").innerHTML = 
     }
 
     $("#save_credit").click(function(){

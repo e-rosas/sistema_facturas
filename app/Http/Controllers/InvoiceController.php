@@ -115,7 +115,9 @@ class InvoiceController extends Controller
                     $item['invoice_service_id'] = $invoice_service->id;
                     ItemService::create($item);
                 }
-                $invoice->status = 2;
+                if (3 == $invoice->status) {
+                    $invoice->status = 2;
+                }
             }
         }
 
