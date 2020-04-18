@@ -22,14 +22,14 @@ class CreateInvoicesTable extends Migration
             $table->date('date');
             $table->decimal('exchange_rate', 13, 4);
 
-            $table->decimal('tax', 13, 4);
-            $table->decimal('dtax', 13, 4);
-            $table->decimal('sub_total', 13, 4);
-            $table->decimal('sub_total_discounted', 13, 4);
-            $table->decimal('total', 13, 4);
-            $table->decimal('total_with_discounts', 13, 4);
-            $table->decimal('amount_paid', 13, 4);
-            $table->decimal('amount_due', 13, 4);
+            $table->decimal('tax', 13, 4)->default(0);
+            $table->decimal('dtax', 13, 4)->default(0);
+            $table->decimal('sub_total', 13, 4)->default(0);
+            $table->decimal('sub_total_discounted', 13, 4)->default(0);
+            $table->decimal('total', 13, 4)->default(0);
+            $table->decimal('total_with_discounts', 13, 4)->default(0);
+            $table->decimal('amount_paid', 13, 4)->default(0);
+            $table->decimal('amount_due', 13, 4)->default(0);
 
             $table->tinyInteger('type')->default(0);
             $table->text('comments')->nullable();

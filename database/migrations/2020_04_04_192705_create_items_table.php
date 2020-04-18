@@ -14,13 +14,14 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code', 50)->unique();
-            $table->string('description');
+            $table->string('description')->default('Pending');
             $table->string('descripcion')->default('Pendiente');
-            $table->decimal('price', 13, 4);
-            $table->decimal('discounted_price', 13, 4);
-            $table->string('type');
+            $table->decimal('price', 13, 4)->default(0);
+            $table->decimal('discounted_price', 13, 4)->default(0);
+            $table->string('SAT')->default('Pendiente');
+            $table->string('type')->default('Pendiente');
             $table->boolean('tax')->default(0);
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->default(8);
 
             $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
