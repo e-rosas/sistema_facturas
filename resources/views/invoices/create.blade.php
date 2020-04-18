@@ -395,7 +395,7 @@
         addItemToCart(item_id, description, price, discounted_price, quantity, 
             id, taxable, descripcion, code) {
             for(var item in this.items) {
-                if(this.items[item].item_id === item_id) {
+                if(this.items[item].item_id === item_id && this.items[item].discounted_price === discounted_price) {
                     this.items[item].quantity += Number(quantity);
                     displayItems(this);
                     return;

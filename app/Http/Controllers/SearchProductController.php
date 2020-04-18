@@ -62,7 +62,7 @@ class SearchProductController extends Controller
     public function findItem(Request $request)
     {
         $item_id = $request->item_id;
-        $item = Item::find($item_id, ['id', 'code', 'description', 'price', 'discounted_price', 'tax'])
+        $item = Item::find($item_id)
         ;
 
         echo json_encode($item);
@@ -74,7 +74,7 @@ class SearchProductController extends Controller
         $search = $request->search;
 
         $services = Service::whereLike(['description', 'code'], $search)
-            ->paginate(10)
+            ->paginate()
         ;
 
         return view('services.index', compact('services'));

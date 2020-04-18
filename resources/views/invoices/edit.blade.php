@@ -427,7 +427,7 @@
         addItemToCart(item_id, description, price, discounted_price, quantity, 
             id, taxable, descripcion, code) {
             for(var item in this.items) {
-                if(this.items[item].item_id === item_id) {
+                if(this.items[item].item_id === item_id && this.items[item].discounted_price === discounted_price) {
                     this.items[item].quantity += Number(quantity);
                     displayItems(this);
                     return;
@@ -561,7 +561,7 @@
             var tax = false;
             if(items[i].itax > 0) tax = true;
             service.addItemToCart(items[i].item_id, items[i].description,items[i].price, items[i].discounted_price, 
-            items[i].quantity, services.length, tax);
+            items[i].quantity, services.length, tax, items[i].descripcion, items[i].code);
         }
         this.services.push(service);
         displayCart();  

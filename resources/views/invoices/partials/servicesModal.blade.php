@@ -4,26 +4,34 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h5 class="heading-small text-muted mb-4">Servicios y productos de la factura {{ $invoice->code }}</h5>
+                        <h5 class="heading align-centered text-center mb-4">Servicios y productos de la factura {{ $invoice->code }}</h5>
                         <div class="form-row">
-                            <div class="col-md-4 ">
+                            <div class="col-md-12 text-left">
                                 <h3 class="text-uppercase text-default ls-1 mb-1">Total de servicios: 
                                     <span class="text-success">{{ $invoice->total_with_discounts }}</span>
                                 </h3>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body px-lg-5 py-lg-5">
-                        @foreach ($invoice->services as $service)
-                            <h5 class="text-uppercase text-default ls-1 mb-1">Servicio: 
-                                <span class="text-primary">{{ $service->code .' '.  $service->description }}</span>
-                            </h5>
-                            <div class="form-row">
-                                @foreach ($service->items as $item)
-                                    <span class="font-weight-light">{{ $item->code .' '.  $item->description . ' Cantidad: ' . $item->quantity }}</span>
-                                @endforeach
+                    <div class="card-body text-left">
+                        <ul class="list-group list-group-flush">
+                            @foreach ($invoice->services as $service)
+                            <div class="shadow-sm p-3 mb-3 bg-white rounded">
+                                <li class="text-uppercase list-group-item">Servicio: 
+                                    <span class="text-primary font-weight-bold">{{ $service->description .' - '. $service->code()}}
+                                        <span class="text-default font-weight-light">Cantidad: </span>{{ $service->quantity  }}
+                                    </span>
+                                    <ul>
+                                        @foreach ($service->items as $item)
+                                            <li class="font-weight-bold">{{$item->description .' - '.   $item->code() }} <span class="text-default font-weight-light">Cantidad: </span>{{ $item->quantity  }}</li>
+                                        @endforeach
+                                    </ul>
+                                </li>
                             </div>
-                        @endforeach
+                                
+                            @endforeach
+                        </ul>
+                        
                         
                     </div>
                 </div>

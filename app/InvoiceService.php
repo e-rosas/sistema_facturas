@@ -110,4 +110,9 @@ class InvoiceService extends Model
     {
         return $this->hasMany('App\ItemService');
     }
+
+    public function code()
+    {
+        return 'A'.$this->code;
+    }
 }
