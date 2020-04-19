@@ -104,7 +104,12 @@
     }
 
     function displayCredit(data){
-        document.getElementById("credit-date").innerHTML = 
+        document.getElementById("credit-date").innerHTML = data.date;
+        document.getElementById("credit-exchange_rate").innerHTML = data.exchange_rate;
+        document.getElementById("credit-number").innerHTML = data.number;
+        document.getElementById("credit-concept").innerHTML = data.concept;
+        document.getElementById("credit-comments").innerHTML = data.comments;
+        document.getElementById("credit-amount_due").innerHTML = data.amount_due;
     }
 
     $("#save_credit").click(function(){
