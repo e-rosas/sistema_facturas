@@ -105,7 +105,7 @@ class Invoice extends Model
     {
         switch ($this->type) {
             case 0:
-                return 'Nota de credito.';
+                return 'Nota de crédito.';
 
                 break;
             case 1:
@@ -113,7 +113,7 @@ class Invoice extends Model
 
                 break;
             case 2:
-                return 'Pendiente de pago';
+                return 'Pendiente de pago.';
 
                 break;
             default:

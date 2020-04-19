@@ -65,7 +65,7 @@
                                         <td>{{ $credit->date->format('d-m-Y') }}</td>
                                         <td>
                                             <a href="{{ route('invoices.show', $credit->invoice) }}">
-                                                {{ $credit->invoice->number}}
+                                                {{ $credit->invoice->code}}
                                             </a>
                                         </td>
                                         <td>{{ $credit->concept() }}</td>

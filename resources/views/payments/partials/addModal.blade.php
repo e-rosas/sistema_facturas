@@ -54,7 +54,7 @@
                             <div class="form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-exchange_rate">Cambio</label>
                                 <input type="numeric" name="exchange_rate" id="payment-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
-                                placeholder="Cambio" value=23 required>
+                                placeholder="Cambio" value=0 required>
 
                                 @if ($errors->has('exchange_rate'))
                                     <span class="invalid-feedback" role="alert">
@@ -107,7 +107,11 @@
     function handler(e){
         var date = document.getElementById("payment-date").value;
         getExchangeRate(date);
-      }
+    }
+    function credit_handler(e){
+        var date = document.getElementById("input-credit-date").value;
+        getExchangeRate(date);
+    }
     function getExchangeRate(date){
         $.ajax({
             url: "{{route('rate.find')}}",
@@ -119,6 +123,7 @@
             },
         success: function (response) {
             document.getElementById("payment-exchange_rate").value = response.value;
+            document.getElementById("input-credit-exchange_rate").value = response.value;
             }
         });
         return false;

@@ -29,7 +29,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
-                                    <input type="date" name="date" id="credit-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                    <input type="date" onchange="credit_handler(event)" name="date" id="input-credit-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
                                     value="{{ old('date') }}" required>
                                     @if ($errors->has('date'))
                                         <span class="invalid-feedback" role="alert">
@@ -40,8 +40,8 @@
                             </div>
                             {{--  exchange_rate --}}
                             <div class="form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="credit-exchange_rate">Cambio</label>
-                                <input type="numeric" name="exchange_rate" id="credit-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
+                                <label class="form-control-label" for="input-credit-exchange_rate">Cambio</label>
+                                <input type="numeric" name="exchange_rate" id="input-credit-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
                                 placeholder="Cambio" value=23 required>
 
                                 @if ($errors->has('exchange_rate'))
@@ -57,7 +57,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                     </div>
-                                    <textarea type="text" rows="3" name="comments" id="credit-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
+                                    <textarea type="text" rows="3" name="comments" id="input-credit-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
                                     value="{{ old('comments') }}" placeholder="Observaciones"></textarea>
                                     @if ($errors->has('comments'))
                                         <span class="invalid-feedback" role="alert">
@@ -108,16 +108,16 @@
         document.getElementById("credit-exchange_rate").innerHTML = data.exchange_rate;
         document.getElementById("credit-number").innerHTML = data.number;
         document.getElementById("credit-concept").innerHTML = data.concept;
-        document.getElementById("credit-comments").innerHTML = data.comments;
+        document.getElementById("input-credit-comments").innerHTML = data.comments;
         document.getElementById("credit-amount_due").innerHTML = data.amount_due;
     }
 
     $("#save_credit").click(function(){
 
-        var date = document.getElementById("credit-date").value;
-        var exchange_rate = document.getElementById("credit-exchange_rate").value;
+        var date = document.getElementById("input-credit-date").value;
+        var exchange_rate = document.getElementById("input-credit-exchange_rate").value;
 
-        var comments = document.getElementById("credit-comments").value;
+        var comments = document.getElementById("input-credit-comments").value;
 
         if(exchange_rate > 0){
             sendCredit(exchange_rate, date, comments);
