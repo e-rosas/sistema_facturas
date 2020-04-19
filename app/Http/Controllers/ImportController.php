@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CsvImportRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ImportController extends Controller
 {
@@ -49,6 +50,9 @@ class ImportController extends Controller
         for ($i = 0; $i < count($csv_data); ++$i) {
             $date = Carbon::createFromFormat('d-m-Y', $csv_data[$i][0]);
             $csv_data[$i][2] = $date->format('Y-m-d');
+            DB::table('rates')->insert(
+                ['date' => $csv_data[$i][2], 'value' => $csv_data[$i][1]]
+            );
             array_push($rates, $csv_data[$i]);
         }
 

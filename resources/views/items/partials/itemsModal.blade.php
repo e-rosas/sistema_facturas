@@ -44,9 +44,9 @@
                                 placeholder="1" value="1" required>                          
                             </div>
                             {{-- tax --}}
-                            <div class="col-lg-1 col-auto form-group custom-control custom-control-alternative custom-checkbox">                                   
+                            <div class="col-lg-1 custom-control custom-checkbox">                                   
                                 <input type="checkbox" name="product-tax" id="custom-product-tax" class="custom-control-input">        
-                                <label class="custom-control-label" for="product-tax">IVA</label>       
+                                <label class="custom-control-label" for="custom-product-tax">IVA</label>       
                             </div>
                             {{-- Add --}}
                             <div class="col-lg-2">

@@ -118,7 +118,7 @@
                 "date": date,
             },
         success: function (response) {
-            document.getElementById("payment-exchange_rate").value = response;
+            document.getElementById("payment-exchange_rate").value = response.value;
             }
         });
         return false;
