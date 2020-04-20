@@ -75,16 +75,6 @@
                                     </div>                              
                                 </div>
                                 <div class="form-row">
-                                    {{--  Type  --}}
-                                    <div class="form-group col-md-4 col-auto">
-                                        <label for="type" class="col-form-label">Tipo</label>
-                                        <select class="custom-select form-control{{ $errors->has('type') ? ' is-invalid' : '' }}" name="type">
-                                            <option value="Material">MATERIAL</option>
-                                            <option value="Pharmacy">FARMACIA</option>
-                                            <option value="Solution">SOLUCIÓN</option>
-                                            <option value="Laboratory">LABORATORIO</option>
-                                        </select>
-                                    </div>
                                     {{--  Category  --}}
                                     <div class="form-group col-auto col-md-4">
                                         <label for="category_id" class="col-form-label">Categoría</label>
