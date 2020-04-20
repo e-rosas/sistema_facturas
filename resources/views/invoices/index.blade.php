@@ -16,7 +16,7 @@
                                     @csrf                                 
                                     <div class="form-row">
                                         <div class="col-md-3">
-                                            <select id='status' class="custom-select" name="status"> 
+                                            <select id='type' class="custom-select" name="type"> 
                                                 <option value='3'>Todas</option>
                                                 <option value='0'>Nota de crédito.</option>
                                                 <option value='1'>Un solo pago completo.</option>
@@ -24,13 +24,13 @@
                                             </select>
                                         </div>
                                         <div class="col-md-2">
-                                            <select id='type' class="custom-select" name="type"> 
+                                            <select id='status' class="custom-select" name="status"> 
                                                 <option value='5'>Todas</option>
                                                 <option value='0'>Nota de crédito pendiente.</option>
                                                 <option value='1'>Completada.</option>
                                                 <option value='2'>Pendiente de pago.</option>
-                                                <option value='3'>Completada.</option>
-                                                <option value='4'>Pendiente de pago.</option>
+                                                <option value='3'>Pendiente de asignar productos.</option>
+                                                <option value='4'>Pendiente de facturar.</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-auto">
