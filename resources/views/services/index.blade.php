@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Service Management')])
+@extends('layouts.app', ['title' => 'Servicios'])
 
 @section('content')
     @include('layouts.headers.cards')
@@ -10,10 +10,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Services') }}</h3>
+                                <h3 class="mb-0">Servicios</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('services.create') }}" class="btn btn-sm btn-primary">{{ __('Add Service') }}</a>
+                                <a href="{{ route('services.create') }}" class="btn btn-sm btn-primary">Registrar</a>
                             </div>
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                         @csrf
                         <div class="form-group col-md-12 col-auto">
                             <label for="example-search-input" class="form-control-label">Search</label>
-                            <input name="search" class="form-control" type="search" required placeholder="Search service..." id="search">
+                            <input name="search" class="form-control" type="search" required placeholder="Buscar..." id="search">
                         </div>
                     </form>
                     
@@ -41,18 +41,21 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">{{ __('Code') }}</th>
-                                    <th scope="col">{{ __('Description') }}</th>
-                                    <th scope="col">{{ __('Price') }}</th>
-                                    <th scope="col">{{ __('Discounted Price') }}</th>
+                                    <th scope="col">Código</th>
+                                    <th  scope="col">Descripción</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Descuento</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($services as $service)
                                     <tr>
-                                        <td>{{ $service->code }}</td>
-                                        <td>{{ $service->description }}</td>
+                                        <td data-container="body" data-toggle="tooltip" data-placement="bottom" 
+                                            title="{{ $service->clave() }}">{{ $service->code }}</td>
+                                        <td  data-container="body" data-toggle="tooltip" data-placement="bottom" 
+                                            title="{{ $service->description }}">{{ $service->descripcion }}</td>
+                                        
                                         <td>{{ $service->price }}</td>
                                         <td>{{ $service->discounted_price }}</td>
 
