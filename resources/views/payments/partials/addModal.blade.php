@@ -9,7 +9,7 @@
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
                             {{--  Number --}}
-                            {{-- <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
+                            <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
@@ -22,7 +22,7 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div> --}}
+                            </div>
                             {{--  Date  --}}
                             <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -65,14 +65,10 @@
                             {{--  method  --}}
                             <div class="form-group{{ $errors->has('method') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-method">Método</label>
-                                <input type="numeric" name="method" id="payment-method" class="form-control form-control-alternative{{ $errors->has('method') ? ' is-invalid' : '' }}"
-                                placeholder="Método" value="Cheque" required>
-                            
-                                @if ($errors->has('method'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('method') }}</strong>
-                                    </span>
-                                @endif
+                                <select id='payment-method' class="custom-select" name="method"> 
+                                    <option value='0' selected>Transferencia</option>
+                                    <option value='1' >Cheque</option>
+                                </select>
                             </div>
                             
                             {{--  comments  --}}
@@ -128,7 +124,7 @@
         });
         return false;
     }
-    function sendPayment(method, exchange_rate, amount, date, comments){
+    function sendPayment(method, exchange_rate, amount, date, comments, number){
         $.ajax({
             url: "{{route('payments.store')}}",
             dataType: 'json',
@@ -142,6 +138,7 @@
                 "method": method,
                 "date": date,
                 "comments": comments,
+                "number": number
             },
         success: function (response) {
             DisplayPayments(response.data);
@@ -190,11 +187,11 @@
         var date = document.getElementById("payment-date").value;
         var method = document.getElementById("payment-method").value;
         var exchange_rate = document.getElementById("payment-exchange_rate").value;
-
+        var number = document.getElementById("payment-number").value;
         var comments = document.getElementById("payment-comments").value;
 
         if(amount > 0 && exchange_rate > 0){
-            sendPayment(method , exchange_rate, amount, date, comments);
+            sendPayment(method , exchange_rate, amount, date, comments, number);
         }
         else {
             alert("Falta introducir cantidad de pago y/o tipo de cambio.")

@@ -46,6 +46,23 @@ class Payment extends Model
         return $this->belongsTo('App\Invoice');
     }
 
+    public function method()
+    {
+        switch ($this->method) {
+            case 0:
+                return 'Transferencia.';
+
+                break;
+            case 1:
+                return 'Cheque.';
+
+                break;
+            default:
+                // code...
+                break;
+        }
+    }
+
     public function concept()
     {
         switch ($this->concept) {

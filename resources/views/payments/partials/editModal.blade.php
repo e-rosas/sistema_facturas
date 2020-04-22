@@ -15,7 +15,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                     </div>
-                                    <label class="form-control-label" id="label-payment-number"></label>
+                                    <input type="numeric" name="number" id="update-payment-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}"
+                                        placeholder="" required>
                                 </div>
                             </div>
                             {{--  Date  --}}
@@ -58,16 +59,12 @@
                                 @endif
                             </div>
                             {{--  method  --}}
-                            <div class="form-group{{ $errors->has('method') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="payment-method">Método</label>
-                                <input type="numeric" name="method" id="update-payment-method" class="form-control form-control-alternative{{ $errors->has('method') ? ' is-invalid' : '' }}"
-                                placeholder="Método" value="Cheque" required>
-                            
-                                @if ($errors->has('method'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('method') }}</strong>
-                                    </span>
-                                @endif
+                            <div class="form-group {{ $errors->has('method') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="update-payment-method">Método</label>
+                                <select id='update-payment-method' class="custom-select" name="method"> 
+                                    <option value='0' selected>Transferencia</option>
+                                    <option value='1' >Cheque</option>
+                                </select>
                             </div>
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
@@ -121,7 +118,7 @@
     }
     function displayPaymentModal(payment_id, number, date, amount, comments, method, exchange_rate){
         document.getElementById("update-payment-id").value = payment_id;
-        document.getElementById("label-payment-number").innerHTML = number;
+        document.getElementById("update-payment-number").innerHTML = number;
         document.getElementById("update-payment-date").value = date;
         document.getElementById("update-payment-amount").value = parseFloat(amount.replace(/,/g, ''));;
         document.getElementById("update-payment-comments").value = comments;
@@ -129,7 +126,7 @@
         document.getElementById("update-payment-method").value = method;
 
       }
-    function updatePayment(id, amount, date, comments, method, exchange_rate){
+    function updatePayment(id, amount, date, comments, method, exchange_rate, number){
         $.ajax({
             url: "{{route('payments.update')}}",
             dataType: 'json',
@@ -141,6 +138,7 @@
                 "date": date,
                 "comments": comments,
                 "method": method,
+                "number": number,
                 "exchange_rate": exchange_rate
             },
         success: function (response) {
@@ -159,7 +157,7 @@
         $("#update-payment").click(function(){
             var payment_id = document.getElementById("update-payment-id").value;
             var amount = document.getElementById("update-payment-amount").value;
-
+            var number = document.getElementById("update-payment-number").value;
             
 
             if(amount > 0 ){
@@ -169,7 +167,7 @@
 
                 var method = document.getElementById("update-payment-method").value;
                 var exchange_rate = document.getElementById("update-payment-exchange_rate").value;
-                updatePayment(payment_id, amount, date, comments, method, exchange_rate);
+                updatePayment(payment_id, amount, date, comments, method, exchange_rate, number);
             }
 
         });

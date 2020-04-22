@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->string('number');
             $table->decimal('exchange_rate', 13, 4);
             $table->decimal('amount_paid', 13, 4);
-            $table->string('method')->default('Por definir');
+            $table->tinyInteger('method')->default(0);
             $table->tinyInteger('concept')->default(0);
             $table->date('date');
             $table->text('comments')->nullable();

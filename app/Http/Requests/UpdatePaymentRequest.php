@@ -29,6 +29,7 @@ class UpdatePaymentRequest extends FormRequest
             'exchange_rate' => 'numeric|required|between:0,999999999.999',
             'comments' => 'max:1000',
             'method' => 'max:255',
+            'number' => 'max:255',
             'date' => 'date',
         ];
     }
