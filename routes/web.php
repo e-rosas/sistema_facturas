@@ -71,6 +71,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 
+    Route::post('reports/payments', 'ReportController@payments')->name('reports.payments');
+    Route::post('reports/stats', 'ReportController@stats')->name('reports.stats');
+    Route::get('reports', 'ReportController@index')->name('reports.index');
+
     Route::get('/import_items', 'ImportController@getImportItems')->name('import.items');
     Route::post('/import_parse_items', 'ImportController@parseImportItems')->name('import.parse.items');
     Route::post('/import_process_items', 'ImportController@processImportItems')->name('import.process.items');

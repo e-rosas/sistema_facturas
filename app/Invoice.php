@@ -101,6 +101,27 @@ class Invoice extends Model
         return $this->series.$this->number;
     }
 
+    public function subtotal()
+    {
+        $mxn = $this->sub_total_discounted * $this->exchange_rate;
+
+        return number_format($mxn, 4);
+    }
+
+    public function IVA()
+    {
+        $mxn = $this->dtax * $this->exchange_rate;
+
+        return number_format($mxn, 4);
+    }
+
+    public function total()
+    {
+        $mxn = $this->total_with_discounts * $this->exchange_rate;
+
+        return number_format($mxn, 4);
+    }
+
     public function type()
     {
         switch ($this->type) {

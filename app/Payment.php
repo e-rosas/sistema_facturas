@@ -63,6 +63,13 @@ class Payment extends Model
         }
     }
 
+    public function total()
+    {
+        $mxn = $this->amount_paid * $this->exchange_rate;
+
+        return number_format($mxn, 4);
+    }
+
     public function concept()
     {
         switch ($this->concept) {

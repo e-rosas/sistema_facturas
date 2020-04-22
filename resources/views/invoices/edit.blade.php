@@ -152,7 +152,7 @@
                                 </div>
                                 
                                 {{--  date  --}}
-                                <div class="col-md-4 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
+                                <div class="col-md-3 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-date">Fecha</label>
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
@@ -167,8 +167,20 @@
                                         </span>
                                     @endif
                                 </div>
+                                {{--  exchange_rate --}}
+                                <div class="col-md-2 form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="invoice-exchange_rate">Cambio</label>
+                                    <input type="numeric" name="exchange_rate" id="invoice-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
+                                    placeholder="Cambio" value="{{ $invoice->exchange_rate }}" required>
+
+                                    @if ($errors->has('exchange_rate'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('exchange_rate') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                                 {{--  amount_due  --}}
-                                <div class="col-md-4 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
+                                <div class="col-md-2 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-amount_due">Debe</label>
                                     <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}" 
                                     placeholder="0" value="{{ $invoice->amount_due }}" readonly>
@@ -377,7 +389,23 @@
     function handler(e){
         var date = document.getElementById("input-date").value;
         document.getElementById("input-date_service").value = date;
+        getExchangeRate(date);
       }
+    function getExchangeRate(date){
+        $.ajax({
+            url: "{{route('rate.find')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "date": date,
+            },
+        success: function (response) {
+            document.getElementById("invoice-exchange_rate").value = response.value;
+            }
+        });
+        return false;
+    }
     // CSRF Token
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -695,6 +723,7 @@
 
     function sendInvoice(patient_id, series, number, concept, code, currency, 
         date, comments){
+            var exchange_rate = document.getElementById("invoice-exchange_rate").value;
         $.ajax({
             url: "{{route('invoice.update')}}",
             type:"patch",
@@ -718,6 +747,7 @@
                 "dtax" : dtax,
                 "amount_due" : total_with_discounts,
                 "amount_paid" : 0,
+                "exchange_rate": exchange_rate,
             },
         success: function (response) {
             setTimeout(function() {
