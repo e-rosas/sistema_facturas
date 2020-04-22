@@ -19,7 +19,6 @@ class CreateItemsTable extends Migration
             $table->decimal('price', 13, 4)->default(0);
             $table->decimal('discounted_price', 13, 4)->default(0);
             $table->string('SAT')->default('Pendiente');
-            $table->string('type')->default('Pendiente');
             $table->boolean('tax')->default(0);
             $table->unsignedBigInteger('category_id')->default(8);
 

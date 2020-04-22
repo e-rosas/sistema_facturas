@@ -15,14 +15,18 @@ class Service extends Model
         'price',
         'discounted_price',
         'category_id',
+        'SAT',
+        'SAT_code',
     ];
     public static $rules = [
         'code' => 'required|max:255',
-        'description' => 'required|max:255',
+        'description' => 'max:255',
         'description' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999',
         'category_id' => 'required|numeric',
+        'SAT' => 'max:255',
+        'SAT_code' => 'max:255',
     ];
     protected $casts = [
         'id' => 'integer',
@@ -51,5 +55,10 @@ class Service extends Model
     public function invoices()
     {
         return $this->belongsToMany('App\Invoice', 'invoice_services');
+    }
+
+    public function clave()
+    {
+        return 'A'.$this->SAT_code;
     }
 }

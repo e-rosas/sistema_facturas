@@ -37,20 +37,20 @@
                                     <th scope="col">Descripción</th>
                                     <th scope="col">Precio</th>
                                     <th scope="col">Descuento</th>
-                                    <th scope="col">Tipo</th>
                                     <th scope="col">IVA</th>
                                     <th scope="col">Categoria</th>
-                                    <th scope="col"></th>
+                                    {{-- <th scope="col"></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
                                     <tr>
-                                        <td>{{ $item->code }}</td>
-                                        <td>{{ $item->description }}</td>
+                                        <td data-container="body" data-toggle="tooltip" data-placement="bottom" 
+                                            title="{{ $item->clave() }}">{{ $item->code }}</td>
+                                        <td data-container="body" data-toggle="tooltip" data-placement="bottom" 
+                                            title="{{ $item->description }}">{{ $item->descripcion }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->discounted_price }}</td>
-                                        <td>{{ $item->type }}</td>
                                         <td>{{ $item->iva() }}</td>
                                         <td>{{ $item->category->name }}</td>
                                         {{-- <td class="text-right">

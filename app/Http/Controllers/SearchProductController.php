@@ -42,14 +42,14 @@ class SearchProductController extends Controller
     {
         $search = $request->search;
         $items = Item::query()
-            ->whereLike(['code', 'description'], $search)
+            ->whereLike(['code', 'description', 'descripcion'], $search)
             ->get()->take(5)
         ;
         $response = [];
         foreach ($items as $item) {
             $response[] = [
                 'id' => $item->id,
-                'text' => $item->code.' '.$item->description,
+                'text' => $item->code.' '.$item->descripcion,
                 'price' => $item->price,
                 'discounted_price' => $item->discounted_price,
                 'tax' => $item->tax,

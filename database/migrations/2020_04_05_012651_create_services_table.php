@@ -14,13 +14,15 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code', 50)->unique();
-            $table->string('description');
+            $table->string('description')->default('Pending');
             $table->string('descripcion')->default('Pendiente');
-            $table->decimal('price', 13, 4);
-            $table->decimal('discounted_price', 13, 4);
+            $table->decimal('price', 13, 4)->default(0);
+            $table->decimal('discounted_price', 13, 4)->default(0);
             $table->timestamps();
             $table->softDeletes();
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->default(8);
+            $table->string('SAT')->default('Pendiente');
+            $table->string('SAT_code')->default('Pendiente');
 
             $table->foreign('category_id')->references('id')->on('categories');
         });
