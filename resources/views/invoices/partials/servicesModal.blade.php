@@ -18,12 +18,12 @@
                             @foreach ($invoice->services as $service)
                             <div class="shadow-sm p-3 mb-3 bg-white rounded">
                                 <li class="text-uppercase list-group-item">Servicio: 
-                                    <span class="text-primary font-weight-bold">{{ $service->description .' - '. $service->code()}}
+                                    <span class="text-primary font-weight-bold">{{ $service->descripcion .' - '. $service->code()}}
                                         <span class="text-default font-weight-light">Cantidad: </span>{{ $service->quantity  }}
                                     </span>
                                     <ul>
                                         @foreach ($service->items as $item)
-                                            <li class="font-weight-bold">{{$item->description .' - '.   $item->code() }} <span class="text-default font-weight-light">Cantidad: </span>{{ $item->quantity  }}</li>
+                                            <li class="font-weight-bold">{{$item->descripcion .' - '.   $item->code() }} <span class="text-default font-weight-light">Cantidad: </span>{{ $item->quantity  }}</li>
                                         @endforeach
                                     </ul>
                                 </li>

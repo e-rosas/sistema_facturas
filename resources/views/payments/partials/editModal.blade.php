@@ -15,7 +15,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                     </div>
-                                    <input type="numeric" name="number" id="update-payment-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}"
+                                    <input type="text" name="number" id="update-payment-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}"
                                         placeholder="" required>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
             },
         success: function (response) {
                 displayPaymentModal(response.data.id, response.data.number,
-                    response.data.date, response.data.amount_paid, 
+                    response.data.date2, response.data.amount_paid, 
                     response.data.comments,response.data.method, response.data.exchange_rate);
             }
         });
@@ -118,7 +118,7 @@
     }
     function displayPaymentModal(payment_id, number, date, amount, comments, method, exchange_rate){
         document.getElementById("update-payment-id").value = payment_id;
-        document.getElementById("update-payment-number").innerHTML = number;
+        document.getElementById("update-payment-number").value = number;
         document.getElementById("update-payment-date").value = date;
         document.getElementById("update-payment-amount").value = parseFloat(amount.replace(/,/g, ''));;
         document.getElementById("update-payment-comments").value = comments;

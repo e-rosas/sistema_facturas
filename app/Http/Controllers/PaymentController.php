@@ -49,7 +49,10 @@ class PaymentController extends Controller
         //New action: Verify that paid amount does not exceed due amount
         $validatePayment = new VerifyPaymentAmount($validated['amount_paid'], $validated['invoice_id']);
         $concept = $validatePayment->verifyPayment();
-        $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 1000);
+        if (is_null($validated['number'])) {
+            $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 1000);
+        }
+
         if ($concept < 2) {
             $validated['concept'] = $concept;
             Payment::create($validated);
@@ -95,6 +98,9 @@ class PaymentController extends Controller
 
         $validatePayment = new VerifyPaymentAmount($validated['amount_paid'], $payment->invoice_id);
         if ($validatePayment->verifyPayment()) {
+            if (is_null($validated['number'])) {
+                $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 1000);
+            }
             $payment->fill($validated);
             $payment->save();
         }

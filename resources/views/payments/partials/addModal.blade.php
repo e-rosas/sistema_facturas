@@ -14,8 +14,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                     </div>
-                                    <input type="number" name="number" id="payment-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
-                                    value="{{ $number ?? '' }}" placeholder="Number" required>
+                                    <input type="text" name="number" id="payment-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
+                                     placeholder="Opcional">
                                     @if ($errors->has('number'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('number') }}</strong>

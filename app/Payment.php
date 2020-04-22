@@ -24,7 +24,7 @@ class Payment extends Model
      * @var array
      */
     protected $dispatchesEvents = [
-        'saved' => PaymentEvent::class,
+        'created' => PaymentEvent::class,
         'updated' => PaymentEvent::class,
         'deleted' => PaymentEvent::class,
     ];

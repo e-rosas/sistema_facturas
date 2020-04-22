@@ -50,16 +50,22 @@
                     </div>
                     <div class="tab-pane fade" id="tab-payment" role="tabpanel" aria-labelledby="tab-payment-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button id="add-payment" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Agregar</i></button>
-                            <br />
+                            @if ($invoice->status != 1) 
+                                <button id="add-payment" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">Agregar</i></button>
+                                <br />
+                            @endif
+                            
                              @include('payments.partials.addModal',['invoice'=>$invoice])
                         </div>
                         @include('payments.partials.table', ['payments'=>$invoice->payments, 'patient_id'=>$invoice->patient->id])
                     </div>
                     <div class="tab-pane fade" id="tab-credit" role="tabpanel" aria-labelledby="tab-credit-tab">
                         <div class="col-md-12 col-auto text-right">
-                            <button id="add-credit" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-credit">Registrar</i></button>
-                            <br />
+                            @if ($invoice->status != 1) 
+                                <button id="add-credit" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-credit">Registrar</i></button>
+                                <br />
+                            @endif
+                            
                             @include('credits.partials.details', ['credit'=>$invoice->credit])
                             @include('credits.partials.addModal')
                         </div>
