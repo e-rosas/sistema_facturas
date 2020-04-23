@@ -53,12 +53,13 @@
                                         <td>{{ $insurer->city }}</td>
                                         
                                         <td class="td-actions text-right">
+                                            <a href="{{ route('insurers.show', $insurer) }}" rel="tooltip"  class="btn btn-success btn-sm btn-icon"  type="button">
+                                                    <i class="fas fa-eye "></i>
+                                            </a>  
                                             <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $insurer->id }})">
                                                     <i class="fas fa-pencil-alt fa-2"></i>
                                             </button>
-                                            <a href="{{ route('insurers.show', $insurer) }}" rel="tooltip"  class="btn btn-success btn-sm btn-icon"  type="button">
-                                                    <i class="fas fa-eye "></i>
-                                            </a>                                         
+                                                                                   
                                         </td>
                                     </tr>
                                 @endforeach

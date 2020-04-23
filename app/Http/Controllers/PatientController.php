@@ -7,7 +7,6 @@ use App\Http\Requests\UpdatePatientRequest;
 use App\Insurer;
 use App\Invoice;
 use App\Patient;
-use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
@@ -38,7 +37,8 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(PatientRequest $request)
@@ -47,20 +47,19 @@ class PatientController extends Controller
         Patient::create($validated);
 
         return redirect()->route('patients.index')->withStatus(__('Paciente registrado exitosamente.'));
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
     public function show(Patient $patient)
     {
         $invoices = Invoice::with('services')
             ->where('patient_id', $patient->id)
-            ->paginate(5);
+            ->paginate(5)
+        ;
 
         return view('patients.show', compact('patient', 'invoices'));
     }
@@ -68,38 +67,38 @@ class PatientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
     public function edit(Patient $patient)
     {
-        //
+        $insurers = Insurer::get();
+
+        return view('patients.edit', compact('patient', 'insurers'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Patient  $patient
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePatientRequest $request)
+    public function update(Patient $patient, UpdatePatientRequest $request)
     {
         $validated = $request->validated();
-        $patient = Patient::findOrFail($validated);
+
         $patient->fill($validated);
         $patient->save();
-        return back()->withStatus(__('Datos de paciente modificados exitosamente.'));
+
+        return redirect()->route('patients.index')->withStatus(__('Datos de paciente modificados exitosamente.'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
     public function destroy(Patient $patient)
     {
-        //
     }
 }

@@ -23,6 +23,20 @@
                             @csrf
                             @include('patients.partials.register')
                         <div class="form-row">
+                            {{--  deductible  --}}
+                            <div class="col-md-4 col-auto form-group{{ $errors->has('deductible') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-deductible">Deducible</label>
+                                <input type="numeric" name="deductible" id="input-deductible" class="form-control form-control-alternative{{ $errors->has('deductible') ? ' is-invalid' : '' }}" 
+                                placeholder="0" value="0">
+                        
+                                @if ($errors->has('deductible'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('deductible') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-6 col-auto">
                                 <label for="insurer_id" class="col-auto col-form-label">Aseguranza</label>
                                 <select class="custom-select form-control{{ $errors->has('insurer_id') ? ' is-invalid' : '' }}" name="insurer_id">

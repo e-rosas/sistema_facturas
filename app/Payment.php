@@ -17,6 +17,7 @@ class Payment extends Model
         'exchange_rate',
         'date',
         'invoice_id',
+        'deducible',
     ];
     /**
      * The event map for the model.

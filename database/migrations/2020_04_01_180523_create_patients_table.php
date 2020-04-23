@@ -24,6 +24,7 @@ class CreatePatientsTable extends Migration
             $table->string('insurance_id', 30)->unique();
             $table->unsignedBigInteger('insurer_id');
             $table->foreign('insurer_id')->references('id')->on('insurers')->cascadeOnDelete();
+            $table->decimal('deductible', 13, 4)->default(-1);
             $table->timestamps();
         });
     }

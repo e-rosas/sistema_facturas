@@ -7,14 +7,6 @@
     {{--  Names  --}}
     <div class="row">
         <div class="form-group col-md-4 col-auto">
-            <label class="form-control-label" for="input-last_name">{{ __('Last name') }}</label>
-            <input type="text" name="last_name" id="input-last_name" class="form-control form-control-alternative" placeholder="{{ __('Last name') }}" value="" required autofocus>
-        </div>
-        <div class="form-group col-md-4 col-auto">
-            <label class="form-control-label" for="input-maiden_name">{{ __('Middle name') }}</label>
-            <input type="text" name="maiden_name" id="input-maiden_name" class="form-control form-control-alternative" placeholder="{{ __('Middle name') }}" value="" autofocus>
-        </div>
-        <div class="form-group col-md-4 col-auto">
             <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
             <input type="text" name="name" id="input-name" class="form-control form-control-alternative" placeholder="{{ __('Name') }}" value="" required autofocus>
 

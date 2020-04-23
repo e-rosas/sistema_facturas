@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('Item Cateogry Management')])
+@extends('layouts.app', ['title' =>'Categorías'])
 
 @section('content')
     @include('layouts.headers.cards')
@@ -10,10 +10,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Item Categories') }}</h3>
+                                <h3 class="mb-0">Categorías</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary">{{ __('Add Category') }}</a>
+                                <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary">Registrar</a>
                             </div>
                         </div>
                     </div>
@@ -40,14 +40,14 @@
                                 <table  id="categories_table" class=" table dt-responsive table-flushed table-bordered">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th scope="col">{{ __('Name') }}</th>
+                                            <th scope="col">Nombre</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($categories as $category)
                                         <tr>
-                                            <td>{{ $category->name }}</td>
+                                            <td>{{ $category->nombre }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

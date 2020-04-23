@@ -61,25 +61,15 @@
                                         <td>{{ $patient->city }}</td>
                                         <td>{{ $patient->insurance_id }}</td>
                                         <td>{{ $patient->insurer->name }}</td>
-                                        <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('patient.destroy', $patient) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            
-                                                            <a class="dropdown-item" href="{{ route('patient.edit', $patient) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this patient?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>   --}}   
-                                                        <a class="dropdown-item" href="{{ route('patients.show', $patient) }}">Ver</a>
-                                                        <a data-person="{{ $patient->id }}" class="edit-person dropdown-item" data-toggle="modal" data-target="#modal-person_data">Editar</a> 
-                                                </div>
-                                            </div>
+                                        <td class="td-actions text-right">
+
+                                            <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.show', $patient) }}">
+                                                <i class="fas fa-eye "></i>
+                                            </a>
+                                            <a class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.edit', $patient) }}">
+                                                <i class="fas fa-pencil-alt fa-2"></i>
+                                            </a> 
+                                            
                                         </td>
                                     </tr>
                                 @endforeach
@@ -97,7 +87,6 @@
                 </div>
             </div>
         </div>
-        @include('patients.edit')
             
         @include('layouts.footers.auth')
     </div>

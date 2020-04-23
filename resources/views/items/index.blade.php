@@ -62,24 +62,10 @@
                                         <td>{{ $item->discounted_price }}</td>
                                         <td>{{ $item->iva() }}</td>
                                         <td>{{ $item->category->name }}</td>
-                                        <td class="text-right">
-                                            <div class="dropdown">
-                                                <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('service.destroy', $service) }}" method="post">
-                                                            @csrf
-                                                            @method('delete')
-                                                            
-                                                            <a class="dropdown-item" href="{{ route('service.edit', $service) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this service?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>    --}}  
-                                                        <a  class="edit-service dropdown-item" href="{{ route('items.edit', $item) }}">Editar</a>
-                                                </div>
-                                            </div>
+                                        <td class="td-actions text-right">
+                                            <a  rel="tooltip"  class="btn btn-info btn-sm btn-icon"  type="button" href="{{ route('items.edit', $item) }}">
+                                                <i class="fas fa-pencil-alt fa-2"></i>
+                                            </a>
                                         </td>
 
                                     </tr>

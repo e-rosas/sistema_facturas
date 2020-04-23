@@ -30,25 +30,13 @@
                     <td>{{ $invoice->sub_total_discounted }}</td>
                     <td>{{ $invoice->dtax }}</td>
                     <td>{{ $invoice->total_with_discounts }}</td>
-                    <td class="text-right">
-                        <div class="dropdown">
-                            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    {{--  <form action="{{ route('invoice.destroy', $invoice) }}" method="post">
-                                        @csrf
-                                        @method('delete')
-
-                                        <a class="dropdown-item" href="{{ route('invoice.edit', $invoice) }}">{{ __('Edit') }}</a>
-                                        <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this invoice?") }}') ? this.parentElement.submit() : ''">
-                                            {{ __('Delete') }}
-                                        </button>
-                                    </form>    --}}
-                                    <a class="dropdown-item" href="{{ route('invoices.show', $invoice) }}">Ver</a>
-                                    <a class="dropdown-item" href="{{ route('invoices.edit', $invoice) }}">Editar</a>
-                            </div>
-                        </div>
+                    <td class="td-actions text-right">
+                        <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button"  href="{{ route('invoices.show', $invoice) }}">
+                            <i class="fas fa-eye "></i>
+                        </a>
+                        <a class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button"  href="{{ route('invoices.edit', $invoice) }}">
+                            <i class="fas fa-pencil-alt fa-2"></i>
+                        </a>
                     </td>
                 </tr>
             @endforeach

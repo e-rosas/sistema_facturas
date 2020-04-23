@@ -23,6 +23,7 @@ class Patient extends Model
         'email',
         'insurance_id',
         'insurer_id',
+        'deductible',
     ];
     /**
      * The event map for the model.
@@ -30,7 +31,7 @@ class Patient extends Model
      * @var array
      */
     protected $dispatchesEvents = [
-        'saved' => PatientCreated::class,
+        'created' => PatientCreated::class,
     ];
     protected $dates = ['birth_date'];
 

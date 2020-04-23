@@ -24,7 +24,6 @@ class UpdatePatientRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
             'full_name' => 'required|max:250',
             'birth_date' => 'date',
             'address' => 'max:255',
@@ -35,6 +34,7 @@ class UpdatePatientRequest extends FormRequest
             'email' => 'max:255',
             'insurance_id' => 'required|max:255',
             'insurer_id' => 'required',
+            'deductible' => 'numeric|between:0,999999999.999',
         ];
     }
 }

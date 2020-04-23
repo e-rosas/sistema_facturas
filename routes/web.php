@@ -22,12 +22,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('insurers', 'InsurerController', ['except' => ['update']]);
     Route::resource('invoices', 'InvoiceController', ['except' => ['update']]);
-    Route::resource('patients', 'PatientController', ['except' => ['update']]);
+    Route::resource('patients', 'PatientController');
     Route::resource('categories', 'CategoryController');
     Route::resource('items', 'ItemController');
     Route::resource('services', 'ServiceController');
-
-    Route::patch('patient/update', ['as' => 'patient.update', 'uses' => 'PatientController@update']);
 
     Route::patch('invoices/updatepatient', ['as' => 'invoice.updatepatient', 'uses' => 'InvoiceController@updatePatient']);
     Route::patch('invoice/update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
