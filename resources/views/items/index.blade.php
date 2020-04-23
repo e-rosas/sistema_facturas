@@ -17,6 +17,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <form  method="post" action="{{ route('items.searchIndex') }}" >
+                        @csrf
+                        <div class="form-group col-md-12 col-auto">
+                            <label for="example-search-input" class="form-control-label">Buscar</label>
+                            <input name="search" class="form-control" type="search" required placeholder="Buscar..." id="search">
+                        </div>
+                    </form>
                     
                     <div class="col-12">
                         @if (session('status'))
@@ -39,6 +47,7 @@
                                     <th scope="col">Descuento</th>
                                     <th scope="col">IVA</th>
                                     <th scope="col">Categoria</th>
+                                    <th scope="col"></th>
                                     {{-- <th scope="col"></th> --}}
                                 </tr>
                             </thead>
@@ -53,25 +62,26 @@
                                         <td>{{ $item->discounted_price }}</td>
                                         <td>{{ $item->iva() }}</td>
                                         <td>{{ $item->category->name }}</td>
-                                        {{-- <td class="text-right">
+                                        <td class="text-right">
                                             <div class="dropdown">
                                                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        {{--  <form action="{{ route('item.destroy', $item) }}" method="post">
+                                                        {{--  <form action="{{ route('service.destroy', $service) }}" method="post">
                                                             @csrf
                                                             @method('delete')
                                                             
-                                                            <a class="dropdown-item" href="{{ route('item.edit', $item) }}">{{ __('Edit') }}</a>
-                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this item?") }}') ? this.parentElement.submit() : ''">
+                                                            <a class="dropdown-item" href="{{ route('service.edit', $service) }}">{{ __('Edit') }}</a>
+                                                            <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this service?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
-                                                        </form>    
-                                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a> 
+                                                        </form>    --}}  
+                                                        <a  class="edit-service dropdown-item" href="{{ route('items.edit', $item) }}">Editar</a>
                                                 </div>
                                             </div>
-                                        </td> --}}
+                                        </td>
+
                                     </tr>
                                 @endforeach
                             </tbody>

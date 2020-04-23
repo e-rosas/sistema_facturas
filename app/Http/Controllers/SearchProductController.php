@@ -73,10 +73,26 @@ class SearchProductController extends Controller
     {
         $search = $request->search;
 
-        $services = Service::whereLike(['description', 'code'], $search)
+        /* $services = Service::whereLike(['description', 'descripcion', 'SAT_code', 'code'], $search)
             ->paginate()
-        ;
+        ; */
+
+        $services = Service::where('code', $search)
+            ->orWhere('SAT_code', $search)->paginate();
 
         return view('services.index', compact('services'));
+    }
+
+    public function searchItemIndex(Request $request)
+    {
+        $search = $request->search;
+
+        /* $items = Item::whereLike(['description', 'descripcion', 'SAT', 'code'], $search)
+            ->paginate()
+        ; */
+
+        $items = Item::where('code', $search)->paginate();
+
+        return view('items.index', compact('items'));
     }
 }

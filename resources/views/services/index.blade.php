@@ -21,7 +21,7 @@
                     <form  method="post" action="{{ route('services.searchIndex') }}" >
                         @csrf
                         <div class="form-group col-md-12 col-auto">
-                            <label for="example-search-input" class="form-control-label">Search</label>
+                            <label for="example-search-input" class="form-control-label">Buscar</label>
                             <input name="search" class="form-control" type="search" required placeholder="Buscar..." id="search">
                         </div>
                     </form>
@@ -74,8 +74,8 @@
                                                                 {{ __('Delete') }}
                                                             </button>
                                                         </form>    --}}  
-                                                        <a class="dropdown-item" href="{{ route('services.show', $service) }}">{{ __('View') }}</a>
-                                                        <a data-service="{{ $service->id }}"  class="edit-service dropdown-item" data-toggle="modal" data-target="#modal-service">{{ __('Edit') }}</a>
+                                                        <a class="dropdown-item" href="{{ route('services.show', $service) }}">Ver</a>
+                                                        <a  class="edit-service dropdown-item" href="{{ route('services.edit', $service) }}">Editar</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -92,8 +92,6 @@
                 </div>
             </div>
         </div>
-
-        @include('services.partials.editService')
             
         @include('layouts.footers.auth')
     </div>

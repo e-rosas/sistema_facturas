@@ -23,6 +23,7 @@ class Item extends Model
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999|lte:price',
         'category_id' => 'required|numeric',
+        'SAT' => 'max:255',
     ];
     protected $casts = [
         'id' => 'integer',

@@ -45,7 +45,7 @@ class ItemController extends Controller
         }
         Item::create($validated);
 
-        return redirect()->route('items.index')->withStatus(__('Artículo registrado exitosamente.'));
+        return redirect()->route('items.index')->withStatus(__('Producto registrado exitosamente.'));
     }
 
     /**
@@ -64,6 +64,7 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
+        return view('items.edit', compact('item'));
     }
 
     /**
@@ -73,6 +74,14 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+        $validated = $this->validateItem();
+        if (isset($request['tax'])) {
+            $validated['tax'] = 1;
+        }
+        $item->fill($validated);
+        $item->save();
+
+        return redirect()->route('items.index')->withStatus(__('Producto actualizado'));
     }
 
     /**

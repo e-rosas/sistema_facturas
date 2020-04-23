@@ -35,15 +35,53 @@
                                             </span>
                                         @endif
                                     </div>
-                                    {{--  Descripcion  --}}
-                                    <div class="col-md-8 col-auto form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-description">Descripción</label>
-                                        <input type="text" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" 
-                                        placeholder="Descripción" value="{{ old('description') }}" required>
-                                    
-                                        @if ($errors->has('description'))
+                                </div>
+                                {{--  Descripcion  --}}
+                                <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-description">Descripción</label>
+                                    <input type="text" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" 
+                                    placeholder="Descripción" value="{{  old('description') }}" required>
+                                
+                                    @if ($errors->has('description'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('description') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                {{--  Descripcion  --}}
+                                <div class="form-group{{ $errors->has('descripcion') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-descripcion">Descripción</label>
+                                    <input type="text" name="descripcion" id="input-descripcion" class="form-control form-control-alternative{{ $errors->has('descripcion') ? ' is-invalid' : '' }}" 
+                                    placeholder="Descripción" value="{{ old('descripcion') }}" required>
+
+                                    @if ($errors->has('descripcion'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('descripcion') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-row">
+                                    {{--  SAT --}}
+                                    <div class="col-md-2 col-auto form-group{{ $errors->has('SAT') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-SAT">Código SAT (opcional)</label>
+                                        <input type="text" name="SAT" id="input-SAT" class="form-control form-control-alternative{{ $errors->has('SAT') ? ' is-invalid' : '' }}" 
+                                        placeholder="Código" value="Pendiente">
+
+                                        @if ($errors->has('SAT'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('description') }}</strong>
+                                                <strong>{{ $errors->first('SAT') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    {{--  SAT_code --}}
+                                    <div class="col-md-2 col-auto form-group{{ $errors->has('SAT_code') ? ' has-danger' : '' }}">
+                                        <label class="form-control-label" for="input-SAT_code">Código SAT (interno)</label>
+                                        <input type="text" name="SAT_code" id="input-SAT_code" class="form-control form-control-alternative{{ $errors->has('SAT_code') ? ' is-invalid' : '' }}" 
+                                        placeholder="Código" value="Pendiente" required>
+
+                                        @if ($errors->has('SAT_code'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('SAT_code') }}</strong>
                                             </span>
                                         @endif
                                     </div>

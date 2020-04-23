@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Requests\UpdateServiceRequest;
 use App\Service;
 use Illuminate\Http\Request;
 
@@ -41,7 +42,7 @@ class ServiceController extends Controller
 
         Service::create($validated);
 
-        return redirect()->route('services.index')->withStatus(__('Service successfully created.'));
+        return redirect()->route('services.index')->withStatus(__('Servicio registrado'));
     }
 
     /**
@@ -61,6 +62,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
+        return view('services.edit', compact('service'));
     }
 
     /**
@@ -68,15 +70,14 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Service $service, UpdateServiceRequest $request)
     {
-        $validated = $this->validateService();
-        $service = Service::find($request->service_id);
+        $validated = $request->validated();
 
         $service->fill($validated);
         $service->save();
 
-        return back()->withStatus(__('Service successfully updated.'));
+        return redirect()->route('services.index')->withStatus(__('Servicio actualizado'));
     }
 
     /**
