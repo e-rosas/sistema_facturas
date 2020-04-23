@@ -14,33 +14,51 @@
         <div class="card-body">
             <div class="form-row">
                 {{--  code --}}
-                <div class="col-md-2 col-auto form-group">
+                <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-code">No. de Cobro</label>
                     <label id="label-code">{{ $invoice->code }}</label>
 
                 </div>
                 {{--  number --}}
-                <div class="col-md-2 col-auto form-group">
-                    <label class="form-control-label" for="label-number">No. de CONTPAQ</label>
+                <div class="col-md-5 col-auto form-group">
+                    <label class="form-control-label" for="label-number">Folio de CONTPAQ</label>
                     <label id="label-number">{{ $invoice->code() }}</label>
 
                 </div>
                 {{--  date  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-date">Fecha</label>
-                    <label id="label-date">{{ $invoice->date->format('l jS \\of F Y') }}</label>
+                    <label id="label-date">{{ $invoice->date->format('d-m-Y') }}</label>
 
                 </div>
+                
+            </div>
+            <div class="form-row">
                 {{--  type --}}
                 <div class="col-md-2 col-auto form-group">
                     <label class="form-control-label" for="label-type">Tipo</label>
                     <label id="invoice-type">{{ $invoice->type() }}</label>
                 </div>
                 {{--  status --}}
-                <div class="col-md-3 col-auto form-group">
+                <div class="col-md-2 col-auto form-group">
                     <label class="form-control-label" for="label-status">Estatus</label>
                     <label id="label-status">{{ $invoice->status() }}</label>
-
+                </div>
+                <div class="col-md-4">
+                    <select id='new-status' class="custom-select" name="status"> 
+                        <option value='10'>Cambiar status</option>
+                        <option value='0'>Nota de crédito pendiente.</option>
+                        <option value='1'>Completada.</option>
+                        <option value='2'>Pendiente de pago.</option>
+                        <option value='3'>Pendiente de asignar productos.</option>
+                        <option value='4'>Pendiente de facturar.</option>
+                        <option value='5'>Aseguranza no pagará.</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button id="update-status" onclick="updateStatus()" class="btn btn-success btn-sm">
+                        Cambiar
+                      </button>
                 </div>
             </div>
             {{--  <div class="form-row">
@@ -110,3 +128,28 @@
         </div>                    
     </div>               
 </div>
+@push('js')
+<script>
+    function updateStatus(){
+        var status = document.getElementById("new-status").value;
+        if(status != 10){
+            $.ajax({
+                url: "{{route('invoices.status')}}",
+                dataType: 'json',
+                type:"patch",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "invoice_id": {{ $invoice->id }},
+                    "status": status,
+                },
+            success: function () {
+                displayStats();
+               
+                }
+            });
+            return false;
+        }
+        
+    }
+</script>
+@endpush

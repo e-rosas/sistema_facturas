@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
     Route::post('invoices/find', 'InvoiceController@find')->name('invoices.find');
+    Route::patch('invoices/update_status', 'InvoiceController@updateStatus')->name('invoices.status');
     Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
     Route::post('patients/find', 'SearchPatientController@findPatient')->name('patients.find');
     Route::post('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');

@@ -160,25 +160,31 @@
                 "invoice_id": {{ $invoice->id }},
             },
         success: function (response) {
-            document.getElementById("invoice-type").innerHTML = response.data.type;
-            document.getElementById("amount-paid").innerHTML = response.data.amount_paid;
-            document.getElementById("amount-due").innerHTML = response.data.amount_due;
-            document.getElementById("invoice-status").innerHTML = response.data.status;
-            document.getElementById("invoice-type").innerHTML = response.data.type;
-            if(response.data.status_n == 1 || response.data.status_n == 3 || response.data.status_n == 4){
-                document.getElementById("add-payment").style.display = 'none';
-                document.getElementById("add-credit").style.display = 'none';
-            }
-            else if(response.data.status_n == 2 || response.data.status_n == 0){
-                document.getElementById("add-payment").style.display = 'block';
-                document.getElementById("add-credit").style.display = 'block';
-            }
+            setStats(response);
 
 
             }
         });
             return false;
     }
+
+    function setStats(response){
+        document.getElementById("invoice-type").innerHTML = response.data.type;
+        document.getElementById("amount-paid").innerHTML = response.data.amount_paid;
+        document.getElementById("amount-due").innerHTML = response.data.amount_due;
+        document.getElementById("label-status").innerHTML = response.data.status;
+        document.getElementById("invoice-type").innerHTML = response.data.type;
+        if(response.data.status_n == 1 || response.data.status_n == 3 || response.data.status_n == 4){
+            document.getElementById("add-payment").style.display = 'none';
+            document.getElementById("add-credit").style.display = 'none';
+        }
+        else if(response.data.status_n == 2 || response.data.status_n == 0){
+            document.getElementById("add-payment").style.display = 'block';
+            document.getElementById("add-credit").style.display = 'block';
+        }
+    }
+
+    
 
     $("#save_payment").click(function(){
 

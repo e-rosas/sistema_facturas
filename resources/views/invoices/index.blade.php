@@ -31,6 +31,7 @@
                                                 <option value='2'>Pendiente de pago.</option>
                                                 <option value='3'>Pendiente de asignar productos.</option>
                                                 <option value='4'>Pendiente de facturar.</option>
+                                                <option value='5'>Aseguranza no pagará.</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-auto">

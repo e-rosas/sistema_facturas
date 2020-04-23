@@ -47,7 +47,6 @@ class InvoiceController extends Controller
         $validated = $request->validated();
         $validated['type'] = 2;
         $validated['status'] = 3;
-        $validated['exchange_rate'] = 0;
         $invoice = Invoice::create($validated);
 
         $services = $request->services;
@@ -116,7 +115,7 @@ class InvoiceController extends Controller
                     ItemService::create($item);
                 }
                 if (3 == $invoice->status) {
-                    $invoice->status = 2;
+                    $invoice->status = 4;
                 }
             }
         }
@@ -125,6 +124,15 @@ class InvoiceController extends Controller
         event(new InvoiceEvent($invoice));
 
         return route('invoices.show', [$invoice]);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $invoice = Invoice::findOrFail($request['invoice_id']);
+        $invoice->status = $request['status'];
+        $invoice->save();
+
+        return json_encode('ok');
     }
 
     /**

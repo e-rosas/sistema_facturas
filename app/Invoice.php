@@ -166,6 +166,10 @@ class Invoice extends Model
                 return 'Pendiente de facturar.';
 
                 break;
+            case 5:
+                return 'Aseguranza no pagará.';
+
+                break;
             default:
                 // code...
                 break;
