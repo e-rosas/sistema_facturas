@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReportRequest;
+use App\Invoice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ChartController extends Controller
+class ReportController extends Controller
 {
     public function index()
     {
         $end = Carbon::today()->addDay();
         $start = Carbon::today()->subMonths(1);
+        $invoices = Invoice::with('payments', 'patient', 'credit')->get();
 
-        $personal_stats = DB::table('person_stats')
+        /* $personal_stats = DB::table('person_stats')
             ->select([DB::raw('(SUM(personal_amount_due)) as personal_amount_due'),
                 DB::raw('(SUM(amount_paid)) as amount_paid'), DB::raw('(SUM(total_amount_due)) as total'), ])
             ->where('status', 1)
@@ -31,9 +33,9 @@ class ChartController extends Controller
         $stats['personal_amount_due'] = $personal_stats[0]->personal_amount_due;
         $stats['insurance_amount_due'] = $insurance_stats[0]->amount_due;
         $stats['total_amount_paid'] = $personal_stats[0]->amount_paid + $insurance_stats[0]->amount_paid;
-        $stats['total_amount_due'] = $personal_stats[0]->total + $insurance_stats[0]->total - $stats['total_amount_paid'];
+        $stats['total_amount_due'] = $personal_stats[0]->total + $insurance_stats[0]->total - $stats['total_amount_paid']; */
 
-        return view('charts.index', compact('end', 'start', 'stats'));
+        return view('reports.index', compact('end', 'start', 'invoices'));
     }
 
     public function payments(ReportRequest $request)

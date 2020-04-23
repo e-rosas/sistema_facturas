@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-    <div class="row">
+    {{--  <div class="row">
         <div class="col-xl-3 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">        
@@ -75,7 +75,7 @@
                 </div> 
             </div>
         </div>
-    </div>
+    </div>  --}}
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -107,6 +107,23 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-xl-12">
+            <div class="card shadow">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-uppercase text-light ls-1 mb-1">Discounts</h6>
+                            <h2 class=" mb-0">Insurance</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @include('reports.partials.shortInvoicesTable')
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--  <div class="row">
         <div class="col-xl-6">
             <div class="card shadow">
                 <div class="card-header bg-transparent">
@@ -149,7 +166,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  --}}
 </div>
 
 

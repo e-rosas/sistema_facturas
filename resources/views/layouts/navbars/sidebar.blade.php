@@ -53,7 +53,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-green"></i> Inicio
+                        <i class="ni ni-tv-2 text-purple"></i> Inicio
                     </a>
                 </li>
 
@@ -74,12 +74,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('payments.index') }}">
-                        <i class="fas fa-dollar-sign text-info"></i> Pagos
+                        <i class="fas fa-dollar-sign text-green"></i> Pagos
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('credits.index') }}">
-                        <i class="fas fa-money-check-alt text-purple"></i> Notas de credito
+                        <i class="fas fa-money-check-alt text-info"></i> Notas de credito
                     </a>
                 </li>
                 <li class="nav-item">
