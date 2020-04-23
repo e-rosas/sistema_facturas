@@ -10,6 +10,9 @@ class CalculateTotalsOfInvoices
     public $total_with_discounts = 0;
     public $amount_due = 0;
     public $amount_paid = 0;
+    public $subtotal = 0;
+    public $IVA = 0;
+    public $total_m = 0;
     private $invoices = [];
 
     public function __construct($invoices)
@@ -76,6 +79,15 @@ class CalculateTotalsOfInvoices
             } else {
                 $this->amount_paid += (float) str_replace(',', '', $invoice->credit->amount_due);
             }
+        }
+    }
+
+    public function totalsShort()
+    {
+        foreach ($this->invoices as $invoice) {
+            $this->subtotal += (float) str_replace(',', '', $invoice->subtotal());
+            $this->IVA += (float) str_replace(',', '', $invoice->IVA());
+            $this->total_m += (float) str_replace(',', '', $invoice->tota());
         }
     }
 
