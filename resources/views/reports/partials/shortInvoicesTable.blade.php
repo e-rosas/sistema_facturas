@@ -47,6 +47,13 @@
 
             @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right">Subtotal: </td>
+                <td>IVA: </td>
+                <td>Total: </td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 

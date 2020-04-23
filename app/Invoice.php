@@ -122,6 +122,13 @@ class Invoice extends Model
         return number_format($mxn, 4);
     }
 
+    public function debe()
+    {
+        $mxn = $this->amount_due * $this->exchange_rate;
+
+        return number_format($mxn, 4);
+    }
+
     public function type()
     {
         switch ($this->type) {

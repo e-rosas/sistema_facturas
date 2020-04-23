@@ -10,11 +10,35 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $end = Carbon::today()->addDay();
-        $start = Carbon::today()->subMonths(1);
-        $invoices = Invoice::with('payments', 'patient', 'credit')->get();
+        if (!is_null($request['start_date'] && !is_null($request['end_date']))) {
+            $start = Carbon::parse($request->start_date);
+            $end = Carbon::parse($request->end_date);
+        } else {
+            $end = Carbon::today()->addDay();
+            $start = Carbon::today()->subMonths(1);
+        }
+
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+
+        $invoices = Invoice::with('payments', 'patient', 'credit')
+            ->whereBetween('date', [$start, $end])
+            ->paginate($perPage)
+        ;
+
+        $invoice_totals = [];
+        foreach ($invoices as $invoice) {
+            $invoice_totals[0] += (float) str_replace(',', '', $invoice->total_with_discounts);
+            $invoice_totals['payments'] += (float) str_replace(',', '', $invoice->amount_paid);
+            if (is_null($invoice->credit)) {
+                $invoice_totals['due'] += (float) str_replace(',', '', $invoice->amount_due);
+            }
+        }
 
         /* $personal_stats = DB::table('person_stats')
             ->select([DB::raw('(SUM(personal_amount_due)) as personal_amount_due'),
@@ -35,7 +59,7 @@ class ReportController extends Controller
         $stats['total_amount_paid'] = $personal_stats[0]->amount_paid + $insurance_stats[0]->amount_paid;
         $stats['total_amount_due'] = $personal_stats[0]->total + $insurance_stats[0]->total - $stats['total_amount_paid']; */
 
-        return view('reports.index', compact('end', 'start', 'invoices'));
+        return view('reports.index', compact('end', 'start', 'perPage', 'invoices', 'invoices_totals'));
     }
 
     public function payments(ReportRequest $request)
