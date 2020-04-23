@@ -51,6 +51,16 @@ class InsurerController extends Controller
      */
     public function show(Insurer $insurer)
     {
+        $invoices = [];
+
+        foreach ($insurer->patients as $patient) {
+            foreach ($patient->invoices as $invoice) {
+                $invoice->load('payments', 'credit');
+                $invoices[] = $invoice;
+            }
+        }
+
+        return view('insurers.show', compact('insurer', 'invoices'));
     }
 
     /**
@@ -74,6 +84,7 @@ class InsurerController extends Controller
 
         $insurer->fill($validated);
         $insurer->save();
+
         return response('OK', 200);
     }
 
@@ -85,10 +96,11 @@ class InsurerController extends Controller
     public function destroy(Insurer $insurer)
     {
     }
+
     public function find(Request $request)
     {
         $insurer_id = $request->insurer_id;
-        $insurer = Insurer::findOrFail($insurer_id) ;
+        $insurer = Insurer::findOrFail($insurer_id);
 
         echo json_encode($insurer);
         exit;

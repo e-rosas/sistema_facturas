@@ -49,11 +49,4 @@
         </tbody>
     </table>
 </div>
-@push('js')
-<script>
-    function toggle_visibility(id) {
-        var e = document.getElementById("invoice"+id);
-        e.style.display = ((e.style.display=='none') ? 'block' : 'none');
-        }
-</script>
-@endpush
+

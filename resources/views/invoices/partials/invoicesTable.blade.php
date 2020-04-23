@@ -2,7 +2,7 @@
     <table class="table align-items-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Number') }}</th>
+                <th scope="col">No. de Cobro</th>
                 <th scope="col">{{ __('Date') }}</th>
                 <th scope="col">{{ __('Total') }}</th>
                 <th scope="col">{{ __('Total with discounts') }}</th>

@@ -56,9 +56,9 @@
                                             <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $insurer->id }})">
                                                     <i class="fas fa-pencil-alt fa-2"></i>
                                             </button>
-                                            <button rel="tooltip" class="btn btn-success btn-sm btn-icon"  type="button">
+                                            <a href="{{ route('insurers.show', $insurer) }}" rel="tooltip"  class="btn btn-success btn-sm btn-icon"  type="button">
                                                     <i class="fas fa-eye "></i>
-                                            </button>                                         
+                                            </a>                                         
                                         </td>
                                     </tr>
                                 @endforeach
