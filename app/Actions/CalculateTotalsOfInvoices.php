@@ -66,6 +66,19 @@ class CalculateTotalsOfInvoices
         }
     }
 
+    public function totals()
+    {
+        foreach ($this->invoices as $invoice) {
+            $this->total_with_discounts += (float) str_replace(',', '', $invoice->total_with_discounts);
+            $this->amount_paid += (float) str_replace(',', '', $invoice->amount_paid);
+            if (is_null($invoice->credit)) {
+                $this->amount_due += (float) str_replace(',', '', $invoice->amount_due);
+            } else {
+                $this->amount_paid += (float) str_replace(',', '', $invoice->credit->amount_due);
+            }
+        }
+    }
+
     public function getInvoicesCount()
     {
         return count($this->invoices);

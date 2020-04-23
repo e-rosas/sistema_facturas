@@ -66,9 +66,9 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="5" class="text-right">Cargos: {{ $invoices_totals['charges'] }}</td>
-                <td>Abonos:{{ $invoices_totals['payments'] }} </td>
-                <td>Saldo: {{ $invoices_totals['due'] }}</td>
+                <td colspan="5" class="text-right">Cargos: {{ $invoices_totals->total_with_discounts}}</td>
+                <td>Abonos:{{ $invoices_totals->amount_paid }} </td>
+                <td>Saldo: {{ $invoices_totals->amount_due }}</td>
             </tr>
         </tfoot>
     </table>

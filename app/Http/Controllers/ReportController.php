@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CalculateTotalsOfInvoices;
 use App\Http\Requests\ReportRequest;
 use App\Invoice;
 use Carbon\Carbon;
@@ -31,25 +32,18 @@ class ReportController extends Controller
             ->paginate($perPage)
         ;
 
-        $invoice_totals = [];
-        foreach ($invoices as $invoice) {
-            $invoice_totals[0] += (float) str_replace(',', '', $invoice->total_with_discounts);
-            $invoice_totals['payments'] += (float) str_replace(',', '', $invoice->amount_paid);
-            if (is_null($invoice->credit)) {
-                $invoice_totals['due'] += (float) str_replace(',', '', $invoice->amount_due);
-            }
-        }
-
+        $invoices_totals = new CalculateTotalsOfInvoices($invoices);
+        $invoices_totals->totals();
         /* $personal_stats = DB::table('person_stats')
             ->select([DB::raw('(SUM(personal_amount_due)) as personal_amount_due'),
-                DB::raw('(SUM(amount_paid)) as amount_paid'), DB::raw('(SUM(total_amount_due)) as total'), ])
+        DB::raw('(SUM(amount_paid)) as amount_paid'), DB::raw('(SUM(total_amount_due)) as total'), ])
             ->where('status', 1)
             ->get()
         ;
 
         $insurance_stats = DB::table('person_stats')
             ->select([DB::raw('(SUM(amount_due)) as amount_due'),
-                DB::raw('(SUM(amount_paid)) as amount_paid'), DB::raw('(SUM(total_amount_due)) as total'), ])
+        DB::raw('(SUM(amount_paid)) as amount_paid'), DB::raw('(SUM(total_amount_due)) as total'), ])
             ->where('status', 0)
             ->get()
         ;
