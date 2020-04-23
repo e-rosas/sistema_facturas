@@ -19,7 +19,7 @@ class Service extends Model
         'SAT_code',
     ];
     public static $rules = [
-        'code' => 'required|max:255',
+        'code' => 'required|max:255|unique:services',
         'description' => 'max:255',
         'description' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',

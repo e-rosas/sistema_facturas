@@ -25,7 +25,7 @@
                                 <div class="form-row">
                                     {{--  Code --}}
                                     <div class="col-md-4 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-code">Código</label>
+                                        <label class="form-control-label" for="input-code">Código SAT (interno)</label>
                                         <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}" 
                                         placeholder="Código" value="{{ old('code') }}">
                                     
@@ -70,18 +70,6 @@
                                         @if ($errors->has('SAT'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('SAT') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                    {{--  SAT_code --}}
-                                    <div class="col-md-2 col-auto form-group{{ $errors->has('SAT_code') ? ' has-danger' : '' }}">
-                                        <label class="form-control-label" for="input-SAT_code">Código SAT (interno)</label>
-                                        <input type="text" name="SAT_code" id="input-SAT_code" class="form-control form-control-alternative{{ $errors->has('SAT_code') ? ' is-invalid' : '' }}" 
-                                        placeholder="Código" value="Pendiente" required>
-
-                                        @if ($errors->has('SAT_code'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('SAT_code') }}</strong>
                                             </span>
                                         @endif
                                     </div>

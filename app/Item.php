@@ -17,7 +17,7 @@ class Item extends Model
         'category_id',
     ];
     public static $rules = [
-        'code' => 'required|max:255',
+        'code' => 'required|max:255|unique:items',
         'description' => 'required|max:255',
         'descripcion' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',
