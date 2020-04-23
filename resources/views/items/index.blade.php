@@ -46,7 +46,7 @@
                                     <th scope="col">Precio</th>
                                     <th scope="col">Descuento</th>
                                     <th scope="col">IVA</th>
-                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Categoría</th>
                                     <th scope="col"></th>
                                     {{-- <th scope="col"></th> --}}
                                 </tr>
@@ -61,7 +61,7 @@
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->discounted_price }}</td>
                                         <td>{{ $item->iva() }}</td>
-                                        <td>{{ $item->category->name }}</td>
+                                        <td>{{ $item->category->nombre }}</td>
                                         <td class="td-actions text-right">
                                             <a  rel="tooltip"  class="btn btn-info btn-sm btn-icon"  type="button" href="{{ route('items.edit', $item) }}">
                                                 <i class="fas fa-pencil-alt fa-2"></i>

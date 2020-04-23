@@ -64,7 +64,9 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        return view('items.edit', compact('item'));
+        $categories = Category::get();
+
+        return view('items.edit', compact('item', 'categories'));
     }
 
     /**

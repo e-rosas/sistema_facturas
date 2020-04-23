@@ -118,8 +118,19 @@
                                         @endif
                                     </div>
                                     {{--  category --}}
-                                    <input type="hidden"  readonly  name="category_id" id="input-category_id" value="{{ $service->category_id }}" class="form-control"
-                                     required>
+                                    <div class="form-group col-md-6 col-auto">
+                                        <label for="category_id" class="col-auto col-form-label">Categoría</label>
+                                        <select class="custom-select form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" name="category_id">
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" {{ $service->category_id == $category->id ? 'selected' : '' }}>{{ $category->nombre }}</option>
+                                        @endforeach
+                                        </select>                  
+                                        @if ($errors)
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('category_id') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4 btn-block">Guardar</button>

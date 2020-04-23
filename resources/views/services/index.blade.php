@@ -45,6 +45,7 @@
                                     <th  scope="col">Descripción</th>
                                     <th scope="col">Precio</th>
                                     <th scope="col">Descuento</th>
+                                    <th scope="col">Categoría</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -58,7 +59,7 @@
                                         
                                         <td>{{ $service->price }}</td>
                                         <td>{{ $service->discounted_price }}</td>
-
+                                        <td>{{ $service->category->nombre }}</td>
                                         <td class="td-actions text-right">
                                             <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('services.show', $service) }}">
                                                 <i class="fas fa-eye "></i>
