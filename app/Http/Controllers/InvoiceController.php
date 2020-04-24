@@ -18,11 +18,56 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = Invoice::with(['patient'])->paginate(15);
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
 
-        return view('invoices.index', compact('invoices'));
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
+        if (is_null($request['type'])) {
+            $type = 3;
+        } else {
+            $type = $request['type'];
+        }
+        if (is_null($request['status'])) {
+            $status = 6;
+        } else {
+            $status = $request['status'];
+        }
+
+        if ($type < 3 && $status < 6) {
+            $invoices = Invoice::with('patient')
+                ->where([['type', $type], ['status', $status]])
+                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
+                ->paginate($perPage)
+        ;
+        } elseif ($type >= 3 && $status < 6) {
+            $invoices = Invoice::with('patient')
+                ->where('status', $status)
+                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
+                ->paginate($perPage)
+        ;
+        } elseif ($type < 3 && $status >= 6) {
+            $invoices = Invoice::with('patient')
+                ->where('type', $type)
+                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
+                ->paginate($perPage)
+        ;
+        } else {
+            $invoices = Invoice::with('patient')
+                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
+                ->paginate($perPage)
+            ;
+        }
+
+        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status'));
     }
 
     /**
@@ -178,7 +223,7 @@ class InvoiceController extends Controller
             ;
         }
 
-        return view('invoices.index', compact('invoices'));
+        return view('invoices.index', compact('invoices', 'search', 'perPage'));
     }
 
     public function searchNumber(Request $request)
