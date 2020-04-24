@@ -14,6 +14,30 @@
                             </div>
                         </div>
                     </div>
+
+                    <form  method="get" action="{{ route('credits.index') }}" >
+                        <div class="form-row">
+                            <div class="col-md-1 col-auto">
+                                <select  class="custom-select" name="perPage"> 
+                                    <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
+                                    <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
+                                    <option value='50' {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                                    <option value='100' {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                                    <option value='150' {{ $perPage == 150 ? 'selected' : '' }}>150</option>
+                                    <option value='10000' {{ $perPage == 10000 ? 'selected' : '' }}>Todas</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-10 col-auto">
+                                <input name="search" class="form-control" type="search"  placeholder="Buscar..." value="{{ $search ?? '' }}">
+                            </div>
+                            <div class="col-md-1 col-auto text-right">
+                                <button type="submit" class="btn btn-primary btn-fab btn-icon">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </form>
                     
                     <div class="col-12">
                         @if (session('status'))

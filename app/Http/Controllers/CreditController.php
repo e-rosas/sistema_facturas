@@ -16,14 +16,26 @@ class CreditController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
         $credits = Credit::with('invoice')
+            ->whereLike(['number', 'invoice.code', 'invoice.number'], $search)
             ->orderBy('date', 'desc')
-            ->paginate(15)
+            ->paginate($perPage)
         ;
 
-        return view('credits.index', compact('credits'));
+        return view('credits.index', compact('credits', 'search', 'perPage'));
     }
 
     /**

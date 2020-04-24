@@ -16,14 +16,26 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
         $payments = Payment::with('invoice')
+            ->whereLike(['number', 'invoice.code', 'invoice.number'], $search)
             ->orderBy('date', 'desc')
-            ->paginate(15)
+            ->paginate($perPage)
         ;
 
-        return view('payments.index', compact('payments'));
+        return view('payments.index', compact('payments', 'search', 'perPage'));
     }
 
     /**
@@ -97,7 +109,9 @@ class PaymentController extends Controller
         $payment = Payment::findOrFail($id);
 
         $validatePayment = new VerifyPaymentAmount($validated['amount_paid'], $payment->invoice_id);
-        if ($validatePayment->verifyPayment()) {
+        $concept = $validatePayment->verifyUpdatePayment($payment->amount_paid);
+
+        if ($concept < 2) {
             if (is_null($validated['number'])) {
                 $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 1000);
             }
@@ -118,7 +132,10 @@ class PaymentController extends Controller
     {
         $payment = Payment::find($request['payment_id']);
         $invoice_id = $payment->invoice_id;
-        $payment->delete();
+        $validatePayment = new VerifyPaymentAmount($payment->amount_paid, $invoice_id);
+        if ($validatePayment->verifyDeletePayment()) {
+            $payment->delete();
+        }
 
         $payments = Payment::with('invoice')->where('invoice_id', $invoice_id)
             ->orderBy('date', 'desc')

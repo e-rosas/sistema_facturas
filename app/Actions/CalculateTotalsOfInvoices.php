@@ -69,7 +69,7 @@ class CalculateTotalsOfInvoices
         }
     }
 
-    public function totals()
+    public function totals() //stats on report index (medTable)
     {
         foreach ($this->invoices as $invoice) {
             $this->total_with_discounts += (float) str_replace(',', '', $invoice->total_with_discounts);
@@ -82,7 +82,7 @@ class CalculateTotalsOfInvoices
         }
     }
 
-    public function totalsShort()
+    public function totalsShort() //stats on report index (shortTable)
     {
         foreach ($this->invoices as $invoice) {
             $this->subtotal += (float) str_replace(',', '', $invoice->subtotal());

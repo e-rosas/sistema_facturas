@@ -18,11 +18,27 @@
                         </div>
                     </div>
 
-                    <form  method="post" action="{{ route('patients.search') }}" >
-                        @csrf
-                        <div class="form-group col-md-12 col-auto">
-                            <label for="example-search-input" class="form-control-label">Buscar</label>
-                            <input name="search" class="form-control" type="search" required placeholder="Buscar pacientes..." id="search">
+                    <form  method="get" action="{{ route('patients.index') }}" >
+                        <div class="form-row">
+                            <div class="col-md-1 col-auto">
+                                <select  class="custom-select" name="perPage"> 
+                                    <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
+                                    <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
+                                    <option value='50' {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                                    <option value='100' {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                                    <option value='150' {{ $perPage == 150 ? 'selected' : '' }}>150</option>
+                                    <option value='10000' {{ $perPage == 10000 ? 'selected' : '' }}>Todas</option>
+                                </select>
+                            </div>
+                            <div class="col-md-10 col-auto">
+                                <input name="search" class="form-control" type="search"  placeholder="Buscar..." value="{{ $search ?? '' }}">
+                            </div>
+                            {{--  refresh  --}}
+                            <div class="col-md-1 col-auto text-right">
+                                <button type="submit" class="btn btn-primary btn-fab btn-icon">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                         </div>
                     </form>
                     
@@ -60,7 +76,11 @@
                                         <td>{{ $patient->phone_number }}</td>
                                         <td>{{ $patient->city }}</td>
                                         <td>{{ $patient->insurance_id }}</td>
-                                        <td>{{ $patient->insurer->name }}</td>
+                                        <td>
+                                            <a href="{{ route('insurers.show', $patient->insurer) }}">
+                                                {{ $patient->insurer->name }}
+                                            </a>
+                                        </td>
                                         <td class="td-actions text-right">
 
                                             <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.show', $patient) }}">

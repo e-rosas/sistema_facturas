@@ -41,12 +41,12 @@
                 </div>
                 {{--  status --}}
                 <div class="col-md-2 col-auto form-group">
-                    <label class="form-control-label" for="label-status">Estatus</label>
+                    <label class="form-control-label" for="label-status">Estado</label>
                     <label id="label-status">{{ $invoice->status() }}</label>
                 </div>
                 <div class="col-md-4">
                     <select id='new-status' class="custom-select" name="status"> 
-                        <option value='10'>Cambiar status</option>
+                        <option value='10'>Cambiar estado</option>
                         <option value='0'>Nota de crédito pendiente.</option>
                         <option value='1'>Completada.</option>
                         <option value='2'>Pendiente de pago.</option>

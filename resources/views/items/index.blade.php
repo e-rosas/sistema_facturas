@@ -30,12 +30,12 @@
                                     <option value='10000' {{ $perPage == 10000 ? 'selected' : '' }}>Todas</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-9 col-auto">
+                            <div class="form-group col-md-10 col-auto">
                                 <input name="search" class="form-control" type="search"  placeholder="Buscar..." value="{{ $search ?? '' }}">
                             </div>
                             <div class="col-md-1 col-auto text-right">
-                                <button type="submit" class="btn btn-primary">
-                                    Buscar
+                                <button type="submit" class="btn btn-primary btn-fab btn-icon">
+                                    <i class="fas fa-search"></i>
                                 </button>
                             </div>
                         </div>

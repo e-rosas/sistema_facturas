@@ -8,7 +8,7 @@
                 @include('components.invoiceStatsCard', ['id' => 'total','title' => 'Total', 'value' => $invoice->total_with_discounts])
                 @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' => 'Pagado', 'value' => $invoice->amount_paid])
                 @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Debe', 'value' => $invoice->amount_due])
-                @include('components.invoiceStatsCard', ['id' => 'invoice-status','title' => 'Estatus', 'value' => $invoice->status()])
+                @include('components.invoiceStatsCard', ['id' => 'invoice-status','title' => 'Estado', 'value' => $invoice->status()])
             </div>
             
         </div>

@@ -45,24 +45,24 @@ class InvoiceController extends Controller
         if ($type < 3 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where([['type', $type], ['status', $status]])
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
+                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id', 'comments'], $search)
                 ->paginate($perPage)
         ;
         } elseif ($type >= 3 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where('status', $status)
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
+                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id', 'comments'], $search)
                 ->paginate($perPage)
         ;
         } elseif ($type < 3 && $status >= 6) {
             $invoices = Invoice::with('patient')
                 ->where('type', $type)
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
+                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id', 'comments'], $search)
                 ->paginate($perPage)
         ;
         } else {
             $invoices = Invoice::with('patient')
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
+                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id', 'comments'], $search)
                 ->paginate($perPage)
             ;
         }
@@ -187,43 +187,6 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-    }
-
-    public function search(Request $request)
-    {
-        if (is_null($request['search'])) {
-            $search = '';
-        } else {
-            $search = $request['search'];
-        }
-        $type = $request['type'];
-        $status = $request['status'];
-        if ($type < 3 && $status < 5) {
-            $invoices = Invoice::with('patient')
-                ->where([['type', $type], ['status', $status]])
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
-                ->paginate(15)
-        ;
-        } elseif ($type >= 3 && $status < 5) {
-            $invoices = Invoice::with('patient')
-                ->where('status', $status)
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
-                ->paginate(15)
-        ;
-        } elseif ($type < 3 && $status >= 5) {
-            $invoices = Invoice::with('patient')
-                ->where('type', $type)
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
-                ->paginate(15)
-        ;
-        } else {
-            $invoices = Invoice::with('patient')
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id'], $search)
-                ->paginate(15)
-            ;
-        }
-
-        return view('invoices.index', compact('invoices', 'search', 'perPage'));
     }
 
     public function searchNumber(Request $request)

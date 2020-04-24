@@ -30,13 +30,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('invoices/updatepatient', ['as' => 'invoice.updatepatient', 'uses' => 'InvoiceController@updatePatient']);
     Route::patch('invoice/update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
     Route::post('invoice/services', 'InvoiceServiceController@getInvoiceServices')->name('invoice.services');
-    Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
+    //Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('patients/searchIndex', 'SearchPatientController@searchPatient')->name('patients.search');
     Route::post('patients/search', 'SearchPatientController@search')->name('patients.searchName');
     Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
     Route::post('services/find', 'SearchProductController@findService')->name('services.find');
 
-    Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
+    //Route::post('invoices/search', 'InvoiceController@search')->name('invoices.search');
     Route::post('invoices/find', 'InvoiceController@find')->name('invoices.find');
     Route::patch('invoices/update_status', 'InvoiceController@updateStatus')->name('invoices.status');
     Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');

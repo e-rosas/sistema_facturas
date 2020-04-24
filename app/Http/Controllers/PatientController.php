@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePatientRequest;
 use App\Insurer;
 use App\Invoice;
 use App\Patient;
+use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
@@ -15,11 +16,25 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $patients = Patient::with(['insurer'])->paginate(15);
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
 
-        return view('patients.index', compact('patients'));
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
+
+        $patients = Patient::with('insurer')->whereLike(['full_name', 'insurance_id'], $search)
+            ->paginate($perPage)
+        ;
+
+        return view('patients.index', compact('patients', 'search', 'perPage'));
     }
 
     /**
