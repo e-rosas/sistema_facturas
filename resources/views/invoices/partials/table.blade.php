@@ -23,7 +23,7 @@
                         </a>
                     </td>
                     <td>{{ $invoice->code() }}</td>
-                    <td>{{ $invoice->patient->full_name }}</td>
+                    <td><a  href="{{ route('patients.show', $invoice->patient) }}">{{  $invoice->patient->full_name  }}</a></td>
                     <td>{{ $invoice->date->format('d-m-Y') }}</td>
                     <td>{{ $invoice->type() }}</td>
                     <td>{{ $invoice->status() }}</td>
@@ -45,6 +45,6 @@
 </div>
 <div class="card-footer py-4">
     <nav class="d-flex justify-content-end" aria-label="...">
-        {{ $invoices->links() }}
+        {{ $invoices->appends(['search'=>$search, 'perPage'=>$perPage, 'type'=>$type,'status'=>$status ])->links() }}
     </nav>
 </div>

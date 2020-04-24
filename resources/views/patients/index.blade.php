@@ -100,7 +100,7 @@
                 
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $patients->links() }}
+                            {{ $patients->appends(['search'=>$search, 'perPage'=>$perPage])->links() }}
                         </nav>
                     </div>
                       

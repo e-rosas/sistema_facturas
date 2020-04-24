@@ -129,7 +129,11 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        return view('invoices.edit', compact('invoice'));
+        if (1 != $invoice->status) {
+            return view('invoices.edit', compact('invoice'));
+        }
+
+        return redirect()->route('invoices.show', $invoice);
     }
 
     /**

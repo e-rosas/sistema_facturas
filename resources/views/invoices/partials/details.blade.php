@@ -6,9 +6,12 @@
                 <div class="col-8 col-auto">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                 </div>
-                <div class="col-4 col-auto text-right">
-                    <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar</a>
-                </div>
+                @if ($invoice->status != 1)
+                    <div class="col-4 col-auto text-right">
+                        <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar</a>
+                    </div>
+                @endif
+                
             </div>
         </div>
         <div class="card-body">
