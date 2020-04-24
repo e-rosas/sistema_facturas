@@ -41,9 +41,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('invoices/update_status', 'InvoiceController@updateStatus')->name('invoices.status');
     Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
     Route::post('patients/find', 'SearchPatientController@findPatient')->name('patients.find');
-    Route::post('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
+    //Route::get('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 
-    Route::post('items/searchIndex', 'SearchProductController@searchItemIndex')->name('items.searchIndex');
+    //Route::get('items/searchIndex', 'SearchProductController@searchItemIndex')->name('items.searchIndex');
 
     Route::post('items/search', 'SearchProductController@searchItem')->name('items.search');
     Route::post('items/find', 'SearchProductController@findItem')->name('items.find');

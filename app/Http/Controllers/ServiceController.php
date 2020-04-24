@@ -14,9 +14,29 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Service $model)
+    public function index(Request $request)
     {
-        return view('services.index', ['services' => $model->paginate(15)]);
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+
+        if (is_null($request['search'])) {
+            $search = '';
+            $services = Service::with('category')->paginate($perPage);
+        } else {
+            $search = $request->search;
+            $services = Service::with('category')->where('code', $search)
+                ->paginate($perPage)
+        ;
+        }
+
+        /* $services = Service::whereLike(['description', 'descripcion', 'SAT_code', 'code'], $search)
+            ->paginate($perPage)
+        ; */
+
+        return view('services.index', compact('services', 'search', 'perPage'));
     }
 
     /**

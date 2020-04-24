@@ -13,11 +13,30 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = \App\Item::with('category')->paginate(15);
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+        if (is_null($request['search'])) {
+            $search = '';
+            $items = Item::with('category')
+                ->paginate($perPage)
+        ;
+        } else {
+            $search = $request->search;
+            $items = Item::with('category')->where('code', $search)
+                ->paginate($perPage)
+        ;
+        }
 
-        return view('items.index', compact('items'));
+        /* $services = Service::whereLike(['description', 'descripcion', 'SAT_code', 'code'], $search)
+            ->paginate($perPage)
+        ; */
+
+        return view('items.index', compact('items', 'search', 'perPage'));
     }
 
     /**
