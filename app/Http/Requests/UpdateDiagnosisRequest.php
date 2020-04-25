@@ -13,7 +13,7 @@ class UpdateDiagnosisRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,6 @@ class UpdateDiagnosisRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
             'code' => 'required|max:10|unique:diagnoses',
             'name' => 'max:250',
             'nombre' => 'max:250',

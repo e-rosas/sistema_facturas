@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('categories', 'CategoryController');
     Route::resource('items', 'ItemController');
     Route::resource('services', 'ServiceController');
-
+    Route::resource('diagnoses', 'DiagnosisController');
     Route::patch('invoices/updatepatient', ['as' => 'invoice.updatepatient', 'uses' => 'InvoiceController@updatePatient']);
     Route::patch('invoice/update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
     Route::post('invoice/services', 'InvoiceServiceController@getInvoiceServices')->name('invoice.services');

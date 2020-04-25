@@ -37,7 +37,7 @@ class CategoryController extends Controller
         $validated = $this->validateItemCategory();
         Category::create($validated);
 
-        return redirect()->route('categories.index')->withStatus(__('Category successfully created.'));
+        return redirect()->route('categories.index')->withStatus(__('Categoría registrada exitosamente'));
     }
 
     /**

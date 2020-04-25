@@ -14,7 +14,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                        
                         </span>
                     </div>
                 </a>
@@ -80,6 +80,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('credits.index') }}">
                         <i class="fas fa-money-check-alt text-info"></i> Notas de credito
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('diagnoses.index') }}">
+                        <i class="fas fa-diagnoses text-black"></i> Diagnósticos
                     </a>
                 </li>
                 <li class="nav-item">

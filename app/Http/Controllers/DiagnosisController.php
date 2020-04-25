@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Diagnosis;
+use App\Http\Requests\DiagnosisRequest;
+use App\Http\Requests\UpdateDiagnosisRequest;
 use Illuminate\Http\Request;
 
 class DiagnosisController extends Controller
@@ -20,11 +22,15 @@ class DiagnosisController extends Controller
             $perPage = 15;
         }
 
-        /* $services = Service::whereLike(['description', 'descripcion', 'SAT_code', 'code'], $search)
-            ->paginate($perPage)
-        ; */
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
 
-        return view('services.index', compact('services', 'search', 'perPage'));
+        $diagnoses = Diagnosis::whereLike(['code', 'name', 'nombre'], $search)->paginate($perPage);
+
+        return view('diagnoses.index', compact('diagnoses', 'search', 'perPage'));
     }
 
     /**
@@ -34,6 +40,7 @@ class DiagnosisController extends Controller
      */
     public function create()
     {
+        return view('diagnoses.create');
     }
 
     /**
@@ -41,8 +48,12 @@ class DiagnosisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DiagnosisRequest $request)
     {
+        $validated = $request->validated();
+        Diagnosis::create($validated);
+
+        return redirect()->route('diagnoses.index')->withStatus(__('Diagnóstico registrado exitosamente'));
     }
 
     /**
@@ -61,6 +72,7 @@ class DiagnosisController extends Controller
      */
     public function edit(Diagnosis $diagnosis)
     {
+        return view('diagnoses.edit', compact('diagnosis'));
     }
 
     /**
@@ -68,8 +80,13 @@ class DiagnosisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Diagnosis $diagnosis)
+    public function update(UpdateDiagnosisRequest $request, Diagnosis $diagnosis)
     {
+        $validated = $request->validated();
+        $diagnosis->fill($validated);
+        $diagnosis->save();
+
+        return redirect()->route('diagnoses.index')->withStatus(__('Diagnóstico actualizado exitosamente'));
     }
 
     /**
