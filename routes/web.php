@@ -83,4 +83,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/import_rates', 'ImportController@getImportRates')->name('import.rates');
     Route::post('/import_parse_rates', 'ImportController@parseImportRates')->name('import.parse.rates');
     Route::post('/import_process_rates', 'ImportController@processImportRates')->name('import.process.rates');
+
+    Route::get('/import_diagnoses', 'ImportController@getImportDiagnoses')->name('import.diagnoses');
+    Route::post('/import_parse_diagnoses', 'ImportController@parseImportDiagnoses')->name('import.parse.diagnoses');
+    Route::post('/import_process_diagnoses', 'ImportController@processImportDiagnoses')->name('import.process.diagnoses');
 });

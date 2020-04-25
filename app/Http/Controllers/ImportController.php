@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Diagnosis;
 use App\Http\Requests\CsvImportRequest;
 use App\Item;
 use App\Service;
@@ -122,5 +123,35 @@ class ImportController extends Controller
         $count = count($rates);
 
         return view('import.fieldsRates', compact('rates', 'count'));
+    }
+
+    public function getImportDiagnoses()
+    {
+        return view('import.importDiagnoses');
+    }
+
+    public function parseImportDiagnoses(CsvImportRequest $request)
+    {
+        $path = $request->file('csv_file')->getRealPath();
+        $csv_data = array_map('str_getcsv', file($path));
+
+        for ($i = 0; $i < count($csv_data); ++$i) {
+            $csv_data[$i][1] = $csv_data[$i][1].' '.$csv_data[$i][2].' '.$csv_data[$i][3];
+        }
+
+        $diagnoses = [];
+
+        for ($i = 0; $i < count($csv_data); ++$i) {
+            $diagnosis = new Diagnosis();
+            $diagnosis->code = $csv_data[$i][0];
+            $diagnosis->name = $csv_data[$i][1];
+            $diagnosis->nombre = 'Pendiente';
+            $diagnosis->save();
+            array_push($diagnoses, $diagnosis);
+        }
+
+        $count = count($diagnoses);
+
+        return view('import.fieldsDiagnoses', compact('diagnoses', 'count'));
     }
 }
