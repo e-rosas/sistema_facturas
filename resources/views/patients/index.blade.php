@@ -54,7 +54,7 @@
                     </div>
                     {{--  Table  --}}
                     <div class="table-responsive" id="patients-table">
-                        <table class="table align-items-center table-flush">
+                        <table class="table align-items-center table-flush table-hover">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Nombre</th>
@@ -67,31 +67,51 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($patients as $patient)
+                                @foreach ($insurees as $insuree)
                                     <tr>
-                                        <td>{{ $patient->full_name }}</td>
+                                        <td>{{ $insuree->patient->full_name }}</td>
                                         <td>
-                                            <a href="mailto:{{$patient->email}}">{{$patient->email}}</a>
+                                            <a href="mailto:{{$insuree->patient->email}}">{{$insuree->patient->email}}</a>
                                         </td>
-                                        <td>{{ $patient->phone_number }}</td>
-                                        <td>{{ $patient->city }}</td>
-                                        <td>{{ $patient->insurance_id }}</td>
+                                        <td>{{ $insuree->patient->phone_number }}</td>
+                                        <td>{{ $insuree->patient->city }}</td>
+                                        <td>{{ $insuree->insurance_id }}</td>
                                         <td>
-                                            <a href="{{ route('insurers.show', $patient->insurer) }}">
-                                                {{ $patient->insurer->name }}
+                                            <a href="{{ route('insurers.show', $insuree->insurer) }}">
+                                                {{ $insuree->insurer->name }}
                                             </a>
                                         </td>
                                         <td class="td-actions text-right">
 
-                                            <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.show', $patient) }}">
+                                            <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.show', $insuree->patient) }}">
                                                 <i class="fas fa-eye "></i>
                                             </a>
-                                            <a class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.edit', $patient) }}">
+                                            <a class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.edit', $insuree->patient) }}">
                                                 <i class="fas fa-pencil-alt fa-2"></i>
                                             </a> 
                                             
                                         </td>
                                     </tr>
+                                    @foreach ($insuree->dependents as $dependent)
+                                    <tr class="table-info">
+                                        <td>{{ $dependent->patient->full_name }}</td>
+                                        <td>
+                                            <a href="mailto:{{$dependent->patient->email}}">{{$dependent->patient->email}}</a>
+                                        </td>
+                                        <td>{{ $dependent->patient->phone_number }}</td>
+                                        <td>{{ $dependent->patient->city }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="td-actions text-right">
+                                            <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.show', $dependent->patient) }}">
+                                                <i class="fas fa-eye "></i>
+                                            </a>
+                                            <a class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.edit', $dependent->patient) }}">
+                                                <i class="fas fa-pencil-alt fa-2"></i>
+                                            </a> 
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 @endforeach
                             </tbody>
                         </table>

@@ -57,7 +57,7 @@
                                 <span> {{ $patient->birth_date->format('d-m-Y') }} </span>
                             </div>
                             <div class="h4 font-weight-300">
-                                <span> {{ $patient->address }} </span>
+                                <span> {{ $patient->address() }} </span>
                             </div>
                             <div class="h4 font-weight-300">
                                 <span> {{ $patient->addressDetails() }} </span>

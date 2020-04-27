@@ -159,9 +159,17 @@ class ImportController extends Controller
     {
         $path = $request->file('csv_file')->getRealPath();
         $csv_data = array_map('str_getcsv', file($path));
-        $names = [];
-        //credito
+        $all_names = [];
         for ($i = 0; $i < 685; ++$i) {
+            $name = $csv_data[$i][4];
+            if (!empty($name)) {
+                array_push($all_names, $name);
+            }
+        }
+        $names = array_unique($all_names);
+        //array_push($names, $csv_data[1][4]);
+        //credito
+        /* for ($i = 0; $i < 685; ++$i) {
             $name = $csv_data[$i][0];
             array_push($names, $name);
         }
@@ -179,7 +187,7 @@ class ImportController extends Controller
         for ($i = 823; $i < 842; ++$i) {
             $name = $csv_data[$i][4];
             array_push($names, $name);
-        }
+        } */
         $count = count($names);
 
         return view('import.fieldsNames', compact('names', 'count'));

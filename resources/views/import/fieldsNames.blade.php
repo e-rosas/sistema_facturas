@@ -4,9 +4,7 @@
     <table class="table">
         @foreach ($names as $row)
             <tr>
-            @foreach ($row as $key => $value)
-                <td>{{ $value }}</td>
-            @endforeach
+            <td>{{ $row }}</td>
             </tr>
         @endforeach
     </table>

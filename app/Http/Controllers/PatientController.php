@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Dependent;
 use App\Http\Requests\PatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
+use App\Insuree;
 use App\Insurer;
 use App\Invoice;
 use App\Patient;
@@ -30,11 +32,17 @@ class PatientController extends Controller
             $search = $request['search'];
         }
 
-        $patients = Patient::with('insurer')->whereLike(['full_name', 'insurance_id'], $search)
-            ->paginate($perPage)
-        ;
+        $insurees = Insuree::with('patient', 'insurer')->whereLike(['insurance_id', 'patient.full_name'], $search)->paginate($perPage);
 
-        return view('patients.index', compact('patients', 'search', 'perPage'));
+        foreach ($insurees as $insuree) {
+            $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->id)->get();
+        }
+
+        /* $patients = Patient::with('insurer')->whereLike(['full_name', 'insurance_id'], $search)
+            ->paginate($perPage)
+        ; */
+
+        return view('patients.index', compact('insurees', 'search', 'perPage'));
     }
 
     /**
