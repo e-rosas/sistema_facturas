@@ -73,7 +73,9 @@ class PatientController extends Controller
     public function store(PatientRequest $request)
     {
         $validated = $request->validated();
+        print_r($validated);
         $validated['full_name'] = $validated['last_name'].' '.$validated['name'];
+
         $patient = Patient::create($validated);
         if ($validated['insured'] > 0) {
             $insuree = new Insuree();
@@ -117,7 +119,7 @@ class PatientController extends Controller
         if ($patient->insured) {
             $insurers = Insurer::take(10)->get();
 
-            return view('patients.create', compact('insurers'));
+            return view('patients.edit', compact('patient', 'insurers'));
         }
 
         return view('patients.edit', compact('patient'));

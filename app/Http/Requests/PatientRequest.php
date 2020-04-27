@@ -24,7 +24,7 @@ class PatientRequest extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required|max:250',
+            'full_name' => 'max:250',
             'birth_date' => 'date',
             'status' => 'max:255',
             'gender' => 'max:255',
@@ -42,8 +42,8 @@ class PatientRequest extends FormRequest
             'name' => 'required|min:2|max:100',
             'insurer_id' => 'numeric',
             'insurance_id' => 'max:50',
-            'insuree_id' => 'numeric',
-            'relationship' => 'numeric',
+            'insuree_id' => 'max:10',
+            'relationship' => 'max:10',
         ];
     }
 }

@@ -33,7 +33,9 @@
                             <div class="input-group-prepend">
                                 <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                             </div>
-                            <input name="birth_date" id="input-birth_date" class="form-control form-control-alternative{{ $errors->has('birth_date') ? ' is-invalid' : '' }}"  type="date" required>
+                            <input name="birth_date" id="input-birth_date" 
+                                class="form-control form-control-alternative{{ $errors->has('birth_date') ? ' is-invalid' : '' }}"  
+                                type="date" required value="{{ old('birth_date') }}">
                         </div>
                         @if ($errors->has('birth_date'))
                             <span class="invalid-feedback" role="alert">
@@ -119,8 +121,9 @@
                     <div class="col-md-4">
                         <label class="form-control-label" for="input-occupation">Ocupación</label>
                         <select id='input-occupation' class="custom-select" name="occupation"> 
-                            <option value='2'>Soltero</option>
-                            <option value='1'>Casado</option>
+                            <option value='1'>Empleado</option>
+                            <option value='2'>Estudiante</option>
+                            <option value='3'>Estudiante tiempo parcial</option>
                             <option value='0'>Otro</option>
                         </select>
                     </div>
@@ -153,7 +156,7 @@
                     <div class="col-md-2 col-auto form-group{{ $errors->has('deductible') ? ' has-danger' : '' }}">
                         <label class="form-control-label" for="input-deductible">Deducible</label>
                         <input type="number" name="deductible" id="input-deductible" class="form-control form-control-alternative{{ $errors->has('deductible') ? ' is-invalid' : '' }}" 
-                        placeholder="0" value="0">
+                        placeholder="0" value="{{ old('deductible') }}">
                 
                         @if ($errors->has('deductible'))
                             <span class="invalid-feedback" role="alert">

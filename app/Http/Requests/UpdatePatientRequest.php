@@ -24,7 +24,6 @@ class UpdatePatientRequest extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required|max:250',
             'birth_date' => 'date',
             'status' => 'max:255',
             'gender' => 'max:255',
@@ -33,7 +32,7 @@ class UpdatePatientRequest extends FormRequest
             'street_number' => 'max:255',
             'city' => 'max:255',
             'state' => 'max:255',
-            'postal_code' => 'digits:5',
+            'zip_code' => 'digits:5',
             'phone_number' => 'max:255',
             'email' => 'max:255',
             'deductible' => 'numeric|between:0,999999999.999',
