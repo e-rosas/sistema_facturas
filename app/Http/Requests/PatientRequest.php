@@ -40,6 +40,10 @@ class PatientRequest extends FormRequest
             'deductible' => 'numeric|between:0,999999999.999',
             'last_name' => 'required|max:80',
             'name' => 'required|min:2|max:100',
+            'insurer_id' => 'numeric',
+            'insurance_id' => 'max:50',
+            'insuree_id' => 'numeric',
+            'relationship' => 'numeric',
         ];
     }
 }

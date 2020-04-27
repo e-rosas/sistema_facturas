@@ -16,7 +16,7 @@ class CreateDependentsTable extends Migration
             $table->unsignedBigInteger('insuree_id');
             $table->tinyInteger('relationship')->default(0);
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
-            $table->foreign('insuree_id')->references('id')->on('insurees')->onDelete('cascade');
+            $table->foreign('insuree_id')->references('patient_id')->on('insurees')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,10 +13,10 @@ class CreateInsureesTable extends Migration
     {
         Schema::create('insurees', function (Blueprint $table) {
             $table->unsignedBigInteger('patient_id')->primary();
-            $table->unsignedInteger('insurer_id');
-            $table->string('insurance_id')->unique();
-            $table->foreign('patient_id')->references('id')->on('patients');
-            $table->foreign('insurer_id')->references('id')->on('insurers');
+            $table->unsignedBigInteger('insurer_id');
+            $table->string('insurance_id', 50)->unique();
+            $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
+            $table->foreign('insurer_id')->references('id')->on('insurers')->cascadeOnDelete();
             $table->timestamps();
         });
     }

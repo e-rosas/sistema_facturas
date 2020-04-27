@@ -50,11 +50,17 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $insurers = Insurer::take(10)->get();
+        $insuree = 0;
+        if ($request->insuree > 0) {
+            $insuree = 1;
+            $insurers = Insurer::take(10)->get();
 
-        return view('patients.create', compact('insurers'));
+            return view('patients.create', compact('insurers', 'insuree'));
+        }
+
+        return view('patients.create', compact('insuree'));
     }
 
     /**
@@ -67,7 +73,21 @@ class PatientController extends Controller
     public function store(PatientRequest $request)
     {
         $validated = $request->validated();
-        Patient::create($validated);
+        $validated['full_name'] = $validated['last_name'].' '.$validated['name'];
+        $patient = Patient::create($validated);
+        if ($validated['insured'] > 0) {
+            $insuree = new Insuree();
+            $insuree->patient_id = $patient->id;
+            $insuree->insurer_id = $validated['insurer_id'];
+            $insuree->insurance_id = $validated['insurance_id'];
+            $insuree->save();
+        } else {
+            $dependent = new Dependent();
+            $dependent->patient_id = $patient->id;
+            $dependent->insuree_id = $validated['insuree_id'];
+            $dependent->relationship = $validated['relationship'];
+            $dependent->save();
+        }
 
         return redirect()->route('patients.index')->withStatus(__('Paciente registrado exitosamente.'));
     }
@@ -94,9 +114,13 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        $insurers = Insurer::get();
+        if ($patient->insured) {
+            $insurers = Insurer::take(10)->get();
 
-        return view('patients.edit', compact('patient', 'insurers'));
+            return view('patients.create', compact('insurers'));
+        }
+
+        return view('patients.edit', compact('patient'));
     }
 
     /**
@@ -109,8 +133,15 @@ class PatientController extends Controller
     public function update(Patient $patient, UpdatePatientRequest $request)
     {
         $validated = $request->validated();
-
         $patient->fill($validated);
+        if ($patient->insured) {
+            $patient->insuree->insurer_id = $validated['insurer_id'];
+            $patient->insuree->insurance_id = $validated['insurance_id'];
+            $patient->insuree->save();
+        } else {
+            $patient->dependent->relationship = $validated['relationship'];
+            $patient->dependent->save();
+        }
         $patient->save();
 
         return redirect()->route('patients.index')->withStatus(__('Datos de paciente modificados exitosamente.'));

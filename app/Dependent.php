@@ -21,4 +21,25 @@ class Dependent extends Model
     {
         return $this->belongsTo('App\Insuree');
     }
+
+    public function relationship()
+    {
+        switch ($this->relationship) {
+            case 0:
+                return 'Otro.';
+
+                break;
+            case 1:
+                return 'Hijo(a).';
+
+                break;
+            case 2:
+                return 'Esposo(a)';
+
+                break;
+            default:
+                // code...
+                break;
+        }
+    }
 }

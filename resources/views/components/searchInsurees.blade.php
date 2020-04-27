@@ -1,9 +1,7 @@
 <!-- For defining autocomplete -->
-<div class="col-auto">
   <select id='insuree_id' class="custom-select form-control{{ $errors->has('insuree_id') ? ' is-invalid' : '' }}" name="insuree_id"> 
-    <option value='0'>{{ __('Select insuree') }}</option>
+    <option value='0'>Seleccionar asegurado</option>
   </select>
-</div>
 
 @push('js')
 <!-- Script -->

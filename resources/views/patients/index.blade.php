@@ -13,7 +13,31 @@
                                 <h3 class="mb-0">Pacientes</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('patients.create') }}" class="btn btn-sm btn-primary">Registrar paciente</a>
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Registrar paciente
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                            {{--  <form action="{{ route('beneficiary.destroy', $beneficiary) }}" method="post">
+                                                @csrf
+                                                @method('delete')
+                                                
+                                                <a class="dropdown-item" href="{{ route('beneficiary.edit', $beneficiary) }}">{{ __('Edit') }}</a>
+                                                <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this beneficiary?") }}') ? this.parentElement.submit() : ''">
+                                                    {{ __('Delete') }}
+                                                </button>
+                                            </form>   --}}  
+                                            <form method="GET" action="{{ route('patients.create') }}">
+                                                <input type="hidden" name="insuree" value="0">
+                                                <button type="submit" class="dropdown-item">Dependiente</button>
+                                            </form>
+                                            <form method="GET" action="{{ route('patients.create') }}">
+                                                <input type="hidden" name="insuree" value="1">
+                                                <button type="submit" class="dropdown-item">Asegurado</button>
+                                            </form>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

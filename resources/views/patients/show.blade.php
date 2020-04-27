@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => 'Pacientes'])
 
 @section('content')
-    @include('layouts.headers.header', ['title' => $patient->full_name, 'description' => $patient->insurance_id ])
+    @include('layouts.headers.header', ['title' => $patient->full_name])
 
     <div class="container-fluid mt--7">
         <div class="row">

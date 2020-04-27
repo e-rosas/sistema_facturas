@@ -23,46 +23,55 @@
                             @csrf
                             @include('patients.partials.register')
                         <div class="form-row">
-                            {{--  deductible  --}}
-                            <div class="col-md-4 col-auto form-group{{ $errors->has('deductible') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="input-deductible">Deducible</label>
-                                <input type="numeric" name="deductible" id="input-deductible" class="form-control form-control-alternative{{ $errors->has('deductible') ? ' is-invalid' : '' }}" 
-                                placeholder="0" value="0">
+                            
+                        </div>
+                        @if ($insuree)
+                            <div class="form-row">
+                                <input type="hidden" name="insured" value=1>
+                                <div class="form-group col-md-6 col-auto">
+                                    <label for="insurer_id" class="col-auto col-form-label">Aseguranza</label>
+                                    <select class="custom-select form-control{{ $errors->has('insurer_id') ? ' is-invalid' : '' }}" name="insurer_id">
+                                    @foreach($insurers as $insurer)
+                                        <option value="{{ $insurer->id }}">{{ $insurer->name }}</option>
+                                    @endforeach
+                                    </select>                  
+                                    @if ($errors)
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('insurer_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="form-group col-md-6 col-auto">
+                                    <label for="insurance_id" class="col-auto col-form-label">ID Aseguranza</label>
+                                    <input type="text" name="insurance_id" id="input-insurance_id" class="form-control form-control-alternative{{ $errors->has('insurance_id') ? ' is-invalid' : '' }}" placeholder="ID Aseguranza" value="{{ old('insurance_id') }}" required>                 
+                                    @if ($errors)
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('insurance_id') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                {{-- <div class="form-group col-auto text-right">
+                                    <a href="{{ route('insurers.create') }}" class="btn btn-sm btn-primary">{{ __('Add Insurer') }}</a>
+                                </div> --}}
+                            </div>
+                        @else
+                            <div class="form-row">
+                                <input type="hidden" name="insured" value=0>
+                                <div class="col-lg-8 form-group">
+                                    <label for="insuree_id" class="col-auto col-form-label">Asegurado</label>
+                                    @include('components.searchInsurees')
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="form-control-label" for="input-status">Relación</label>
+                                    <select id='input-relationship' class="custom-select" name="relationship"> 
+                                        <option value='2'>Esposo(a)</option>
+                                        <option value='1'>Hijo(a)</option>
+                                        <option value='0'>Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
                         
-                                @if ($errors->has('deductible'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('deductible') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 col-auto">
-                                <label for="insurer_id" class="col-auto col-form-label">Aseguranza</label>
-                                <select class="custom-select form-control{{ $errors->has('insurer_id') ? ' is-invalid' : '' }}" name="insurer_id">
-                                @foreach($insurers as $insurer)
-                                    <option value="{{ $insurer->id }}">{{ $insurer->name }}</option>
-                                @endforeach
-                                </select>                  
-                                @if ($errors)
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('insurer_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group col-md-6 col-auto">
-                                <label for="insurance_id" class="col-auto col-form-label">ID Aseguranza</label>
-                                <input type="text" name="insurance_id" id="input-insurance_id" class="form-control form-control-alternative{{ $errors->has('insurance_id') ? ' is-invalid' : '' }}" placeholder="ID Aseguranza" value="{{ old('insurance_id') }}" required>                 
-                                @if ($errors)
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('insurance_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            {{-- <div class="form-group col-auto text-right">
-                                <a href="{{ route('insurers.create') }}" class="btn btn-sm btn-primary">{{ __('Add Insurer') }}</a>
-                            </div> --}}
-                        </div>
                         <div class="pl-lg-4">
                             <button type="submit" class="btn btn-success mt-4 btn-block">Guardar</button>
                         </div>

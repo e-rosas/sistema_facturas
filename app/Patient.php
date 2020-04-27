@@ -47,6 +47,16 @@ class Patient extends Model
         return $this->hasOne('App\PersonStats');
     }
 
+    public function insuree()
+    {
+        return $this->hasOne('App\Insuree');
+    }
+
+    public function dependent()
+    {
+        return $this->hasOne('App\Dependent');
+    }
+
     public function gender()
     {
         switch ($this->gender) {
