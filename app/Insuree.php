@@ -11,6 +11,7 @@ class Insuree extends Model
         'patient_id',
         'insurer_id',
         'insurance_id',
+        'nss',
     ];
 
     public function patient()

@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/import_parse_rates', 'ImportController@parseImportRates')->name('import.parse.rates');
     Route::post('/import_process_rates', 'ImportController@processImportRates')->name('import.process.rates');
 
-    Route::get('/import_names', 'ImportController@getImportNames')->name('import.names');
-    Route::post('/import_parse_names', 'ImportController@parseImportNames')->name('import.parse.names');
-    Route::post('/import_process_names', 'ImportController@processImportNames')->name('import.process.names');
+    Route::get('/import_patients', 'ImportController@getImportPatients')->name('import.patients');
+    Route::post('/import_parse_patients', 'ImportController@parseImportPatients')->name('import.parse.patients');
+    Route::post('/import_process_patients', 'ImportController@processImportPatients')->name('import.process.patients');
 });

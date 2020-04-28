@@ -44,6 +44,7 @@ class PatientRequest extends FormRequest
             'insurance_id' => 'max:50',
             'insuree_id' => 'max:10',
             'relationship' => 'max:10',
+            'nss' => 'max:20',
         ];
     }
 }

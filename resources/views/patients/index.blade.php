@@ -82,7 +82,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Nombre</th>
-                                    <th scope="col">Correo</th>
+                                    <th scope="col">NSS</th>
                                     <th scope="col">Teléfono</th>
                                     <th scope="col">Ciudad</th>
                                     <th scope="col">ID de Aseguranza</th>
@@ -94,9 +94,7 @@
                                 @foreach ($insurees as $insuree)
                                     <tr>
                                         <td>{{ $insuree->patient->full_name }}</td>
-                                        <td>
-                                            <a href="mailto:{{$insuree->patient->email}}">{{$insuree->patient->email}}</a>
-                                        </td>
+                                        <td>{{ $insuree->nss }}</td>
                                         <td>{{ $insuree->patient->phone_number }}</td>
                                         <td>{{ $insuree->patient->city }}</td>
                                         <td>{{ $insuree->insurance_id }}</td>

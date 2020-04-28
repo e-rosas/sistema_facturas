@@ -25,7 +25,7 @@
                             @if ($insuree)
                                 <div class="form-row">
                                     <input type="hidden" name="insured" value=1>
-                                    <div class="form-group col-md-6 col-auto">
+                                    <div class="form-group col-md-5 col-auto">
                                         <label for="insurer_id" class="col-auto col-form-label">Aseguranza</label>
                                         <select class="custom-select form-control{{ $errors->has('insurer_id') ? ' is-invalid' : '' }}" name="insurer_id">
                                         @foreach($insurers as $insurer)
@@ -38,12 +38,21 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-6 col-auto">
-                                        <label for="insurance_id" class="col-auto col-form-label">ID Aseguranza</label>
+                                    <div class="form-group col-md-4 col-auto">
+                                        <label for="input-insurance_id" class="col-auto col-form-label">ID Aseguranza</label>
                                         <input type="text" name="insurance_id" id="input-insurance_id" class="form-control form-control-alternative{{ $errors->has('insurance_id') ? ' is-invalid' : '' }}" placeholder="ID Aseguranza" value="{{ old('insurance_id') }}" required>                 
                                         @if ($errors)
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('insurance_id') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="form-group col-md-3 col-auto">
+                                        <label for="input-nss" class="col-auto col-form-label">No. Seguro Social</label>
+                                        <input type="text" name="nss" id="input-nss" class="form-control form-control-alternative{{ $errors->has('nss') ? ' is-invalid' : '' }}" placeholder="ID Aseguranza" value="{{ old('nss') }}" required>                 
+                                        @if ($errors)
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('nss') }}</strong>
                                             </span>
                                         @endif
                                     </div>

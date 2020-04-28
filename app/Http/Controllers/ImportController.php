@@ -125,9 +125,9 @@ class ImportController extends Controller
         return view('import.fieldsRates', compact('rates', 'count'));
     }
 
-    public function getImportNames()
+    public function getImportPatients()
     {
-        return view('import.importNames');
+        return view('import.importPatients');
     }
 
     public function parseImportDiagnoses(CsvImportRequest $request)
@@ -155,11 +155,12 @@ class ImportController extends Controller
         return view('import.fieldsDiagnoses', compact('diagnoses', 'count'));
     }
 
-    public function parseImportNames(CsvImportRequest $request)
+    public function parseImportPatients(CsvImportRequest $request)
     {
         $path = $request->file('csv_file')->getRealPath();
         $csv_data = array_map('str_getcsv', file($path));
-        $all_names = [];
+        $patients = $csv_data;
+        /* $all_names = [];
         for ($i = 0; $i < 685; ++$i) {
             $name = $csv_data[$i][4];
             if (!empty($name)) {
@@ -169,7 +170,7 @@ class ImportController extends Controller
         $names = array_unique($all_names);
         //array_push($names, $csv_data[1][4]);
         //credito
-        /* for ($i = 0; $i < 685; ++$i) {
+        for ($i = 0; $i < 685; ++$i) {
             $name = $csv_data[$i][0];
             array_push($names, $name);
         }
@@ -188,8 +189,8 @@ class ImportController extends Controller
             $name = $csv_data[$i][4];
             array_push($names, $name);
         } */
-        $count = count($names);
+        $count = count($patients);
 
-        return view('import.fieldsNames', compact('names', 'count'));
+        return view('import.fieldsPatients', compact('patients', 'count'));
     }
 }

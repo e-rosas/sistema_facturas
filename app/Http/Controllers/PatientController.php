@@ -32,7 +32,7 @@ class PatientController extends Controller
             $search = $request['search'];
         }
 
-        $insurees = Insuree::with('patient', 'insurer')->whereLike(['insurance_id', 'patient.full_name'], $search)->paginate($perPage);
+        $insurees = Insuree::with('patient', 'insurer')->whereLike(['nss', 'insurance_id', 'patient.full_name'], $search)->paginate($perPage);
 
         foreach ($insurees as $insuree) {
             $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->id)->get();
@@ -82,6 +82,7 @@ class PatientController extends Controller
             $insuree->patient_id = $patient->id;
             $insuree->insurer_id = $validated['insurer_id'];
             $insuree->insurance_id = $validated['insurance_id'];
+            $insuree->nss = $validated['nss'];
             $insuree->save();
         } else {
             $dependent = new Dependent();
