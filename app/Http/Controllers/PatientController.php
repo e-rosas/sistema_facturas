@@ -35,7 +35,7 @@ class PatientController extends Controller
         $insurees = Insuree::with('patient', 'insurer')->whereLike(['nss', 'insurance_id', 'patient.full_name'], $search)->paginate($perPage);
 
         foreach ($insurees as $insuree) {
-            $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->id)->get();
+            $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->patient_id)->get();
         }
 
         /* $patients = Patient::with('insurer')->whereLike(['full_name', 'insurance_id'], $search)

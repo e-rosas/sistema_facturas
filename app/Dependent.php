@@ -37,6 +37,10 @@ class Dependent extends Model
                 return 'Esposo(a)';
 
                 break;
+            case 3:
+                return 'Pendiente';
+
+                break;
             default:
                 // code...
                 break;

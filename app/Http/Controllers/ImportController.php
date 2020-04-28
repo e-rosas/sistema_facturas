@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Dependent;
 use App\Diagnosis;
 use App\Http\Requests\CsvImportRequest;
+use App\Insuree;
 use App\Item;
+use App\Patient;
 use App\Service;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -159,7 +162,46 @@ class ImportController extends Controller
     {
         $path = $request->file('csv_file')->getRealPath();
         $csv_data = array_map('str_getcsv', file($path));
-        $patients = $csv_data;
+
+        $patients = [];
+
+        $date = Carbon::today();
+        $lookup = true;
+        for ($i = 1455; $i < count($csv_data); ++$i) {
+            $patient = new Patient();
+            $patient->last_name = $csv_data[$i][2];
+            $patient->name = $csv_data[$i][3];
+            $patient->full_name = $patient->last_name.' '.$patient->name;
+            $patient->phone_number = $csv_data[$i][4];
+            $patient->gender = $this->gender($csv_data[$i][5]);
+            $patient->insured = 0;
+            $patient->birth_date = $date;
+            $patient->street = 'Calle pendiente';
+            $patient->street_number = 'No. de calle pendiente';
+            $patient->city = 'Ciudad pendiente';
+            $patient->state = 'CA';
+            $patient->zip_code = 00000;
+            $patient->email = 'Correo pendiente';
+            $patient->save();
+
+            $insuree = Insuree::where('nss', $csv_data[$i][6])->first();
+            if (!is_null($insuree)) {
+                $dependent = new Dependent();
+                $dependent->patient_id = $patient->id;
+                $dependent->insuree_id = $insuree->patient_id;
+                $dependent->relationship = 3;
+                $patient->nss = $insuree->nss;
+                $dependent->save();
+                array_push($patients, $patient);
+            }
+
+            /* $insuree = new Insuree();
+            $insuree->patient_id = $patient->id;
+            $insuree->insurer_id = 5;
+            $insuree->insurance_id = 'PENDIENTE'.$patient->name.$csv_data[$i][1];
+            $insuree->nss = $csv_data[$i][6];
+            $insuree->save(); */
+        }
         /* $all_names = [];
         for ($i = 0; $i < 685; ++$i) {
             $name = $csv_data[$i][4];
@@ -192,5 +234,14 @@ class ImportController extends Controller
         $count = count($patients);
 
         return view('import.fieldsPatients', compact('patients', 'count'));
+    }
+
+    private function gender($gender)
+    {
+        if ('M' == $gender) {
+            return 0;
+        }
+
+        return 1;
     }
 }
