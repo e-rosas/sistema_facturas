@@ -13,9 +13,14 @@
             
         </div>
         <div class="row">
-            @include('components.patientInfo', ['patient' => $invoice->patient])
-
-            @include('components.insurerInfo', ['insurer' => $invoice->patient->insurer])
+            @include('components.patientInfo', ['patient' => $invoice->patient, 'type' => 'Paciente'])
+            @if ($invoice->patient->insured)
+                @include('components.insurerInfo', ['insurer' => $invoice->patient->insurer])
+            @else
+                @include('components.patientInfo', ['patient' => $invoice->patient->insuree, 'type' => 'Asegurado'])
+                @include('components.insurerInfo', ['insurer' => $invoice->patient->insuree->insurer])
+            @endif
+            
         </div>
         <div class="row">
             {{--  Details  --}}

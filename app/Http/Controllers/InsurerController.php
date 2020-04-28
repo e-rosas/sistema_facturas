@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InsurerRequest;
 use App\Http\Requests\UpdateInsurer;
+use App\Insuree;
 use App\Insurer;
 use Illuminate\Http\Request;
 
@@ -53,12 +54,19 @@ class InsurerController extends Controller
     {
         $invoices = [];
 
-        foreach ($insurer->patients as $patient) {
-            foreach ($patient->invoices as $invoice) {
+        $insurees = Insuree::with('patient', 'patient.invoices')->where('insurer_id', $insurer->id)->get();
+        foreach ($insurees as $insuree) {
+            foreach ($insuree->patient->invoices as $invoice) {
                 $invoice->load('payments', 'credit');
                 $invoices[] = $invoice;
             }
         }
+        /* foreach ($insurer->insurees as $insuree) {
+            foreach ($insuree->patient->invoices as $invoice) {
+                $invoice->load('payments', 'credit');
+                $invoices[] = $invoice;
+            }
+        } */
 
         return view('insurers.show', compact('insurer', 'invoices'));
     }

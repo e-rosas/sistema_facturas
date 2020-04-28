@@ -45,24 +45,24 @@ class InvoiceController extends Controller
         if ($type < 3 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where([['type', $type], ['status', $status]])
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id', 'comments'], $search)
+                ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->paginate($perPage)
         ;
         } elseif ($type >= 3 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where('status', $status)
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id', 'comments'], $search)
+                ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->paginate($perPage)
         ;
         } elseif ($type < 3 && $status >= 6) {
             $invoices = Invoice::with('patient')
                 ->where('type', $type)
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id', 'comments'], $search)
+                ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->paginate($perPage)
         ;
         } else {
             $invoices = Invoice::with('patient')
-                ->whereLike(['number', 'code', 'patient.full_name', 'patient.insurance_id', 'comments'], $search)
+                ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->paginate($perPage)
             ;
         }

@@ -61,11 +61,11 @@ class Patient extends Model
     {
         switch ($this->gender) {
             case 0:
-                return 'Masculino.';
+                return 'Masculino';
 
                 break;
             case 1:
-                return 'Femenino.';
+                return 'Femenino';
 
                 break;
             default:
@@ -78,11 +78,11 @@ class Patient extends Model
     {
         switch ($this->status) {
             case 0:
-                return 'Otro.';
+                return 'Otro';
 
                 break;
             case 1:
-                return 'Casado.';
+                return 'Casado';
 
                 break;
             case 2:
@@ -99,19 +99,19 @@ class Patient extends Model
     {
         switch ($this->occupation) {
             case 0:
-                return 'Otro.';
+                return 'Otro';
 
                 break;
             case 1:
-                return 'Empleado.';
+                return 'Empleado';
 
                 break;
             case 2:
-                return 'Estudiante.';
+                return 'Estudiante';
 
                 break;
             case 3:
-                return 'Estudiante tiempo parcial.';
+                return 'Estudiante tiempo parcial';
 
                 break;
             default:

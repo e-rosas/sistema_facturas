@@ -3,7 +3,7 @@
         <div class="card-header bg-primary border-0">
             <div class="row">
                 <div class="col-8 col-auto">
-                    <h3 style="color:white" class="card-title text-uppercase  mb-0">Paciente</h3>
+                    <h3 style="color:white" class="card-title text-uppercase  mb-0">{{ $type ?? ''}}</h3>
                 </div>
             </div>
         </div>

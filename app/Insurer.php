@@ -22,8 +22,8 @@ class Insurer extends Model
         return $this->city.', '.$this->state.'.  '.$this->postal_code;
     }
 
-    public function patients()
+    public function insurees()
     {
-        return $this->hasMany('App\Patient');
+        return $this->hasMany('App\Insuree');
     }
 }
