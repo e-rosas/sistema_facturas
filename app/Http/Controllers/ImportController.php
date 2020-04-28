@@ -166,7 +166,6 @@ class ImportController extends Controller
         $patients = [];
 
         $date = Carbon::today();
-        $lookup = true;
         for ($i = 1455; $i < count($csv_data); ++$i) {
             $patient = new Patient();
             $patient->last_name = $csv_data[$i][2];
@@ -182,7 +181,7 @@ class ImportController extends Controller
             $patient->state = 'CA';
             $patient->zip_code = 00000;
             $patient->email = 'Correo pendiente';
-            $patient->save();
+            //$patient->save();
 
             $insuree = Insuree::where('nss', $csv_data[$i][6])->first();
             if (!is_null($insuree)) {
@@ -191,7 +190,7 @@ class ImportController extends Controller
                 $dependent->insuree_id = $insuree->patient_id;
                 $dependent->relationship = 3;
                 $patient->nss = $insuree->nss;
-                $dependent->save();
+                //$dependent->save();
                 array_push($patients, $patient);
             }
 
@@ -234,6 +233,72 @@ class ImportController extends Controller
         $count = count($patients);
 
         return view('import.fieldsPatients', compact('patients', 'count'));
+    }
+
+    public function getImportInvoices()
+    {
+        return view('import.importInvoices');
+    }
+
+    public function parseImportInvoices(CsvImportRequest $request)
+    {
+        $path = $request->file('csv_file')->getRealPath();
+        $csv_data = array_map('str_getcsv', file($path));
+
+        $invoices = $csv_data;
+        $all_names = [];
+        for ($i = 0; $i < 685; ++$i) {
+            $name = $csv_data[$i][4];
+            if (!empty($name)) {
+                array_push($all_names, $name);
+            }
+        }
+        $patients = [];
+        $names = array_unique($all_names);
+        $not_found = [];
+        foreach ($names as $name) {
+            $patient = Patient::whereLike('full_name', $name)->first();
+            if (!is_null($patient)) {
+                //array_push($patient_names, $patient->full_name);
+                array_push($patients, $patient);
+            } else {
+                array_push($not_found, $name);
+            }
+        }
+        //$not_found = array_diff_assoc($names, $patient_names);
+        /* $all_names = [];
+        for ($i = 0; $i < 685; ++$i) {
+            $name = $csv_data[$i][4];
+            if (!empty($name)) {
+                array_push($all_names, $name);
+            }
+        }
+        $names = array_unique($all_names);
+        //array_push($names, $csv_data[1][4]);
+        //credito
+        for ($i = 0; $i < 685; ++$i) {
+            $name = $csv_data[$i][0];
+            array_push($names, $name);
+        }
+        //contado, con fecha
+        for ($i = 686; $i < 765; ++$i) {
+            $name = $csv_data[$i][4];
+            array_push($names, $name);
+        }
+        //contado, sin fecha
+        for ($i = 765; $i < 823; ++$i) {
+            $name = $csv_data[$i][3];
+            array_push($names, $name);
+        }
+        //contado, con fecha de nuevo
+        for ($i = 823; $i < 842; ++$i) {
+            $name = $csv_data[$i][4];
+            array_push($names, $name);
+        } */
+        $count = count($names);
+        $count2 = count($patients);
+
+        return view('import.fieldsInvoices', compact('patients', 'count2', 'count', 'not_found'));
     }
 
     private function gender($gender)
