@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 class Invoice extends Model
 {
     use Notifiable;
+    public $person;
+    public $pagos = [];
+    public $nota;
     public $fillable = [
         'series',
         'number',
@@ -82,6 +85,11 @@ class Invoice extends Model
     }
 
     public function getTotalAttribute($value)
+    {
+        return number_format($value, 4);
+    }
+
+    public function getTotalWithDiscountsAttribute($value)
     {
         return number_format($value, 4);
     }

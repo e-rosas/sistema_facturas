@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Credit;
 use App\Dependent;
 use App\Diagnosis;
 use App\Http\Requests\CsvImportRequest;
@@ -9,9 +10,11 @@ use App\Insuree;
 use App\Invoice;
 use App\Item;
 use App\Patient;
+use App\Payment;
 use App\Service;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ImportController extends Controller
 {
@@ -247,30 +250,84 @@ class ImportController extends Controller
         $csv_data = array_map('str_getcsv', file($path));
 
         $invoices = [];
+        $not_found = [];
         //$all_names = [];
         //0-28 OCT
-        for ($i = 0; $i < 76; ++$i) {
+        for ($i = 0; $i < 685; ++$i) {
             $name = $csv_data[$i][4];
             if (!empty($name)) {
                 $patientss = Patient::where('full_name', $name)->get();
                 if (1 == count($patientss)) {
                     $invoice = new Invoice();
+                    $invoice->person = $patientss[0];
                     $invoice->series = $csv_data[$i][1];
                     $invoice->number = $csv_data[$i][2];
                     $invoice->code = 'PENDING'.$csv_data[$i][2];
                     $invoice->concept = $csv_data[$i][3];
                     $invoice->currency = 'USD';
+                    $invoice->comments = 'Importada';
                     $invoice->status = 3;
                     $invoice->type = 2;
                     $invoice->patient_id = $patientss[0]->id;
                     $invoice->date = Carbon::createFromFormat('d/m/Y', $csv_data[$i][0]);
-                    $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5]);
-                    $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][9]);
+                    if (!empty($csv_data[$i][6])) { //total in thousands
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5].$csv_data[$i][6]);
+                        if (strlen($csv_data[$i][9]) <= 6) {
+                            $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][11]);
+                        } else {
+                            $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][10]);
+                        }
+                    } else {
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5]);
+                        $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][9]);
+                    }
+                    $n = $i + 1;
+                    $next_concept = $csv_data[$n][3];
+
+                    $length = strlen($next_concept);
+                    while ($length < 27) {
+                        //Log::debug($csv_data[$n]);
+                        $date = Carbon::createFromFormat('d/m/Y', $csv_data[$n][0]);
+                        if (1 == strlen($csv_data[$n][6])) {
+                            $amount = (float) str_replace(',', '', $csv_data[$n][6].$csv_data[$n][7]);
+                            $rate = (float) str_replace(',', '', $csv_data[$n][8]);
+                        } else {
+                            $amount = (float) str_replace(',', '', $csv_data[$n][6]);
+                            $rate = (float) str_replace(',', '', $csv_data[$n][7]);
+                        }
+                        if (26 == $length) {
+                            //payment
+                            $payment = new Payment();
+                            $payment->date = $date;
+                            $payment->amount_paid = $amount;
+                            $payment->exchange_rate = $rate;
+                            $payment->method = 0;
+                            $payment->concept = 0;
+                            $payment->number = $n;
+                            $payment->comments = 'importado';
+                            $invoice->pagos[] = $payment;
+                        } else {
+                            $credit = new Credit();
+                            $credit->date = $date;
+                            $credit->amount_due = $amount;
+                            $credit->comments = 'importado';
+                            $credit->exchange_rate = $rate;
+                            $credit->number = $n;
+                            $credit->series = 'NC';
+                            $invoice->nota = $credit;
+                        }
+
+                        //credit
+                        ++$n;
+                        $next_concept = $csv_data[$n][3];
+                        $length = strlen($next_concept);
+                    }
+                    //R: 26
+                    //c: 20
                     array_push($invoices, $invoice);
                 } else {
                     array_push($not_found, $name);
                 }
-                array_push($all_names, $name);
             }
         }
         /* $patients = [];
@@ -320,10 +377,10 @@ class ImportController extends Controller
             $name = $csv_data[$i][4];
             array_push($names, $name);
         } */
-        $count = count($names);
-        $count2 = count($patients);
 
-        return view('import.fieldsInvoices', compact('patients', 'count2', 'count', 'not_found'));
+        $count = count($invoices);
+
+        return view('import.fieldsInvoices', compact('invoices', 'count'));
     }
 
     private function gender($gender)
