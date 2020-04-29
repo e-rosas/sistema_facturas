@@ -6,6 +6,7 @@ use App\Dependent;
 use App\Diagnosis;
 use App\Http\Requests\CsvImportRequest;
 use App\Insuree;
+use App\Invoice;
 use App\Item;
 use App\Patient;
 use App\Service;
@@ -166,7 +167,7 @@ class ImportController extends Controller
         $patients = [];
 
         $date = Carbon::today();
-        for ($i = 1455; $i < count($csv_data); ++$i) {
+        for ($i = 1455; $i < count($csv_data); ++$i) { //1455
             $patient = new Patient();
             $patient->last_name = $csv_data[$i][2];
             $patient->name = $csv_data[$i][3];
@@ -245,26 +246,50 @@ class ImportController extends Controller
         $path = $request->file('csv_file')->getRealPath();
         $csv_data = array_map('str_getcsv', file($path));
 
-        $invoices = $csv_data;
-        $all_names = [];
-        for ($i = 0; $i < 685; ++$i) {
+        $invoices = [];
+        //$all_names = [];
+        //0-28 OCT
+        for ($i = 0; $i < 76; ++$i) {
             $name = $csv_data[$i][4];
             if (!empty($name)) {
+                $patientss = Patient::where('full_name', $name)->get();
+                if (1 == count($patientss)) {
+                    $invoice = new Invoice();
+                    $invoice->series = $csv_data[$i][1];
+                    $invoice->number = $csv_data[$i][2];
+                    $invoice->code = 'PENDING'.$csv_data[$i][2];
+                    $invoice->concept = $csv_data[$i][3];
+                    $invoice->currency = 'USD';
+                    $invoice->status = 3;
+                    $invoice->type = 2;
+                    $invoice->patient_id = $patientss[0]->id;
+                    $invoice->date = Carbon::createFromFormat('d/m/Y', $csv_data[$i][0]);
+                    $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5]);
+                    $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][9]);
+                    array_push($invoices, $invoice);
+                } else {
+                    array_push($not_found, $name);
+                }
                 array_push($all_names, $name);
             }
         }
-        $patients = [];
+        /* $patients = [];
         $names = array_unique($all_names);
         $not_found = [];
         foreach ($names as $name) {
-            $patient = Patient::whereLike('full_name', $name)->first();
+            $patientss = Patient::where('full_name', $name)->get();
+            if (1 == count($patientss)) {
+                array_push($patients, $patientss[0]);
+            } else {
+                array_push($not_found, $name);
+            }
             if (!is_null($patient)) {
                 //array_push($patient_names, $patient->full_name);
                 array_push($patients, $patient);
             } else {
                 array_push($not_found, $name);
             }
-        }
+        } */
         //$not_found = array_diff_assoc($names, $patient_names);
         /* $all_names = [];
         for ($i = 0; $i < 685; ++$i) {
