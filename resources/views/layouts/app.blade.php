@@ -17,7 +17,12 @@
         <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
-        <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>
+        <script
+			  src="https://code.jquery.com/jquery-3.5.0.min.js"
+			  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+              crossorigin="anonymous">
+        </script>
+        {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}
         @stack('headjs')
     </head>
     <body class="{{ $class ?? '' }}">
