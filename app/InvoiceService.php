@@ -23,11 +23,13 @@ class InvoiceService extends Model
         'code',
         'quantity',
         'created_at',
+        'diagnosis_code',
     ];
     public static $rules = [
         'invoice_id' => 'required',
         'service_id' => 'required',
         'code' => 'max:255',
+        'diagnosis_code' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999',
         'tax' => 'numeric|required|between:0,999999999.999',
