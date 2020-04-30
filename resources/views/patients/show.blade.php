@@ -18,7 +18,7 @@
         <div class="row mt-5">
             <div class="col-xl-9">
                 <div class="card card-stats mb-4 mb-xl-0">
-                    @include('reports.partials.shortInvoicesTable', ['invoices' => $invoices])
+                    @include('reports.partials.shortInvoicesTable', ['invoices' => $invoices, 'invoices_totals'=>$invoices_totals])
                     {{-- <div class="card-body">
                         @include('components.personTab', ['invoices'=>$invoices, 'person_data'=>$insuree->person_data,
                             'stats'=>$stats, 'beneficiaries' => $beneficiaries])

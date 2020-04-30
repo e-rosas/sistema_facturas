@@ -10,7 +10,7 @@ class CalculateTotalsOfInvoices
     public $total_with_discounts = 0;
     public $amount_due = 0;
     public $amount_paid = 0;
-    public $subtotal = 0;
+    public $subtotal_m = 0;
     public $IVA = 0;
     public $total_m = 0;
     private $invoices = [];
@@ -85,10 +85,25 @@ class CalculateTotalsOfInvoices
     public function totalsShort() //stats on report index (shortTable)
     {
         foreach ($this->invoices as $invoice) {
-            $this->subtotal += (float) str_replace(',', '', $invoice->subtotal());
+            $this->subtotal_m += (float) str_replace(',', '', $invoice->subtotal());
             $this->IVA += (float) str_replace(',', '', $invoice->IVA());
-            $this->total_m += (float) str_replace(',', '', $invoice->tota());
+            $this->total_m += (float) str_replace(',', '', $invoice->total());
         }
+    }
+
+    public function getSubtotalM()
+    {
+        return number_format($this->subtotal_m, 3);
+    }
+
+    public function getIVA()
+    {
+        return number_format($this->IVA, 3);
+    }
+
+    public function getTotalM()
+    {
+        return number_format($this->total_m, 3);
     }
 
     public function getInvoicesCount()

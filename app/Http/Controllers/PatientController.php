@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CalculateTotalsOfInvoices;
 use App\Dependent;
 use App\Http\Requests\PatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
@@ -102,12 +103,13 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        $invoices = Invoice::with('services')
-            ->where('patient_id', $patient->id)
-            ->paginate(5)
-        ;
+        $invoices = Invoice::with('payments')
+            ->where('patient_id', $patient->id)->get();
 
-        return view('patients.show', compact('patient', 'invoices'));
+        $invoices_totals = new CalculateTotalsOfInvoices($invoices);
+        $invoices_totals->totalsShort();
+
+        return view('patients.show', compact('patient', 'invoices', 'invoices_totals'));
     }
 
     /**

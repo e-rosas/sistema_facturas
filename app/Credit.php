@@ -25,7 +25,7 @@ class Credit extends Model
 
     public function total()
     {
-        $mxn = $this->amount_due * $this->exchange_rate;
+        $mxn = (float) str_replace(',', '', $this->amount_due) * (float) str_replace(',', '', $this->exchange_rate);
 
         return number_format($mxn, 4);
     }

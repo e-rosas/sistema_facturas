@@ -49,9 +49,9 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4" class="text-right">Subtotal: </td>
-                <td>IVA: </td>
-                <td>Total: </td>
+                <td colspan="4" class="text-right">Subtotal: {{ $invoices_totals->getSubtotalM() }}</td>
+                <td>IVA:  {{ $invoices_totals->getIVA() }}</td>
+                <td>Total:  {{ $invoices_totals->getTotalM() }}</td>
             </tr>
         </tfoot>
     </table>

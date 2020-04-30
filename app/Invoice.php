@@ -111,28 +111,28 @@ class Invoice extends Model
 
     public function subtotal()
     {
-        $mxn = $this->sub_total_discounted * $this->exchange_rate;
+        $mxn = (float) str_replace(',', '', $this->sub_total_discounted) * (float) str_replace(',', '', $this->exchange_rate);
 
         return number_format($mxn, 4);
     }
 
     public function IVA()
     {
-        $mxn = $this->dtax * $this->exchange_rate;
+        $mxn = (float) str_replace(',', '', $this->dtax) * (float) str_replace(',', '', $this->exchange_rate);
 
         return number_format($mxn, 4);
     }
 
     public function total()
     {
-        $mxn = $this->total_with_discounts * $this->exchange_rate;
+        $mxn = (float) str_replace(',', '', $this->total_with_discounts) * (float) str_replace(',', '', $this->exchange_rate);
 
         return number_format($mxn, 4);
     }
 
     public function debe()
     {
-        $mxn = $this->amount_due * $this->exchange_rate;
+        $mxn = (float) str_replace(',', '', $this->amount_due) * (float) str_replace(',', '', $this->exchange_rate);
 
         return number_format($mxn, 4);
     }
