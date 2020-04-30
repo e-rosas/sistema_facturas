@@ -17,8 +17,8 @@
             @if ($invoice->patient->insured)
                 @include('components.insurerInfo', ['insurer' => $invoice->patient->insuree->insurer])
             @else
-                @include('components.patientInfo', ['patient' => $invoice->patient->insuree, 'type' => 'Asegurado'])
-                @include('components.insurerInfo', ['insurer' => $invoice->patient->insuree->insurer])
+                @include('components.patientInfo', ['patient' => $insuree->patient, 'type' => 'Asegurado'])
+                @include('components.insurerInfo', ['insurer' => $insuree->insurer])
             @endif
             
         </div>

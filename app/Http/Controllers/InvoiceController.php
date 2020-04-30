@@ -6,6 +6,7 @@ use App\Events\InvoiceEvent;
 use App\Http\Requests\InvoiceRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceStatsResource;
+use App\Insuree;
 use App\Invoice;
 use App\InvoiceService;
 use App\ItemService;
@@ -118,6 +119,15 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice)
     {
         $invoice = $invoice->load('services.service', 'patient', 'payments');
+
+        if (!$invoice->patient->insured) {
+            $insuree = Insuree::with('patient', 'insurer')
+                ->where('patient_id', $invoice->patient->dependent->insuree_id)
+                ->first()
+            ;
+
+            return view('invoices.show', compact('invoice', 'insuree'));
+        }
 
         return view('invoices.show', compact('invoice'));
     }
