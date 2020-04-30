@@ -103,7 +103,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        $invoices = Invoice::with('payments')
+        $invoices = Invoice::with('payments', 'patient', 'credit')
             ->where('patient_id', $patient->id)->get();
 
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);

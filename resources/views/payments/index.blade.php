@@ -76,7 +76,7 @@
 
                                         <td>{{ $payment->amount_paid }}</td>
                                         <td>{{ $payment->concept()}}</td>
-                                        <td>{{ $payment->method}}</td>
+                                        <td>{{ $payment->method()}}</td>
                                         {{-- <td class="td-actions text-right">
                                             <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $payment->id }})">
                                                     <i class="fas fa-pencil-alt fa-2 "></i>

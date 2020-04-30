@@ -73,6 +73,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('reports.index') }}">
+                        <i class="fas fa-file-invoice-dollar text-blue"></i> Reportes
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('payments.index') }}">
                         <i class="fas fa-dollar-sign text-green"></i> Pagos
                     </a>

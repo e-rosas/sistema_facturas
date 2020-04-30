@@ -86,8 +86,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                     </div>
-                    <input type="date" name="start_date" id="input-start_date" class="form-control"
-                    value="{{ $start->format('Y-m-d') }}" required>
+                    <input type="date" name="start" id="input-start" class="form-control"
+                    value="{{ $start->format('Y-m-d') }}">
                 </div>
             </div>
             {{--  end_date  --}}
@@ -96,8 +96,8 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                     </div>
-                    <input type="date" name="end_date" id="input-end_date" class="form-control"
-                    value="{{ $end->format('Y-m-d')  }}" required>
+                    <input type="date" name="end" id="input-end" class="form-control"
+                    value="{{ $end->format('Y-m-d')  }}">
                 </div>
             </div>
             <div class="col-md-2 col-auto">
@@ -135,7 +135,7 @@
                 </div>
                 <div class="card-footer py-4">
                     <nav class="d-flex justify-content-end" aria-label="...">
-                        {{ $invoices->appends(['start_date' =>$start, 'end_date' => $end, 'perPage' => $perPage])->links() }}
+                        {{ $invoices->appends(['start' =>$start->format('Y-m-d'), 'end' => $end->format('Y-m-d'), 'perPage' => $perPage])->links() }}
                     </nav>
                 </div>
             </div>

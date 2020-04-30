@@ -13,9 +13,9 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        if (!is_null($request['start_date'] && !is_null($request['end_date']))) {
-            $start = Carbon::parse($request->start_date);
-            $end = Carbon::parse($request->end_date);
+        if (!is_null($request['start'] && !is_null($request['end']))) {
+            $start = Carbon::parse($request->start);
+            $end = Carbon::parse($request->end);
         } else {
             $end = Carbon::today()->addDay();
             $start = Carbon::today()->subMonths(1);
