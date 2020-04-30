@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\VerifyPaymentAmount;
 use App\Credit;
 use App\Dependent;
 use App\Diagnosis;
@@ -250,10 +251,13 @@ class ImportController extends Controller
         $csv_data = array_map('str_getcsv', file($path));
 
         $invoices = [];
-        $not_found = [];
+        $not_found_credito = [];
+        $not_found_contado = [];
+        $not_found_contado_e = [];
+        $not_found_contado_f = [];
+        $not_found_contado_m = [];
         //$all_names = [];
-        //0-28 OCT
-        for ($i = 0; $i < 685; ++$i) {
+        /* for ($i = 0; $i < 685; ++$i) {
             $name = $csv_data[$i][4];
             if (!empty($name)) {
                 $patientss = Patient::where('full_name', $name)->get();
@@ -267,7 +271,7 @@ class ImportController extends Controller
                     $invoice->currency = 'USD';
                     $invoice->comments = 'Importada';
                     $invoice->status = 3;
-                    $invoice->type = 2;
+                    $invoice->type = 0;
                     $invoice->patient_id = $patientss[0]->id;
                     $invoice->date = Carbon::createFromFormat('d/m/Y', $csv_data[$i][0]);
                     if (!empty($csv_data[$i][6])) { //total in thousands
@@ -281,6 +285,8 @@ class ImportController extends Controller
                         $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5]);
                         $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][9]);
                     }
+                    $invoice->amount_due = (float) str_replace(',', '', $invoice->total_with_discounts);
+                    $invoice->save();
                     $n = $i + 1;
                     $next_concept = $csv_data[$n][3];
 
@@ -297,23 +303,31 @@ class ImportController extends Controller
                         }
                         if (26 == $length) {
                             //payment
-                            $payment = new Payment();
-                            $payment->date = $date;
-                            $payment->amount_paid = $amount;
-                            $payment->exchange_rate = $rate;
-                            $payment->method = 0;
-                            $payment->concept = 0;
-                            $payment->number = $n;
-                            $payment->comments = 'importado';
-                            $invoice->pagos[] = $payment;
+                            $validatePayment = new VerifyPaymentAmount($amount, $invoice->id);
+                            $concept = $validatePayment->verifyPayment();
+                            if ($concept < 2) {
+                                $payment = new Payment();
+                                $payment->invoice_id = $invoice->id;
+                                $payment->date = $date;
+                                $payment->amount_paid = $amount;
+                                $payment->exchange_rate = $rate;
+                                $payment->method = 0;
+                                $payment->concept = $concept;
+                                $payment->number = $invoice->number.'- P'.rand(1, 1000);
+                                $payment->comments = 'importado';
+                                $payment->save();
+                                $invoice->pagos[] = $payment;
+                            }
                         } else {
                             $credit = new Credit();
+                            $credit->invoice_id = $invoice->id;
                             $credit->date = $date;
                             $credit->amount_due = $amount;
                             $credit->comments = 'importado';
                             $credit->exchange_rate = $rate;
-                            $credit->number = $n;
+                            $credit->number = $invoice->number.'- NC'.rand(1, 1000);
                             $credit->series = 'NC';
+                            $credit->save();
                             $invoice->nota = $credit;
                         }
 
@@ -326,7 +340,207 @@ class ImportController extends Controller
                     //c: 20
                     array_push($invoices, $invoice);
                 } else {
-                    array_push($not_found, $name);
+                    array_push($not_found_credito, $csv_data[$i]);
+                }
+            }
+        } */
+        //de contado
+        for ($i = 686; $i < 763; ++$i) {
+            $name = $csv_data[$i][4];
+            if (!empty($name)) {
+                $patientss = Patient::where('full_name', $name)->get();
+                if (1 == count($patientss)) {
+                    $invoice = new Invoice();
+                    $invoice->person = $patientss[0];
+                    $invoice->series = $csv_data[$i][1];
+                    $invoice->number = $csv_data[$i][2];
+                    $invoice->code = 'PENDING'.$csv_data[$i][2];
+                    $invoice->concept = $csv_data[$i][3];
+                    $invoice->currency = 'USD';
+                    $invoice->comments = 'Importada';
+                    $invoice->status = 3;
+                    $invoice->type = 1;
+                    $invoice->patient_id = $patientss[0]->id;
+                    $invoice->date = Carbon::createFromFormat('d/m/Y', $csv_data[$i][0]);
+                    if (!empty($csv_data[$i][6])) { //total in thousands
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5].$csv_data[$i][6]);
+                        if (strlen($csv_data[$i][9]) <= 6) {
+                            $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][11]);
+                        } else {
+                            $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][10]);
+                        }
+                    } else {
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5]);
+                        $invoice->exchange_rate = (float) str_replace(',', '', $csv_data[$i][9]);
+                    }
+                    $invoice->amount_due = (float) str_replace(',', '', $invoice->total_with_discounts);
+                    $invoice->save();
+                    //payment
+                    $validatePayment = new VerifyPaymentAmount((float) str_replace(',', '', $invoice->total_with_discounts), $invoice->id);
+                    $concept = $validatePayment->verifyPayment();
+                    if ($concept < 2) {
+                        $payment = new Payment();
+                        $payment->invoice_id = $invoice->id;
+                        $payment->date = $invoice->date;
+                        $payment->amount_paid = (float) str_replace(',', '', $invoice->total_with_discounts);
+                        $payment->exchange_rate = (float) str_replace(',', '', $invoice->exchange_rate);
+                        $payment->method = 0;
+                        $payment->concept = $concept;
+                        $payment->number = $invoice->number.'- P'.rand(1, 1000);
+                        $payment->comments = 'importado';
+                        $payment->save();
+                        $invoice->pagos[] = $payment;
+                    }
+                    array_push($invoices, $invoice);
+                } else {
+                    array_push($not_found_contado, $csv_data[$i]);
+                }
+            }
+        }
+        //sin fecha, enero
+        for ($i = 763; $i < 801; ++$i) {
+            $name = $csv_data[$i][3];
+            if (!empty($name)) {
+                $patientss = Patient::where('full_name', $name)->get();
+                if (1 == count($patientss)) {
+                    $invoice = new Invoice();
+                    $invoice->person = $patientss[0];
+                    $invoice->series = $csv_data[$i][0];
+                    $invoice->number = $csv_data[$i][1];
+                    $invoice->code = 'PENDING'.$csv_data[$i][1];
+                    $invoice->concept = $csv_data[$i][2];
+                    $invoice->currency = 'USD';
+                    $invoice->comments = 'Importada, sin fecha, tipo de cambio, ENERO';
+                    $invoice->status = 3;
+                    $invoice->type = 1;
+                    $invoice->patient_id = $patientss[0]->id;
+                    $invoice->date = Carbon::createFromFormat('d/m/Y', '02/01/2020');
+                    $rate = DB::table('rates')->select('value')->where('date', $invoice->date)->first();
+                    $invoice->exchange_rate = $rate->value;
+                    if (!empty($csv_data[$i][5])) { //total in thousands
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][4].$csv_data[$i][5]);
+                    } else {
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][4]);
+                    }
+                    $invoice->amount_due = (float) str_replace(',', '', $invoice->total_with_discounts);
+                    $invoice->save();
+                    //payment
+                    $validatePayment = new VerifyPaymentAmount((float) str_replace(',', '', $invoice->total_with_discounts), $invoice->id);
+                    $concept = $validatePayment->verifyPayment();
+                    if ($concept < 2) {
+                        $payment = new Payment();
+                        $payment->invoice_id = $invoice->id;
+                        $payment->date = $invoice->date;
+                        $payment->amount_paid = (float) str_replace(',', '', $invoice->total_with_discounts);
+                        $payment->exchange_rate = (float) str_replace(',', '', $invoice->exchange_rate);
+                        $payment->method = 0;
+                        $payment->concept = $concept;
+                        $payment->number = $invoice->number.'- P'.rand(1, 1000);
+                        $payment->comments = 'importado, sin fecha / tipo de cambio';
+                        $payment->save();
+                        $invoice->pagos[] = $payment;
+                    }
+
+                    array_push($invoices, $invoice);
+                } else {
+                    array_push($not_found_contado_e, $csv_data[$i]);
+                }
+            }
+        }
+        //sin fecha, FEBRERO
+        for ($i = 801; $i < 821; ++$i) {
+            $name = $csv_data[$i][2];
+            if (!empty($name)) {
+                $patientss = Patient::where('full_name', $name)->get();
+                if (1 == count($patientss)) {
+                    $invoice = new Invoice();
+                    $invoice->person = $patientss[0];
+                    $invoice->series = 'D';
+                    $invoice->number = $csv_data[$i][0];
+                    $invoice->code = 'PENDING'.$csv_data[$i][0];
+                    $invoice->concept = $csv_data[$i][1];
+                    $invoice->currency = 'USD';
+                    $invoice->comments = 'Importada, sin fecha, tipo de cambio, FEBRERO';
+                    $invoice->status = 3;
+                    $invoice->type = 1;
+                    $invoice->patient_id = $patientss[0]->id;
+                    $invoice->date = Carbon::createFromFormat('d/m/Y', '04/02/2020');
+                    $rate = DB::table('rates')->select('value')->where('date', $invoice->date)->first();
+                    $invoice->exchange_rate = $rate->value;
+                    if (!empty($csv_data[$i][4])) { //total in thousands
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][3].$csv_data[$i][4]);
+                    } else {
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][3]);
+                    }
+                    $invoice->amount_due = (float) str_replace(',', '', $invoice->total_with_discounts);
+                    $invoice->save();
+                    //payment
+                    $validatePayment = new VerifyPaymentAmount((float) str_replace(',', '', $invoice->total_with_discounts), $invoice->id);
+                    $concept = $validatePayment->verifyPayment();
+                    if ($concept < 2) {
+                        $payment = new Payment();
+                        $payment->invoice_id = $invoice->id;
+                        $payment->date = $invoice->date;
+                        $payment->amount_paid = (float) str_replace(',', '', $invoice->total_with_discounts);
+                        $payment->exchange_rate = (float) str_replace(',', '', $invoice->exchange_rate);
+                        $payment->method = 0;
+                        $payment->concept = $concept;
+                        $payment->number = $invoice->number.'- P'.rand(1, 1000);
+                        $payment->comments = 'importado, sin fecha / tipo de cambio';
+                        $payment->save();
+                        $invoice->pagos[] = $payment;
+                    }
+                    array_push($invoices, $invoice);
+                } else {
+                    array_push($not_found_contado_f, $csv_data[$i]);
+                }
+            }
+        }
+        for ($i = 821; $i < 841; ++$i) {
+            $name = $csv_data[$i][4];
+            if (!empty($name)) {
+                $patientss = Patient::where('full_name', $name)->get();
+                if (1 == count($patientss)) {
+                    $invoice = new Invoice();
+                    $invoice->person = $patientss[0];
+                    $invoice->series = $csv_data[$i][1];
+                    $invoice->number = $csv_data[$i][2];
+                    $invoice->code = 'PENDING'.$csv_data[$i][2];
+                    $invoice->concept = $csv_data[$i][3];
+                    $invoice->currency = 'USD';
+                    $invoice->comments = 'Importada';
+                    $invoice->status = 3;
+                    $invoice->type = 1;
+                    $invoice->patient_id = $patientss[0]->id;
+                    $invoice->date = Carbon::createFromFormat('d/m/Y', $csv_data[$i][0]);
+                    $rate = DB::table('rates')->select('value')->where('date', $invoice->date)->first();
+                    $invoice->exchange_rate = $rate->value;
+
+                    if (!empty($csv_data[$i][6])) { //total in thousands
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5].$csv_data[$i][6]);
+                    } else {
+                        $invoice->total_with_discounts = (float) str_replace(',', '', $csv_data[$i][5]);
+                    }
+                    $invoice->amount_due = (float) str_replace(',', '', $invoice->total_with_discounts);
+                    $invoice->save();
+                    //payment
+                    $validatePayment = new VerifyPaymentAmount((float) str_replace(',', '', $invoice->total_with_discounts), $invoice->id);
+                    $concept = $validatePayment->verifyPayment();
+                    if ($concept < 2) {
+                        $payment = new Payment();
+                        $payment->invoice_id = $invoice->id;
+                        $payment->date = $invoice->date;
+                        $payment->amount_paid = (float) str_replace(',', '', $invoice->total_with_discounts);
+                        $payment->exchange_rate = (float) str_replace(',', '', $invoice->exchange_rate);
+                        $payment->method = 0;
+                        $payment->concept = $concept;
+                        $payment->number = $invoice->number.'- P'.rand(1, 1000);
+                        $payment->comments = 'importado';
+                        $payment->save();
+                        $invoice->pagos[] = $payment;
+                    }
+                } else {
+                    array_push($not_found_contado_m, $csv_data[$i]);
                 }
             }
         }
@@ -338,13 +552,13 @@ class ImportController extends Controller
             if (1 == count($patientss)) {
                 array_push($patients, $patientss[0]);
             } else {
-                array_push($not_found, $name);
+                array_push($not_found, $name)H;
             }
             if (!is_null($patient)) {
                 //array_push($patient_names, $patient->full_name);
                 array_push($patients, $patient);
             } else {
-                array_push($not_found, $name);
+                array_push($not_found, $name)H;
             }
         } */
         //$not_found = array_diff_assoc($names, $patient_names);
@@ -379,8 +593,9 @@ class ImportController extends Controller
         } */
 
         $count = count($invoices);
+        $count2 = count($not_found_credito);
 
-        return view('import.fieldsInvoices', compact('invoices', 'count'));
+        return view('import.fieldsInvoices', compact('invoices', 'count', 'not_found_credito', 'count2', 'not_found_contado', 'not_found_contado_e', 'not_found_contado_f', 'not_found_contado_m'));
     }
 
     private function gender($gender)

@@ -31,7 +31,7 @@ class SearchPatientController extends Controller
         $patients = Patient::query($search)
             ->where('insured', 1)
             ->where(function ($query) use ($search) {
-                $query->whereLike(['full_name'], $search)
+                $query->whereLike(['full_name', 'insuree.nss'], $search)
                 ;
             })
             ->get()->take(20)
