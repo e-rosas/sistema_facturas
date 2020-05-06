@@ -84,7 +84,7 @@
                                     <th scope="col">Nombre</th>
                                     <th scope="col">NSS</th>
                                     <th scope="col">Teléfono</th>
-                                    <th scope="col">Ciudad</th>
+                                    <th scope="col">Fecha Nacimiento</th>
                                     <th scope="col">ID de Aseguranza</th>
                                     <th scope="col">Aseguranza</th>
                                     <th scope="col"></th>
@@ -96,7 +96,7 @@
                                         <td> <a href="{{ route('patients.show', $insuree->patient) }}">{{ $insuree->patient->full_name }}</a></td>
                                         <td>{{ $insuree->nss }}</td>
                                         <td>{{ $insuree->patient->phone_number }}</td>
-                                        <td>{{ $insuree->patient->city }}</td>
+                                        <td>{{ $insuree->patient->birth_date->format('d-m-Y') }}</td>
                                         <td>{{ $insuree->insurance_id }}</td>
                                         <td>
                                             <a href="{{ route('insurers.show', $insuree->insurer) }}">
@@ -121,7 +121,7 @@
                                             <a href="mailto:{{$dependent->patient->email}}">{{$dependent->patient->email}}</a>
                                         </td>
                                         <td>{{ $dependent->patient->phone_number }}</td>
-                                        <td>{{ $dependent->patient->city }}</td>
+                                        <td>{{ $dependent->patient->birth_date->format('d-m-Y')  }}</td>
                                         <td></td>
                                         <td></td>
                                         <td class="td-actions text-right">
