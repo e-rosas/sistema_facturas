@@ -145,6 +145,16 @@ class PatientController extends Controller
             $patient->insuree->insurer_id = $validated['insurer_id'];
             $patient->insuree->insurance_id = $validated['insurance_id'];
             $patient->insuree->save();
+            $dependents = Dependent::with('patient')->where('insuree_id', $patient->id)->get();
+            foreach ($dependents as $dependent) {
+                $dependent->patient->street = $patient->street;
+                $dependent->patient->street_number = $patient->street_number;
+                $dependent->patient->city = $patient->city;
+                $dependent->patient->state = $patient->state;
+                $dependent->patient->zip_code = $patient->zip_code;
+                $dependent->patient->phone_number = $patient->phone_number;
+                $dependent->patient->save();
+            }
         } else {
             //$dependent = Dependent::where('patient_id', $patient->id)->first();
             $patient->dependent->relationship = $validated['relationship'];
