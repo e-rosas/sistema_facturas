@@ -18,7 +18,7 @@
         <div class="card-body pt-0 pt-md-4">    
             <div class="text-center">
                 <h3>
-                    {{ $patient->full_name }}
+                    <a href="{{ route('patients.show', $patient) }}" class="mr-4">{{ $patient->full_name }} </a>
                     
                 </h3>
                 <div class="h4 font-weight-300">
