@@ -36,7 +36,9 @@ class PatientController extends Controller
         $insurees = Insuree::with('patient', 'insurer')->whereLike(['nss', 'insurance_id', 'patient.full_name'], $search)->paginate($perPage);
 
         foreach ($insurees as $insuree) {
-            $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->patient_id)->get();
+            $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->patient_id)
+                ->get()
+            ;
         }
 
         /* $patients = Patient::with('insurer')->whereLike(['full_name', 'insurance_id'], $search)
@@ -74,7 +76,6 @@ class PatientController extends Controller
     public function store(PatientRequest $request)
     {
         $validated = $request->validated();
-        print_r($validated);
         $validated['full_name'] = $validated['last_name'].' '.$validated['name'];
 
         $patient = Patient::create($validated);
@@ -140,10 +141,12 @@ class PatientController extends Controller
         $validated = $request->validated();
         $patient->fill($validated);
         if ($patient->insured) {
+            //$insuree = Insuree::where('patient_id', $patient->id)->first();
             $patient->insuree->insurer_id = $validated['insurer_id'];
             $patient->insuree->insurance_id = $validated['insurance_id'];
             $patient->insuree->save();
         } else {
+            //$dependent = Dependent::where('patient_id', $patient->id)->first();
             $patient->dependent->relationship = $validated['relationship'];
             $patient->dependent->save();
         }

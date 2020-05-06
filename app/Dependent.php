@@ -11,6 +11,7 @@ class Dependent extends Model
         'insuree_id',
         'relationship',
     ];
+    protected $primaryKey = 'patient_id';
 
     public function patient()
     {

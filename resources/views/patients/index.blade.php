@@ -93,7 +93,7 @@
                             <tbody>
                                 @foreach ($insurees as $insuree)
                                     <tr>
-                                        <td>{{ $insuree->patient->full_name }}</td>
+                                        <td> <a href="{{ route('patients.show', $insuree->patient) }}">{{ $insuree->patient->full_name }}</a></td>
                                         <td>{{ $insuree->nss }}</td>
                                         <td>{{ $insuree->patient->phone_number }}</td>
                                         <td>{{ $insuree->patient->city }}</td>
@@ -116,7 +116,7 @@
                                     </tr>
                                     @foreach ($insuree->dependents as $dependent)
                                     <tr class="table-info">
-                                        <td>{{ $dependent->patient->full_name }}</td>
+                                        <td> <a href="{{ route('patients.show', $dependent->patient) }}">{{ $dependent->patient->full_name }}</a> </td>
                                         <td>
                                             <a href="mailto:{{$dependent->patient->email}}">{{$dependent->patient->email}}</a>
                                         </td>

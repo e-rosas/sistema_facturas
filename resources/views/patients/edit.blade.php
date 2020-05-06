@@ -118,7 +118,7 @@
                                     <div class="form-group{{ $errors->has('zip_code') ? ' has-danger' : '' }} col-md-4 col-auto">
                                         <label class="form-control-label" for="update-zip_code">Código Postal</label>
                                         <input type="text" name="zip_code" id="update-zip_code" class="form-control form-control-alternative{{ $errors->has('zip_code') ? ' is-invalid' : '' }}"
-                                         placeholder="Código Postal" value="{{ $patient->zip_code }}" required>
+                                         placeholder="Código Postal" value="{{ $patient->zip_code }}">
                                     
                                         @if ($errors->has('zip_code'))
                                             <span class="invalid-feedback" role="alert">
@@ -245,9 +245,9 @@
                                     <div class="col-lg-4">
                                         <label class="form-control-label" for="update-status">Relación</label>
                                         <select id='update-relationship' class="custom-select" name="relationship"> 
-                                            <option value='2' {{ $patient->dependent->occupation == 2 ? 'selected' : '' }}>Esposo(a)</option>
-                                            <option value='1' {{ $patient->dependent->occupation == 1 ? 'selected' : '' }}>Hijo(a)</option>
-                                            <option value='0' {{ $patient->dependent->occupation == 0 ? 'selected' : '' }}>Otro</option>
+                                            <option value='2' {{ $patient->dependent->relationship == 2 ? 'selected' : '' }}>Esposo(a)</option>
+                                            <option value='1' {{ $patient->dependent->relationship == 1 ? 'selected' : '' }}>Hijo(a)</option>
+                                            <option value='0' {{ $patient->dependent->relationship == 0 ? 'selected' : '' }}>Otro</option>
                                         </select>
                                     </div>
                                 </div>

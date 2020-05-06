@@ -49,12 +49,12 @@ class Patient extends Model
 
     public function insuree()
     {
-        return $this->hasOne('App\Insuree');
+        return $this->hasOne('App\Insuree', 'patient_id', 'id');
     }
 
     public function dependent()
     {
-        return $this->hasOne('App\Dependent');
+        return $this->hasOne('App\Dependent', 'patient_id', 'id');
     }
 
     public function gender()

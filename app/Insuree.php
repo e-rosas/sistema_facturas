@@ -13,6 +13,7 @@ class Insuree extends Model
         'insurance_id',
         'nss',
     ];
+    protected $primaryKey = 'patient_id';
 
     public function patient()
     {
