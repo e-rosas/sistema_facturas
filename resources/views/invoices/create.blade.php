@@ -396,9 +396,9 @@
         sub_total_discounted = 0;
         total_price = 0;
         total_discounted_price = 0;
-        created_at = new Date();
+        DOS = new Date();
         constructor(service_id, description, price, discounted_price, quantity, id, 
-            created_at, descripcion, code) {
+            DOS, descripcion, code) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -411,8 +411,8 @@
             this.id = id;
             this.descripcion = descripcion;
             this.code = code;
-            this.date2 = getCorrectDate(created_at);
-            this.created_at = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
+            this.date2 = getCorrectDate(DOS);
+            this.DOS = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
         }
 
         get date(){
@@ -535,10 +535,10 @@
             }
         }
 
-        var created_at = document.getElementById("input-date_service").value;
+        var DOS = document.getElementById("input-date_service").value;
         
         var service = new Service(service_id, description, price, discounted_price, 
-            quantity, id, created_at, descripcion, code);
+            quantity, id, DOS, descripcion, code);
         this.services.push(service);   
         displayCart();  
     }

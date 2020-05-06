@@ -422,7 +422,7 @@
         sub_total_discounted = 0;
         total_price = 0;
         total_discounted_price = 0;      
-        created_at = new Date();
+        DOS = new Date();
 
         items_sub_total = 0;
         items_sub_total_discounted = 0;
@@ -430,7 +430,7 @@
         items_total_discounted_price = 0;
 
         constructor(service_id, description, price, discounted_price, quantity, id, 
-            created_at, descripcion, code) {
+            DOS, descripcion, code) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -443,8 +443,8 @@
             this.id = id;
             this.descripcion = descripcion;
             this.code = code;
-            this.date2 = getCorrectDate(created_at);
-            this.created_at = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
+            this.date2 = getCorrectDate(DOS);
+            this.DOS = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
         }
 
         get date(){
@@ -572,19 +572,19 @@
             }
         }
 
-        var created_at = document.getElementById("input-date_service").value;
+        var DOS = document.getElementById("input-date_service").value;
         
         var service = new Service(service_id, description, price, discounted_price,
-         quantity, id, created_at, descripcion, code);
+         quantity, id, DOS, descripcion, code);
         this.services.push(service);
         displayCart();  
     }
     function addServiceToCartFromInvoice(service_id, description, price, discounted_price,
-         quantity, id, created_at, items, descripcion, code) {
+         quantity, id, DOS, items, descripcion, code) {
         
         var service = new Service(service_id, description, parseFloat(price.replace(/,/g,'')), 
             parseFloat(discounted_price.replace(/,/g,'')), quantity, 
-                services.length, created_at, descripcion, code);
+                services.length, DOS, descripcion, code);
         for(var i in items){
             var tax = false;
             if(items[i].itax > 0) tax = true;
@@ -665,7 +665,7 @@
             for(var i = 0; i < response.length; i++){
                 addServiceToCartFromInvoice(response[i].service_id, response[i].description, 
                     response[i].price, response[i].discounted_price, response[i].quantity, 
-                    response[i].id, response[i].created_at, response[i].items, 
+                    response[i].id, response[i].DOS, response[i].items, 
                     response[i].descripcion, response[i].code);   
             }
             displayCart();                

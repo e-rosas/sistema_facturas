@@ -32,6 +32,7 @@ class Invoice extends Model
         'exchange_rate',
         'type',
         'patient_id',
+        'DOS',
     ];
     /**
      * The event map for the model.
@@ -62,7 +63,7 @@ class Invoice extends Model
         'type' => 'integer',
     ];
 
-    protected $dates = ['date', 'created_at', 'updated_at'];
+    protected $dates = ['date', 'created_at', 'updated_at', 'DOS'];
 
     public function getTaxAttribute($value)
     {

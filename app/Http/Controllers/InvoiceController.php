@@ -93,12 +93,14 @@ class InvoiceController extends Controller
         $validated = $request->validated();
         $validated['type'] = 2;
         $validated['status'] = 3;
+        $validated['DOS'] = $validated['date'];
         $invoice = Invoice::create($validated);
 
         $services = $request->services;
         foreach ($services as $service) {
             $service['invoice_id'] = $invoice->id;
             $invoice_service = InvoiceService::create($service);
+            $invoice->DOS = $invoice_service->DOS;
             if (isset($service['items'])) {
                 $items = $service['items'];
                 foreach ($items as $item) {
