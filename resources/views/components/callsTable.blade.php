@@ -4,8 +4,10 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Number') }}</th>
+                <th scope="col">{{ __('Invoice') }}</th>
                 <th scope="col">{{ __('Date') }}</th>
                 <th scope="col">{{ __('Claim') }}</th>
+                <th scope="col">{{ __('Status') }}</th>
                 <th scope="col">{{ __('Comments') }}</th>
                 <th scope="col"></th>
             </tr>
@@ -14,8 +16,14 @@
             @foreach ($calls as $call)
                 <tr>
                     <td>{{ $call->number}}</td>
+                    <td>
+                        <a href="{{ route('invoices.show', $call->invoice) }}">
+                            {{ $call->invoice->number}}
+                        </a>
+                    </td>
                     <td>{{ $call->date->format('M-d-Y')}}</td>
                     <td>{{ $call->claim}}</td>
+                    <td>{{ $call->status}}</td>
                     <td>{{ $call->comments}}</td>
                     <td class="text-right">
                         <button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal({{ $call->id }})">

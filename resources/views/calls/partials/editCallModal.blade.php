@@ -1,43 +1,35 @@
-<div class="modal fade" id="modal-call" role="dialog" aria-labelledby="modal-call" aria-hidden="true">
+<div class="modal fade" id="modal-update-call" role="dialog" aria-labelledby="modal-call" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h6 class="heading-small text-muted mb-4">{{ __('Add call') }}</h6>
-                        <h4>{{ $person_data->phone_number }}</h4>
+                        <h6 class="heading-small text-muted mb-4">{{ __('Edit call') }}</h6>                 
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="form-group">
+                        <div>                  
                             <div class="form-group">
+                                {{--  Call --}}
+                                <input readonly type="hidden" name="call_id" id="update-call_id" class="form-control"
+                                 required>
+                                
                                 {{--  Number --}}
-                                <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
+                                <div class="form-group ">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                         </div>
-                                        <input type="number" name="number" id="input-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
-                                        placeholder="Number" required>
-                                        @if ($errors->has('number'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('number') }}</strong>
-                                            </span>
-                                        @endif
+                                        <input type="numeric" readonly name="number" id="update-number" class="form-control" required>
                                     </div>
                                 </div>
-                                {{--  Invoice  --}}
-                                <div class="form-group">
-                                    <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id"> 
-                                        <option value='0'>{{ __('Select invoice') }}</option>
-                                    </select>
-                                </div>
+                                
                                 {{--  Claim  --}}
                                 <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                         </div>
-                                        <input type="text" name="claim" id="input-claim" class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}"
+                                        <input type="text" name="claim" id="update-claim" class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}" 
                                         value="{{ old('claim') }}" placeholder="{{ __('Claim') }}">
                                         @if ($errors->has('claim'))
                                             <span class="invalid-feedback" role="alert">
@@ -52,7 +44,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input onchange="handler(event);" type="date" name="date" id="input-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                        <input onchange="handler(event);" type="date" name="date" id="update-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}" 
                                         value="{{ old('date') }}" required>
                                         @if ($errors->has('date'))
                                             <span class="invalid-feedback" role="alert">
@@ -67,7 +59,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
-                                        <select class="form-control" id="input-status">
+                                        <select multiple class="form-control" id="update-status">
                                             <option>In process</option>
                                             <option>Deductibles</option>
                                             <option>Denied for non covered charges</option>
@@ -82,7 +74,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
-                                        <textarea type="text" rows="3" name="comments" id="input-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
+                                        <textarea type="text" rows="3" name="comments" id="update-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}" 
                                         value="{{ old('comments') }}" placeholder="{{ __('Comments') }}"></textarea>
                                         @if ($errors->has('comments'))
                                             <span class="invalid-feedback" role="alert">
@@ -90,9 +82,9 @@
                                             </span>
                                         @endif
                                     </div>
-                                </div>
+                                </div>                   
                                 <div class="text-center">
-                                    <button id="save_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
+                                    <button id="update_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -106,102 +98,105 @@
 @push('js')
 
 <script>
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    function sendCall(number, claim, date,
-    comments, status, invoice_id){
+    function setCallCount(){
+        var n = document.getElementById("calls_table").rows.length;
+        document.getElementById("input-number").value = n;
+    }
+    function updateCall(id, number, claim, date, 
+    comments, status){
         $.ajax({
-            url: "{{route('calls.store')}}",
+            url: "{{route('calls.update')}}",
             dataType: 'json',
-            type:"post",
+            type:"patch",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "person_data_id": {{ $person_data->id }},
+                "id": id,
+                "person_data_id": {{ $person_data_id }},
                 "number": number,
                 "claim": claim,
                 "date": date,
                 "comments": comments,
-                "status": status,
-                'invoice_id': invoice_id
+                "status": status
             },
         success: function (response) {
-            displayCalls(response.data);
-            $('#modal-call').modal('hide')
-
+            var calls = response.data;
+            displayCalls(calls); //on callsModal
+                
+            $('#modal-update-call').modal('hide')
             }
         });
-        return false;
+            return false;
     }
 
-    function showEditCallModal(id){
-
-        getCallData(id); //on editCallModal
-        $('#modal-update-call').modal('show')
-
+    function CallData(call_id, number, claim, date, 
+        comments, status){
+            document.getElementById("update-call_id").value = call_id;
+            document.getElementById("update-number").value = number;
+            document.getElementById("update-claim").value = claim;
+            document.getElementById("update-date").value = date;
+            document.getElementById("update-comments").value = comments;
+            document.getElementById("update-status").value = status;
+            
     }
 
-    function displayCalls(data){
-        var calls = data;
-        var output = "";
+    function getCallData(id){
+        $.ajax({
+            url: "{{route('calls.find')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "id" : id
+            },
+        success: function (data) {          
+            CallData(data.id,data.number, data.claim, 
+                    data.date, data.comments, data.status);                                 
+            }
+        });
+            return false;
+    }
 
-        for(var i = 0; i < calls.length; i++){
-            output += "<tr value="+calls[i].id+">"
-                + "<td>" + calls[i].number + "</td>"
-                + "<td>" + calls[i].invoice + "</td>"
-                + "<td>" + calls[i].date + "</td>"
-                + "<td>" + calls[i].claim + "</td>"
-                + "<td>" + calls[i].status + "</td>"
-                + "<td>" + calls[i].comments+ "</td>"
-                +'<td class="text-right"><button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
-                +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
-                +"</td></tr>";
+    function DeleteCall(id){
+        var r = confirm("Are you sure?");
+        if(r){
+            $.ajax({
+                url: "{{route('calls.destroy')}}",
+                dataType: 'json',
+                type:"delete",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "call_id" : id
+                },
+            success: function (response) {
+                displayCalls(response.data);
+                }
+            });
+            return false;
         }
 
-        $('#calls_table tbody').html(output);
-        setCallCount();
     }
 
-    $("#save_call").click(function(){
-        var number = document.getElementById("input-number").value;
-        var claim = document.getElementById("input-claim").value;
-        var date = document.getElementById("input-date").value;
-        var comments = document.getElementById("input-comments").value;
-        var status = document.getElementById("input-status").value;
-        var invoice_id = document.getElementById("invoice_id").value;
-        sendCall(number, claim, date, comments, status, invoice_id);
-
-
-    });
     $(document).ready(function(){
-        $("#invoice_id").select2({
-          minimumInputLength: 2,
-          dropdownParent: $('#modal-call'),
-          ajax: { 
-            url: "{{route('invoices.searchNumber')}}",
-            type:'post',
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-              return {
-                _token: CSRF_TOKEN,
-                person_data_id: {{ $person_data->id }},
-                search: params.term // search term
-              };
-            },
-            processResults: function (response) {
-              return {
-                results: response
-              };
-            },
-            cache: true
-          }
-    
+        setCallCount();
+        $('#calls_table').on("click", ".update-call", function(event) {
+            var id = $(this).data('call');
+            getCallData(id);
+
+
+        })
+        
+        $("#update_call").click(function(){
+            var call_id = document.getElementById("update-call_id").value;
+            var number = document.getElementById("update-number").value;
+            var claim = document.getElementById("update-claim").value;
+            var date = document.getElementById("update-date").value;
+            var comments = document.getElementById("update-comments").value;
+            var status = document.getElementById("update-status").value;
+
+            updateCall(call_id, number, claim, date, comments, status);
+            
         });
-    
     });
 </script>
-
-@endpush
-@push('headjs')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    
 @endpush
