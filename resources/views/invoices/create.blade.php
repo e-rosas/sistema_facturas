@@ -315,7 +315,14 @@
                                 <button type="button" id="add_service" class="btn btn-outline-success btn-lg">Agregar</button>
                             </div>
                         </div>
-                        
+                        <div class="form-row">
+                            @include('components.searchDiagnoses')  
+                            <div class="col-md-4">
+                                <input type="text" name="diagnosis_code" id="input-diagnosis_code" class="form-control form-control-alternative{{ $errors->has('diagnosis_code') ? ' is-invalid' : '' }}" 
+                                    placeholder="Codigo" readonly>
+                                <input id="diagnosis" type="hidden" value=0>
+                            </div>
+                        </div>
                         {{-- Table of services --}}
                         <div  class="table-responsive">
                             <table id="services_table" class="table align-services-center table-flush">
@@ -396,9 +403,11 @@
         sub_total_discounted = 0;
         total_price = 0;
         total_discounted_price = 0;
+        diagnosis_id = 0;
+        diagnosis_code = "";
         DOS = new Date();
         constructor(service_id, description, price, discounted_price, quantity, id, 
-            DOS, descripcion, code) {
+            DOS, descripcion, code, diagnosis_code, diagnosis_id) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -413,6 +422,8 @@
             this.code = code;
             this.date2 = getCorrectDate(DOS);
             this.DOS = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
+            this.diagnosis_code = diagnosis_code;
+            this.diagnosis_id = diagnosis_id;
         }
 
         get date(){
@@ -526,7 +537,7 @@
 
     // Add to cart
     function addServiceToCart(service_id, description, price, discounted_price, 
-        quantity, id, descripcion, code) {
+        quantity, id, descripcion, code, diagnosis_code, diagnosis_id) {
         for(var service in this.services) {
             if(this.services[service].id === id) {
                 this.services[service].quantity += Number(quantity);
@@ -538,7 +549,7 @@
         var DOS = document.getElementById("input-date_service").value;
         
         var service = new Service(service_id, description, price, discounted_price, 
-            quantity, id, DOS, descripcion, code);
+            quantity, id, DOS, descripcion, code, diagnosis_code, diagnosis_id);
         this.services.push(service);   
         displayCart();  
     }
@@ -602,7 +613,7 @@
 
 
 
-    function getService(id, quantity, price, discounted_price){
+    function getService(id, quantity, price, discounted_price, diagnosis_id){
         $.ajax({
             url: "{{route('services.find')}}",
             dataType: 'json',
@@ -611,14 +622,16 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id" : id
             },
-        success: function (response) {                
+        success: function (response) {      
+                var diagnosis_code = document.getElementById("input-diagnosis_code").value;          
                 addServiceToCart(response.id, response.description, 
                     price, discounted_price, quantity, services.length,
-                     response.descripcion, response.code);                                    
+                     response.descripcion, response.code, diagnosis_code, diagnosis_id);                                    
             }
         });
             return false;
     }
+
 
     function getItem(service_id, item_id, quantity, price, discounted_price){
         $.ajax({
@@ -651,6 +664,7 @@
     function sendInvoice(patient_id, series, number, concept, code, currency, 
         method,  date, comments){
             var exchange_rate = document.getElementById("invoice-exchange_rate").value;
+            exchange_rate = parseFloat(exchange_rate.replace(/,/g,''));
         $.ajax({
             url: "{{route('invoices.store')}}",
             type:"post",
@@ -763,14 +777,14 @@
         $("#add_service").click(function(){
             var quantity = Number(document.getElementById("input-quantity").value);
             
-
-            if(quantity > 0){
+            var diagnosis_id = Number(document.getElementById("diagnosis_id").value);
+            if(quantity > 0 && diagnosis_id > 0){
                 var price = document.getElementById("custom-price").value;
                 price = parseFloat(price.replace(/,/g,''));
                 var discounted_price = document.getElementById("custom-discounted-price").value;
                 discounted_price = parseFloat(discounted_price.replace(/,/g,''));
                 var service_id= $("#service_id").children("option:selected").val();
-                getService(service_id, quantity, price, discounted_price);
+                getService(service_id, quantity, price, discounted_price, diagnosis_id);
             }
             
         });

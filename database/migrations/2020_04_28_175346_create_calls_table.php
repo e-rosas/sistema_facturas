@@ -20,7 +20,7 @@ class CreateCallsTable extends Migration
             $table->text('comments')->nullable();
             $table->date('date');
             $table->string('claim')->nullable();
-            $table->foreign('patient_id')->references('id')->on('patient')->onDelete('cascade');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });

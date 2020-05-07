@@ -15,8 +15,9 @@ class CreateInvoiceServicesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('invoice_id');
             $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger('diagnosis_id');
             $table->string('code');
-            $table->string('diagnosis_code');
+            $table->string('diagnosis_code')->default('Pendiente');
             $table->string('description');
             $table->string('descripcion')->default('Pendiente');
             $table->decimal('price', 13, 4);
@@ -31,6 +32,7 @@ class CreateInvoiceServicesTable extends Migration
             $table->date('DOS'); //date of service
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('diagnosis_id')->references('id')->on('diagnoses')->onDelete('cascade');
             $table->timestamps();
         });
     }

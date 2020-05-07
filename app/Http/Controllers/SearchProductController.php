@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Diagnosis;
 use App\Item;
 use App\Service;
 use Illuminate\Http\Request;
@@ -35,6 +36,35 @@ class SearchProductController extends Controller
         ;
 
         echo json_encode($service);
+        exit;
+    }
+
+    public function searchDiagnosis(Request $request)
+    {
+        $search = $request->search;
+        $diagnoses = Diagnosis::query()
+            ->whereLike(['code', 'name'], $search)
+            ->get()->take(5)
+        ;
+        $response = [];
+        foreach ($diagnoses as $diagnosis) {
+            $response[] = [
+                'id' => $diagnosis->id,
+                'text' => $diagnosis->code.' '.$diagnosis->name,
+                'code' => $diagnosis->code,
+            ];
+        }
+        echo json_encode($response);
+        exit;
+    }
+
+    public function findDiagnosis(Request $request)
+    {
+        $diagnosis_id = $request->diagnosis_id;
+        $diagnosis = Diagnosis::find($diagnosis_id)
+        ;
+
+        echo json_encode($diagnosis);
         exit;
     }
 

@@ -21,7 +21,7 @@ class CreateInvoicesTable extends Migration
             $table->string('currency')->default('USD');
             $table->date('date');
             $table->date('DOS'); //date of service
-            $table->decimal('exchange_rate', 13, 4);
+            $table->decimal('exchange_rate', 13, 4)->default(0);
 
             $table->decimal('tax', 13, 4)->default(0);
             $table->decimal('dtax', 13, 4)->default(0);
