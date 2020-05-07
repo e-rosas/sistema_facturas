@@ -335,9 +335,9 @@
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Descripción</th>
                                         <th scope="col">Diagnóstico</th>
-                                        <th scope="col">Descuento</th>
+                                        <th scope="col">Precio</th>
                                         <th scope="col">Cantidad</th>
-                                        <th scope="col">Total Descontado</th>
+                                        <th scope="col">Total</th>
                                         <th scope="col">Articulos</th>
                                         <th scope="col"></th>
                                     </tr>
