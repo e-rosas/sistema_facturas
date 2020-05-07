@@ -210,7 +210,7 @@
                                 </div>
                                 {{--  sub_total_discounts  --}}
                                 <div class="col-md-4 col-auto form-group">
-                                    <label class="form-control-label" for="input-sub_total_discounts">sub_total con descuento</label>
+                                    <label class="form-control-label" for="input-sub_total_discounts">Subtotal con descuento</label>
                                     <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative" 
                                     placeholder="0" value="0" readonly>
                                 </div>

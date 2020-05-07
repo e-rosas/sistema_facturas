@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\InvoiceEvent;
+use App\Invoice;
 use App\InvoiceService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceServiceController extends Controller
 {
@@ -78,5 +82,40 @@ class InvoiceServiceController extends Controller
 
         echo json_encode($services);
         exit;
+    }
+
+    public function updatePrices()
+    {
+        $invoices = Invoice::get();
+        foreach ($invoices as $invoice) {
+            if (0 == (float) str_replace(',', '', $invoice->exchange_rate)) {
+                $invoice->exchange_rate = $this->getRate($invoice->date);
+            }
+            $invoice->sub_total_discounted = (float) str_replace(',', '', $invoice->sub_total);
+            $invoice->total_with_discounts = (float) str_replace(',', '', $invoice->total);
+            $invoice->amount_due = (float) str_replace(',', '', $invoice->total);
+            $all_services = InvoiceService::where('invoice_id', $invoice->id)->get();
+            foreach ($all_services as $service) {
+                $service->discounted_price = (float) str_replace(',', '', $service->price);
+                $service->sub_total_discounted = (float) str_replace(',', '', $service->sub_total);
+                $service->total_discounted_price = (float) str_replace(',', '', $service->total_price);
+                $service->save();
+            }
+            $invoice->save();
+            event(new InvoiceEvent($invoice));
+        }
+    }
+
+    private function getRate($date)
+    {
+        if (Carbon::SATURDAY == $date->dayOfWeek || Carbon::SUNDAY == $date->dayOfWeek) {
+            $date = $date->previousWeekday();
+        }
+        $value = DB::table('rates')->select('value')->where('date', $date)->first();
+        if (is_null($value)) {
+            $value['value'] = 0;
+        }
+
+        return  $value->value;
     }
 }
