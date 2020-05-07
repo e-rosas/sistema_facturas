@@ -84,7 +84,7 @@ class PatientController extends Controller
             $insuree->patient_id = $patient->id;
             $insuree->insurer_id = $validated['insurer_id'];
             $insuree->insurance_id = $validated['insurance_id'];
-            $insuree->nss = $validated['nss'];
+            $insuree->nss = $validated['insurance_id'];
             $insuree->save();
         } else {
             $dependent = new Dependent();

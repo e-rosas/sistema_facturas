@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="form-group col-md-3 col-auto">
                                         <label for="input-nss" class="col-auto col-form-label">No. Seguro Social</label>
-                                        <input type="text" name="nss" id="input-nss" class="form-control form-control-alternative{{ $errors->has('nss') ? ' is-invalid' : '' }}" placeholder="ID Aseguranza" value="{{ old('nss') }}" required>                 
+                                        <input type="text" name="nss" id="input-nss" class="form-control form-control-alternative{{ $errors->has('nss') ? ' is-invalid' : '' }}" placeholder="ID Aseguranza" value="{{ old('nss') }}">                 
                                         @if ($errors)
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('nss') }}</strong>

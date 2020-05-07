@@ -156,7 +156,7 @@
                     <div class="col-md-2 col-auto form-group{{ $errors->has('deductible') ? ' has-danger' : '' }}">
                         <label class="form-control-label" for="input-deductible">Deducible</label>
                         <input type="number" name="deductible" id="input-deductible" class="form-control form-control-alternative{{ $errors->has('deductible') ? ' is-invalid' : '' }}" 
-                        placeholder="0" value="{{ old('deductible') }}">
+                        placeholder="0" value="0">
                 
                         @if ($errors->has('deductible'))
                             <span class="invalid-feedback" role="alert">
