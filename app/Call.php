@@ -22,7 +22,6 @@ class Call extends Model
         'invoice_id' => 'required',
         'date' => 'date',
         'claim' => 'max:255',
-        'patient_id' => 'required',
     ];
     protected $casts = [
         'id' => 'integer',
@@ -55,6 +54,10 @@ class Call extends Model
                 break;
             case 4:
                 return __('Negada por ');
+
+                break;
+            case 5:
+                return __('Otro');
 
                 break;
             default:

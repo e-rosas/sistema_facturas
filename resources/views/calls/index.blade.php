@@ -10,7 +10,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">{{ __('Calls') }}</h3>
+                                <h3 class="mb-0">{{ __('Llamadas') }}</h3>
                             </div>
                             
                         </div>

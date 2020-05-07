@@ -1,20 +1,21 @@
 <div class="nav-wrapper">
     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
         <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-file-invoice-dollar  mr-2"></i> {{ __('Invoices') }} </a>
+            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-invoices-tab" data-toggle="tab" href="#tabs-invoices" role="tab" 
+                aria-controls="tabs-invoices" aria-selected="true"><i class="fas fa-file-invoice-dollar  mr-2"></i> {{ __('Facturas') }} </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-tags mr-2"></i> {{ __('Discounts') }} </a>
+            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-calls-tab" data-toggle="tab" href="#tabs-calls" role="tab" 
+                aria-controls="tabs-calls" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Llamadas') }}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Calls') }}</a>
+            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-payments-tab" data-toggle="tab" href="#tabs-payments" role="tab" 
+                aria-controls="tabs-payments" aria-selected="false"><i class="fas fa-dollar-sign mr-2"></i> {{ __('Pagos') }}</a>
         </li>
+        @if ($patient->insured)
         <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-4" aria-selected="false"><i class="fas fa-dollar-sign mr-2"></i> {{ __('Payments') }}</a>
-        </li>
-        @if ($person_data->insured)
-        <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-5-tab" data-toggle="tab" href="#tabs-icons-text-5" role="tab" aria-controls="tabs-icons-text-5" aria-selected="false"><i class="fas fa-user-friends mr-2"></i> {{ __('Beneficiaries') }}</a>
+            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-dependents-tab" data-toggle="tab" href="#tabs-dependents" role="tab" 
+                aria-controls="tabs-dependents" aria-selected="false"><i class="fas fa-user-friends mr-2"></i> {{ __('Dependientes') }}</a>
         </li>
         @endif
     </ul>
@@ -22,46 +23,29 @@
 <div class="card shadow">
     <div class="card-body">
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                @include('invoices.partials.invoicesTable', ['invoices' => $invoices])
-                <div class="card-footer py-4">
-                    <nav class="d-flex justify-content-end" aria-label="...">
-                        {{ $invoices->links() }}
-                    </nav>
-                </div>
+            <div class="tab-pane fade show active" id="tabs-invoices" role="tabpanel" aria-labelledby="tabs-invoices-tab">
+                @include('reports.partials.shortInvoicesTable', ['invoices' => $invoices, 'invoices_totals'=>$invoices_totals])
             </div>
-            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+            <div class="tab-pane fade" id="tabs-calls" role="tabpanel" aria-labelledby="tabs-calls-tab">
                 <div class="col-md-12 col-auto text-right">
-                    <button type="button" id="add-personal-discount-button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-form">{{ __('Add') }}</i></button>
+                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Agregar') }}</i></button>
                     <br />
-                    @include('components.discountsModal',['person_data_id'=>$person_data->id, 'stats'=>$stats])
-
-                    
+                    @include('components.callsModal',['patient'=>$patient])
                 </div>
-                @include('components.discountsTable', ['discounts'=>$person_data->discounts()->paginate(15)])
+                @include('components.callsTable', ['calls'=>$calls])
 
-                
+                 @include('calls.partials.editCallModal', ['patient_id' => $patient->id])
             </div>
-            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+            <div class="tab-pane fade" id="tabs-payments" role="tabpanel" aria-labelledby="tabs-payments-tab">
                 <div class="col-md-12 col-auto text-right">
-                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Add') }}</i></button>
+                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">{{ __('Agregar') }}</i></button>
                     <br />
-                    @include('components.callsModal',['person_data'=>$person_data])
+                    @include('payments.partials.addModal',['patient_id'=>$patient->id])
                 </div>
-                @include('components.callsTable', ['calls'=>$person_data->calls()->paginate(15)])
-
-                 @include('calls.partials.editCallModal', ['person_data_id' => $person_data->id])
+                @include('payments.partials.table', ['payments'=>$patient->payments()->paginate(15), 'patient_id'=>$patient->id])
             </div>
-            <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                <div class="col-md-12 col-auto text-right">
-                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">{{ __('Add') }}</i></button>
-                    <br />
-                    @include('payments.partials.addModal',['person_data_id'=>$person_data->id])
-                </div>
-                @include('payments.partials.table', ['payments'=>$person_data->payments()->paginate(15), 'person_data_id'=>$person_data->id])
-            </div>
-            @if ($person_data->insured)
-            <div class="tab-pane fade" id="tabs-icons-text-5" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+            @if ($patient->insured)
+            <div class="tab-pane fade" id="tabs-dependents" role="tabpanel" aria-labelledby="tabs-dependents-tab">
                 <div class="col-md-12 col-auto text-right">
                     @include('insurees.partials.beneficiariesTable', ['beneficiaries' => $beneficiaries])
                 </div>

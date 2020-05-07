@@ -4,8 +4,8 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h6 class="heading-small text-muted mb-4">{{ __('Add call') }}</h6>
-                        <h4>{{ $person_data->phone_number }}</h4>
+                        <h6 class="heading-small text-muted mb-4">{{ __('Agregar llamada') }}</h6>
+                        <h4>{{ $patient->phone_number }}</h4>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
@@ -28,7 +28,7 @@
                                 {{--  Invoice  --}}
                                 <div class="form-group">
                                     <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id"> 
-                                        <option value='0'>{{ __('Select invoice') }}</option>
+                                        <option value='0'>{{ __('Seleccionar factura') }}</option>
                                     </select>
                                 </div>
                                 {{--  Claim  --}}
@@ -68,11 +68,12 @@
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
                                         <select class="form-control" id="input-status">
-                                            <option>In process</option>
-                                            <option>Deductibles</option>
-                                            <option>Denied for non covered charges</option>
-                                            <option>Paid</option>
-                                            <option>Denied for timely filing</option>
+                                            <option value="0">{{ __('En proceso') }}</option>
+                                            <option value="1">{{ __('Deducibles') }}</option>
+                                            <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
+                                            <option value="3">{{ __('Pagada') }}</option>
+                                            <option value="4">{{ __('Negada por ') }}</option>
+                                            <option value="5">{{ __('Otro') }}</option>
                                           </select>
                                     </div>
                                 </div>
@@ -83,7 +84,7 @@
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
                                         <textarea type="text" rows="3" name="comments" id="input-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
-                                        value="{{ old('comments') }}" placeholder="{{ __('Comments') }}"></textarea>
+                                        value="{{ old('comments') }}" placeholder="{{ __('Comentarios') }}"></textarea>
                                         @if ($errors->has('comments'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('comments') }}</strong>
@@ -92,7 +93,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button id="save_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
+                                    <button id="save_call" class="btn btn-block btn-success">{{ __('Guardar') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +116,6 @@
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "person_data_id": {{ $person_data->id }},
                 "number": number,
                 "claim": claim,
                 "date": date,
@@ -183,7 +183,7 @@
             data: function (params) {
               return {
                 _token: CSRF_TOKEN,
-                person_data_id: {{ $person_data->id }},
+                patient_id: {{ $patient->id }},
                 search: params.term // search term
               };
             },

@@ -3,12 +3,12 @@
     <table id="calls_table" class="table align-services-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Number') }}</th>
-                <th scope="col">{{ __('Invoice') }}</th>
-                <th scope="col">{{ __('Date') }}</th>
+                <th scope="col">{{ __('Número') }}</th>
+                <th scope="col">{{ __('Factura') }}</th>
+                <th scope="col">{{ __('Fecha') }}</th>
                 <th scope="col">{{ __('Claim') }}</th>
-                <th scope="col">{{ __('Status') }}</th>
-                <th scope="col">{{ __('Comments') }}</th>
+                <th scope="col">{{ __('Estado') }}</th>
+                <th scope="col">{{ __('Comentarios') }}</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -21,10 +21,10 @@
                             {{ $call->invoice->number}}
                         </a>
                     </td>
-                    <td>{{ $call->date->format('M-d-Y')}}</td>
-                    <td>{{ $call->claim}}</td>
-                    <td>{{ $call->status}}</td>
-                    <td>{{ $call->comments}}</td>
+                    <td>{{ $call->date->format('d-M-Y')}}</td>
+                    <td>{{ $call->claim }}</td>
+                    <td>{{ $call->status }}</td>
+                    <td>{{ $call->comments }}</td>
                     <td class="text-right">
                         <button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal({{ $call->id }})">
                             <span class="btn-inner--icon">
@@ -42,6 +42,6 @@
 </div>
 <div class="card-footer py-4">
     <nav class="d-flex justify-content-end" aria-label="...">
-        {{ $calls->links() }}
+       
     </nav>
 </div>
