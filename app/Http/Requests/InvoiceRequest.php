@@ -40,6 +40,7 @@ class InvoiceRequest extends FormRequest
             'amount_paid' => 'numeric|between:0,999999999.999',
             'amount_due' => 'numeric|between:0,999999999.999',
             'patient_id' => 'required',
+            'exchange_rate' => 'numeric|required|between:0,999999999.999',
         ];
     }
 }
