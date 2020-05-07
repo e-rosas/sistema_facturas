@@ -97,18 +97,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                {{--  method --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('method') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-method">Forma de pago</label>
-                                    <input type="text" name="method" id="input-method" class="form-control form-control-alternative{{ $errors->has('method') ? ' is-invalid' : '' }}" 
-                                    placeholder="Forma de pago" value="Por definir" required>
 
-                                    @if ($errors->has('method'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('method') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
                                 
                                 
                             </div>
@@ -248,6 +237,20 @@
                                     @if ($errors->has('comments'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('comments') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                {{--  doctor --}}
+                                <div class="col-md-12 col-auto form-group{{ $errors->has('doctor') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-doctor">Doctor</label>
+                                    <input type="text" name="doctor" id="input-doctor" class="form-control form-control-alternative{{ $errors->has('doctor') ? ' is-invalid' : '' }}" 
+                                    placeholder="Nombre, MD" value="">
+
+                                    @if ($errors->has('doctor'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('doctor') }}</strong>
                                         </span>
                                     @endif
                                 </div>
@@ -662,9 +665,10 @@
     }
 
     function sendInvoice(patient_id, series, number, concept, code, currency, 
-        method,  date, comments){
+         date, comments){
             var exchange_rate = document.getElementById("invoice-exchange_rate").value;
             exchange_rate = parseFloat(exchange_rate.replace(/,/g,''));
+            var doctor =  document.getElementById("input-doctor").value;
         $.ajax({
             url: "{{route('invoices.store')}}",
             type:"post",
@@ -678,7 +682,6 @@
                 "concept" : concept,
                 "code": code,
                 "currency" : currency,
-                "method" : method,
                 "services" : this.services,
                 "total" : total,
                 "sub_total" : sub_total,
@@ -689,6 +692,7 @@
                 "amount_due" : total_with_discounts,
                 "amount_paid" : 0,
                 "exchange_rate": exchange_rate,
+                "doctor": doctor
             },
         success: function (response) {
             setTimeout(function() {
@@ -824,9 +828,9 @@
                 var series = document.getElementById("input-series").value; 
                 var concept = document.getElementById("input-concept").value; 
                 var currency = document.getElementById("input-currency").value; 
-                var method = document.getElementById("input-method").value; 
+               
                 sendInvoice(patient_id, series, number, concept, code, currency, 
-                    method,  date,  comments);
+                      date,  comments);
             }
             
             else {

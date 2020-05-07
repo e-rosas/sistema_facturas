@@ -32,6 +32,8 @@ class CreateInvoicesTable extends Migration
             $table->decimal('amount_paid', 13, 4)->default(0);
             $table->decimal('amount_due', 13, 4)->default(0);
 
+            $table->string('doctor')->default('Pendiente');
+
             $table->tinyInteger('type')->default(0);
             $table->text('comments')->nullable();
             $table->tinyInteger('status')->default(0);
