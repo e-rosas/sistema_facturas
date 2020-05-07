@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CalculateTotalsOfInvoices;
 use App\Http\Requests\InsurerRequest;
 use App\Http\Requests\UpdateInsurer;
 use App\Insuree;
 use App\Insurer;
+use App\Invoice;
 use Illuminate\Http\Request;
 
 class InsurerController extends Controller
@@ -52,15 +54,17 @@ class InsurerController extends Controller
      */
     public function show(Insurer $insurer)
     {
-        $invoices = [];
+        $invoices = collect();
 
-        $insurees = Insuree::with('patient', 'patient.invoices')->where('insurer_id', $insurer->id)->get();
+        $insurees = Insuree::where('insurer_id', $insurer->id)->get();
         foreach ($insurees as $insuree) {
-            foreach ($insuree->patient->invoices as $invoice) {
-                $invoice->load('payments', 'credit');
-                $invoices[] = $invoice;
+            $invoicess = Invoice::where('patient_id', $insuree->patient_id)->get();
+            foreach ($invoicess as $invoice) {
+                $invoices->add($invoice);
             }
         }
+        $invoices_totals = new CalculateTotalsOfInvoices($invoices);
+        $invoices_totals->totalsShort();
         /* foreach ($insurer->insurees as $insuree) {
             foreach ($insuree->patient->invoices as $invoice) {
                 $invoice->load('payments', 'credit');
@@ -68,7 +72,7 @@ class InsurerController extends Controller
             }
         } */
 
-        return view('insurers.show', compact('insurer', 'invoices'));
+        return view('insurers.show', compact('insurer', 'invoices', 'invoices_totals'));
     }
 
     /**

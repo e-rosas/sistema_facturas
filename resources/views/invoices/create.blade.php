@@ -328,16 +328,15 @@
                         </div>
                         {{-- Table of services --}}
                         <div  class="table-responsive">
-                            <table id="services_table" class="table align-services-center table-flush">
+                            <table id="services_table" class=" table align-services-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col"></th>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Descripción</th>
-                                        <th scope="col">Precio</th>
+                                        <th scope="col">Diagnóstico</th>
                                         <th scope="col">Descuento</th>
                                         <th scope="col">Cantidad</th>
-                                        <th scope="col">Total</th>
                                         <th scope="col">Total Descontado</th>
                                         <th scope="col">Articulos</th>
                                         <th scope="col"></th>
@@ -745,10 +744,9 @@
             + "<td>  <input type='checkbox' name='service'>  </td>"
             + "<td>" + this.services[i].date + "</td>"
             + "<td>" + this.services[i].description + "</td>"
-            + "<td>" + this.services[i].price + "</td>" 
+            + "<td>" + this.services[i].diagnosis_code + "</td>"
             + "<td>" + this.services[i].discounted_price + "</td>"
             + "<td>" + this.services[i].quantity + "</td>"
-            + "<td>" + this.services[i].total_price + "</td>"
             + "<td>" + this.services[i].total_discounted_price + '</td>'
             + "<td>" + this.services[i].items.length + '</td>'
             +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'

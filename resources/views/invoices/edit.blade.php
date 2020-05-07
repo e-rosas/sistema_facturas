@@ -275,6 +275,20 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="form-row">
+                                {{--  doctor --}}
+                                <div class="col-md-12 col-auto form-group{{ $errors->has('doctor') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-doctor">Doctor</label>
+                                    <input type="text" name="doctor" id="input-doctor" class="form-control form-control-alternative{{ $errors->has('doctor') ? ' is-invalid' : '' }}" 
+                                    placeholder="Nombre, MD" value="{{ $invoice->doctor }}">
+
+                                    @if ($errors->has('doctor'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('doctor') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                         </form>
                     </div>                    
                 </div>               
@@ -338,19 +352,25 @@
                                 <button type="button" id="add_service" class="btn btn-outline-success btn-lg">Agregar</button>
                             </div>
                         </div>
-                        
+                        <div class="form-row">
+                            @include('components.searchDiagnoses')  
+                            <div class="col-md-4">
+                                <input type="text" name="diagnosis_code" id="input-diagnosis_code" class="form-control form-control-alternative{{ $errors->has('diagnosis_code') ? ' is-invalid' : '' }}" 
+                                    placeholder="Codigo" readonly>
+                                <input id="diagnosis" type="hidden" value=0>
+                            </div>
+                        </div>
                         {{-- Table of services --}}
                         <div  class="table-responsive">
-                            <table id="services_table" class="table align-services-center table-flush">
-                                <thead class="thead-light">
+                            <table id="services_table" class="table table-sm align-services-center table-flush ">
+                                <thead class="thead-light ">
                                     <tr>
                                         <th scope="col"></th>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Descripción</th>
-                                        <th scope="col">Precio</th>
+                                        <th scope="col">Diagnóstico</th>
                                         <th scope="col">Descuento</th>
                                         <th scope="col">Cantidad</th>
-                                        <th scope="col">Total</th>
                                         <th scope="col">Total Descontado</th>
                                         <th scope="col">Articulos</th>
                                         <th scope="col"></th>
@@ -421,7 +441,9 @@
         sub_total = 0;
         sub_total_discounted = 0;
         total_price = 0;
-        total_discounted_price = 0;      
+        total_discounted_price = 0;     
+        diagnosis_id = 0;
+        diagnosis_code = ""; 
         DOS = new Date();
 
         items_sub_total = 0;
@@ -430,7 +452,7 @@
         items_total_discounted_price = 0;
 
         constructor(service_id, description, price, discounted_price, quantity, id, 
-            DOS, descripcion, code) {
+            DOS, descripcion, code, diagnosis_code, diagnosis_id) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -445,6 +467,8 @@
             this.code = code;
             this.date2 = getCorrectDate(DOS);
             this.DOS = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
+            this.diagnosis_code = diagnosis_code;
+            this.diagnosis_id = diagnosis_id;
         }
 
         get date(){
@@ -563,7 +587,7 @@
 
      // Add to cart
      function addServiceToCart(service_id, description, price, discounted_price,
-         quantity, id, descripcion, code) {
+         quantity, id, descripcion, code, diagnosis_code, diagnosis_id) {
         for(var service in this.services) {
             if(this.services[service].id === id) {
                 this.services[service].quantity += Number(quantity);
@@ -575,16 +599,16 @@
         var DOS = document.getElementById("input-date_service").value;
         
         var service = new Service(service_id, description, price, discounted_price,
-         quantity, id, DOS, descripcion, code);
+         quantity, id, DOS, descripcion, code, diagnosis_code, diagnosis_id);
         this.services.push(service);
         displayCart();  
     }
     function addServiceToCartFromInvoice(service_id, description, price, discounted_price,
-         quantity, id, DOS, items, descripcion, code) {
+         quantity, id, DOS, items, descripcion, code, diagnosis_code, diagnosis_id) {
         
         var service = new Service(service_id, description, parseFloat(price.replace(/,/g,'')), 
             parseFloat(discounted_price.replace(/,/g,'')), quantity, 
-                services.length, DOS, descripcion, code);
+                services.length, DOS, descripcion, code, diagnosis_code, diagnosis_id);
         for(var i in items){
             var tax = false;
             if(items[i].itax > 0) tax = true;
@@ -666,7 +690,7 @@
                 addServiceToCartFromInvoice(response[i].service_id, response[i].description, 
                     response[i].price, response[i].discounted_price, response[i].quantity, 
                     response[i].id, response[i].DOS, response[i].items, 
-                    response[i].descripcion, response[i].code);   
+                    response[i].descripcion, response[i].code, response[i].diagnosis_code, response[i].diagnosis_id);   
             }
             displayCart();                
                                                  
@@ -675,7 +699,7 @@
             return false;
     }
 
-    function getService(id, quantity, price, discounted_price){
+    function getService(id, quantity, price, discounted_price, diagnosis_id){
         $.ajax({
             url: "{{route('services.find')}}",
             dataType: 'json',
@@ -684,10 +708,11 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id" : id
             },
-        success: function (response) {                
+        success: function (response) {        
+                var diagnosis_code = document.getElementById("input-diagnosis_code").value;        
                 addServiceToCart(response.id, response.description, 
                     price, discounted_price, quantity, services.length,
-                    response.descripcion, response.code);                                    
+                    response.descripcion, response.code, diagnosis_code, diagnosis_id);                                    
             }
         });
             return false;
@@ -724,6 +749,8 @@
     function sendInvoice(patient_id, series, number, concept, code, currency, 
         date, comments){
             var exchange_rate = document.getElementById("invoice-exchange_rate").value;
+            exchange_rate = parseFloat(exchange_rate.replace(/,/g,''));
+            var doctor =  document.getElementById("input-doctor").value;
         $.ajax({
             url: "{{route('invoice.update')}}",
             type:"patch",
@@ -748,6 +775,7 @@
                 "amount_due" : total_with_discounts,
                 "amount_paid" : 0,
                 "exchange_rate": exchange_rate,
+                "doctor": doctor
             },
         success: function (response) {
             setTimeout(function() {
@@ -814,10 +842,9 @@
             + "<td>  <input type='checkbox' name='service'>  </td>"
             + "<td>" + this.services[i].date + "</td>"
             + "<td>" + this.services[i].description + "</td>"
-            + "<td>" + this.services[i].price + "</td>" 
+            + "<td>" + this.services[i].diagnosis_code + "</td>"
             + "<td>" + this.services[i].discounted_price + "</td>"
             + "<td>" + this.services[i].quantity + "</td>"
-            + "<td>" + this.services[i].total_price + "</td>"
             + "<td>" + this.services[i].total_discounted_price + '</td>'
             + "<td>" + this.services[i].items.length + '</td>'
             +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
@@ -852,14 +879,14 @@
         $("#add_service").click(function(){
             var quantity = Number(document.getElementById("input-quantity").value);
 
-            
-            if(quantity > 0){
+            var diagnosis_id = Number(document.getElementById("diagnosis_id").value);
+            if(quantity > 0 && diagnosis_id > 0){
                 var price = document.getElementById("custom-price").value;
                 price = parseFloat(price.replace(/,/g,''));
                 var discounted_price = document.getElementById("custom-discounted-price").value;
                 discounted_price = parseFloat(discounted_price.replace(/,/g,''));
                 var service_id= $("#service_id").children("option:selected").val();
-                getService(service_id, quantity, price, discounted_price);
+                getService(service_id, quantity, price, discounted_price, diagnosis_id);
             }
             
         });

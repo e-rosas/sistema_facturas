@@ -29,6 +29,7 @@ class UpdateInvoiceRequest extends FormRequest
             'number' => 'max:255',
             'code' => 'required|max:255',
             'concept' => 'max:255',
+            'doctor' => 'max:255',
             'currency' => 'max:255',
             'date' => 'date',
             'comments' => 'max:1000',
@@ -39,6 +40,7 @@ class UpdateInvoiceRequest extends FormRequest
             'total' => 'numeric|required|between:0,999999999.999',
             'total_with_discounts' => 'numeric|required|between:0,999999999.999',
             'patient_id' => 'required',
+            'exchange_rate' => 'numeric|required|between:0,999999999.999',
         ];
     }
 }
