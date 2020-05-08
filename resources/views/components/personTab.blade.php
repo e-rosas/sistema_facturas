@@ -37,19 +37,14 @@
                  @include('calls.partials.editCallModal', ['patient_id' => $patient->id])
             </div>
             <div class="tab-pane fade" id="tabs-payments" role="tabpanel" aria-labelledby="tabs-payments-tab">
-                <div class="col-md-12 col-auto text-right">
-                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-payment">{{ __('Agregar') }}</i></button>
-                    <br />
-                    @include('payments.partials.addModal',['patient_id'=>$patient->id])
-                </div>
                 @include('payments.partials.table', ['payments'=>$patient->payments()->paginate(15), 'patient_id'=>$patient->id])
             </div>
             @if ($patient->insured)
-            <div class="tab-pane fade" id="tabs-dependents" role="tabpanel" aria-labelledby="tabs-dependents-tab">
-                <div class="col-md-12 col-auto text-right">
-                    @include('insurees.partials.beneficiariesTable', ['beneficiaries' => $beneficiaries])
+                <div class="tab-pane fade" id="tabs-dependents" role="tabpanel" aria-labelledby="tabs-dependents-tab">
+                    <div class="col-md-12 col-auto text-right">
+                        @include('components.beneficiariesTable', ['beneficiaries' => $beneficiaries])
+                    </div>
                 </div>
-            </div>
             @endif
         </div>
     </div>

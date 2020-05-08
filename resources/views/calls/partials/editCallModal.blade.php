@@ -60,11 +60,12 @@
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
                                         <select multiple class="form-control" id="update-status">
-                                            <option>In process</option>
-                                            <option>Deductibles</option>
-                                            <option>Denied for non covered charges</option>
-                                            <option>Paid</option>
-                                            <option>Denied for timely filing</option>
+                                            <option value="0">{{ __('En proceso') }}</option>
+                                            <option value="1">{{ __('Deducibles') }}</option>
+                                            <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
+                                            <option value="3">{{ __('Pagada') }}</option>
+                                            <option value="4">{{ __('Negada por ') }}</option>
+                                            <option value="5">{{ __('Otro') }}</option>
                                           </select>
                                     </div>
                                 </div>
@@ -111,7 +112,7 @@
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id": id,
-                "person_data_id": {{ $person_data_id }},
+                "patient_id": {{ $patient_id }},
                 "number": number,
                 "claim": claim,
                 "date": date,
@@ -135,7 +136,6 @@
             document.getElementById("update-claim").value = claim;
             document.getElementById("update-date").value = date;
             document.getElementById("update-comments").value = comments;
-            document.getElementById("update-status").value = status;
             
     }
 
@@ -157,7 +157,7 @@
     }
 
     function DeleteCall(id){
-        var r = confirm("Are you sure?");
+        var r = confirm("Confirmar la eliminacion de la llamada");
         if(r){
             $.ajax({
                 url: "{{route('calls.destroy')}}",
@@ -177,7 +177,6 @@
     }
 
     $(document).ready(function(){
-        setCallCount();
         $('#calls_table').on("click", ".update-call", function(event) {
             var id = $(this).data('call');
             getCallData(id);

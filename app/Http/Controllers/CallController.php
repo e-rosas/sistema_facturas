@@ -41,6 +41,7 @@ class CallController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validateCall();
+        $validated['number'] = 'C'.$validated['invoice_id'].'-'.rand(1, 1000);
         Call::create($validated);
 
         return $this->getPersonCalls($request->person_data_id);

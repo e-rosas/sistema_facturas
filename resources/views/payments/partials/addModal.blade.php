@@ -4,7 +4,7 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h6 class="heading-small text-muted mb-4">Nuevo pago</h6>
+                        <h6 class="heading-small text-muted mb-4">{{ __('Nuevo pago') }}</h6>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
@@ -15,7 +15,7 @@
                                         <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                     </div>
                                     <input type="text" name="number" id="payment-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
-                                     placeholder="Opcional">
+                                     placeholder="{{ __('Opcional') }}">
                                     @if ($errors->has('number'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('number') }}</strong>

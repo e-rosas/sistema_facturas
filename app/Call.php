@@ -16,7 +16,6 @@ class Call extends Model
         'patient_id',
     ];
     public static $rules = [
-        'number' => 'required',
         'comments' => 'max:1000',
         'status' => 'numeric',
         'invoice_id' => 'required',
