@@ -18,11 +18,37 @@
         <div class="row mt-5">
             <div class="col-xl-9">
                 <div class="card card-stats mb-4 mb-xl-0">
-                    @include('reports.partials.shortInvoicesTable', ['invoices' => $invoices, 'invoices_totals'=>$invoices_totals])
-                    {{-- <div class="card-body">
-                        @include('components.personTab', ['invoices'=>$invoices, 'person_data'=>$insuree->person_data,
-                            'stats'=>$stats, 'beneficiaries' => $beneficiaries])
-                    </div> --}}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Asegurado') }}</h5>
+                                <span class="h2 font-weight-bold mb-0"> <a href="{{ route('patients.show', $insuree->patient) }}"> {{ $insuree->patient->full_name }} - {{ $insuree->nss }} </a></span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+                                    <i class="fas fa-user-shield"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <br />
+                <div class="card card-stats ">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Aseguranza') }}</h5>
+                                <span class="h2 font-weight-bold mb-0"> <a href="{{ route('insurers.show', $insuree->insurer) }}"> {{ $insuree->insurer->name }}</a></span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
             <div class="col-xl-3 order-xl-2 mb-5 mb-xl-0">
@@ -34,13 +60,13 @@
                         {{-- <form  method="post" action="{{ route('reports.invoices') }}" >
                             @csrf
                             <div class="form-group col-md-12 col-auto">
-                                <input type="hidden" value=" {{ $patient->id }} " name="person_data_id" id="input-person_data_id" class="custom-control-input">
+                                <input type="hidden" value=" {{ $patient->id }} " name="patient_id" id="input-patient_id" class="custom-control-input">
                                 <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('PDF') }}</button>
                             </div>
                         </form> --}}
                     </div>
                     <div class="card-body pt-0 pt-md-4">
-                        <div class="row">
+                        {{--  <div class="row">
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
@@ -48,7 +74,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>  --}}
                         <div class="text-center">
                             <div class="h4 font-weight-300">
                                 
@@ -71,6 +97,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-xl-12">
+                @include('components.personTab')
             </div>
         </div>
     </div>

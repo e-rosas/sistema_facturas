@@ -25,6 +25,11 @@ class Insuree extends Model
         return $this->belongsTo('App\Insurer');
     }
 
+    public function dependents()
+    {
+        return $this->hasMany('App\Dependent', 'insuree_id', 'patient_id');
+    }
+
     public function fullName()
     {
         $data = $this->patient;

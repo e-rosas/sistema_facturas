@@ -3,11 +3,11 @@
     <table id="payments_table" class="table align-services-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">No. de Pago</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Comentarios</th>
-                <th scope="col">Acciones</th>
+                <th scope="col">{{ __('No. de Pago') }}</th>
+                <th scope="col">{{ __('Fecha') }}</th>
+                <th scope="col">{{ __('Cantidad') }}</th>
+                <th scope="col">{{ __('Comentarios') }}</th>
+                <th scope="col">{{ __('Acciones') }}</th>
             </tr>
         </thead>
         <tbody>

@@ -120,7 +120,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        $invoice = $invoice->load('services.service', 'patient', 'payments');
+        $invoice = $invoice->load('services.service', 'patient', 'payments', 'calls');
 
         if (!$invoice->patient->insured) {
             $insuree = Insuree::with('patient', 'insurer')

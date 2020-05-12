@@ -104,13 +104,37 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        $invoices = Invoice::with('payments', 'patient', 'credit')
+        $invoices = Invoice::with('patient', 'payments', 'credit', 'calls')
             ->where('patient_id', $patient->id)->get();
 
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);
         $invoices_totals->totalsShort();
 
-        return view('patients.show', compact('patient', 'invoices', 'invoices_totals'));
+        $calls = [];
+        $payments = [];
+        $dependents = [];
+        $insuree = 0;
+
+        if ($patient->insured) {
+            $dependents = Dependent::with('patient')->where('insuree_id', $patient->id)->get();
+        } else {
+            $insuree = Insuree::with('patient', 'insurer')
+                ->where('patient_id', $patient->dependent->insuree_id)
+                ->first()
+            ;
+        }
+
+        foreach ($invoices as $invoice) {
+            foreach ($invoice->calls as $call) {
+                array_push($calls, $call);
+            }
+
+            foreach ($invoice->payments as $payment) {
+                array_push($payments, $payment);
+            }
+        }
+
+        return view('patients.show', compact('patient', 'invoices', 'invoices_totals', 'calls', 'payments', 'dependents', 'insuree'));
     }
 
     /**

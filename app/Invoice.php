@@ -208,6 +208,11 @@ class Invoice extends Model
         return $this->hasMany('App\Payment');
     }
 
+    public function calls()
+    {
+        return $this->hasMany('App\Call');
+    }
+
     public function credit()
     {
         return $this->hasOne('App\Credit');

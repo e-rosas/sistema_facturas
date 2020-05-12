@@ -16,7 +16,7 @@ class CallController extends Controller
      */
     public function index()
     {
-        $calls = Call::with('person_data', 'invoice')
+        $calls = Call::with('invoice')
             ->orderBy('date', 'desc')
             ->paginate(15)
         ;
@@ -44,7 +44,7 @@ class CallController extends Controller
         $validated['number'] = 'C'.$validated['invoice_id'].'-'.rand(1, 1000);
         Call::create($validated);
 
-        return $this->getPersonCalls($request->person_data_id);
+        return $this->invoiceCalls($request->invoice_id);
     }
 
     /**
@@ -79,16 +79,16 @@ class CallController extends Controller
         $call->fill($validated);
         $call->save();
 
-        return $this->getPersonCalls($call->person_data_id);
+        return $this->invoiceCalls($call->invoice_id);
     }
 
     public function delete(Request $request)
     {
         $call = Call::findOrFail($request['call_id']);
-        $person_data_id = $call->person_data_id;
+        $invoice_id = $call->invoice_id;
         $call->delete();
 
-        return $this->getPersonCalls($person_data_id);
+        return $this->invoiceCalls($invoice_id);
     }
 
     public function validateCall()
@@ -105,9 +105,9 @@ class CallController extends Controller
         return new CallResource($call);
     }
 
-    private function getPersonCalls($person_data_id)
+    private function invoiceCalls($invoice_id)
     {
-        $calls = Call::where('person_data_id', $person_data_id)
+        $calls = Call::where('invoice_id', $invoice_id)
             ->orderBy('date', 'desc')
             ->paginate(15)
         ;

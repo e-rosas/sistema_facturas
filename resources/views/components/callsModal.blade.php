@@ -5,7 +5,7 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
                         <h6 class="heading-small text-muted mb-4">{{ __('Agregar llamada') }}</h6>
-                        <h4>{{ $patient->phone_number }}</h4>
+                        <h4>{{ $invoice->patient->phone_number }}</h4>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
@@ -26,11 +26,11 @@
                                     </div>
                                 </div>
                                 {{--  Invoice  --}}
-                                <div class="form-group">
+                                {{--  <div class="form-group">
                                     <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id"> 
                                         <option value='0'>{{ __('Seleccionar factura') }}</option>
                                     </select>
-                                </div>
+                                </div>  --}}
                                 {{--  Claim  --}}
                                 <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
@@ -109,7 +109,7 @@
 <script>
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     function sendCall(number, claim, date,
-    comments, status, invoice_id){
+    comments, status){
         $.ajax({
             url: "{{route('calls.store')}}",
             dataType: 'json',
@@ -121,7 +121,7 @@
                 "date": date,
                 "comments": comments,
                 "status": status,
-                'invoice_id': invoice_id
+                'invoice_id': {{ $invoice_id }},
             },
         success: function (response) {
             displayCalls(response.data);
@@ -166,42 +166,10 @@
         var date = document.getElementById("input-date").value;
         var comments = document.getElementById("input-comments").value;
         var status = document.getElementById("input-status").value;
-        var invoice_id = document.getElementById("invoice_id").value;
-        sendCall(number, claim, date, comments, status, invoice_id);
+        sendCall(number, claim, date, comments, status);
 
 
-    });
-    $(document).ready(function(){
-        $("#invoice_id").select2({
-          minimumInputLength: 2,
-          dropdownParent: $('#modal-call'),
-          ajax: { 
-            url: "{{route('invoices.searchNumber')}}",
-            type:'post',
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-              return {
-                _token: CSRF_TOKEN,
-                patient_id: {{ $patient->id }},
-                search: params.term // search term
-              };
-            },
-            processResults: function (response) {
-              return {
-                results: response
-              };
-            },
-            cache: true
-          }
-    
-        });
-    
     });
 </script>
 
-@endpush
-@push('headjs')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 @endpush

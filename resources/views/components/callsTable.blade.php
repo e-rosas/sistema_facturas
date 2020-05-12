@@ -23,7 +23,7 @@
                     </td>
                     <td>{{ $call->date->format('d-M-Y')}}</td>
                     <td>{{ $call->claim }}</td>
-                    <td>{{ $call->status }}</td>
+                    <td>{{ $call->status() }}</td>
                     <td>{{ $call->comments }}</td>
                     <td class="text-right">
                         <button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal({{ $call->id }})">

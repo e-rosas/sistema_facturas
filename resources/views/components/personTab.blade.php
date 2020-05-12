@@ -27,22 +27,66 @@
                 @include('reports.partials.shortInvoicesTable', ['invoices' => $invoices, 'invoices_totals'=>$invoices_totals])
             </div>
             <div class="tab-pane fade" id="tabs-calls" role="tabpanel" aria-labelledby="tabs-calls-tab">
-                <div class="col-md-12 col-auto text-right">
-                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Agregar') }}</i></button>
-                    <br />
-                    @include('components.callsModal',['patient'=>$patient])
+                <div  class="table-responsive">
+                    <table id="calls_table" class="table align-services-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">{{ __('Número') }}</th>
+                                <th scope="col">{{ __('Factura') }}</th>
+                                <th scope="col">{{ __('Fecha') }}</th>
+                                <th scope="col">{{ __('Claim') }}</th>
+                                <th scope="col">{{ __('Estado') }}</th>
+                                <th scope="col">{{ __('Comentarios') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($calls as $call)
+                                <tr>
+                                    <td>{{ $call->number}}</td>
+                                    <td>
+                                        <a href="{{ route('invoices.show', $call->invoice) }}">
+                                            {{ $call->invoice->number}}
+                                        </a>
+                                    </td>
+                                    <td>{{ $call->date->format('d-M-Y')}}</td>
+                                    <td>{{ $call->claim }}</td>
+                                    <td>{{ $call->status }}</td>
+                                    <td>{{ $call->comments }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                @include('components.callsTable', ['calls'=>$calls])
-
-                 @include('calls.partials.editCallModal', ['patient_id' => $patient->id])
             </div>
             <div class="tab-pane fade" id="tabs-payments" role="tabpanel" aria-labelledby="tabs-payments-tab">
-                @include('payments.partials.table', ['payments'=>$patient->payments()->paginate(15), 'patient_id'=>$patient->id])
+                <div class="table-responsive">
+                    <table id="payments_table" class="table align-services-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">{{ __('No. de Pago') }}</th>
+                                <th scope="col">{{ __('Fecha') }}</th>
+                                <th scope="col">{{ __('Cantidad') }}</th>
+                                <th scope="col">{{ __('Comentarios') }}</th>
+                                <th scope="col">{{ __('Acciones') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($payments as $payment)
+                                <tr>
+                                    <td>{{ $payment->number}}</td>
+                                    <td>{{ $payment->date->format('M-d-Y')}}</td>
+                                    <td>{{ $payment->amount_paid}}</td>
+                                    <td>{{ $payment->comments}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
             @if ($patient->insured)
                 <div class="tab-pane fade" id="tabs-dependents" role="tabpanel" aria-labelledby="tabs-dependents-tab">
                     <div class="col-md-12 col-auto text-right">
-                        @include('components.beneficiariesTable', ['beneficiaries' => $beneficiaries])
+                        @include('components.dependentsTable', ['dependents' => $dependents])
                     </div>
                 </div>
             @endif

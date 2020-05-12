@@ -13,7 +13,6 @@ class Call extends Model
         'invoice_id',
         'claim',
         'date',
-        'patient_id',
     ];
     public static $rules = [
         'comments' => 'max:1000',
@@ -24,10 +23,9 @@ class Call extends Model
     ];
     protected $casts = [
         'id' => 'integer',
-        'patient_id' => 'integer',
+        'invoice_id' => 'integer',
         'comments' => 'string',
         'claim' => 'string',
-        'number' => 'integer',
     ];
 
     protected $dates = ['date'];
@@ -63,11 +61,6 @@ class Call extends Model
                 // code...
                 break;
         }
-    }
-
-    public function patient()
-    {
-        return $this->belongsTo('App\Patient');
     }
 
     public function invoice()

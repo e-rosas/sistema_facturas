@@ -40,6 +40,10 @@
                     <a class="nav-link mb-sm-3 mb-md-0" id="tab-credit-tab" data-toggle="tab" href="#tab-credit"
                          role="tab" aria-controls="tab-credit" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>Nota de Crédito</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-calls-tab" data-toggle="tab" href="#tabs-calls" role="tab" 
+                        aria-controls="tabs-calls" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Llamadas') }}</a>
+                </li>
             </ul>
         </div>
         <div class="card shadow">
@@ -74,6 +78,15 @@
                             @include('credits.partials.details', ['credit'=>$invoice->credit])
                             @include('credits.partials.addModal')
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="tabs-calls" role="tabpanel" aria-labelledby="tabs-calls-tab">
+                        <div class="col-md-12 col-auto text-right">
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-call">{{ __('Agregar') }}</i></button>
+                            <br />
+                            @include('components.callsModal',['invoice_id'=>$invoice->id])
+                        </div>
+                        @include('components.callsTable', ['calls'=>$invoice->calls])
+                        @include('calls.partials.editCallModal')
                     </div>
                 </div>
             </div>

@@ -112,7 +112,6 @@
             data: {
                 "_token": "{{ csrf_token() }}",
                 "id": id,
-                "patient_id": {{ $patient_id }},
                 "number": number,
                 "claim": claim,
                 "date": date,
