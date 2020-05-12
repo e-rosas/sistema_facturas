@@ -52,7 +52,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input onchange="handler(event);" type="date" name="date" id="input-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                        <input type="date" name="date" id="input-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
                                         value="{{ old('date') }}" required>
                                         @if ($errors->has('date'))
                                             <span class="invalid-feedback" role="alert">

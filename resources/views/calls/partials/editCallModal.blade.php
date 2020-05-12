@@ -54,12 +54,12 @@
                                     </div>
                                 </div>
                                 {{--  status  --}}
-                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                <div class="form-group {{ $errors->has('status') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
-                                        <select multiple class="form-control" id="update-status">
+                                        <select class="form-control" id="update-status-call">
                                             <option value="0">{{ __('En proceso') }}</option>
                                             <option value="1">{{ __('Deducibles') }}</option>
                                             <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
@@ -135,7 +135,7 @@
             document.getElementById("update-claim").value = claim;
             document.getElementById("update-date").value = date;
             document.getElementById("update-comments").value = comments;
-            
+            document.getElementById("update-status-call").value = status;
     }
 
     function getCallData(id){
@@ -149,7 +149,7 @@
             },
         success: function (data) {          
             CallData(data.id,data.number, data.claim, 
-                    data.date, data.comments, data.status);                                 
+                    data.date2, data.comments, data.status_n);                                 
             }
         });
             return false;
@@ -189,7 +189,7 @@
             var claim = document.getElementById("update-claim").value;
             var date = document.getElementById("update-date").value;
             var comments = document.getElementById("update-comments").value;
-            var status = document.getElementById("update-status").value;
+            var status = document.getElementById("update-status-call").value;
 
             updateCall(call_id, number, claim, date, comments, status);
             

@@ -19,10 +19,12 @@ class CallResource extends JsonResource
             'id' => $this->id,
             'number' => $this->number,
             'status' => $this->status(),
+            'status_n' => $this->status,
             'invoice' => $this->invoice->number,
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'claim' => is_null($this->claim) ? '' : $this->claim,
             'date' => $this->date->format('d-M-Y'),
+            'date2' => $this->date->format('Y-m-d'),
         ];
     }
 }

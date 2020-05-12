@@ -26,10 +26,10 @@ class UpdateCallRequest extends FormRequest
         return [
             'number' => 'required',
             'comments' => 'max:1000',
-            'status' => 'max:250',
+            'status' => 'required',
             'date' => 'date',
             'claim' => 'max:255',
-            'person_data_id' => 'required',
+            'id' => 'required',
         ];
     }
 }
