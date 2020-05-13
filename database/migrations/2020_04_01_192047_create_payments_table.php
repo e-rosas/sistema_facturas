@@ -19,6 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('amount_paid', 13, 4);
             $table->tinyInteger('method')->default(0);
             $table->tinyInteger('concept')->default(0);
+            $table->tinyInteger('type')->default(0);
             $table->date('date');
             $table->text('comments')->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();

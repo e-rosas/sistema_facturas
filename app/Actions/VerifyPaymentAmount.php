@@ -41,6 +41,15 @@ class VerifyPaymentAmount
         return 2;
     }
 
+    public function paymentType()
+    {
+        if (5 == $this->invoice->status) {
+            return 1; //charge
+        }
+
+        return 0;
+    }
+
     public function verifyDeletePayment()
     {
         if (1 == $this->invoice->status) {

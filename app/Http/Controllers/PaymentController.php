@@ -66,6 +66,7 @@ class PaymentController extends Controller
         }
 
         if ($concept < 2) {
+            $validated['type'] = $validatePayment->paymentType();
             $validated['concept'] = $concept;
             Payment::create($validated);
         }

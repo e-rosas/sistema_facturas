@@ -18,6 +18,7 @@ class Payment extends Model
         'date',
         'invoice_id',
         'deducible',
+        'type',
     ];
     /**
      * The event map for the model.
@@ -56,6 +57,23 @@ class Payment extends Model
                 break;
             case 1:
                 return 'Cheque.';
+
+                break;
+            default:
+                // code...
+                break;
+        }
+    }
+
+    public function type()
+    {
+        switch ($this->type) {
+            case 0:
+                return 'Normal.';
+
+                break;
+            case 1:
+                return 'Cargo.';
 
                 break;
             default:
