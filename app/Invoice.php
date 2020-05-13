@@ -217,4 +217,9 @@ class Invoice extends Model
     {
         return $this->hasOne('App\Credit');
     }
+
+    public function charge()
+    {
+        return $this->hasOne('App\Charge');
+    }
 }

@@ -30,7 +30,7 @@
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
                                     <input type="date" onchange="credit_handler(event)" name="date" id="input-credit-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                    value="{{ old('date') }}" required>
+                                    value="{{ $today->format('Y-m-d')}}" required>
                                     @if ($errors->has('date'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('date') }}</strong>

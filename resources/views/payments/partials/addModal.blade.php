@@ -30,7 +30,7 @@
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
                                     <input type="date" name="date" id="payment-date" onchange="handler(event)" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                    value="{{ old('date') }}" required>
+                                    value="{{ $today->format('Y-m-d')}}" required>
                                     @if ($errors->has('date'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('date') }}</strong>
@@ -108,6 +108,14 @@
         var date = document.getElementById("input-credit-date").value;
         getExchangeRate(date);
     }
+    function charge_handler(e){
+        var date = document.getElementById("input-charge-date").value;
+        getExchangeRate(date);
+    }
+    function details_handler(e){
+        var date = document.getElementById("input-date").value;
+        getExchangeRate(date);
+    }
     function getExchangeRate(date){
         $.ajax({
             url: "{{route('rate.find')}}",
@@ -120,6 +128,8 @@
         success: function (response) {
             document.getElementById("payment-exchange_rate").value = response.value;
             document.getElementById("input-credit-exchange_rate").value = response.value;
+            document.getElementById("input-charge-exchange_rate").value = response.value;
+            document.getElementById("invoice-exchange_rate").value = response.value;
             }
         });
         return false;
@@ -174,11 +184,11 @@
         document.getElementById("amount-due").innerHTML = response.data.amount_due;
         document.getElementById("label-status").innerHTML = response.data.status;
         document.getElementById("invoice-type").innerHTML = response.data.type;
-        if(response.data.status_n == 1 || response.data.status_n == 3 || response.data.status_n == 4){
+        if(response.data.status_n == 1){
             document.getElementById("add-payment").style.display = 'none';
             document.getElementById("add-credit").style.display = 'none';
         }
-        else if(response.data.status_n == 2 || response.data.status_n == 0){
+        else {
             document.getElementById("add-payment").style.display = 'block';
             document.getElementById("add-credit").style.display = 'block';
         }

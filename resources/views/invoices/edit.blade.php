@@ -32,7 +32,7 @@
                         {{--  Names  --}}
                         <div class="row">
                             <div class="form-group col-md-6 col-auto">
-                                <label class="form-control-label" for="person_name">{{ __('Patient') }}</label>
+                                <label class="form-control-label" for="person_name">{{ __('Paciente') }}</label>
                                 <label id="person_name"> {{ $invoice->patient->full_name}} </label>
                             </div>     
                             {{-- <div class="form-group col-md-6 col-auto text-right">

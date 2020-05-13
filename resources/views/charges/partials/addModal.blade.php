@@ -4,7 +4,7 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h6 class="heading-small text-muted mb-4">Nueva nota de crédito</h6>
+                        <h6 class="heading-small text-muted mb-4">Nuevo cargo</h6>
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
@@ -30,7 +30,7 @@
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
                                     <input type="date" onchange="charge_handler(event)" name="date" id="input-charge-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                    value="{{ Carbon::today() }}" required>
+                                    value="{{ $today->format('Y-m-d')}}" required>
                                     @if ($errors->has('date'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('date') }}</strong>
@@ -40,9 +40,9 @@
                             </div>
                             {{--  amount  --}}
                             <div class="form-group{{ $errors->has('amount_paid') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="input_amount_charged">Cantidad</label>
-                                <input type="numeric" name="amount_charged" id="input_amount_charged" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}"
-                                placeholder="Cantidad" value={{ (float) str_replace(',', '', $this->amount_due)  }}>
+                                <label class="form-control-label" for="input-charge-amount_charged">Cantidad</label>
+                                <input type="numeric" name="amount_charged" id="input-charge-amount_charged" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}"
+                                placeholder="Cantidad" value={{ (float) str_replace(',', '', $invoice->amount_due)  }}>
 
                                 @if ($errors->has('amount_paid'))
                                     <span class="invalid-feedback" role="alert">

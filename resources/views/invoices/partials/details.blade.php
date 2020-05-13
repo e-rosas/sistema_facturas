@@ -3,35 +3,56 @@
     <div class="card bg-secondary shadow">
         <div class="card-header bg-red border-0">
             <div class="row">
-                <div class="col-8 col-auto">
+                <div class="col-4 col-auto">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                 </div>
                 @if ($invoice->status != 1)
                     <div class="col-4 col-auto text-right">
-                        <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar</a>
+                        <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
                     </div>
                 @endif
+                @if ($invoice->status != 1) 
+                    <div class="col-4 col-auto text-right">
+                        <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
+                        <br />
+                    </div>
+                @endif
+                
+                    @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])
                 
             </div>
         </div>
         <div class="card-body">
             <div class="form-row">
+                {{--  Comments  --}}
+                <div class="col-md-12 col-auto form-group">
+                    <label class="form-control-label" for="label-concept">Observaciones</label>
+                    <label id="label-concept">{{ $invoice->concept }}</label>
+                </div>
+            </div>
+            <div class="form-row">
                 {{--  code --}}
-                <div class="col-md-3 col-auto form-group">
+                <div class="col-md-2 col-auto form-group">
                     <label class="form-control-label" for="label-code">No. de Cobro</label>
                     <label id="label-code">{{ $invoice->code }}</label>
 
                 </div>
                 {{--  number --}}
-                <div class="col-md-5 col-auto form-group">
+                <div class="col-md-2 col-auto form-group">
                     <label class="form-control-label" for="label-number">Folio de CONTPAQ</label>
-                    <label id="label-number">{{ $invoice->code() }}</label>
+                    <label id="label-number">{{ $invoice->number }}</label>
 
                 </div>
                 {{--  date  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-date">Fecha</label>
                     <label id="label-date">{{ $invoice->date->format('d-m-Y') }}</label>
+
+                </div>
+                {{--  number --}}
+                <div class="col-md-5 col-auto form-group">
+                    <label class="form-control-label" for="label-number">Tipo de cambio</label>
+                    <label id="label-exchange_rate">{{ $invoice->exchange_rate }}</label>
 
                 </div>
                 
@@ -85,6 +106,13 @@
                 <div class="col-md-12 col-auto form-group">
                     <label class="form-control-label" for="label-comments">Observaciones</label>
                     <label id="label-comments">{{ $invoice->comments }}</label>
+                </div>
+            </div>
+            <div class="form-row">
+                {{--  Doctor  --}}
+                <div class="col-md-12 col-auto form-group">
+                    <label class="form-control-label" for="label-doctor">Doctor</label>
+                    <label id="label-doctor">{{ $invoice->doctor }}</label>
                 </div>
                 
             </div>

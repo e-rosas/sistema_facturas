@@ -56,9 +56,8 @@ class ChargeController extends Controller
     {
         $validated = $request->validated();
         $invoice = Invoice::findOrFail($validated['invoice_id']);
-        if (is_null($validated['number'])) {
-            $validated['number'] = $validated['invoice_number'].'- C'.rand(1, 10000);
-        }
+        $validated['number'] = $validated['invoice_number'].'- C'.rand(1, 10000);
+
         event(new InvoiceEvent($invoice)); //update invoice stats
         $validated['original_amount_due'] = $invoice->amount_due;
         $charge = Charge::create($validated);

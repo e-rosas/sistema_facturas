@@ -34,14 +34,14 @@
                 @if (is_null($charge))
                     <span id="charge-amount_charged">Sin cargo</span>
                 @else
-                    <span id="charge-amount_charged"> {{ $charge->amount_charged() }} </span>          
+                    <span id="charge-amount_charged"> {{ $charge->getAmountCharged() }} </span>          
                 @endif
             </div>
             <div class="h4 font-weight-300"> Tipo de cambio: 
                 @if (is_null($charge))
                     <span id="charge-exchange_rate">Sin cargo</span>
                 @else
-                    <span id="charge-exchange_rate"> {{ $charge->exchange_rate() }} </span>          
+                    <span id="charge-exchange_rate"> {{ $charge->getExchangeRate() }} </span>          
                 @endif
             </div>
             

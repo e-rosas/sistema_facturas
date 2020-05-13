@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Events\InvoiceEvent;
 use App\Http\Requests\InvoiceRequest;
+use App\Http\Requests\UpdateInvoiceDetailsRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Resources\InvoiceDetailsResource;
 use App\Http\Resources\InvoiceStatsResource;
 use App\Insuree;
 use App\Invoice;
 use App\InvoiceService;
 use App\ItemService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -122,16 +125,18 @@ class InvoiceController extends Controller
     {
         $invoice = $invoice->load('services.service', 'patient', 'payments', 'calls');
 
+        $today = Carbon::today();
+
         if (!$invoice->patient->insured) {
             $insuree = Insuree::with('patient', 'insurer')
                 ->where('patient_id', $invoice->patient->dependent->insuree_id)
                 ->first()
             ;
 
-            return view('invoices.show', compact('invoice', 'insuree'));
+            return view('invoices.show', compact('invoice', 'insuree', 'today'));
         }
 
-        return view('invoices.show', compact('invoice'));
+        return view('invoices.show', compact('invoice', 'today'));
     }
 
     /**
@@ -146,6 +151,18 @@ class InvoiceController extends Controller
         }
 
         return redirect()->route('invoices.show', $invoice);
+    }
+
+    public function updateDetails(UpdateInvoiceDetailsRequest $request)
+    {
+        $validated = $request->validated();
+        $invoice = Invoice::findOrFail($validated['invoice_id']);
+
+        $invoice->fill($validated);
+
+        $invoice->save();
+
+        return new InvoiceDetailsResource($invoice);
     }
 
     /**
@@ -184,7 +201,7 @@ class InvoiceController extends Controller
         $invoice->save();
         event(new InvoiceEvent($invoice));
 
-        return route('invoices.show', [$invoice]);
+        return route('invoices.show', $invoice);
     }
 
     public function updateStatus(Request $request)
@@ -193,7 +210,7 @@ class InvoiceController extends Controller
         $invoice->status = $request['status'];
         $invoice->save();
 
-        return json_encode('ok');
+        return new InvoiceStatsResource($invoice);
     }
 
     /**

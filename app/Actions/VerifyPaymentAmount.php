@@ -70,7 +70,7 @@ class VerifyPaymentAmount
         }
 
         $this->invoice->type = 0; //credit pending
-        $this->invoice->status = 0;
+        //$this->invoice->status = 0;
         $this->invoice->save();
 
         return 0;

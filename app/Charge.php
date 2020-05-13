@@ -19,6 +19,23 @@ class Charge extends Model
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 
+    public function status()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Transferencia.';
+
+                break;
+            case 1:
+                return 'Cheque.';
+
+                break;
+            default:
+                // code...
+                break;
+        }
+    }
+
     public function getAmountCharged()
     {
         return number_format($this->amount_charged, 4);

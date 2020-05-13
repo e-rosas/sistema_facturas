@@ -12,6 +12,7 @@
             </div>
             
         </div>
+        <br />
         <div class="row">
             @include('components.patientInfo', ['patient' => $invoice->patient, 'type' => 'Paciente'])
             @if ($invoice->patient->insured)
@@ -22,6 +23,7 @@
             @endif
             
         </div>
+        <br />
         <div class="row">
             {{--  Details  --}}
             @include('invoices.partials.details', ['invoice' => $invoice])
@@ -45,7 +47,7 @@
                         aria-controls="tabs-calls" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Llamadas') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-charge-tab" data-toggle="tab" href="#tabs-charge" role="tab" 
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-charge-tab" data-toggle="tab" href="#tab-charge" role="tab" 
                         aria-controls="tabs-charge" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Cargos') }}</a>
                 </li>
             </ul>
