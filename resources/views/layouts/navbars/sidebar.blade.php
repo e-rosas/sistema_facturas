@@ -88,6 +88,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('charges.index') }}">
+                        <i class="fas fa-money-check-alt text-info"></i> Cargos
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('diagnoses.index') }}">
                         <i class="fas fa-diagnoses text-black"></i> Diagnósticos
                     </a>

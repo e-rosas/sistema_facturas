@@ -53,7 +53,7 @@ class Charge extends Model
 
     public function invoice()
     {
-        return $this->belongsTo('App\Invoice', 'id', 'invoice_id');
+        return $this->belongsTo('App\Invoice');
     }
 
     public function letters()
