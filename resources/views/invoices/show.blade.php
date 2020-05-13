@@ -30,19 +30,23 @@
             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0 active" id="tab-services-tab" data-toggle="tab" href="#tab-services" 
-                        role="tab" aria-controls="tab-services" aria-selected="true"><i class="fas fa-procedures mr-2"></i>Servicios</a>
+                        role="tab" aria-controls="tab-services" aria-selected="true"><i class="fas fa-procedures mr-2"></i>{{ __('Servicios') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0" id="tab-payment-tab" data-toggle="tab" href="#tab-payment" 
-                        role="tab" aria-controls="tab-payment" aria-selected="false"><i class="fas fa-dollar-sign  mr-2"></i>Pagos</a>
+                        role="tab" aria-controls="tab-payment" aria-selected="false"><i class="fas fa-dollar-sign  mr-2"></i>{{ __('Pagos') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0" id="tab-credit-tab" data-toggle="tab" href="#tab-credit"
-                         role="tab" aria-controls="tab-credit" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>Nota de Crédito</a>
+                         role="tab" aria-controls="tab-credit" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>{{ __('Nota de Crédito') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0" id="tabs-calls-tab" data-toggle="tab" href="#tabs-calls" role="tab" 
                         aria-controls="tabs-calls" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Llamadas') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-charge-tab" data-toggle="tab" href="#tabs-charge" role="tab" 
+                        aria-controls="tabs-charge" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Cargos') }}</a>
                 </li>
             </ul>
         </div>
@@ -87,6 +91,17 @@
                         </div>
                         @include('components.callsTable', ['calls'=>$invoice->calls])
                         @include('calls.partials.editCallModal')
+                    </div>
+                    <div class="tab-pane fade" id="tab-charge" role="tabpanel" aria-labelledby="tab-charge-tab">
+                        <div class="col-md-12 col-auto text-right">
+                            @if ($invoice->status != 5) 
+                                <button id="add-charge" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-charge">Registrar</i></button>
+                                <br />
+                            @endif
+                            
+                            @include('charges.partials.details', ['charge'=>$invoice->charge])
+                            @include('charges.partials.addModal')
+                        </div>
                     </div>
                 </div>
             </div>

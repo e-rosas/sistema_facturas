@@ -25,14 +25,12 @@ class ChargeRequest extends FormRequest
     {
         return [
             'comments' => 'max:1000',
-            'series' => 'max:250',
             'date' => 'date',
             'invoice_id' => 'required',
             'number' => 'max:250',
             'invoice_number' => 'required',
             'exchange_rate' => 'numeric|required|between:0,99.999',
             'amount_charged' => 'numeric|required|between:0,999999999.999',
-            'original_amount_due' => 'numeric|required|between:0,999999999.999',
         ];
     }
 }

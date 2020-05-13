@@ -43,4 +43,9 @@ class Charge extends Model
     {
         return $this->hasMany('App\Letter', 'charge_id', 'invoice_id');
     }
+
+    public function concept()
+    {
+        return 'Cargo personal '.$this->date->year;
+    }
 }
