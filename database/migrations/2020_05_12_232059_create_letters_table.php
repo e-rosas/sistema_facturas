@@ -15,6 +15,7 @@ class CreateLettersTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('charge_id');
             $table->date('date');
+            $table->string('number');
             $table->string('file_path')->nullable();
             $table->text('comments')->nullable();
             $table->foreign('charge_id')->references('invoice_id')->on('charges')->onDelete('cascade');

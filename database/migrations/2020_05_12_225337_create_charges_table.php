@@ -17,6 +17,7 @@ class CreateChargesTable extends Migration
             $table->decimal('amount_charged', 13, 4);
             $table->decimal('exchange_rate', 13, 4);
             $table->date('date');
+            $table->string('number');
             $table->tinyInteger('status')->default(0);
             $table->text('comments')->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->cascadeOnDelete();

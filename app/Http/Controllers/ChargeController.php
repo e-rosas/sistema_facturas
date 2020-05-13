@@ -12,9 +12,26 @@ class ChargeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
+        $charges = Charge::with('invoice')
+            ->whereLike(['number', 'invoice.code', 'invoice.number'], $search)
+            ->orderBy('date', 'desc')
+            ->paginate($perPage)
+        ;
+
+        return view('charges.index', compact('charges', 'search', 'perPage'));
     }
 
     /**
@@ -24,62 +41,50 @@ class ChargeController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Charge  $charge
      * @return \Illuminate\Http\Response
      */
     public function show(Charge $charge)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Charge  $charge
      * @return \Illuminate\Http\Response
      */
     public function edit(Charge $charge)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Charge  $charge
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Charge $charge)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Charge  $charge
      * @return \Illuminate\Http\Response
      */
     public function destroy(Charge $charge)
     {
-        //
     }
 }
