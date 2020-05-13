@@ -114,7 +114,7 @@ class PaymentController extends Controller
 
         if ($concept < 2) {
             if (is_null($validated['number'])) {
-                $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 1000);
+                $validated['number'] = $validated['invoice_number'].'- P'.rand(1, 10000);
             }
             $payment->fill($validated);
             $payment->save();

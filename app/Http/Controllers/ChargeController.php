@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Charge;
+use App\Events\InvoiceEvent;
+use App\Http\Requests\ChargeRequest;
+use App\Http\Resources\ChargeResource;
+use App\Invoice;
 use Illuminate\Http\Request;
 
 class ChargeController extends Controller
@@ -48,8 +52,20 @@ class ChargeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ChargeRequest $request)
     {
+        $validated = $request->validated();
+        $invoice = Invoice::findOrFail($validated['invoice_id']);
+        if (is_null($validated['number'])) {
+            $validated['number'] = $validated['invoice_number'].'- C'.rand(1, 10000);
+        }
+        event(new InvoiceEvent($invoice)); //update invoice stats
+        $validated['original_amount_due'] = $invoice->amount_due;
+        $charge = Charge::create($validated);
+        $invoice->status = 5; //insurance wont pay
+        $invoice->save();
+
+        return new ChargeResource($charge);
     }
 
     /**

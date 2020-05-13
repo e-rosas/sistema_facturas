@@ -70,6 +70,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('calls/update', 'CallController@update')->name('calls.update');
     Route::delete('calls/destroy', 'CallController@delete')->name('calls.destroy');
 
+    Route::get('charges', 'ChargeController@index')->name('charges.index');
+    Route::post('charges/add', 'ChargeController@store')->name('charges.store');
+    Route::post('charges/find', 'ChargeController@find')->name('charges.find');
+    Route::patch('charges/update', 'ChargeController@update')->name('charges.update');
+    Route::delete('charges/destroy', 'ChargeController@delete')->name('charges.destroy');
+
     //Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
 
     Route::patch('insurers/update', 'InsurerController@update')->name('insurers.update');
