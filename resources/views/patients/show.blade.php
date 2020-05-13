@@ -17,29 +17,35 @@
         </div>
         <div class="row mt-5">
             <div class="col-xl-9">
-                <div class="card card-stats mb-4 mb-xl-0">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Asegurado') }}</h5>
-                                <span class="h2 font-weight-bold mb-0"> <a href="{{ route('patients.show', $insuree->patient) }}"> {{ $insuree->patient->full_name }} - {{ $insuree->nss }} </a></span>
-                            </div>
-                            <div class="col-auto">
-                                <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
-                                    <i class="fas fa-user-shield"></i>
+                @if (!$patient->insured)
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Asegurado') }}</h5>
+                                    <span class="h2 font-weight-bold mb-0"> <a href="{{ route('patients.show', $insuree->patient) }}"> {{ $insuree->patient->full_name }} - {{ $insuree->nss }} </a></span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-blue text-white rounded-circle shadow">
+                                        <i class="fas fa-user-shield"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
-                </div>
-                <br />
+                    <br />
+                @endif
                 <div class="card card-stats ">
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Aseguranza') }}</h5>
-                                <span class="h2 font-weight-bold mb-0"> <a href="{{ route('insurers.show', $insuree->insurer) }}"> {{ $insuree->insurer->name }}</a></span>
+                                @if (!$patient->insured)
+                                    <span class="h2 font-weight-bold mb-0"> <a href="{{ route('insurers.show', $insuree->insurer) }}"> {{ $insuree->insurer->name }}</a></span>
+                                @else
+                                    <span class="h2 font-weight-bold mb-0"> <a href="{{ route('insurers.show', $patient->insuree->insurer) }}"> {{ $patient->insuree->insurer->name }}</a></span>
+                                @endif
+                                
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
