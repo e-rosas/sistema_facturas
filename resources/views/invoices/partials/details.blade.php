@@ -26,7 +26,7 @@
             <div class="form-row">
                 {{--  Comments  --}}
                 <div class="col-md-12 col-auto form-group">
-                    <label class="form-control-label" for="label-concept">Observaciones</label>
+                    <label class="form-control-label" for="label-concept">Concepto</label>
                     <label id="label-concept">{{ $invoice->concept }}</label>
                 </div>
             </div>
