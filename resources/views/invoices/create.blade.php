@@ -396,9 +396,20 @@
         return new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000)
     }
 
+    class Diagnosis {
+        diagnosis_id = 0;
+        diagnosis_code = "";
+
+        constructor(diagnosis_id, diagnosis_code){
+            this.diagnosis_id = diagnosis_id;
+            this.diagnosis_code = diagnosis_code;
+        }
+    }
+
     class Service {
         quantity = 1;
         items = [];
+        diagnoses = [];
         tax = 0;
         dtax = 0;
         sub_total = 0;
@@ -430,6 +441,20 @@
 
         get date(){
             return this.date2.toLocaleDateString();
+        }
+
+        addDiagnosis(diagnosis_id, diagnosis_code){
+            var diagnosis = new Diagnosis(diagnosis_id, diagnosis_code);
+            this.diagnoses.push(diagnosis);
+        }
+
+        removeDiagnosis(id) {
+            for(var diagnosis in this.diagnoses) {
+                if(this.diagnoses[diagnosis].diagnosis_id === diagnosis_id) {
+                    this.diagnosis.splice(diagnosis, 1);
+                    break;
+                }
+            };
         }
 
         // Add to cart
@@ -528,7 +553,7 @@
     }
 
     const TAX = 0.08;
-
+    diagnoses = [];
     services = [];
     tax = 0;
     dtax = 0;
@@ -536,6 +561,20 @@
     sub_total_discounted = 0;
     total = 0;
     total_with_discounts = 0;
+
+    addDiagnosis(diagnosis_id, diagnosis_code){
+        var diagnosis = new Diagnosis(diagnosis_id, diagnosis_code);
+        this.diagnoses.push(diagnosis);
+    }
+
+    removeDiagnosis(id) {
+        for(var diagnosis in this.diagnoses) {
+            if(this.diagnoses[diagnosis].diagnosis_id === diagnosis_id) {
+                this.diagnosis.splice(diagnosis, 1);
+                break;
+            }
+        };
+    }
 
     // Add to cart
     function addServiceToCart(service_id, description, price, discounted_price, 
