@@ -13,7 +13,7 @@ class CreateItemServicesTable extends Migration
     {
         Schema::create('item_services', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('invoice_service_id');
+            $table->unsignedBigInteger('diagnosis_service_id');
             $table->unsignedBigInteger('item_id');
             $table->string('code');
             $table->string('description');
@@ -28,7 +28,7 @@ class CreateItemServicesTable extends Migration
             $table->decimal('total_price', 13, 4);
             $table->decimal('total_discounted_price', 13, 4);
 
-            $table->foreign('invoice_service_id')->references('id')->on('invoice_services')->onDelete('cascade');
+            $table->foreign('diagnosis_service_id')->references('id')->on('diagnosis_services')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->timestamps();
         });

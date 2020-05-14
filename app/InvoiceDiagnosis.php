@@ -19,4 +19,9 @@ class InvoiceDiagnosis extends Model
     {
         return $this->belongsTo('App\Invoice');
     }
+
+    public function services()
+    {
+        return $this->hasMany('App\DiagnosisServices');
+    }
 }

@@ -101,20 +101,21 @@ class InvoiceController extends Controller
         $validated['DOS'] = $request['DOS'];
         $invoice = Invoice::create($validated);
 
-        $invoice_diagnosis = new InvoiceDiagnosis();
-        $invoice_diagnosis->invoice_id = $invoice->id;
-        $invoice_diagnosis->save();
+        $invoice_diagnoses_services = $request->invoice_diagnoses_services;
 
-        $diagnoses = $request->diagnoses;
-
-        foreach ($diagnoses as $diagnosis) {
-            $invoice_diagnosis_list = new InvoiceDiagnosisList();
-            $invoice_diagnosis_list->invoice_diagnoses_id = $invoice_diagnosis->id;
-            $invoice_diagnosis_list->diagnosis_id = $diagnosis['diagnosis_id'];
-            $invoice_diagnosis_list->diagnosis_id = $diagnosis['diagnosis_id'];
+        foreach ($invoice_diagnoses_services as $diagnoses_services) {
+            $invoice_diagnosis = new InvoiceDiagnosis();
+            $invoice_diagnosis->invoice_id = $invoice->id;
             $invoice_diagnosis->save();
 
-            $services = $diagnosis->services;
+            $diagnoses = $diagnoses_services['diagnoses'];
+
+            foreach ($diagnoses as $diagnosis) {
+                $diagnosis['invoice_diagnoses_id'] = $invoice_diagnosis->id;
+                InvoiceDiagnosisList::create($diagnosis);
+            }
+
+            $services = $diagnoses_services['services'];
             foreach ($services as $service) {
                 $service['invoice_diagnoses_id'] = $invoice_diagnosis->id;
                 $diagnosis_service = DiagnosisService::create($service);
@@ -140,8 +141,7 @@ class InvoiceController extends Controller
     {
         $invoice = $invoice->load('patient', 'payments', 'calls');
 
-        $diagnoses = InvoiceDiagnosisList::with('services.items')
-            ->where('invoice_diagnoses_id', $invoice->id)->get();
+        $diagnoses_services = InvoiceDiagnosis::with('diagnoses', 'services')->where('invoice_id', $invoice->id)->get();
 
         $today = Carbon::today();
 
@@ -156,7 +156,7 @@ class InvoiceController extends Controller
             //return view('invoices.show', compact('invoice', 'insuree', 'today'));
         }
 
-        return view('invoices.show', compact('invoice', 'insuree', 'today', 'diagnoses'));
+        return view('invoices.show', compact('invoice', 'insuree', 'today', 'diagnoses_services'));
     }
 
     /**
@@ -202,14 +202,21 @@ class InvoiceController extends Controller
 
         InvoiceDiagnosis::where('invoice_id', $invoice->id)->delete();
 
-        $diagnoses = $request->diagnoses;
+        $invoice_diagnoses_services = $request->invoice_diagnoses_services;
 
-        foreach ($diagnoses as $diagnosis) {
+        foreach ($invoice_diagnoses_services as $diagnoses_services) {
             $invoice_diagnosis = new InvoiceDiagnosis();
             $invoice_diagnosis->invoice_id = $invoice->id;
             $invoice_diagnosis->save();
 
-            $services = $diagnosis->services;
+            $diagnoses = $diagnoses_services['diagnoses'];
+
+            foreach ($diagnoses as $diagnosis) {
+                $diagnosis['invoice_diagnoses_id'] = $invoice_diagnosis->id;
+                InvoiceDiagnosisList::create($diagnosis);
+            }
+
+            $services = $diagnoses_services['services'];
             foreach ($services as $service) {
                 $service['invoice_diagnoses_id'] = $invoice_diagnosis->id;
                 $diagnosis_service = DiagnosisService::create($service);

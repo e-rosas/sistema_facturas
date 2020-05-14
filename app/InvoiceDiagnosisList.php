@@ -21,9 +21,4 @@ class InvoiceDiagnosisList extends Model
     {
         return $this->belongsTo('App\InvoiceDiagnosis');
     }
-
-    public function services()
-    {
-        return $this->hasMany('App\DiagnosisService');
-    }
 }

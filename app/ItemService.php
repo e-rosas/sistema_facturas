@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ItemService extends Model
 {
     public $fillable = [
-        'invoice_service_id',
+        'diagnosis_service_id',
         'code',
         'description',
         'descripcion',
@@ -23,7 +23,7 @@ class ItemService extends Model
         'quantity',
     ];
     public static $rules = [
-        'invoice_service_id' => 'required',
+        'diagnosis_service_id' => 'required',
         'item_id' => 'required',
         'code' => 'max:255',
         'description' => 'max:255',
@@ -40,7 +40,7 @@ class ItemService extends Model
     ];
     protected $casts = [
         'id' => 'integer',
-        'invoice_service_id' => 'integer',
+        'diagnosis_service_id' => 'integer',
         'description' => 'string',
         'item_id' => 'integer',
         'itax' => 'decimal:13',
@@ -89,9 +89,9 @@ class ItemService extends Model
         return $this->belongsTo('App\Item');
     }
 
-    public function invoice_service()
+    public function diagnosis_service()
     {
-        return $this->belongsTo('App\InvoiceService');
+        return $this->belongsTo('App\DiagnosisService');
     }
 
     public function code()
