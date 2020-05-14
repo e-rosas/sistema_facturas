@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Charge extends Model
 {
+    public $primaryKey = 'invoice_id';
     public $fillable = [
         'original_amount_due',
         'amount_charged',

@@ -47,7 +47,7 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="form-group col-md-3 col-auto">
+                                    {{--  <div class="form-group col-md-3 col-auto">
                                         <label for="input-nss" class="col-auto col-form-label">No. Seguro Social</label>
                                         <input type="text" name="nss" id="input-nss" class="form-control form-control-alternative{{ $errors->has('nss') ? ' is-invalid' : '' }}" placeholder="ID Aseguranza" value="{{ old('nss') }}">                 
                                         @if ($errors)
@@ -55,7 +55,7 @@
                                                 <strong>{{ $errors->first('nss') }}</strong>
                                             </span>
                                         @endif
-                                    </div>
+                                    </div>  --}}
                                     <input type="hidden" name="insuree_id" value=0>
                                     <input type="hidden" name="relationship" value=-1>
                                     {{-- <div class="form-group col-auto text-right">

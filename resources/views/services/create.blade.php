@@ -39,7 +39,7 @@
                                 </div>
                                 {{--  Descripcion  --}}
                                 <div class="form-group{{ $errors->has('description') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-description">Descripción</label>
+                                    <label class="form-control-label" for="input-description">Description</label>
                                     <input type="text" name="description" id="input-description" class="form-control form-control-alternative{{ $errors->has('description') ? ' is-invalid' : '' }}" 
                                     placeholder="Descripción" value="{{  old('description') }}" required>
                                 
