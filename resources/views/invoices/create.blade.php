@@ -409,7 +409,6 @@
     class Service {
         quantity = 1;
         items = [];
-        diagnoses = [];
         tax = 0;
         dtax = 0;
         sub_total = 0;
@@ -441,20 +440,6 @@
 
         get date(){
             return this.date2.toLocaleDateString();
-        }
-
-        addDiagnosis(diagnosis_id, diagnosis_code){
-            var diagnosis = new Diagnosis(diagnosis_id, diagnosis_code);
-            this.diagnoses.push(diagnosis);
-        }
-
-        removeDiagnosis(id) {
-            for(var diagnosis in this.diagnoses) {
-                if(this.diagnoses[diagnosis].diagnosis_id === diagnosis_id) {
-                    this.diagnosis.splice(diagnosis, 1);
-                    break;
-                }
-            };
         }
 
         // Add to cart
@@ -636,6 +621,9 @@
         this.sub_total_discounted = 0;
         this.total = 0;
         this.total_with_discounts = 0;
+        for(var diagnosis in this.diagnoses){
+
+        }
         for(var service in this.services) {
             this.services[service].totalItemsCart();
 

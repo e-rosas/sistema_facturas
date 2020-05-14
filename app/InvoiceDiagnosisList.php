@@ -19,7 +19,7 @@ class InvoiceDiagnosisList extends Model
 
     public function invoiceDiagnosis()
     {
-        return $this->belongsTo('App\InvoiceDiagnosis', 'invoice_id', 'invoice_diagnoses_id');
+        return $this->belongsTo('App\InvoiceDiagnosis');
     }
 
     public function services()

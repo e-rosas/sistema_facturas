@@ -101,11 +101,17 @@ class InvoiceController extends Controller
         $validated['DOS'] = $request['DOS'];
         $invoice = Invoice::create($validated);
 
+        $invoice_diagnosis = new InvoiceDiagnosis();
+        $invoice_diagnosis->invoice_id = $invoice->id;
+        $invoice_diagnosis->save();
+
         $diagnoses = $request->diagnoses;
 
         foreach ($diagnoses as $diagnosis) {
-            $invoice_diagnosis = new InvoiceDiagnosis();
-            $invoice_diagnosis->invoice_id = $invoice->id;
+            $invoice_diagnosis_list = new InvoiceDiagnosisList();
+            $invoice_diagnosis_list->invoice_diagnoses_id = $invoice_diagnosis->id;
+            $invoice_diagnosis_list->diagnosis_id = $diagnosis['diagnosis_id'];
+            $invoice_diagnosis_list->diagnosis_id = $diagnosis['diagnosis_id'];
             $invoice_diagnosis->save();
 
             $services = $diagnosis->services;
