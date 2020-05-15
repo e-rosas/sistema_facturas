@@ -175,8 +175,11 @@ class InvoiceController extends Controller
     public function updateDetails(UpdateInvoiceDetailsRequest $request)
     {
         $validated = $request->validated();
-        $invoice = Invoice::findOrFail($validated['invoice_id']);
 
+        $invoice = Invoice::findOrFail($validated['invoice_id']);
+        if ('Pendiente' != $validated['number']) {
+            $invoice->status = 2;
+        }
         $invoice->fill($validated);
 
         $invoice->save();

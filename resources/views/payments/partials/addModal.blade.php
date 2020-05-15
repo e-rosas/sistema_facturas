@@ -183,8 +183,9 @@
         document.getElementById("amount-paid").innerHTML = response.data.amount_paid;
         document.getElementById("amount-due").innerHTML = response.data.amount_due;
         document.getElementById("label-status").innerHTML = response.data.status;
+        document.getElementById("invoice-status").innerHTML = response.data.status;
         document.getElementById("invoice-type").innerHTML = response.data.type;
-        if(response.data.status_n == 1){
+        if(response.data.status_n == 1){ /*completed*/
             document.getElementById("add-payment").style.display = 'none';
             document.getElementById("add-credit").style.display = 'none';
         }

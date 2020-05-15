@@ -14,7 +14,7 @@
             @foreach ($payments as $payment)
                 <tr>
                     <td>{{ $payment->number}}</td>
-                    <td>{{ $payment->date->format('M-d-Y')}}</td>
+                    <td>{{ $payment->date->format('d-m-Y')}}</td>
                     <td>{{ $payment->amount_paid}}</td>
                     <td>{{ $payment->comments}}</td>
                      <td class="td-actions text-right">
