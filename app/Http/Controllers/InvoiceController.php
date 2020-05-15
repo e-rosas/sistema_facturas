@@ -141,8 +141,7 @@ class InvoiceController extends Controller
     {
         $invoice = $invoice->load('patient', 'payments', 'calls');
 
-        $diagnoses_services = InvoiceDiagnosis::with('diagnoses', 'services.service')->where('invoice_id', $invoice->id)->get();
-        dd($diagnoses_services);
+        $diagnoses_services = InvoiceDiagnosis::with('diagnoses', 'services.service', 'services.items')->where('invoice_id', $invoice->id)->get();
         $today = Carbon::today();
 
         $insuree = [];

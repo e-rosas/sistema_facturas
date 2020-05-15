@@ -24,10 +24,16 @@
         </div>
         <div class="card-body">
             <div class="form-row">
-                {{--  Comments  --}}
-                <div class="col-md-12 col-auto form-group">
+                {{--  Concept  --}}
+                <div class="col-md-10 col-auto form-group">
                     <label class="form-control-label" for="label-concept">Concepto</label>
                     <label id="label-concept">{{ $invoice->concept }}</label>
+                </div>
+                {{--  DOS  --}}
+                <div class="col-md-2 col-auto form-group">
+                    <label class="form-control-label" for="label-date">Fecha de servicio</label>
+                    <label id="label-date">{{ $invoice->DOS->format('d-m-Y') }}</label>
+
                 </div>
             </div>
             <div class="form-row">
