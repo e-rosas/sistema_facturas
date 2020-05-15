@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DiagnosisService extends Model
 {
-    public $dates = ['DOS', 'updated_at'];
+    public $dates = ['DOS', 'DOS_to', 'updated_at'];
     public $fillable = [
         'service_id',
         'price',
@@ -22,6 +22,7 @@ class DiagnosisService extends Model
         'code',
         'quantity',
         'DOS',
+        'DOS_to',
         'invoice_diagnoses_id',
     ];
     public static $rules = [
@@ -40,6 +41,7 @@ class DiagnosisService extends Model
         'descripcion' => 'max:255',
         'quantity' => 'numeric|required',
         'DOS' => 'date',
+        'DOS_to' => 'date',
     ];
     protected $casts = [
         'id' => 'integer',
@@ -98,7 +100,7 @@ class DiagnosisService extends Model
 
     public function diagnosis()
     {
-        return $this->belongsTo('App\InvoiceDiagnosis');
+        return $this->belongsTo('App\InvoiceDiagnosis', 'id', 'invoice_diagnoses_id');
     }
 
     public function service()

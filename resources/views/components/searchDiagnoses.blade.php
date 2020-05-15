@@ -1,5 +1,5 @@
 <!-- For defining autocomplete -->
-<div class="col-md-8">
+<div class="col-md-10">
   <select id='diagnosis_id' class="custom-select form-control{{ $errors->has('service_id') ? ' is-invalid' : '' }}" name="service_id"> 
     <option value='0'>Seleccionar diagnostico</option>
   </select>
@@ -11,6 +11,7 @@
 
 // CSRF Token
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
 $(document).ready(function(){
 
     
@@ -29,7 +30,6 @@ $(document).ready(function(){
         };
       },
       processResults: function (response) {
-        document.getElementById("input-diagnosis_code").value = response[0].code; 
         return {
           results: response
         };

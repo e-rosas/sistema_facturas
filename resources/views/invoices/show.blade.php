@@ -59,9 +59,9 @@
                         <div class="col-md-12 col-auto text-right">
                             <button id="view-services" type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-services">Lista</i></button>
                             <br />
-                             @include('invoices.partials.servicesModal',['invoice'=>$invoice])
+                             @include('invoices.partials.servicesModal')
                         </div>
-                        @include('components.servicesTable', ['services'=>$invoice->services])
+                        @include('components.servicesTable', ['services'=>$diagnoses_services->services])
                     </div>
                     <div class="tab-pane fade" id="tab-payment" role="tabpanel" aria-labelledby="tab-payment-tab">
                         <div class="col-md-12 col-auto text-right">

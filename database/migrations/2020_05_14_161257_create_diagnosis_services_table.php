@@ -16,7 +16,6 @@ class CreateDiagnosisServicesTable extends Migration
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('invoice_diagnoses_id');
             $table->string('code');
-            $table->string('diagnosis_code')->default('Pendiente');
             $table->string('description');
             $table->string('descripcion')->default('Pendiente');
             $table->decimal('price', 13, 4);
@@ -28,7 +27,8 @@ class CreateDiagnosisServicesTable extends Migration
             $table->decimal('sub_total_discounted', 13, 4);
             $table->decimal('total_price', 13, 4);
             $table->decimal('total_discounted_price', 13, 4);
-            $table->date('DOS'); //date of service
+            $table->date('DOS'); //date of service from
+            $table->date('DOS_to'); //date of service to
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->foreign('invoice_diagnoses_id')->references('id')->on('invoice_diagnoses')->onDelete('cascade');
             $table->timestamps();

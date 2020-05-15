@@ -30,7 +30,7 @@ $(document).ready(function(){
       },
       processResults: function (response) {
         document.getElementById("custom-price").value = parseFloat(response[0].price.replace(/,/g,'')); 
-        document.getElementById("custom-discounted-price").value = parseFloat(response[0].price.replace(/,/g,'')); 
+        /*document.getElementById("custom-discounted-price").value = parseFloat(response[0].price.replace(/,/g,'')); */
         return {
           results: response
         };

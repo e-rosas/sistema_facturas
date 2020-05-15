@@ -261,6 +261,50 @@
             </div>
         </div>
         <div class="row">
+            {{-- Patient --}}
+            <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-services-center">
+                            <div class="col-8 col-auto">
+                                <h3 class="mb-0">Diagnósticos</h3>
+                            </div>
+                            <div class="col-4 col-auto text-right">
+                                <a href="{{ route('diagnoses.create') }}" class="btn btn-sm btn-primary">Registar nuevo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {{--  Diagnoses  --}}
+                        <div class="form-row">
+                            @include('components.searchDiagnoses')  
+                            <div class="col-md-2">
+                                <label class="form-control-label"></label>
+                                <button type="button" onclick="addDiagnosisList()" id="add_diagnosis" class="btn btn-outline-success btn-lg">Agregar</button>
+                            </div>
+                            {{-- <div id="diagnoses_list">
+
+                            </div> --}}
+                        </div>
+                        <div class="table-responsive">
+                            <table id="diagnoses_table" class="table align-items-center">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">{{ __('Seleccionar') }}</th>
+                                        <th scope="col">{{ __('Código') }}</th>
+                                        <th scope="col">{{ __('Nombre') }}</th>
+                                        <th scope="col">{{ __('Remover') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                    
+                </div>               
+            </div>
+        </div>
+        <div class="row">
             {{-- Services --}}
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
@@ -282,9 +326,14 @@
                         <br />
                         <div class="form-row">
                             {{--  date  --}}
-                            <div class="col-lg-6 col-auto">
-                                <label class="form-control-label" for="input-date_service">Fecha de servicio</label>
-                                <input name="date_service" id="input-date_service" class="form-control form-control-alternative"  type="date" required>
+                            <div class="col-lg-3 col-auto">
+                                <label class="form-control-label"   for="input-date_service">Fecha de servicio (de)</label>
+                                <input name="date_service" onchange="service_handler(event)" id="input-date_service" class="form-control form-control-alternative"  type="date" required>
+                            </div>
+                            {{--  date  --}}
+                            <div class="col-lg-3 col-auto">
+                                <label class="form-control-label" for="input-date_service-to">Fecha de servicio (a)</label>
+                                <input name="date_service-to" id="input-date_service-to" class="form-control form-control-alternative"  type="date" required>
                             </div>
                             {{--  price  --}}
                             <div class="col-lg-2 col-auto form-group">
@@ -294,12 +343,14 @@
                             
                             </div>
                             {{--  discounted-price  --}}
-                            <div class="col-lg-2 col-auto form-group">
+                            {{-- <div class="col-lg-2 col-auto form-group">
                                 <label class="form-control-label" for="custom-discounted-price">Descuento</label>
                                 <input type="numeric" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
                                 placeholder="0"  required>
                             
-                            </div>
+                            </div> --}}
+                            <input type="hidden" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
+                            placeholder="0"  required>
                             {{--  quantity  --}}
                             <div class="col-lg-1 col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-quantity">Cantidad</label>
@@ -316,14 +367,6 @@
                             <div class=" col-lg-1 col-md-3 form-group col-auto text-right">
                                 <label class="form-control-label"></label>
                                 <button type="button" id="add_service" class="btn btn-outline-success btn-lg">Agregar</button>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            @include('components.searchDiagnoses')  
-                            <div class="col-md-4">
-                                <input type="text" name="diagnosis_code" id="input-diagnosis_code" class="form-control form-control-alternative{{ $errors->has('diagnosis_code') ? ' is-invalid' : '' }}" 
-                                    placeholder="Codigo" readonly>
-                                <input id="diagnosis" type="hidden" value=0>
                             </div>
                         </div>
                         {{-- Table of services --}}
@@ -371,7 +414,12 @@
     function handler(e){
         var date = document.getElementById("input-date").value;
         document.getElementById("input-date_service").value = date;
+        document.getElementById("input-date_service-to").value = date;
         getExchangeRate(date);
+    }
+    function service_handler(e){
+        var date = document.getElementById("input-date_service").value;
+        document.getElementById("input-date_service-to").value = date;
     }
     function getExchangeRate(date){
         $.ajax({
@@ -396,13 +444,184 @@
         return new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000)
     }
 
+    function addDiagnosisList(){
+        var diagnosis_id = Number(document.getElementById("diagnosis_id").value);
+        findDiagnosis(diagnosis_id);
+        
+    }
+
+    function displayDiagnosisList(){
+        var output = "";
+        for(var i in diagnosesList) {
+            output += "<tr value="+diagnosesList[i].diagnosis_id+">"
+                + "<td>  <input type='checkbox'  name='active'></td>"
+                + "<td id=diagnosis"+diagnosesList[i].diagnosis_id+">" + diagnosesList[i].diagnosis_code + "</td>"
+                + "<td>" + diagnosesList[i].name + "</td>"
+                + "<td><button onclick='removeDiagnosis("+diagnosesList[i].diagnosis_id+")' class='delete-item btn btn-sm btn-danger' id=" + diagnosesList[i].diagnosis_id+ ">X</button></td>"
+                +  "</tr>";
+        }
+        $('#diagnoses_table tbody').html(output);
+        /*var output = "<div class='form-row'>";
+        for(var i in diagnosesList) {
+            var r = i % 4;
+            if(i != 0 && r === 0){ //new rows
+                output += "</div><div class='form-row'>";
+            }
+            output += "<div class='col-auto custom-control custom-checkbox custom-control-inline'>"
+                + "<input type='checkbox' class='custom-control-input' id=diag" + diagnosesList[i].diagnosis_id + " data-id=" + diagnosesList[i].diagnosis_id + " data-code="+diagnosesList[i].diagnosis_code +">"     
+                + "<label class='custom-control-label' for=diag" + diagnosesList[i].diagnosis_id + ">"+diagnosesList[i].name +"        </label>" 
+                + "<button onclick='removeDiagnosis("+diagnosesList[i].diagnosis_id+")' class='delete-item btn btn-sm btn-danger' id=" + diagnosesList[i].diagnosis_id+ ">X</button>"
+                +"</div>";
+          
+        }
+        $('#diagnoses_list').html(output);*/
+    }
+
+    function getBag(bag_id, checked_diagnoses){
+        for(var b in this.invoice_diagnoses_services) {
+            if(this.invoice_diagnoses_services[b].bag_id === bag_id) {
+                return this.invoice_diagnoses_services[b];
+            }
+        }
+        var newBag = new DiagnosesServices(bag_id);
+        newBag.diagnoses = checked_diagnoses;
+        this.invoice_diagnoses_services.push(newBag);
+        return newBag;
+    }
+
+    function searchBag(bag_id){
+        for(var b in this.invoice_diagnoses_services) {
+            if(this.invoice_diagnoses_services[b].bag_id == bag_id) {
+                return this.invoice_diagnoses_services[b];
+            }
+        }
+    }
+
+    class DiagnosesServices {
+        bag_id = "";
+        tax = 0;
+        dtax = 0;
+        sub_total = 0;
+        sub_total_discounted = 0;
+        total = 0;
+        total_with_discounts = 0;
+        diagnoses = [];
+        services = [];
+
+        constructor(bag_id){
+            this.bag_id = bag_id;
+        }
+
+        addDiagnosis(diagnosis_id, diagnosis_code){
+            for(var d in this.diagnoses) {
+                if(this.diagnoses[d].diagnosis_id === diagnosis_id) {
+                    return;
+                }
+            }
+            var diagnosis = new Diagnosis(diagnosis_id, diagnosis_code);
+            this.diagnoses.push(diagnosis);
+            generateId();
+        }
+
+        generateId(){
+            for(var d in this.diagnoses){
+                this.bag_id = this.bag_id.concat(this.diagnoses[d].diagnosis_id);
+            }
+        }
+    
+        removeDiagnosis(id) {
+            for(var diagnosis in this.diagnoses) {
+                if(this.diagnoses[diagnosis].diagnosis_id === diagnosis_id) {
+                    this.diagnosis.splice(diagnosis, 1);
+                    break;
+                }
+            };
+            generateId();
+        }
+        // Add to cart
+        addServiceToCart(service_id, description, price, discounted_price, 
+            quantity, id, descripcion, code) {
+            for(var service in this.services) {
+                if(this.services[service].id === id) {
+                    this.services[service].quantity += Number(quantity);
+                    totalCart();
+                    return;
+                }
+            }
+
+            var DOS = document.getElementById("input-date_service").value;
+            var DOS_to = document.getElementById("input-date_service-to").value;
+            var service = new Service(service_id, description, price, discounted_price, 
+                quantity, id, DOS,DOS_to, descripcion, code);
+            this.services.push(service);   
+            totalCart();  
+        }
+        // Remove service from cart
+        removeServiceFromCart(service_id) {
+            for(var service in this.services) {
+                if(this.services[service].service_id === service_id) {
+                    this.services[service].quantity --;
+                    if(this.services[service].quantity === 0) {
+                        this.services.splice(service, 1);
+                    }
+                    break;
+                }
+            };
+        }
+
+        removeServiceFromCartAll(service_id) {
+            for(var service in this.services) {
+            if(this.services[service].id=== service_id) {
+                this.services.splice(service, 1);
+                break;
+            }
+            }
+            totalCart();
+        }
+        // Clear cart
+        clearCart(){
+            this.services = [];
+        }
+        addItemToService(service_id, item_id, description, price, discounted_price, 
+        tax, quantity, id, descripcion, code){
+
+            //Find service in array
+            var service = this.services.find(s => s.id == service_id);
+
+            service.addItemToCart(item_id, description, price, 
+                    discounted_price, quantity, this.services.length, tax, descripcion, code);
+        }
+        // Total cart
+        totalCart() {
+            this.tax = 0;
+            this.dtax = 0;
+            this.sub_total = 0;
+            this.sub_total_discounted = 0;
+            this.total = 0;
+            this.total_with_discounts = 0;
+            for(var service in this.services) {
+                this.services[service].totalItemsCart();
+
+                this.tax += this.services[service].tax;
+                this.dtax += this.services[service].dtax;
+                this.sub_total += this.services[service].sub_total;
+                this.sub_total_discounted += this.services[service].sub_total_discounted;
+                this.total += this.services[service].total_price;
+                this.total_with_discounts += this.services[service].total_discounted_price;
+            }
+        }
+    }
+
     class Diagnosis {
         diagnosis_id = 0;
         diagnosis_code = "";
-
-        constructor(diagnosis_id, diagnosis_code){
+        name = "";
+        nombre = "";
+        constructor(diagnosis_id, diagnosis_code, name, nombre){
             this.diagnosis_id = diagnosis_id;
             this.diagnosis_code = diagnosis_code;
+            this.name = name;
+            this.nombre = nombre;
         }
     }
 
@@ -418,8 +637,9 @@
         diagnosis_id = 0;
         diagnosis_code = "";
         DOS = new Date();
+        DOS_to = this.DOS;
         constructor(service_id, description, price, discounted_price, quantity, id, 
-            DOS, descripcion, code, diagnosis_code, diagnosis_id) {
+            DOS,DOS_to, descripcion, code) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -434,8 +654,8 @@
             this.code = code;
             this.date2 = getCorrectDate(DOS);
             this.DOS = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
-            this.diagnosis_code = diagnosis_code;
-            this.diagnosis_id = diagnosis_id;
+            this.date3 = getCorrectDate(DOS_to);
+            this.DOS_to = this.date3.toISOString().split('T')[0]+' '+this.date3.toTimeString().split(' ')[0];
         }
 
         get date(){
@@ -538,8 +758,8 @@
     }
 
     const TAX = 0.08;
-    diagnoses = [];
-    services = [];
+    invoice_diagnoses_services = [];
+    diagnosesList = [];
     tax = 0;
     dtax = 0;
     sub_total = 0;
@@ -547,72 +767,27 @@
     total = 0;
     total_with_discounts = 0;
 
-    addDiagnosis(diagnosis_id, diagnosis_code){
-        var diagnosis = new Diagnosis(diagnosis_id, diagnosis_code);
-        this.diagnoses.push(diagnosis);
-    }
-
-    removeDiagnosis(id) {
-        for(var diagnosis in this.diagnoses) {
-            if(this.diagnoses[diagnosis].diagnosis_id === diagnosis_id) {
-                this.diagnosis.splice(diagnosis, 1);
-                break;
-            }
-        };
-    }
-
-    // Add to cart
-    function addServiceToCart(service_id, description, price, discounted_price, 
-        quantity, id, descripcion, code, diagnosis_code, diagnosis_id) {
-        for(var service in this.services) {
-            if(this.services[service].id === id) {
-                this.services[service].quantity += Number(quantity);
-                displayCart();
+    function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre){
+        for(var d in this.diagnosesList) {
+            if(this.diagnosesList[d].diagnosis_id === diagnosis_id) {
                 return;
             }
         }
-
-        var DOS = document.getElementById("input-date_service").value;
-        
-        var service = new Service(service_id, description, price, discounted_price, 
-            quantity, id, DOS, descripcion, code, diagnosis_code, diagnosis_id);
-        this.services.push(service);   
-        displayCart();  
+        var diagnosis = new Diagnosis(diagnosis_id, diagnosis_code, name, nombre);
+        this.diagnosesList.push(diagnosis);
+        displayDiagnosisList();
     }
-    // Remove service from cart
-    function removeServiceFromCart(service_id) {
-        for(var service in this.services) {
-            if(this.services[service].service_id === service_id) {
-                this.services[service].quantity --;
-                if(this.services[service].quantity === 0) {
-                    this.services.splice(service, 1);
-                }
+
+    function removeDiagnosis(id) {
+        for(var diagnosis in this.diagnosesList) {
+            if(this.diagnosesList[diagnosis].diagnosis_id === id) {
+                this.diagnosesList.splice(diagnosis, 1);
                 break;
             }
         };
+        displayDiagnosisList();
     }
 
-    function removeServiceFromCartAll(service_id) {
-        for(var service in this.services) {
-          if(this.services[service].id=== service_id) {
-            services.splice(service, 1);
-            break;
-          }
-        }
-        displayCart();
-    }
-    // Clear cart
-    function clearCart(){
-        this.services = [];
-    }
-    // Count cart 
-    function totalCount() {
-        var totalCount = 0;
-        for(var service in this.services) {
-            totalCount += this.services[service].quantity;
-        }
-        return totalCount;
-    }
     // Total cart
     function totalCart() {
         this.tax = 0;
@@ -621,18 +796,15 @@
         this.sub_total_discounted = 0;
         this.total = 0;
         this.total_with_discounts = 0;
-        for(var diagnosis in this.diagnoses){
+        for(var service in this.invoice_diagnoses_services) {
+            this.invoice_diagnoses_services[service].totalCart();
 
-        }
-        for(var service in this.services) {
-            this.services[service].totalItemsCart();
-
-            this.tax += this.services[service].tax;
-            this.dtax += this.services[service].dtax;
-            this.sub_total += this.services[service].sub_total;
-            this.sub_total_discounted += this.services[service].sub_total_discounted;
-            this.total += this.services[service].total_price;
-            this.total_with_discounts += this.services[service].total_discounted_price;
+            this.tax += this.invoice_diagnoses_services[service].tax;
+            this.dtax += this.invoice_diagnoses_services[service].dtax;
+            this.sub_total += this.invoice_diagnoses_services[service].sub_total;
+            this.sub_total_discounted += this.invoice_diagnoses_services[service].sub_total_discounted;
+            this.total += this.invoice_diagnoses_services[service].total;
+            this.total_with_discounts += this.invoice_diagnoses_services[service].total_with_discounts;
         }
     }
 
@@ -640,9 +812,25 @@
         return Number(this.total_with_discounts);
     }
 
+    function findDiagnosis(diagnosis_id){
+        $.ajax({
+            url: "{{route('diagnoses.find')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "diagnosis_id" : diagnosis_id
+            },
+        success: function (response) {      
+                addDiagnosis(diagnosis_id, response.code, response.name, response.nombre);                            
+            }
+        });
+            return false;
+    }
 
 
-    function getService(id, quantity, price, discounted_price, diagnosis_id){
+
+    function getService(id, quantity, price, discounted_price, bag){
         $.ajax({
             url: "{{route('services.find')}}",
             dataType: 'json',
@@ -652,10 +840,11 @@
                 "service_id" : id
             },
         success: function (response) {      
-                var diagnosis_code = document.getElementById("input-diagnosis_code").value;          
-                addServiceToCart(response.id, response.description, 
-                    price, discounted_price, quantity, services.length,
-                     response.descripcion, response.code, diagnosis_code, diagnosis_id);                                    
+                         
+                bag.addServiceToCart(response.id, response.description, 
+                    price, discounted_price, quantity, bag.services.length,
+                     response.descripcion, response.code);   
+                displayCart();                                 
             }
         });
             return false;
@@ -680,21 +869,13 @@
             return false;
     }
 
-    function addItemToService(service_id, item_id, description, price, discounted_price, 
-        tax, quantity, id, descripcion, code){
-
-        //Find service in array
-        var service = this.services.find(s => s.id == service_id);
-
-        service.addItemToCart(item_id, description, price, 
-                discounted_price, quantity, services.length, tax, descripcion, code);
-    }
 
     function sendInvoice(patient_id, series, number, concept, code, currency, 
          date, comments){
             var exchange_rate = document.getElementById("invoice-exchange_rate").value;
             exchange_rate = parseFloat(exchange_rate.replace(/,/g,''));
             var doctor =  document.getElementById("input-doctor").value;
+            var DOS = document.getElementById("input-date_service-to").value;
         $.ajax({
             url: "{{route('invoices.store')}}",
             type:"post",
@@ -708,7 +889,7 @@
                 "concept" : concept,
                 "code": code,
                 "currency" : currency,
-                "services" : this.services,
+                "invoice_diagnoses_services" : this.invoice_diagnoses_services,
                 "total" : total,
                 "sub_total" : sub_total,
                 "sub_total_discounted" : sub_total_discounted,
@@ -718,7 +899,8 @@
                 "amount_due" : total_with_discounts,
                 "amount_paid" : 0,
                 "exchange_rate": exchange_rate,
-                "doctor": doctor
+                "doctor": doctor,
+                "DOS": DOS
             },
         success: function (response) {
             setTimeout(function() {
@@ -765,20 +947,23 @@
     function displayCart() {
         totalCart();
         var output = "";
-        for(var i in this.services) {
+        for(var b in this.invoice_diagnoses_services){
+            for(var i in this.invoice_diagnoses_services[b].services) {
 
-          output += "<tr value="+this.services[i].id+">"
-            + "<td>  <input type='checkbox' name='service'>  </td>"
-            + "<td>" + this.services[i].date + "</td>"
-            + "<td>" + this.services[i].description + "</td>"
-            + "<td>" + this.services[i].diagnosis_code + "</td>"
-            + "<td>" + this.services[i].discounted_price + "</td>"
-            + "<td>" + this.services[i].quantity + "</td>"
-            + "<td>" + this.services[i].total_discounted_price + '</td>'
-            + "<td>" + this.services[i].items.length + '</td>'
-            +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
-            +'</td> </tr>';
+                output += "<tr value="+this.invoice_diagnoses_services[b].services[i].id+">"
+                    + "<td><button class='delete-service btn btn-sm btn-danger' data-bag-id=" + this.invoice_diagnoses_services[b].bag_id  + " data-id=" + this.invoice_diagnoses_services[b].services[i].id + ">X</button></td>"
+                  + "<td>" + this.invoice_diagnoses_services[b].services[i].date + "</td>"
+                  + "<td>" + this.invoice_diagnoses_services[b].services[i].description + "</td>"
+                  + "<td>" + this.invoice_diagnoses_services[b].bag_id + "</td>"
+                  + "<td>" + this.invoice_diagnoses_services[b].services[i].discounted_price + "</td>"
+                  + "<td>" + this.invoice_diagnoses_services[b].services[i].quantity + "</td>"
+                  + "<td>" + this.invoice_diagnoses_services[b].services[i].total_discounted_price + '</td>'
+                  + "<td>" + this.invoice_diagnoses_services[b].services[i].items.length + '</td>'
+                  +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.invoice_diagnoses_services[b].services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
+                  +'</td> </tr>';
+              }
         }
+        
         $('#services_table tbody').html(output);
         document.getElementById("input-total").value = this.total;
         document.getElementById("input-total_with_discounts").value = this.total_with_discounts;
@@ -789,9 +974,6 @@
         document.getElementById("input-dtax").value = this.dtax; 
         
     }
-
-
-
     const current_date = new Date();
     var dd = String(current_date.getDate()).padStart(2, '0');
     var mm = String(current_date.getMonth() + 1).padStart(2, '0');
@@ -804,19 +986,42 @@
 
 
         $("#add_service").click(function(){
+
+
             var quantity = Number(document.getElementById("input-quantity").value);
+            var service_id= $("#service_id").children("option:selected").val();
             
-            var diagnosis_id = Number(document.getElementById("diagnosis_id").value);
-            if(quantity > 0 && diagnosis_id > 0){
+            if(quantity > 0 && service_id > 0){
+                var bag_id = "";
+                var i = 0;
+                var checked_diagnoses = [];
+                $("#diagnoses_table tbody").find('input[name="active"]').each(function(){
+                    if($(this).is(":checked")){
+                        var diagnosis = diagnosesList[i];
+                        checked_diagnoses.push(diagnosis);
+                        
+                    }
+                    i++;
+    
+                });
+
+                for(var d in checked_diagnoses){
+                    bag_id = bag_id.concat(checked_diagnoses[d].diagnosis_id);
+                }
+                
+
+                var bag = getBag(bag_id, checked_diagnoses);
                 var price = document.getElementById("custom-price").value;
                 price = parseFloat(price.replace(/,/g,''));
-                var discounted_price = document.getElementById("custom-discounted-price").value;
-                discounted_price = parseFloat(discounted_price.replace(/,/g,''));
-                var service_id= $("#service_id").children("option:selected").val();
-                getService(service_id, quantity, price, discounted_price, diagnosis_id);
+                var discounted_price = price; /*document.getElementById("custom-discounted-price").value;
+                discounted_price = parseFloat(discounted_price.replace(/,/g,''));*/
+                
+                getService(service_id, quantity, price, discounted_price, bag);
             }
             
         });
+
+
 
         $("#add_item").click(function(){
             var quantity = Number(document.getElementById("input-product-quantity").value);
@@ -841,10 +1046,23 @@
 
         })
 
+        // Delete service button
+        $('#services_table').on("click", ".delete-service", function(event) {
+            var bag_id = "";
+            bag_id = $(this).data('bag-id');
+            var service_id = $(this).data('id');
+
+            var bag = searchBag(bag_id);
+            bag.removeServiceFromCartAll(service_id);
+            displayCart();
+
+
+        })
+
 
         
         $("#save").click(function(){
-            if(services.length > 0 ) {
+            if(invoice_diagnoses_services.length > 0 ) {
                 var patient_id= $("#patient_id").children("option:selected").val();
                 var date = document.getElementById("input-date").value; 
                 var code = document.getElementById("input-code").value; 
@@ -862,19 +1080,6 @@
                 alert("Falta agregar servicios a la factura.");
             }
             
-
-        });
-        $("#remove_selected").click(function(){
-
-            $("#services_table tbody").find('input[name="service"]').each(function(){
-
-                if($(this).is(":checked")){
-                    var id = Number($(this).parents("tr").attr('value'));
-                    removeServiceFromCartAll(id);                 
-                }
-
-            });
-            displayCart();
 
         });
     });

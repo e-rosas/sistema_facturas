@@ -12,7 +12,7 @@ class InvoiceDiagnosis extends Model
 
     public function diagnoses()
     {
-        return $this->hasMany('App\InvoiceDiagnosisList');
+        return $this->hasMany('App\InvoiceDiagnosisList', 'invoice_diagnoses_id', 'id');
     }
 
     public function invoice()
@@ -22,6 +22,6 @@ class InvoiceDiagnosis extends Model
 
     public function services()
     {
-        return $this->hasMany('App\DiagnosisServices');
+        return $this->hasMany('App\DiagnosisService', 'invoice_diagnoses_id', 'id');
     }
 }
