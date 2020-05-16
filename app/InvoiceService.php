@@ -60,46 +60,6 @@ class InvoiceService extends Model
         'quantity' => 'integer',
     ];
 
-    public function getTaxAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
-    public function getDtaxAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
-    public function getSubTotalAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
-    public function getSubTotalDiscountedAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
-    public function getTotalPriceAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
-    public function getTotalDiscountedPriceAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
-    public function getPriceAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
-    public function getDiscountedPriceAttribute($value)
-    {
-        return number_format($value, 3);
-    }
-
     public function invoice()
     {
         return $this->belongsTo('App\Invoice');

@@ -293,4 +293,6 @@ class InvoiceController extends Controller
 
         return new InvoiceStatsResource($invoice);
     }
+
+    
 }

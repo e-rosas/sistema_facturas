@@ -34,9 +34,9 @@
                         <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button"  href="{{ route('invoices.show', $invoice) }}">
                             <i class="fas fa-eye "></i>
                         </a>
-                        <a class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button"  href="{{ route('invoices.edit', $invoice) }}">
+                        {{-- <a class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button"  href="{{ route('invoices.edit', $invoice) }}">
                             <i class="fas fa-pencil-alt fa-2"></i>
-                        </a>
+                        </a> --}}
                     </td>
                 </tr>
             @endforeach
