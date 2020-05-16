@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Diagnosis;
 use App\DiagnosisService;
+use App\Http\Resources\InvoiceDiagnosisResource;
 use App\Invoice;
 use App\InvoiceDiagnosis;
-use App\InvoiceDiagnosisList;
 use App\Service;
 use Illuminate\Http\Request;
 
@@ -15,11 +15,9 @@ class InvoiceDiagnosisController extends Controller
     public function getInvoiceDiagnoses(Request $request)
     {
         $invoice_id = $request->invoice_id;
-        $diagnoses = InvoiceDiagnosisList::with('services.items')
-            ->where('invoice_diagnoses_id', $invoice_id)->get();
+        $diagnoses = InvoiceDiagnosis::where('invoice_id', $invoice_id)->get();
 
-        echo json_encode($diagnoses);
-        exit;
+        return InvoiceDiagnosisResource::collection($diagnoses);
     }
 
     public function migrate()

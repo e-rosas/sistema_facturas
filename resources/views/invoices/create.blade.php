@@ -678,7 +678,7 @@
         for(var service in this.services) {
             if(this.services[service].id === id) {
                 this.services[service].quantity += Number(quantity);
-                totalCart();
+                displayCart();
                 return;
             }
         }
@@ -688,7 +688,7 @@
         var service = new Service(service_id, description, price, discounted_price, 
             quantity, id, DOS,DOS_to, descripcion, code, pointers);
         this.services.push(service);   
-        /*totalCart();  */
+        displayCart();
     }
 
     function removeServiceFromCartAll(service_id) {

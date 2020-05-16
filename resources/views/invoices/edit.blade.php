@@ -438,6 +438,50 @@
         utcDate = new Date(date); //Date object a day behind
         return new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000)
     }
+    function addDiagnosisList(){
+        var diagnosis_id = Number(document.getElementById("diagnosis_id").value);
+        findDiagnosis(diagnosis_id);
+        
+    }
+
+    function displayDiagnosisList(){
+        var output = "";
+        for(var i in diagnosesList) {
+            output += "<tr value="+diagnosesList[i].diagnosis_id+">"
+                + "<td>  <input type='checkbox'  name='active'></td>"
+                + "<td id=diagnosis"+diagnosesList[i].diagnosis_id+">" + diagnosesList[i].diagnosis_code + "</td>"
+                + "<td>" + diagnosesList[i].name + "</td>"
+                + "<td><button onclick='removeDiagnosis("+diagnosesList[i].diagnosis_id+")' class='delete-item btn btn-sm btn-danger' id=" + diagnosesList[i].diagnosis_id+ ">X</button></td>"
+                +  "</tr>";
+        }
+        $('#diagnoses_table tbody').html(output);
+        /*var output = "<div class='form-row'>";
+        for(var i in diagnosesList) {
+            var r = i % 4;
+            if(i != 0 && r === 0){ //new rows
+                output += "</div><div class='form-row'>";
+            }
+            output += "<div class='col-auto custom-control custom-checkbox custom-control-inline'>"
+                + "<input type='checkbox' class='custom-control-input' id=diag" + diagnosesList[i].diagnosis_id + " data-id=" + diagnosesList[i].diagnosis_id + " data-code="+diagnosesList[i].diagnosis_code +">"     
+                + "<label class='custom-control-label' for=diag" + diagnosesList[i].diagnosis_id + ">"+diagnosesList[i].name +"        </label>" 
+                + "<button onclick='removeDiagnosis("+diagnosesList[i].diagnosis_id+")' class='delete-item btn btn-sm btn-danger' id=" + diagnosesList[i].diagnosis_id+ ">X</button>"
+                +"</div>";
+          
+        }
+        $('#diagnoses_list').html(output);*/
+    }
+    class Diagnosis {
+        diagnosis_id = 0;
+        diagnosis_code = "";
+        name = "";
+        nombre = "";
+        constructor(diagnosis_id, diagnosis_code, name, nombre){
+            this.diagnosis_id = diagnosis_id;
+            this.diagnosis_code = diagnosis_code;
+            this.name = name;
+            this.nombre = nombre;
+        }
+    }
     class Service {
         quantity = 1;
         items = [];
@@ -446,10 +490,10 @@
         sub_total = 0;
         sub_total_discounted = 0;
         total_price = 0;
-        total_discounted_price = 0;     
-        diagnosis_id = 0;
-        diagnosis_code = ""; 
+        total_discounted_price = 0;
+        diagnoses_pointers = "";
         DOS = new Date();
+        DOS_to = this.DOS;
 
         items_sub_total = 0;
         items_sub_total_discounted = 0;
@@ -457,7 +501,7 @@
         items_total_discounted_price = 0;
 
         constructor(service_id, description, price, discounted_price, quantity, id, 
-            DOS, descripcion, code, diagnosis_code, diagnosis_id) {
+            DOS, descripcion, code, pointers) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -472,8 +516,9 @@
             this.code = code;
             this.date2 = getCorrectDate(DOS);
             this.DOS = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
-            this.diagnosis_code = diagnosis_code;
-            this.diagnosis_id = diagnosis_id;
+            this.date3 = getCorrectDate(DOS_to);
+            this.DOS_to = this.date3.toISOString().split('T')[0]+' '+this.date3.toTimeString().split(' ')[0];
+            this.diagnoses_pointers = pointers;
         }
 
         get date(){
@@ -583,6 +628,7 @@
     const TAX = 0.08;
 
     services = [];
+    diagnosesList = [];
     tax = 0;
     dtax = 0;
     sub_total = 0;
@@ -590,9 +636,30 @@
     total = 0;
     total_with_discounts = 0;
 
+    function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre){
+        for(var d in this.diagnosesList) {
+            if(this.diagnosesList[d].diagnosis_id === diagnosis_id) {
+                return;
+            }
+        }
+        var diagnosis = new Diagnosis(diagnosis_id, diagnosis_code, name, nombre);
+        this.diagnosesList.push(diagnosis);
+        displayDiagnosisList();
+    }
+
+    function removeDiagnosis(id) {
+        for(var diagnosis in this.diagnosesList) {
+            if(this.diagnosesList[diagnosis].diagnosis_id === id) {
+                this.diagnosesList.splice(diagnosis, 1);
+                break;
+            }
+        };
+        displayDiagnosisList();
+    }
+
      // Add to cart
      function addServiceToCart(service_id, description, price, discounted_price,
-         quantity, id, descripcion, code, diagnosis_code, diagnosis_id) {
+         quantity, id, descripcion, code, pointers) {
         for(var service in this.services) {
             if(this.services[service].id === id) {
                 this.services[service].quantity += Number(quantity);
@@ -602,18 +669,23 @@
         }
 
         var DOS = document.getElementById("input-date_service").value;
+        var DOS_to = document.getElementById("input-date_service-to").value;
+        var service = new Service(service_id, description, price, discounted_price, 
+            quantity, id, DOS,DOS_to, descripcion, code, pointers);
+        this.services.push(service);   
+        displayCart();  
+    }
+    function addDiagnosisFromInvoice(diagnosis_id, name, code) {
         
-        var service = new Service(service_id, description, price, discounted_price,
-         quantity, id, DOS, descripcion, code, diagnosis_code, diagnosis_id);
-        this.services.push(service);
+        var diagnosis = new Diagnosis(diagnosis_id, name,  code);
         displayCart();  
     }
     function addServiceToCartFromInvoice(service_id, description, price, discounted_price,
-         quantity, id, DOS, items, descripcion, code, diagnosis_code, diagnosis_id) {
+         quantity, id, DOS, items, descripcion, code, pointers) {
         
         var service = new Service(service_id, description, parseFloat(price.replace(/,/g,'')), 
             parseFloat(discounted_price.replace(/,/g,'')), quantity, 
-                services.length, DOS, descripcion, code, diagnosis_code, diagnosis_id);
+                services.length, DOS, descripcion, code, pointers);
         for(var i in items){
             var tax = false;
             if(items[i].itax > 0) tax = true;
@@ -622,18 +694,6 @@
         }
         this.services.push(service);
         displayCart();  
-    }
-    // Remove service from cart
-    function removeServiceFromCart(service_id) {
-        for(var service in this.services) {
-            if(this.services[service].service_id === service_id) {
-                this.services[service].quantity --;
-                if(this.services[service].quantity === 0) {
-                    this.services.splice(service, 1);
-                }
-                break;
-            }
-        };
     }
 
     function removeServiceFromCartAll(service_id) {
@@ -695,6 +755,29 @@
                 addServiceToCartFromInvoice(response[i].service_id, response[i].description, 
                     response[i].price, response[i].discounted_price, response[i].quantity, 
                     response[i].id, response[i].DOS, response[i].items, 
+                    response[i].descripcion, response[i].code, response[i].diagnoses_pointers);   
+            }
+            displayCart();                
+                                                 
+            }
+        });
+            return false;
+    }
+
+    function getInvoiceDiagnoses(id){
+        $.ajax({
+            url: "{{route('invoice.diagnoses')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "invoice_id" : id
+            },
+        success: function (response) {
+            for(var i = 0; i < response.length; i++){
+                addDiagnosisFromInvoice(response[i].service_id, response[i].description, 
+                    response[i].price, response[i].discounted_price, response[i].quantity, 
+                    response[i].id, response[i].DOS, response[i].items, 
                     response[i].descripcion, response[i].code, response[i].diagnosis_code, response[i].diagnosis_id);   
             }
             displayCart();                
@@ -704,7 +787,23 @@
             return false;
     }
 
-    function getService(id, quantity, price, discounted_price, diagnosis_id){
+    function findDiagnosis(diagnosis_id){
+        $.ajax({
+            url: "{{route('diagnoses.find')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "diagnosis_id" : diagnosis_id
+            },
+        success: function (response) {      
+                addDiagnosis(diagnosis_id, response.code, response.name, response.nombre);                            
+            }
+        });
+            return false;
+    }
+
+    function getService(id, quantity, price, discounted_price, pointers){
         $.ajax({
             url: "{{route('services.find')}}",
             dataType: 'json',
@@ -713,11 +812,10 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id" : id
             },
-        success: function (response) {        
-                var diagnosis_code = document.getElementById("input-diagnosis_code").value;        
+        success: function (response) {               
                 addServiceToCart(response.id, response.description, 
                     price, discounted_price, quantity, services.length,
-                    response.descripcion, response.code, diagnosis_code, diagnosis_id);                                    
+                    response.descripcion, response.code, pointers);                                    
             }
         });
             return false;
