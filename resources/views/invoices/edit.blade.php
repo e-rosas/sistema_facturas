@@ -48,137 +48,94 @@
             {{--  Details  --}}
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
-                        <div class="row align-services-center">
-                            <div class="col-8 col-auto">
-                                <h3 class="mb-0">Factura</h3>
+                    <div class="card-header bg-red border-0">
+                        <div class="row">
+                            <div class="col-4 col-auto">
+                                <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                             </div>
+                            @if ($invoice->status != 1) 
+                                <div class="col-4 col-auto text-right">
+                                    <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
+                                    <br />
+                                </div>
+                            @endif
+                            
+                            @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])
+                            
                         </div>
                     </div>
                     <div class="card-body">
                         <form method="post" action="{{ route('invoices.store') }}" autocomplete="off">
                             @csrf
                             <div class="form-row">
-                                {{--  number --}}
-                                <div class="col-md-2 col-auto form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-number">Folio CONTPAQ</label>
-                                    <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}" 
-                                    placeholder="Folio" value="{{ $invoice->number }}">
-
-                                    @if ($errors->has('number'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('number') }}</strong>
-                                        </span>
-                                    @endif
+                                {{--  Concept  --}}
+                                <div class="col-md-10 col-auto form-group">
+                                    <label class="form-control-label" for="label-concept">Concepto</label>
+                                    <label id="label-concept">{{ $invoice->concept }}</label>
                                 </div>
-                                {{--  series --}}
-                                <div class="col-md-2 col-auto form-group{{ $errors->has('series') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-series">Serie</label>
-                                    <input type="text" name="series" id="input-series" class="form-control form-control-alternative{{ $errors->has('series') ? ' is-invalid' : '' }}" 
-                                    placeholder="Serie" value="{{ $invoice->series }}">
-
-                                    @if ($errors->has('series'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('series') }}</strong>
-                                        </span>
-                                    @endif
+                                {{--  DOS  --}}
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="label-date">Fecha de servicio</label>
+                                    <label id="label-date">{{ $invoice->DOS->format('d-m-Y') }}</label>
+                
                                 </div>
-                                {{--  concept --}}
-                                <div class="col-md-8 col-auto form-group{{ $errors->has('concept') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-concept">Concepto</label>
-                                    <input type="text" name="concept" id="input-concept" class="form-control form-control-alternative{{ $errors->has('concept') ? ' is-invalid' : '' }}" 
-                                    placeholder="Concepto" value="{{ $invoice->concept }}">
-
-                                    @if ($errors->has('concept'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('concept') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                
-                                
-                            </div>
-                            <div class="form-row">
-                                {{--  currency --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('currency') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-currency">Moneda</label>
-                                    <input type="text" name="currency" id="input-currency" class="form-control form-control-alternative{{ $errors->has('currency') ? ' is-invalid' : '' }}" 
-                                    placeholder="Moneda" value="{{ $invoice->currency }}" required>
-
-                                    @if ($errors->has('currency'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('currency') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                {{-- method
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('method') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-method">Forma de pago</label>
-                                    <input type="text" name="method" id="input-method" class="form-control form-control-alternative{{ $errors->has('method') ? ' is-invalid' : '' }}" 
-                                    placeholder="Forma de pago" value="Por definir" required>
-
-                                    @if ($errors->has('method'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('method') }}</strong>
-                                        </span>
-                                    @endif
-                                </div> --}}
-                                
-                                {{--  exchange_rate --}}
-                                {{--  <div class="col-md-3 col-auto form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-exchange_rate">Cambio</label>
-                                    <input type="number" name="exchange_rate" id="input-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
-                                    placeholder="Cambio" value="{{ old('exchange_rate') }}" required>
-
-                                    @if ($errors->has('exchange_rate'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('exchange_rate') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>  --}}
                             </div>
                             <div class="form-row">
                                 {{--  code --}}
-                                <div class="col-md-4 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-code">Número</label>
-                                    <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}" 
-                                    placeholder="Número" value="{{ $invoice->code }}">
-
-                                    @if ($errors->has('code'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('code') }}</strong>
-                                        </span>
-                                    @endif
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="label-code">No. de Cobro</label>
+                                    <label id="label-code">{{ $invoice->code }}</label>
+                
+                                </div>
+                                {{--  number --}}
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="label-number">Folio de CONTPAQ</label>
+                                    <label id="label-number">{{ $invoice->number }}</label>
+                
+                                </div>
+                                {{--  date  --}}
+                                <div class="col-md-3 col-auto form-group">
+                                    <label class="form-control-label" for="label-date">Fecha</label>
+                                    <label id="label-date">{{ $invoice->date->format('d-m-Y') }}</label>
+                
+                                </div>
+                                {{--  number --}}
+                                <div class="col-md-5 col-auto form-group">
+                                    <label class="form-control-label" for="label-number">Tipo de cambio</label>
+                                    <label id="label-exchange_rate">{{ $invoice->exchange_rate }}</label>
+                
                                 </div>
                                 
-                                {{--  date  --}}
-                                <div class="col-md-3 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-date">Fecha</label>
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
-                                        </div>
-                                        <input  name="date" id="input-date" value="{{ $invoice->date }}"
-                                            class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }}"  type="date" required>
-                                    </div>
-                                    @if ($errors->has('date'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('date') }}</strong>
-                                        </span>
-                                    @endif
+                            </div>
+                            <div class="form-row">
+                                {{--  type --}}
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="label-type">Tipo</label>
+                                    <label id="invoice-type">{{ $invoice->type() }}</label>
                                 </div>
-                                {{--  exchange_rate --}}
-                                <div class="col-md-2 form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="invoice-exchange_rate">Cambio</label>
-                                    <input type="numeric" name="exchange_rate" id="invoice-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
-                                    placeholder="Cambio" value="{{ $invoice->exchange_rate }}" required>
-
-                                    @if ($errors->has('exchange_rate'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('exchange_rate') }}</strong>
-                                        </span>
-                                    @endif
+                                {{--  status --}}
+                                <div class="col-md-2 col-auto form-group">
+                                    <label class="form-control-label" for="label-status">Estado</label>
+                                    <label id="label-status">{{ $invoice->status() }}</label>
                                 </div>
+                                <div class="col-md-4">
+                                    <select id='new-status' class="custom-select" name="status"> 
+                                        <option value='10'>Cambiar estado</option>
+                                        <option value='0'>Nota de crédito pendiente.</option>
+                                        <option value='1'>Completada.</option>
+                                        <option value='2'>Pendiente de pago.</option>
+                                        <option value='3'>Pendiente de asignar productos.</option>
+                                        <option value='4'>Pendiente de facturar.</option>
+                                        <option value='5'>Aseguranza no pagará.</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <button id="update-status" onclick="updateStatus()" class="btn btn-success btn-sm">
+                                        Cambiar
+                                      </button>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 {{--  amount_due  --}}
                                 <div class="col-md-2 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-amount_due">Debe</label>
@@ -261,35 +218,51 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-row">
-                                {{--  comments --}}
-                                <div class="col-md-12 col-auto form-group{{ $errors->has('comments') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-comments">Observaciones</label>
-                                    <input type="text" name="comments" id="input-comments" class="form-control form-control-alternative{{ $errors->has('comments') ? ' is-invalid' : '' }}" 
-                                    placeholder="Observaciones" value="{{ $invoice->comments }}">
-
-                                    @if ($errors->has('comments'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('comments') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                {{--  doctor --}}
-                                <div class="col-md-12 col-auto form-group{{ $errors->has('doctor') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-doctor">Doctor</label>
-                                    <input type="text" name="doctor" id="input-doctor" class="form-control form-control-alternative{{ $errors->has('doctor') ? ' is-invalid' : '' }}" 
-                                    placeholder="Nombre, MD" value="{{ $invoice->doctor }}">
-
-                                    @if ($errors->has('doctor'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('doctor') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
                         </form>
+                    </div>                    
+                </div>               
+            </div>
+        </div>
+        <div class="row">
+            {{-- Diagnosticos --}}
+            <div class="col-xl-12 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-services-center">
+                            <div class="col-8 col-auto">
+                                <h3 class="mb-0">{{ __('Diagnósticos') }}</h3>
+                            </div>
+                            <div class="col-4 col-auto text-right">
+                                <a href="{{ route('diagnoses.create') }}" class="btn btn-sm btn-primary">{{ __('Registar nuevo diagnóstico') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {{--  Diagnoses  --}}
+                        <div class="form-row">
+                            @include('components.searchDiagnoses')  
+                            <div class="col-md-2">
+                                <label class="form-control-label"></label>
+                                <button type="button" onclick="addDiagnosisList()" id="add_diagnosis" class="btn btn-outline-success btn-lg">Agregar</button>
+                            </div>
+                            {{-- <div id="diagnoses_list">
+
+                            </div> --}}
+                        </div>
+                        <div class="table-responsive">
+                            <table id="diagnoses_table" class="table align-items-center">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">{{ __('Seleccionar') }}</th>
+                                        <th scope="col">{{ __('Código') }}</th>
+                                        <th scope="col">{{ __('Nombre') }}</th>
+                                        <th scope="col">{{ __('Remover') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>                    
                 </div>               
             </div>
@@ -301,10 +274,10 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-services-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">Servicios</h3>
+                                <h3 class="mb-0">{{ __('Servicios') }}</h3>
                             </div>
                             <div class="col-4 col-auto text-right">
-                                <a href="{{ route('services.create') }}" class="btn btn-sm btn-primary">Registrar un nuevo servicio</a>
+                                <a href="{{ route('services.create') }}" class="btn btn-sm btn-primary">{{ __('Registrar un nuevo servicio') }}</a>
                             </div>
                         </div>
                     </div>
@@ -316,9 +289,14 @@
                         <br />
                         <div class="form-row">
                             {{--  date  --}}
-                            <div class="col-lg-6 col-auto">
-                                <label class="form-control-label" for="input-date_service">Fecha de servicio</label>
-                                <input name="date_service" id="input-date_service" class="form-control form-control-alternative"  type="date" required>
+                            <div class="col-lg-3 col-auto">
+                                <label class="form-control-label"   for="input-date_service">Fecha de servicio (de)</label>
+                                <input name="date_service" onchange="service_handler(event)" id="input-date_service" class="form-control form-control-alternative"  type="date" required>
+                            </div>
+                            {{--  date  --}}
+                            <div class="col-lg-3 col-auto">
+                                <label class="form-control-label" for="input-date_service-to">Fecha de servicio (a)</label>
+                                <input name="date_service-to" id="input-date_service-to" class="form-control form-control-alternative"  type="date" required>
                             </div>
                             {{--  price  --}}
                             <div class="col-lg-2 col-auto form-group">
@@ -327,13 +305,15 @@
                                 placeholder="0" required>
                             
                             </div>
-                            {{--  discounted-price  --}}
+                            {{--  discounted-price  
                             <div class="col-lg-2 col-auto form-group">
                                 <label class="form-control-label" for="custom-discounted-price">Descuento</label>
                                 <input type="numeric" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
                                 placeholder="0"  required>
                             
-                            </div>
+                            </div>--}}
+                            <input type="hidden" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
+                            placeholder="0"  required>
                             {{--  quantity  --}}
                             <div class="col-lg-1 col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-quantity">Cantidad</label>
@@ -366,13 +346,13 @@
                                 <thead class="thead-light ">
                                     <tr>
                                         <th scope="col"></th>
-                                        <th scope="col">Fecha</th>
-                                        <th scope="col">Descripción</th>
-                                        <th scope="col">Diagnóstico</th>
-                                        <th scope="col">Precio</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Articulos</th>
+                                        <th scope="col">{{ __('Fecha') }}</th>
+                                        <th scope="col">{{ __('Descripción') }}</th>
+                                        <th scope="col">{{ __('Diagnóstico') }}</th>
+                                        <th scope="col">{{ __('Precio') }}</th>
+                                        <th scope="col">{{ __('Cantidad') }}</th>
+                                        <th scope="col">{{ __('Total') }}</th>
+                                        <th scope="col">{{ __('Articulos') }}</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -406,11 +386,36 @@
 @endsection
 @push('js')
 <script>
+    function updateStatus(){
+        var status = document.getElementById("new-status").value;
+        if(status != 10){
+            $.ajax({
+                url: "{{route('invoices.status')}}",
+                dataType: 'json',
+                type:"patch",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "invoice_id": {{ $invoice->id }},
+                    "status": status,
+                },
+            success: function () {
+                displayStats();
+               
+                }
+            });
+            return false;
+        }
+        
+    }
     function handler(e){
         var date = document.getElementById("input-date").value;
         document.getElementById("input-date_service").value = date;
         getExchangeRate(date);
       }
+      function service_handler(e){
+        var date = document.getElementById("input-date_service").value;
+        document.getElementById("input-date_service-to").value = date;
+    }
     function getExchangeRate(date){
         $.ajax({
             url: "{{route('rate.find')}}",

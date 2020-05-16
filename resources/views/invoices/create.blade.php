@@ -261,16 +261,16 @@
             </div>
         </div>
         <div class="row">
-            {{-- Patient --}}
+            {{-- Diagnosticos --}}
             <div class="col-xl-12 order-xl-1">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-services-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">Diagnósticos</h3>
+                                <h3 class="mb-0">{{ __('Diagnósticos') }}</h3>
                             </div>
                             <div class="col-4 col-auto text-right">
-                                <a href="{{ route('diagnoses.create') }}" class="btn btn-sm btn-primary">Registar nuevo</a>
+                                <a href="{{ route('diagnoses.create') }}" class="btn btn-sm btn-primary">{{ __('Registar nuevo diagnóstico') }}</a>
                             </div>
                         </div>
                     </div>
@@ -311,10 +311,10 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-services-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">Servicios</h3>
+                                <h3 class="mb-0">{{ __('Servicios') }}</h3>
                             </div>
                             <div class="col-4 col-auto text-right">
-                                <a href="{{ route('services.create') }}" class="btn btn-sm btn-primary">Registrar un nuevo servicio</a>
+                                <a href="{{ route('services.create') }}" class="btn btn-sm btn-primary">{{ __('Registrar un nuevo servicio') }}</a>
                             </div>
                         </div>
                     </div>
@@ -375,13 +375,13 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col"></th>
-                                        <th scope="col">Fecha</th>
-                                        <th scope="col">Descripción</th>
-                                        <th scope="col">Diagnóstico</th>
-                                        <th scope="col">Precio</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Articulos</th>
+                                        <th scope="col">{{ __('Fecha') }}</th>
+                                        <th scope="col">{{ __('Descripción') }}</th>
+                                        <th scope="col">{{ __('Diagnóstico') }}</th>
+                                        <th scope="col">{{ __('Precio') }}</th>
+                                        <th scope="col">{{ __('Cantidad') }}</th>
+                                        <th scope="col">{{ __('Total') }}</th>
+                                        <th scope="col">{{ __('Articulos') }}</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -475,141 +475,6 @@
           
         }
         $('#diagnoses_list').html(output);*/
-    }
-
-    function getBag(bag_id, checked_diagnoses){
-        for(var b in this.invoice_diagnoses_services) {
-            if(this.bag_id === bag_id) {
-                return this.invoice_diagnoses_services[b];
-            }
-        }
-        var newBag = new DiagnosesServices(bag_id);
-        newBag.diagnoses = checked_diagnoses;
-        this.invoice_diagnoses_services.push(newBag);
-        return newBag;
-    }
-
-    function searchBag(bag_id){
-        for(var b in this.invoice_diagnoses_services) {
-            if(this.bag_id == bag_id) {
-                return this.invoice_diagnoses_services[b];
-            }
-        }
-    }
-
-    class DiagnosesServices {
-        bag_id = "";
-        tax = 0;
-        dtax = 0;
-        sub_total = 0;
-        sub_total_discounted = 0;
-        total = 0;
-        total_with_discounts = 0;
-        diagnoses = [];
-        services = [];
-
-        constructor(bag_id){
-            this.bag_id = bag_id;
-        }
-
-        addDiagnosis(diagnosis_id, diagnosis_code){
-            for(var d in this.diagnoses) {
-                if(this.diagnoses[d].diagnosis_id === diagnosis_id) {
-                    return;
-                }
-            }
-            var diagnosis = new Diagnosis(diagnosis_id, diagnosis_code);
-            this.diagnoses.push(diagnosis);
-            generateId();
-        }
-
-        generateId(){
-            for(var d in this.diagnoses){
-                this.bag_id = this.bag_id.concat(this.diagnoses[d].diagnosis_id);
-            }
-        }
-    
-        removeDiagnosis(id) {
-            for(var diagnosis in this.diagnoses) {
-                if(this.diagnoses[diagnosis].diagnosis_id === diagnosis_id) {
-                    this.diagnosis.splice(diagnosis, 1);
-                    break;
-                }
-            };
-            generateId();
-        }
-        // Add to cart
-        addServiceToCart(service_id, description, price, discounted_price, 
-            quantity, id, descripcion, code) {
-            for(var service in this.services) {
-                if(this.services[service].id === id) {
-                    this.services[service].quantity += Number(quantity);
-                    totalCart();
-                    return;
-                }
-            }
-
-            var DOS = document.getElementById("input-date_service").value;
-            var DOS_to = document.getElementById("input-date_service-to").value;
-            var service = new Service(service_id, description, price, discounted_price, 
-                quantity, id, DOS,DOS_to, descripcion, code);
-            this.services.push(service);   
-            totalCart();  
-        }
-        // Remove service from cart
-        removeServiceFromCart(service_id) {
-            for(var service in this.services) {
-                if(this.services[service].service_id === service_id) {
-                    this.services[service].quantity --;
-                    if(this.services[service].quantity === 0) {
-                        this.services.splice(service, 1);
-                    }
-                    break;
-                }
-            };
-        }
-
-        removeServiceFromCartAll(service_id) {
-            for(var service in this.services) {
-            if(this.services[service].id=== service_id) {
-                this.services.splice(service, 1);
-                break;
-            }
-            }
-            totalCart();
-        }
-        // Clear cart
-        clearCart(){
-            this.services = [];
-        }
-        addItemToService(service_id, item_id, description, price, discounted_price, 
-        tax, quantity, id, descripcion, code){
-
-            //Find service in array
-            var service = this.services.find(s => s.id == service_id);
-
-            service.addItemToCart(item_id, description, price, 
-                    discounted_price, quantity, this.services.length, tax, descripcion, code);
-        }
-        // Total cart
-        totalCart() {
-            this.tax = 0;
-            this.dtax = 0;
-            this.sub_total = 0;
-            this.sub_total_discounted = 0;
-            this.total = 0;
-            this.total_with_discounts = 0;
-            for(var service in this.services) {
-                this.services[service].totalItemsCart();
-
-                this.tax += this.services[service].tax;
-                this.dtax += this.services[service].dtax;
-                this.sub_total += this.services[service].sub_total;
-                this.sub_total_discounted += this.services[service].sub_total_discounted;
-                this.total += this.services[service].total_price;
-                this.total_with_discounts += this.services[service].total_discounted_price;
-            }
-        }
     }
 
     class Diagnosis {
