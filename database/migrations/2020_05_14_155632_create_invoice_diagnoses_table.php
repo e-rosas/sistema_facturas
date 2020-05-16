@@ -14,6 +14,9 @@ class CreateInvoiceDiagnosesTable extends Migration
         Schema::create('invoice_diagnoses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('invoice_id');
+            $table->unsignedBigInteger('diagnosis_id');
+            $table->string('diagnosis_code')->default('Pendiente');
+            $table->foreign('diagnosis_id')->references('id')->on('diagnoses')->onDelete('cascade');
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });

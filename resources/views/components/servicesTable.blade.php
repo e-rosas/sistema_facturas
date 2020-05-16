@@ -5,6 +5,7 @@
             <tr>
                 <th scope="col">Código</th>
                 <th scope="col">Descripción</th>
+                <th scope="col">Diagnósticos</th>
                 <th scope="col">Fecha (de)</th>
                 <th scope="col">Fecha (a)</th>
                 <th scope="col">Precio</th>
@@ -13,11 +14,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($diagnoses_services as $diagnoses)
-                @foreach ($diagnoses->services as $service)
+                @foreach ($invoice->services2 as $service)
                     <tr> 
                         <td><a  href="{{ route('services.show', $service->service) }}">{{ $service->service->code }}</a></td>
                         <td>{{ $service->description}}</td>
+                        <td>{{ $service->diagnoses_pointers}}</td>
                         <td>{{ $service->DOS->format('d-m-Y') }}</td>
                         <td>{{ $service->DOS_to->format('d-m-Y') }}</td>
                         <td>{{ $service->discounted_price}}</td>
@@ -25,7 +26,6 @@
                         <td>{{ $service->total_discounted_price}}</td>
                     </tr>
                 @endforeach
-            @endforeach
         </tbody>
     </table>
 </div>

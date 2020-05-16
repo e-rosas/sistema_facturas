@@ -15,8 +15,7 @@
                     </div>
                     <div class="card-body text-left">
                         <ul class="list-group list-group-flush">
-                            @foreach ($diagnoses_services as $diagnoses)
-                                @foreach ($diagnoses->services as $service)
+                                @foreach ($invoice->services2 as $service)
                                 <div class="shadow-sm p-3 mb-3 bg-white rounded">
                                     <li class="text-uppercase list-group-item">Servicio: 
                                         <span class="text-primary font-weight-bold">{{ $service->descripcion .' - '. $service->code()}}
@@ -31,8 +30,6 @@
                                 </div>
                                     
                                 @endforeach
-                            
-                            @endforeach
                         </ul>
                         
                         

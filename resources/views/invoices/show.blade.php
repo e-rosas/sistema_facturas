@@ -61,6 +61,8 @@
                             <br />
                              @include('invoices.partials.servicesModal')
                         </div>
+                        @include('components.tableDiagnosesCodes')
+                        <br />
                         @include('components.servicesTable')
                     </div>
                     <div class="tab-pane fade" id="tab-payment" role="tabpanel" aria-labelledby="tab-payment-tab">

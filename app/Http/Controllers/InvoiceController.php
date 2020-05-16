@@ -98,12 +98,31 @@ class InvoiceController extends Controller
         $validated = $request->validated();
         $validated['type'] = 2;
         $validated['status'] = 3;
-        $validated['DOS'] = $request['DOS'];
         $invoice = Invoice::create($validated);
 
-        $invoice_diagnoses_services = $request->invoice_diagnoses_services;
+        // $invoice_diagnoses_services = $request->invoice_diagnoses_services;
 
-        foreach ($invoice_diagnoses_services as $diagnoses_services) {
+        $diagnoses = $request['diagnoses'];
+
+        foreach ($diagnoses as $diagnosis) {
+            $diagnosis['invoice_id'] = $invoice->id;
+            InvoiceDiagnosis::create($diagnosis);
+        }
+
+        $services = $request['services'];
+        foreach ($services as $service) {
+            $service['invoice_id'] = $invoice->id;
+            $diagnosis_service = DiagnosisService::create($service);
+            if (isset($service['items'])) {
+                $items = $service['items'];
+                foreach ($items as $item) {
+                    $item['diagnosis_service_id'] = $diagnosis_service->id;
+                    ItemService::create($item);
+                }
+            }
+        }
+
+        /* foreach ($invoice_diagnoses_services as $diagnoses_services) {
             $invoice_diagnosis = new InvoiceDiagnosis();
             $invoice_diagnosis->invoice_id = $invoice->id;
             $invoice_diagnosis->save();
@@ -127,7 +146,7 @@ class InvoiceController extends Controller
                     }
                 }
             }
-        }
+        } */
 
         return route('invoices.show', [$invoice]);
     }
@@ -139,9 +158,9 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        $invoice = $invoice->load('patient', 'payments', 'calls');
+        $invoice = $invoice->load('patient', 'payments', 'calls', 'services2.service', 'services2.items', 'diagnoses.diagnosis');
 
-        $diagnoses_services = InvoiceDiagnosis::with('diagnoses', 'services.service', 'services.items')->where('invoice_id', $invoice->id)->get();
+        //$diagnoses_services = InvoiceDiagnosis::with('diagnoses', 'services.service', 'services.items')->where('invoice_id', $invoice->id)->get();
         $today = Carbon::today();
 
         $insuree = [];
@@ -155,7 +174,7 @@ class InvoiceController extends Controller
             //return view('invoices.show', compact('invoice', 'insuree', 'today'));
         }
 
-        return view('invoices.show', compact('invoice', 'insuree', 'today', 'diagnoses_services'));
+        return view('invoices.show', compact('invoice', 'insuree', 'today'));
     }
 
     /**
@@ -203,31 +222,24 @@ class InvoiceController extends Controller
         $invoice->fill($validated);
 
         InvoiceDiagnosis::where('invoice_id', $invoice->id)->delete();
+        DiagnosisService::where('invoice_id', $invoice->id)->delete();
 
-        $invoice_diagnoses_services = $request->invoice_diagnoses_services;
+        $diagnoses = $request['diagnoses'];
 
-        foreach ($invoice_diagnoses_services as $diagnoses_services) {
-            $invoice_diagnosis = new InvoiceDiagnosis();
-            $invoice_diagnosis->invoice_id = $invoice->id;
-            $invoice_diagnosis->save();
+        foreach ($diagnoses as $diagnosis) {
+            $diagnosis['invoice_id'] = $invoice->id;
+            InvoiceDiagnosis::create($diagnosis);
+        }
 
-            $diagnoses = $diagnoses_services['diagnoses'];
-
-            foreach ($diagnoses as $diagnosis) {
-                $diagnosis['invoice_diagnoses_id'] = $invoice_diagnosis->id;
-                InvoiceDiagnosisList::create($diagnosis);
-            }
-
-            $services = $diagnoses_services['services'];
-            foreach ($services as $service) {
-                $service['invoice_diagnoses_id'] = $invoice_diagnosis->id;
-                $diagnosis_service = DiagnosisService::create($service);
-                if (isset($service['items'])) {
-                    $items = $service['items'];
-                    foreach ($items as $item) {
-                        $item['diagnosis_service_id'] = $diagnosis_service->id;
-                        ItemService::create($item);
-                    }
+        $services = $request['services'];
+        foreach ($services as $service) {
+            $service['invoice_id'] = $invoice->id;
+            $diagnosis_service = DiagnosisService::create($service);
+            if (isset($service['items'])) {
+                $items = $service['items'];
+                foreach ($items as $item) {
+                    $item['diagnosis_service_id'] = $diagnosis_service->id;
+                    ItemService::create($item);
                 }
             }
         }

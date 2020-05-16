@@ -6,11 +6,11 @@
                 <div class="col-4 col-auto">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                 </div>
-                @if ($invoice->status != 1)
+                {{-- @if ($invoice->status != 1)
                     <div class="col-4 col-auto text-right">
                         <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
                     </div>
-                @endif
+                @endif --}}
                 @if ($invoice->status != 1) 
                     <div class="col-4 col-auto text-right">
                         <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
@@ -142,26 +142,26 @@
 
                 </div>
             </div>
-            <div class="form-row">
-                {{--  dtax --}}
+            {{-- <div class="form-row">
+                
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-dtax">IVA con descuento</label>
                     <label id="label-dtax">{{ $invoice->dtax }}</label>
 
                 </div>
-                {{--  sub_total_with_discounts  --}}
+                
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-sub_total_with_discounts">Subtotal con descuento</label>
                     <label id="label-num">{{ $invoice->sub_total_discounted }}</label>
 
                 </div>
-                {{--  total_with_discounts  --}}
+                
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-total_with_discounts">Total con descuento</label>
                     <label id="label-num">{{ $invoice->total_with_discounts }}</label>
 
                 </div>
-            </div>
+            </div> --}}
         </div>                    
     </div>               
 </div>

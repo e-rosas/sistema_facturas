@@ -8,20 +8,17 @@ class InvoiceDiagnosis extends Model
 {
     public $fillable = [
         'invoice_id',
+        'diagnosis_id',
+        'diagnosis_code',
     ];
 
-    public function diagnoses()
+    public function diagnosis()
     {
-        return $this->hasMany('App\InvoiceDiagnosisList', 'invoice_diagnoses_id', 'id');
+        return $this->belongsTo('App\Diagnosis');
     }
 
     public function invoice()
     {
         return $this->belongsTo('App\Invoice');
-    }
-
-    public function services()
-    {
-        return $this->hasMany('App\DiagnosisService', 'invoice_diagnoses_id', 'id');
     }
 }

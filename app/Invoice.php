@@ -203,6 +203,16 @@ class Invoice extends Model
         return $this->hasMany('App\InvoiceService');
     }
 
+    public function diagnoses()
+    {
+        return $this->hasMany('App\InvoiceDiagnosis');
+    }
+
+    public function services2()
+    {
+        return $this->hasMany('App\DiagnosisService');
+    }
+
     public function payments()
     {
         return $this->hasMany('App\Payment');

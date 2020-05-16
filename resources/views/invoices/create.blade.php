@@ -479,7 +479,7 @@
 
     function getBag(bag_id, checked_diagnoses){
         for(var b in this.invoice_diagnoses_services) {
-            if(this.invoice_diagnoses_services[b].bag_id === bag_id) {
+            if(this.bag_id === bag_id) {
                 return this.invoice_diagnoses_services[b];
             }
         }
@@ -491,7 +491,7 @@
 
     function searchBag(bag_id){
         for(var b in this.invoice_diagnoses_services) {
-            if(this.invoice_diagnoses_services[b].bag_id == bag_id) {
+            if(this.bag_id == bag_id) {
                 return this.invoice_diagnoses_services[b];
             }
         }
@@ -634,12 +634,11 @@
         sub_total_discounted = 0;
         total_price = 0;
         total_discounted_price = 0;
-        diagnosis_id = 0;
-        diagnosis_code = "";
+        diagnoses_pointers = "";
         DOS = new Date();
         DOS_to = this.DOS;
         constructor(service_id, description, price, discounted_price, quantity, id, 
-            DOS,DOS_to, descripcion, code) {
+            DOS,DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -656,6 +655,7 @@
             this.DOS = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
             this.date3 = getCorrectDate(DOS_to);
             this.DOS_to = this.date3.toISOString().split('T')[0]+' '+this.date3.toTimeString().split(' ')[0];
+            this.diagnoses_pointers = pointers;
         }
 
         get date(){
@@ -758,7 +758,7 @@
     }
 
     const TAX = 0.08;
-    invoice_diagnoses_services = [];
+    services = [];
     diagnosesList = [];
     tax = 0;
     dtax = 0;
@@ -796,16 +796,54 @@
         this.sub_total_discounted = 0;
         this.total = 0;
         this.total_with_discounts = 0;
-        for(var service in this.invoice_diagnoses_services) {
-            this.invoice_diagnoses_services[service].totalCart();
+        for(var service in this.services) {
+            this.services[service].totalItemsCart();
 
-            this.tax += this.invoice_diagnoses_services[service].tax;
-            this.dtax += this.invoice_diagnoses_services[service].dtax;
-            this.sub_total += this.invoice_diagnoses_services[service].sub_total;
-            this.sub_total_discounted += this.invoice_diagnoses_services[service].sub_total_discounted;
-            this.total += this.invoice_diagnoses_services[service].total;
-            this.total_with_discounts += this.invoice_diagnoses_services[service].total_with_discounts;
+            this.tax += this.services[service].tax;
+            this.dtax += this.services[service].dtax;
+            this.sub_total += this.services[service].sub_total;
+            this.sub_total_discounted += this.services[service].sub_total_discounted;
+            this.total += this.services[service].total_price;
+            this.total_with_discounts += this.services[service].total_discounted_price;
         }
+    }
+
+    function addServiceToCart(service_id, description, price, discounted_price, 
+        quantity, id, descripcion, code, pointers) {
+        for(var service in this.services) {
+            if(this.services[service].id === id) {
+                this.services[service].quantity += Number(quantity);
+                totalCart();
+                return;
+            }
+        }
+
+        var DOS = document.getElementById("input-date_service").value;
+        var DOS_to = document.getElementById("input-date_service-to").value;
+        var service = new Service(service_id, description, price, discounted_price, 
+            quantity, id, DOS,DOS_to, descripcion, code, pointers);
+        this.services.push(service);   
+        /*totalCart();  */
+    }
+
+    function removeServiceFromCartAll(service_id) {
+        for(var service in this.services) {
+            if(this.services[service].id=== service_id) {
+                this.services.splice(service, 1);
+                break;
+            }
+        }
+        totalCart();
+    }
+
+    function addItemToService(service_id, item_id, description, price, discounted_price, 
+        tax, quantity, id, descripcion, code){
+
+        //Find service in array
+        var service = this.services.find(s => s.id == service_id);
+
+        service.addItemToCart(item_id, description, price, 
+                discounted_price, quantity, this.services.length, tax, descripcion, code);
     }
 
     function totalDiscounts() {
@@ -830,7 +868,7 @@
 
 
 
-    function getService(id, quantity, price, discounted_price, bag){
+    function getService(id, quantity, price, discounted_price, pointers){
         $.ajax({
             url: "{{route('services.find')}}",
             dataType: 'json',
@@ -841,9 +879,9 @@
             },
         success: function (response) {      
                          
-                bag.addServiceToCart(response.id, response.description, 
-                    price, discounted_price, quantity, bag.services.length,
-                     response.descripcion, response.code);   
+                addServiceToCart(response.id, response.description, 
+                    price, discounted_price, quantity, services.length,
+                     response.descripcion, response.code, pointers);   
                 displayCart();                                 
             }
         });
@@ -889,7 +927,8 @@
                 "concept" : concept,
                 "code": code,
                 "currency" : currency,
-                "invoice_diagnoses_services" : this.invoice_diagnoses_services,
+                "diagnoses" : this.diagnosesList,
+                "services" : this.services,
                 "total" : total,
                 "sub_total" : sub_total,
                 "sub_total_discounted" : sub_total_discounted,
@@ -947,22 +986,20 @@
     function displayCart() {
         totalCart();
         var output = "";
-        for(var b in this.invoice_diagnoses_services){
-            for(var i in this.invoice_diagnoses_services[b].services) {
+        for(var i in this.services) {
 
-                output += "<tr value="+this.invoice_diagnoses_services[b].services[i].id+">"
-                    + "<td><button class='delete-service btn btn-sm btn-danger' data-bag-id=" + this.invoice_diagnoses_services[b].bag_id  + " data-id=" + this.invoice_diagnoses_services[b].services[i].id + ">X</button></td>"
-                  + "<td>" + this.invoice_diagnoses_services[b].services[i].date + "</td>"
-                  + "<td>" + this.invoice_diagnoses_services[b].services[i].description + "</td>"
-                  + "<td>" + this.invoice_diagnoses_services[b].bag_id + "</td>"
-                  + "<td>" + this.invoice_diagnoses_services[b].services[i].discounted_price + "</td>"
-                  + "<td>" + this.invoice_diagnoses_services[b].services[i].quantity + "</td>"
-                  + "<td>" + this.invoice_diagnoses_services[b].services[i].total_discounted_price + '</td>'
-                  + "<td>" + this.invoice_diagnoses_services[b].services[i].items.length + '</td>'
-                  +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.invoice_diagnoses_services[b].services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
-                  +'</td> </tr>';
-              }
-        }
+            output += "<tr value="+this.services[i].id+">"
+                + "<td><button class='delete-service btn btn-sm btn-danger' data-id=" + this.services[i].id + ">X</button></td>"
+                + "<td>" + this.services[i].date + "</td>"
+                + "<td>" + this.services[i].description + "</td>"
+                + "<td>" + this.services[i].diagnoses_pointers+ "</td>"
+                + "<td>" + this.services[i].discounted_price + "</td>"
+                + "<td>" + this.services[i].quantity + "</td>"
+                + "<td>" + this.services[i].total_discounted_price + '</td>'
+                + "<td>" + this.services[i].items.length + '</td>'
+                +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
+                +'</td> </tr>';
+            }
         
         $('#services_table tbody').html(output);
         document.getElementById("input-total").value = this.total;
@@ -990,34 +1027,34 @@
 
             var quantity = Number(document.getElementById("input-quantity").value);
             var service_id= $("#service_id").children("option:selected").val();
-            
-            if(quantity > 0 && service_id > 0){
-                var bag_id = "";
-                var i = 0;
-                var checked_diagnoses = [];
-                $("#diagnoses_table tbody").find('input[name="active"]').each(function(){
-                    if($(this).is(":checked")){
-                        var diagnosis = diagnosesList[i];
-                        checked_diagnoses.push(diagnosis);
-                        
-                    }
+            var pointers = "";
+            var i = 0;
+            $("#diagnoses_table tbody").find('input[name="active"]').each(function(){
+                if($(this).is(":checked")){
                     i++;
-    
-                });
-
-                for(var d in checked_diagnoses){
-                    bag_id = bag_id.concat(checked_diagnoses[d].diagnosis_id);
+                    pointers += i+",";
+                    
                 }
                 
 
-                var bag = getBag(bag_id, checked_diagnoses);
+            });
+            pointers = pointers.substring(0,pointers.length-1);
+            console.log(pointers);
+            
+            if(quantity > 0 && service_id > 0 && pointers.length > 0){
+                
                 var price = document.getElementById("custom-price").value;
                 price = parseFloat(price.replace(/,/g,''));
                 var discounted_price = price; /*document.getElementById("custom-discounted-price").value;
                 discounted_price = parseFloat(discounted_price.replace(/,/g,''));*/
                 
-                getService(service_id, quantity, price, discounted_price, bag);
+                getService(service_id, quantity, price, discounted_price, pointers);
             }
+
+            console.log("Diagnoses: ");
+            console.log(diagnosesList);
+            console.log("Services: ");
+            console.log(services);
             
         });
 
@@ -1048,12 +1085,8 @@
 
         // Delete service button
         $('#services_table').on("click", ".delete-service", function(event) {
-            var bag_id = "";
-            bag_id = $(this).data('bag-id');
             var service_id = $(this).data('id');
-
-            var bag = searchBag(bag_id);
-            bag.removeServiceFromCartAll(service_id);
+            removeServiceFromCartAll(service_id);
             displayCart();
 
 
@@ -1062,7 +1095,7 @@
 
         
         $("#save").click(function(){
-            if(invoice_diagnoses_services.length > 0 ) {
+            if(services.length > 0 ) {
                 var patient_id= $("#patient_id").children("option:selected").val();
                 var date = document.getElementById("input-date").value; 
                 var code = document.getElementById("input-code").value; 

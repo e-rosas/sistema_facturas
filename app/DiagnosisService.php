@@ -23,11 +23,12 @@ class DiagnosisService extends Model
         'quantity',
         'DOS',
         'DOS_to',
-        'invoice_diagnoses_id',
+        'invoice_id',
+        'diagnoses_pointers',
     ];
     public static $rules = [
         'service_id' => 'required',
-        'invoice_diagnoses_id' => 'required',
+        'invoice_id' => 'required',
         'code' => 'max:255',
         'price' => 'numeric|required|between:0,999999999.999',
         'discounted_price' => 'numeric|required|between:0,999999999.999',
@@ -42,6 +43,7 @@ class DiagnosisService extends Model
         'quantity' => 'numeric|required',
         'DOS' => 'date',
         'DOS_to' => 'date',
+        'diagnoses_pointers' => 'max:255|required',
     ];
     protected $casts = [
         'id' => 'integer',
@@ -98,9 +100,9 @@ class DiagnosisService extends Model
         return number_format($value, 3);
     }
 
-    public function diagnosis()
+    public function invoice()
     {
-        return $this->belongsTo('App\InvoiceDiagnosis', 'id', 'invoice_diagnoses_id');
+        return $this->belongsTo('App\Invoice');
     }
 
     public function service()
