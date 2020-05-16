@@ -54,7 +54,7 @@ class Service extends Model
 
     public function invoices()
     {
-        return $this->belongsToMany('App\Invoice', 'invoice_services');
+        return $this->belongsToMany('App\Invoice', 'diagnosis_services');
     }
 
     public function clave()

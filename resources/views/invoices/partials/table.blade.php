@@ -5,7 +5,7 @@
                 <th scope="col">Num. de Cobro</th>
                 <th scope="col">Folio CONTPAQ</th>
                 <th scope="col">Paciente</th>
-                <th scope="col">Fecha</th>
+                <th scope="col">Fecha de servicio</th>
                 <th scope="col">Tipo</th>
                 <th scope="col">Status</th>
                 <th scope="col">Subtotal</th>
@@ -24,7 +24,7 @@
                     </td>
                     <td>{{ $invoice->code() }}</td>
                     <td><a  href="{{ route('patients.show', $invoice->patient) }}">{{  $invoice->patient->full_name  }}</a></td>
-                    <td>{{ $invoice->date->format('d-m-Y') }}</td>
+                    <td>{{ $invoice->DOS->format('d-m-Y') }}</td>
                     <td>{{ $invoice->type() }}</td>
                     <td>{{ $invoice->status() }}</td>
                     <td>{{ $invoice->sub_total_discounted }}</td>

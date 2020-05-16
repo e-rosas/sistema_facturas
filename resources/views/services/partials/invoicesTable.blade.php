@@ -2,10 +2,10 @@
     <table class="table align-items-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Number') }}</th>
-                <th scope="col">{{ __('Patient') }}</th>
-                <th scope="col">{{ __('Date') }}</th>
-                <th scope="col">{{ __('Total with discounts') }}</th>
+                <th scope="col">{{ __('Numero') }}</th>
+                <th scope="col">{{ __('Paciente') }}</th>
+                <th scope="col">{{ __('Fecha') }}</th>
+                <th scope="col">{{ __('Total') }}</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -13,8 +13,8 @@
             @foreach ($invoices as $invoice)
                 <tr>
                     <td><a  href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>
-                    <td>{{ $invoice->person_data->fullName() }}</td>
-                    <td>{{ $invoice->date->format('M-d-Y') }}</td>
+                    <td>{{ $invoice->patient->full_name }}</td>
+                    <td>{{ $invoice->DOS->format('d-m-Y') }}</td>
                     <td>{{ $invoice->total_with_discounts }}</td>
                     <td class="text-right">
                         <div class="dropdown">
@@ -31,8 +31,8 @@
                                             {{ __('Delete') }}
                                         </button>
                                     </form>    --}}  
-                                    <a class="dropdown-item" href="{{ route('invoices.show', $invoice) }}">{{ __('View') }}</a>
-                                    <a class="dropdown-item" href="{{ route('invoices.edit', $invoice) }}">{{ __('Edit') }}</a>
+                                    <a class="dropdown-item" href="{{ route('invoices.show', $invoice) }}">{{ __('Ver') }}</a>
+                                    <a class="dropdown-item" href="{{ route('invoices.edit', $invoice) }}">{{ __('Editar') }}</a>
                             </div>
                         </div>
                     </td>
@@ -43,6 +43,5 @@
 </div>
 <div class="card-footer py-4">
     <nav class="d-flex justify-content-end" aria-label="...">
-        {{ $invoices->links() }}
     </nav>
 </div>
