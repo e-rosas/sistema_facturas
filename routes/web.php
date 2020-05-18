@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('diagnoses', 'DiagnosisController');
     Route::patch('invoices/updatepatient', ['as' => 'invoice.updatepatient', 'uses' => 'InvoiceController@updatePatient']);
     Route::patch('invoice/update', ['as' => 'invoice.update', 'uses' => 'InvoiceController@update']);
-    Route::post('invoice/services', 'InvoiceServiceController@getInvoiceServices')->name('invoice.services');
+    Route::post('invoice/services', 'DiagnosisServiceController@getInvoiceServices')->name('invoice.services');
     Route::post('invoice/diagnoses', 'InvoiceServiceController@getInvoiceServices')->name('invoice.services');
     //Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('patients/searchIndex', 'SearchPatientController@searchPatient')->name('patients.search');

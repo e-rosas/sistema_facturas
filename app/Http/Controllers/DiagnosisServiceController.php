@@ -14,7 +14,6 @@ class DiagnosisServiceController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -24,62 +23,60 @@ class DiagnosisServiceController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\DiagnosisService  $diagnosisService
      * @return \Illuminate\Http\Response
      */
     public function show(DiagnosisService $diagnosisService)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\DiagnosisService  $diagnosisService
      * @return \Illuminate\Http\Response
      */
     public function edit(DiagnosisService $diagnosisService)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\DiagnosisService  $diagnosisService
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, DiagnosisService $diagnosisService)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\DiagnosisService  $diagnosisService
      * @return \Illuminate\Http\Response
      */
     public function destroy(DiagnosisService $diagnosisService)
     {
-        //
+    }
+
+    public function getInvoiceServices(Request $request)
+    {
+        $invoice_id = $request->invoice_id;
+        $services = DiagnosisService::with('items')
+            ->where('invoice_id', $invoice_id)->get();
+
+        echo json_encode($services);
+        exit;
     }
 }

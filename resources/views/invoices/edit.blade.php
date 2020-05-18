@@ -675,10 +675,10 @@
         this.services.push(service);   
         displayCart();  
     }
-    function addDiagnosisFromInvoice(diagnosis_id, name, code) {
+    function addDiagnosisFromInvoice(diagnosis_id, name, code, nombre) {
         
-        var diagnosis = new Diagnosis(diagnosis_id, name,  code);
-        displayCart();  
+        var diagnosis = new Diagnosis(diagnosis_id, name,  code, nombre);
+        
     }
     function addServiceToCartFromInvoice(service_id, description, price, discounted_price,
          quantity, id, DOS, items, descripcion, code, pointers) {
@@ -693,7 +693,6 @@
             items[i].quantity, services.length, tax, items[i].descripcion, items[i].code);
         }
         this.services.push(service);
-        displayCart();  
     }
 
     function removeServiceFromCartAll(service_id) {
@@ -775,12 +774,10 @@
             },
         success: function (response) {
             for(var i = 0; i < response.length; i++){
-                addDiagnosisFromInvoice(response[i].service_id, response[i].description, 
-                    response[i].price, response[i].discounted_price, response[i].quantity, 
-                    response[i].id, response[i].DOS, response[i].items, 
-                    response[i].descripcion, response[i].code, response[i].diagnosis_code, response[i].diagnosis_id);   
+                addDiagnosisFromInvoice(response[i].diagnosis_id, response[i].diagnosis_name, 
+                    response[i].diagnosis_code, response[i].diagnosis_nombre, response[i].quantity);   
             }
-            displayCart();                
+            displayDiagnosisList();            
                                                  
             }
         });
