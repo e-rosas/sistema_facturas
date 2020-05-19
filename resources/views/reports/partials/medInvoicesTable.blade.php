@@ -2,16 +2,16 @@
     <table class="table align-items-center table-flush table-sm table-hover">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Serie</th>
-                <th scope="col">Folio</th>
-                <th scope="col">Concepto</th>
-                <th scope="col">Cargos</th>
-                <th scope="col">Abonos</th>
-                <th scope="col">Saldo</th>
-                <th scope="col">Vence</th>
-                <th scope="col">Cambio</th>
-                <th scope="col">Estado</th>
+                <th scope="col">Fecha{{ __('Nombre') }}</th>
+                <th scope="col">Serie{{ __('Nombre') }}</th>
+                <th scope="col">Folio{{ __('Nombre') }}</th>
+                <th scope="col">Concepto{{ __('Nombre') }}</th>
+                <th scope="col">Cargos{{ __('Nombre') }}</th>
+                <th scope="col">Abonos{{ __('Nombre') }}</th>
+                <th scope="col">Saldo{{ __('Nombre') }}</th>
+                <th scope="col">Vence{{ __('Nombre') }}</th>
+                <th scope="col">Cambio{{ __('Nombre') }}</th>
+                <th scope="col">Estado{{ __('Nombre') }}</th>
             </tr>
         </thead>
         <tbody>

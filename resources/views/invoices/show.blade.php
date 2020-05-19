@@ -7,7 +7,11 @@
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
                 @include('components.invoiceStatsCard', ['id' => 'total','title' => 'Total', 'value' => $invoice->total_with_discounts])
                 @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' => 'Pagado', 'value' => $invoice->amount_paid])
-                @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Debe', 'value' => $invoice->amount_due])
+                @if (is_null($invoice->charge))
+                    @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Debe', 'value' => $invoice->amount_due])
+                @else
+                    @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Debe', 'value' => $invoice->chargeAmountDue()])
+                @endif
                 @include('components.invoiceStatsCard', ['id' => 'invoice-status','title' => 'Estado', 'value' => $invoice->status()])
             </div>
             

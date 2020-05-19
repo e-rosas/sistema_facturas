@@ -139,6 +139,13 @@ class Invoice extends Model
         return number_format($mxn, 4);
     }
 
+    public function chargeAmountDue()
+    {
+        $charge_due = $this->charge->amount_charged - (float) str_replace(',', '', $this->amount_paid);
+
+        return number_format($charge_due, 4);
+    }
+
     public function type()
     {
         switch ($this->type) {

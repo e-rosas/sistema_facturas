@@ -643,8 +643,6 @@
     }
 
     function removeDiagnosis(id) {
-        console.log(id);
-        console.log(this.diagnosesList);
         for(var diagnosis in this.diagnosesList) {
             if(this.diagnosesList[diagnosis].diagnosis_id === id) {
                 this.diagnosesList.splice(diagnosis, 1);

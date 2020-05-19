@@ -2,12 +2,12 @@
     <table class="table align-items-center table-flush table-sm">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Folio CONTPAQ</th>
-                <th scope="col">Paciente</th>
-                <th scope="col">Subtotal</th>
-                <th scope="col">IVA</th>
-                <th scope="col">Total</th>
+                <th scope="col">{{ __('Fecha') }}</th>
+                <th scope="col">{{ __('Folio CONTPAQ') }}</th>
+                <th scope="col">Paciente{{ __('Nombre') }}</th>
+                <th scope="col">Subtotalv</th>
+                <th scope="col">IVA{{ __('Nombre') }}</th>
+                <th scope="col">Total{{ __('Nombre') }}</th>
             </tr>
         </thead>
         <tbody>
