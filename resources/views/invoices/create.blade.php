@@ -904,7 +904,6 @@
 
             });
             pointers = pointers.substring(0,pointers.length-1);
-            console.log(pointers);
             
             if(quantity > 0 && service_id > 0 && pointers.length > 0){
                 
@@ -915,11 +914,6 @@
                 
                 getService(service_id, quantity, price, discounted_price, pointers);
             }
-
-            console.log("Diagnoses: ");
-            console.log(diagnosesList);
-            console.log("Services: ");
-            console.log(services);
             
         });
 

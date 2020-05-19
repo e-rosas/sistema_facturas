@@ -6,11 +6,11 @@
                 <div class="col-4 col-auto">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                 </div>
-                {{-- @if ($invoice->status != 1)
+                @if ($invoice->status != 1)
                     <div class="col-4 col-auto text-right">
                         <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
                     </div>
-                @endif --}}
+                @endif
                 @if ($invoice->status != 1) 
                     <div class="col-4 col-auto text-right">
                         <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>

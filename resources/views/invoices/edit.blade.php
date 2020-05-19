@@ -21,7 +21,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-services-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">Paciente</h3>
+                                <h3 class="mb-0">{{ __('Paciente') }}</h3>
                             </div>
                             <div class="col-4 col-auto text-right">
                                 <a href="{{ route('invoices.show', $invoice) }}" class="btn btn-sm btn-primary">Regresar a la factura</a>
@@ -33,7 +33,10 @@
                         <div class="row">
                             <div class="form-group col-md-6 col-auto">
                                 <label class="form-control-label" for="person_name">{{ __('Paciente') }}</label>
-                                <label id="person_name"> {{ $invoice->patient->full_name}} </label>
+                                <h3>
+                                    <a href="{{ route('patients.show', $invoice->patient) }}" class="mr-4">{{ $invoice->patient->full_name }} </a>
+                                    
+                                </h3>
                             </div>     
                             {{-- <div class="form-group col-md-6 col-auto text-right">
                                 <button type="button" data-toggle="modal" data-target="#modal-person" class="btn btn-outline-info">Change</button>
@@ -53,14 +56,14 @@
                             <div class="col-4 col-auto">
                                 <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                             </div>
-                            @if ($invoice->status != 1) 
+                            {{--  @if ($invoice->status != 1) 
                                 <div class="col-4 col-auto text-right">
                                     <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
                                     <br />
                                 </div>
                             @endif
                             
-                            @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])
+                            @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])  --}}
                             
                         </div>
                     </div>
@@ -332,14 +335,6 @@
                                 <button type="button" id="add_service" class="btn btn-outline-success btn-lg">Agregar</button>
                             </div>
                         </div>
-                        <div class="form-row">
-                            @include('components.searchDiagnoses')  
-                            <div class="col-md-4">
-                                <input type="text" name="diagnosis_code" id="input-diagnosis_code" class="form-control form-control-alternative{{ $errors->has('diagnosis_code') ? ' is-invalid' : '' }}" 
-                                    placeholder="Codigo" readonly>
-                                <input id="diagnosis" type="hidden" value=0>
-                            </div>
-                        </div>
                         {{-- Table of services --}}
                         <div  class="table-responsive">
                             <table id="services_table" class="table table-sm align-services-center table-flush ">
@@ -501,7 +496,7 @@
         items_total_discounted_price = 0;
 
         constructor(service_id, description, price, discounted_price, quantity, id, 
-            DOS, descripcion, code, pointers) {
+            DOS,DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = price;
@@ -661,7 +656,7 @@
      function addServiceToCart(service_id, description, price, discounted_price,
          quantity, id, descripcion, code, pointers) {
         for(var service in this.services) {
-            if(this.services[service].id === id) {
+            if(this.services[service].service_id === service_id) {
                 this.services[service].quantity += Number(quantity);
                 displayCart();
                 return;
@@ -678,14 +673,16 @@
     function addDiagnosisFromInvoice(diagnosis_id, name, code, nombre) {
         
         var diagnosis = new Diagnosis(diagnosis_id, name,  code, nombre);
+        this.diagnosesList.push(diagnosis);
+
         
     }
     function addServiceToCartFromInvoice(service_id, description, price, discounted_price,
-         quantity, id, DOS, items, descripcion, code, pointers) {
+         quantity, id, DOS, items, descripcion, code, pointers, DOS_to) {
         
         var service = new Service(service_id, description, parseFloat(price.replace(/,/g,'')), 
             parseFloat(discounted_price.replace(/,/g,'')), quantity, 
-                services.length, DOS, descripcion, code, pointers);
+                services.length, DOS, DOS_to, descripcion, code, pointers);
         for(var i in items){
             var tax = false;
             if(items[i].itax > 0) tax = true;
@@ -754,7 +751,7 @@
                 addServiceToCartFromInvoice(response[i].service_id, response[i].description, 
                     response[i].price, response[i].discounted_price, response[i].quantity, 
                     response[i].id, response[i].DOS, response[i].items, 
-                    response[i].descripcion, response[i].code, response[i].diagnoses_pointers);   
+                    response[i].descripcion, response[i].code, response[i].diagnoses_pointers, response[i].DOS_to);   
             }
             displayCart();                
                                                  
@@ -773,9 +770,9 @@
                 "invoice_id" : id
             },
         success: function (response) {
-            for(var i = 0; i < response.length; i++){
-                addDiagnosisFromInvoice(response[i].diagnosis_id, response[i].diagnosis_name, 
-                    response[i].diagnosis_code, response[i].diagnosis_nombre, response[i].quantity);   
+            for(var i = 0; i < response.data.length; i++){
+                addDiagnosisFromInvoice(response.data[i].diagnosis_id, response.data[i].diagnosis_name, 
+                    response.data[i].diagnosis_code, response.data[i].diagnosis_nombre, response.data[i].quantity);   
             }
             displayDiagnosisList();            
                                                  
@@ -846,25 +843,15 @@
                 discounted_price, quantity, services.length, tax, descripcion, code);
     }
 
-    function sendInvoice(patient_id, series, number, concept, code, currency, 
-        date, comments){
-            var exchange_rate = document.getElementById("invoice-exchange_rate").value;
-            exchange_rate = parseFloat(exchange_rate.replace(/,/g,''));
-            var doctor =  document.getElementById("input-doctor").value;
+    function sendInvoice(){
+            var DOS = document.getElementById("input-date_service-to").value;
         $.ajax({
             url: "{{route('invoice.update')}}",
             type:"patch",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "invoice_id": {!! $invoice->id !!},
-                "patient_id" : patient_id,
-                "date" : date,
-                "comments" : comments,
-                "number" : number,
-                "series" : series,
-                "concept" : concept,
-                "code": code,
-                "currency" : currency,
+                "diagnoses" : this.diagnosesList,
                 "services" : this.services,
                 "total" : total,
                 "sub_total" : sub_total,
@@ -873,9 +860,7 @@
                 "tax" : tax,
                 "dtax" : dtax,
                 "amount_due" : total_with_discounts,
-                "amount_paid" : 0,
-                "exchange_rate": exchange_rate,
-                "doctor": doctor
+                "DOS": DOS
             },
         success: function (response) {
             setTimeout(function() {
@@ -939,10 +924,10 @@
         for(var i in this.services) {
 
           output += "<tr value="+this.services[i].id+">"
-            + "<td>  <input type='checkbox' name='service'>  </td>"
+            + "<td><button class='delete-service btn btn-sm btn-danger' data-id=" + this.services[i].id + ">X</button></td>"
             + "<td>" + this.services[i].date + "</td>"
             + "<td>" + this.services[i].description + "</td>"
-            + "<td>" + this.services[i].diagnosis_code + "</td>"
+            + "<td>" + this.services[i].diagnoses_pointers + "</td>"
             + "<td>" + this.services[i].discounted_price + "</td>"
             + "<td>" + this.services[i].quantity + "</td>"
             + "<td>" + this.services[i].total_discounted_price + '</td>'
@@ -966,27 +951,34 @@
 
     var today = yyyy + '-' + mm + '-' + dd;
     $(document).ready(function(){
-        document.getElementById("input-date").value = today;
         document.getElementById("input-date_service").value = today;
-
+        getInvoiceDiagnoses({!! $invoice->id !!});
         getInvoiceServices({!! $invoice->id !!});
-        $("#person_data_id").change(function(){
-
-            var selectedService= $(this).children("option:selected").val();
-    
-        });
 
         $("#add_service").click(function(){
             var quantity = Number(document.getElementById("input-quantity").value);
+            var service_id= $("#service_id").children("option:selected").val();
+            var pointers = "";
+            var i = 0;
+            $("#diagnoses_table tbody").find('input[name="active"]').each(function(){
+                if($(this).is(":checked")){
+                    i++;
+                    pointers += i+",";
+                    
+                }
+                
 
-            var diagnosis_id = Number(document.getElementById("diagnosis_id").value);
-            if(quantity > 0 && diagnosis_id > 0){
+            });
+            pointers = pointers.substring(0,pointers.length-1);
+            
+            if(quantity > 0 && service_id > 0 && pointers.length > 0){
+                
                 var price = document.getElementById("custom-price").value;
                 price = parseFloat(price.replace(/,/g,''));
-                var discounted_price = document.getElementById("custom-discounted-price").value;
-                discounted_price = parseFloat(discounted_price.replace(/,/g,''));
-                var service_id= $("#service_id").children("option:selected").val();
-                getService(service_id, quantity, price, discounted_price, diagnosis_id);
+                var discounted_price = price; /*document.getElementById("custom-discounted-price").value;
+                discounted_price = parseFloat(discounted_price.replace(/,/g,''));*/
+                
+                getService(service_id, quantity, price, discounted_price, pointers);
             }
             
         });
@@ -1015,19 +1007,18 @@
 
         })
 
+        $('#services_table').on("click", ".delete-service", function(event) {
+            var service_id = $(this).data('id');
+            removeServiceFromCartAll(service_id);
+            displayCart();
+
+
+        })
+
         
         $("#save").click(function(){
             if(services.length > 0 ) {
-                var patient_id= {!! $invoice->patient_id !!};
-                var date = document.getElementById("input-date").value; 
-                var code = document.getElementById("input-code").value; 
-                var comments = document.getElementById("input-comments").value;
-                var number = document.getElementById("input-number").value;  
-                var series = document.getElementById("input-series").value; 
-                var concept = document.getElementById("input-concept").value; 
-                var currency = document.getElementById("input-currency").value;
-                sendInvoice(patient_id, series, number, concept, code, currency,
-                 date,  comments);
+                sendInvoice();
             }
             
             else {
@@ -1035,19 +1026,6 @@
             }
             
             
-
-        });
-        $("#remove_selected").click(function(){
-
-            $("#services_table tbody").find('input[name="service"]').each(function(){
-
-                if($(this).is(":checked")){
-                    var id = Number($(this).parents("tr").attr('value'));
-                    removeServiceFromCartAll(id);                 
-                }
-
-            });
-            displayCart();
 
         });
     });

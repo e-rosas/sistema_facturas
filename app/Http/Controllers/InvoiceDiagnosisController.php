@@ -22,7 +22,7 @@ class InvoiceDiagnosisController extends Controller
 
     public function migrate()
     {
-        $invoices = Invoice::where('id', '<', 56)->get();
+        $invoices = Invoice::where('id', '<', 9)->get();
         foreach ($invoices as $invoice) {
             $diagnoses = [];
             $unique_diagnoses = [];
