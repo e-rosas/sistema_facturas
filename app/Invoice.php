@@ -86,6 +86,11 @@ class Invoice extends Model
         return number_format($this->amount_due, 4);
     }
 
+    public function amountPaid()
+    {
+        return number_format($this->amount_paid, 4);
+    }
+
     public function exchangeRate()
     {
         return number_format($this->exchange_rate, 4);

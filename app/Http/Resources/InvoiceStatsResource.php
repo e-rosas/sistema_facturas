@@ -19,8 +19,8 @@ class InvoiceStatsResource extends JsonResource
             'id' => $this->id,
             'status' => $this->status(),
             'type' => $this->type(),
-            'amount_paid' => $this->amount_paid,
-            'amount_due' => $this->amount_due,
+            'amount_paid' => $this->amountPaid(),
+            'amount_due' => $this->amountDue(),
             'status_n' => $this->status,
             'type_n' => $this->type,
         ];
