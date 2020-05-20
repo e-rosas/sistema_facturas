@@ -118,7 +118,9 @@
             </div>
         </div>
     </form>
-    
+    <div class="row">
+        @include('components.currencySwitch')
+    </div>
     <div class="row">
         <div class="col-xl-12">
             <div class="card shadow">
@@ -131,7 +133,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @include('reports.partials.medInvoicesTable')
+                    @include('reports.partials.shortInvoicesTable')
                 </div>
                 <div class="card-footer py-4">
                     <nav class="d-flex justify-content-end" aria-label="...">
