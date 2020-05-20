@@ -2,16 +2,16 @@
     <table class="table align-items-center table-flush table-sm table-hover">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Fecha{{ __('Nombre') }}</th>
-                <th scope="col">Serie{{ __('Nombre') }}</th>
-                <th scope="col">Folio{{ __('Nombre') }}</th>
-                <th scope="col">Concepto{{ __('Nombre') }}</th>
-                <th scope="col">Cargos{{ __('Nombre') }}</th>
-                <th scope="col">Abonos{{ __('Nombre') }}</th>
-                <th scope="col">Saldo{{ __('Nombre') }}</th>
-                <th scope="col">Vence{{ __('Nombre') }}</th>
-                <th scope="col">Cambio{{ __('Nombre') }}</th>
-                <th scope="col">Estado{{ __('Nombre') }}</th>
+                <th scope="col">{{ __('Fecha') }}</th>
+                <th scope="col">{{ __('Serie') }}</th>
+                <th scope="col">{{ __('Folio') }}</th>
+                <th scope="col">{{ __('Concepto') }}</th>
+                <th scope="col">{{ __('Cargos') }}</th>
+                <th scope="col">{{ __('Abonos') }}</th>
+                <th scope="col">{{ __('Saldo') }}</th>
+                <th scope="col">{{ __('Vence') }}</th>
+                <th scope="col">{{ __('Cambio') }}</th>
+                <th scope="col">{{ __('Estado') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -21,16 +21,16 @@
                     <td>{{ $invoice->series }}</td>
                     <td><a  href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>        
                     <td>{{ $invoice->concept }}</td>
-                    <td>{{ $invoice->total_with_discounts }}</td>    
+                    <td>{{ $invoice->totalDiscounted()}}</td>    
                     <td></td>
                     @if (!is_null($invoice->credit))
                         <td>0.0000</td>
                     @else
-                        <td>{{ $invoice->amount_due }}</td>
+                        <td>{{ $invoice->amountDue() }}</td>
                     @endif
                     
                     <td>{{ $invoice->date->format('d-m-Y') }}</td>
-                    <td>{{ $invoice->exchange_rate }}</td>     
+                    <td>{{ $invoice->exchangeRate() }}</td>     
                     <td>{{ $invoice->status() }}</td>         
                 </tr>
             @foreach ($invoice->payments as $payment)
@@ -40,10 +40,10 @@
                     <td>{{ $payment->number}}</td>
                     <td>{{ $payment->concept()}}</td>
                     <td></td>
-                    <td>{{ $payment->amount_paid }}</td>
+                    <td>{{ $payment->amountPaid() }}</td>
                     <td></td>
                     <td></td>
-                    <td>{{ $payment->exchange_rate }}</td>
+                    <td>{{ $payment->exchangeRate() }}</td>
                     <td></td>
                 </tr>
             @endforeach
@@ -54,10 +54,10 @@
                     <td>{{ $invoice->credit->number}}</td>
                     <td>{{ $invoice->credit->concept()}}</td>
                     <td></td>
-                    <td>{{ $invoice->credit->amount_due }}</td>
+                    <td>{{ $invoice->credit->amountDue() }}</td>
                     <td></td>
                     <td></td>
-                    <td>{{ $invoice->credit->exchange_rate }}</td>
+                    <td>{{ $invoice->credit->exchangeRate() }}</td>
                     <td></td>
                 </tr>
             @endif
@@ -66,9 +66,9 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="5" class="text-right">Cargos: {{ $invoices_totals->total_with_discounts}}</td>
-                <td>Abonos:{{ $invoices_totals->amount_paid }} </td>
-                <td>Saldo: {{ $invoices_totals->amount_due }}</td>
+                <td colspan="5" class="text-right">Cargos: {{ $invoices_totals->getTotal_with_discounts()}}</td>
+                <td>Abonos:{{ $invoices_totals->getAmountPaid()}} </td>
+                <td>Saldo: {{ $invoices_totals->getAmountDue() }}</td>
             </tr>
         </tfoot>
     </table>

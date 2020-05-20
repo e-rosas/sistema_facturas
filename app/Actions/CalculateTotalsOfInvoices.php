@@ -8,6 +8,9 @@ class CalculateTotalsOfInvoices
 {
     public $total = 0;
     public $total_with_discounts = 0;
+    public $subtotal = 0;
+    public $subtotal_with_discounts = 0;
+    public $dtax = 0;
     public $amount_due = 0;
     public $amount_paid = 0;
     public $subtotal_m = 0;
@@ -32,7 +35,17 @@ class CalculateTotalsOfInvoices
      */
     public function getTotal()
     {
-        return number_format($this->total, 3);
+        return number_format($this->total, 4);
+    }
+
+    public function getSubtotal()
+    {
+        return number_format($this->subtotal_with_discounts, 4);
+    }
+
+    public function getDTax()
+    {
+        return number_format($this->dtax, 4);
     }
 
     /**
@@ -40,15 +53,20 @@ class CalculateTotalsOfInvoices
      */
     public function getTotal_with_discounts()
     {
-        return number_format($this->total_with_discounts, 3);
+        return number_format($this->total_with_discounts, 4);
     }
 
     /**
      * Get the value of amount_due.
      */
-    public function getAmount_due()
+    public function getAmountDue()
     {
-        return number_format($this->amount_due, 3);
+        return number_format($this->amount_due, 4);
+    }
+
+    public function getAmountPaid()
+    {
+        return number_format($this->amount_paid, 4);
     }
 
     public function calculateTotals()
@@ -59,51 +77,57 @@ class CalculateTotalsOfInvoices
             $total_payments->calculateTotals();
 
             $invoice->amount_paid = $total_payments->amount_paid;
-            $invoice->amount_due = (float) str_replace(',', '', $invoice->total_with_discounts) - $total_payments->amount_paid;
+            $invoice->amount_due = $invoice->total_with_discounts - $total_payments->amount_paid;
             $invoice->save();
 
             $this->amount_paid += $total_payments->amount_paid;
-            $this->total += (float) str_replace(',', '', $invoice->total);
-            $this->total_with_discounts += (float) str_replace(',', '', $invoice->total_with_discounts);
-            $this->amount_due += (float) str_replace(',', '', $invoice->amount_due);
+            $this->total += $invoice->total;
+            $this->total_with_discounts += $invoice->total_with_discounts;
+            $this->amount_due += $invoice->amount_due;
         }
     }
 
     public function totals() //stats on report index (medTable)
     {
         foreach ($this->invoices as $invoice) {
-            $this->total_with_discounts += (float) str_replace(',', '', $invoice->total_with_discounts);
-            $this->amount_paid += (float) str_replace(',', '', $invoice->amount_paid);
+            $this->total_with_discounts += $invoice->total_with_discounts;
+            $this->subtotal_with_discounts += $invoice->sub_total_discounted;
+            $this->amount_paid += $invoice->amount_paid;
+            $this->dtax += $invoice->dtax;
             if (is_null($invoice->credit)) {
-                $this->amount_due += (float) str_replace(',', '', $invoice->amount_due);
+                $this->amount_due += $invoice->amount_due;
             } else {
-                $this->amount_paid += (float) str_replace(',', '', $invoice->credit->amount_due);
+                $this->amount_paid += $invoice->credit->amount_due;
             }
+
+            $this->subtotal_m += $invoice->subtotal();
+            $this->IVA += $invoice->IVA();
+            $this->total_m += $invoice->total();
         }
     }
 
     public function totalsShort() //stats on report index (shortTable)
     {
         foreach ($this->invoices as $invoice) {
-            $this->subtotal_m += (float) str_replace(',', '', $invoice->subtotal());
-            $this->IVA += (float) str_replace(',', '', $invoice->IVA());
-            $this->total_m += (float) str_replace(',', '', $invoice->total());
+            $this->subtotal_m += $invoice->subtotal();
+            $this->IVA += $invoice->IVA();
+            $this->total_m += $invoice->total();
         }
     }
 
     public function getSubtotalM()
     {
-        return number_format($this->subtotal_m, 3);
+        return number_format($this->subtotal_m, 4);
     }
 
     public function getIVA()
     {
-        return number_format($this->IVA, 3);
+        return number_format($this->IVA, 4);
     }
 
     public function getTotalM()
     {
-        return number_format($this->total_m, 3);
+        return number_format($this->total_m, 4);
     }
 
     public function getInvoicesCount()

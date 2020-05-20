@@ -66,44 +66,29 @@ class Invoice extends Model
 
     protected $dates = ['date', 'created_at', 'updated_at', 'DOS'];
 
-    public function getTaxAttribute($value)
+    public function subtotalDiscounted()
     {
-        return number_format($value, 4);
+        return number_format($this->sub_total_discounted, 4);
     }
 
-    public function getDtaxAttribute($value)
+    public function totalDiscounted()
     {
-        return number_format($value, 4);
+        return number_format($this->total_with_discounts, 4);
     }
 
-    public function getExchangeRateAttribute($value)
+    public function discountedTax()
     {
-        return number_format($value, 4);
+        return number_format($this->dtax, 4);
     }
 
-    public function getSubtotalAttribute($value)
+    public function amountDue()
     {
-        return number_format($value, 4);
+        return number_format($this->amount_due, 4);
     }
 
-    public function getTotalAttribute($value)
+    public function exchangeRate()
     {
-        return number_format($value, 4);
-    }
-
-    public function getTotalWithDiscountsAttribute($value)
-    {
-        return number_format($value, 4);
-    }
-
-    public function getAmountPaidAttribute($value)
-    {
-        return number_format($value, 4);
-    }
-
-    public function getAmountDueAttribute($value)
-    {
-        return number_format($value, 4);
+        return number_format($this->exchange_rate, 4);
     }
 
     public function code()
@@ -111,39 +96,64 @@ class Invoice extends Model
         return $this->series.$this->number;
     }
 
+    public function subtotalF()
+    {
+        $mxn = $this->sub_total_discounted * $this->exchange_rate;
+
+        return number_format($mxn, 4);
+    }
+
     public function subtotal()
     {
-        $mxn = (float) str_replace(',', '', $this->sub_total_discounted) * (float) str_replace(',', '', $this->exchange_rate);
+        return $this->sub_total_discounted * $this->exchange_rate;
+    }
+
+    public function IVAF()
+    {
+        $mxn = $this->dtax * $this->exchange_rate;
 
         return number_format($mxn, 4);
     }
 
     public function IVA()
     {
-        $mxn = (float) str_replace(',', '', $this->dtax) * (float) str_replace(',', '', $this->exchange_rate);
+        return $this->dtax * $this->exchange_rate;
+    }
+
+    public function totalF()
+    {
+        $mxn = $this->total_with_discounts * $this->exchange_rate;
 
         return number_format($mxn, 4);
     }
 
     public function total()
     {
-        $mxn = (float) str_replace(',', '', $this->total_with_discounts) * (float) str_replace(',', '', $this->exchange_rate);
+        return $this->total_with_discounts * $this->exchange_rate;
+    }
+
+    public function debeF()
+    {
+        $mxn = $this->amount_due * $this->exchange_rate;
 
         return number_format($mxn, 4);
     }
 
     public function debe()
     {
-        $mxn = (float) str_replace(',', '', $this->amount_due) * (float) str_replace(',', '', $this->exchange_rate);
+        return $this->amount_due * $this->exchange_rate;
+    }
 
-        return number_format($mxn, 4);
+    public function chargeAmountDueF()
+    {
+        $charge_due = $this->charge->amount_charged - $this->amount_paid;
+
+        return number_format($charge_due, 4);
     }
 
     public function chargeAmountDue()
     {
-        $charge_due = $this->charge->amount_charged - (float) str_replace(',', '', $this->amount_paid);
-
-        return number_format($charge_due, 4);
+        return $this->charge->amount_charged - $this->amount_paid;
     }
 
     public function type()

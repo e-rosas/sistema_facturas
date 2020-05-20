@@ -3,11 +3,11 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Fecha') }}</th>
-                <th scope="col">{{ __('Folio CONTPAQ') }}</th>
-                <th scope="col">Paciente{{ __('Nombre') }}</th>
-                <th scope="col">Subtotalv</th>
-                <th scope="col">IVA{{ __('Nombre') }}</th>
-                <th scope="col">Total{{ __('Nombre') }}</th>
+                <th scope="col">{{ __('CONTPAQ') }}</th>
+                <th scope="col">{{ __('Paciente') }}</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">{{ __('IVA') }}</th>
+                <th scope="col">Total</th>
             </tr>
         </thead>
         <tbody>
@@ -20,16 +20,16 @@
                             {{ $invoice->patient->full_name}}
                         </a>
                     </td>
-                    <td>$ {{ $invoice->subtotal() }}</td>
-                    <td>$ {{ $invoice->IVA() }}</td>
-                    <td>$ {{ $invoice->total()}}</td>                  
+                    <td>$ <span class="MXN"> {{ $invoice->subtotalF() }} </span><span class="USD" style="visibility: hidden"> {{ $invoice->subtotalDiscounted() }} </span> </td>
+                    <td>$ <span class="MXN"> {{ $invoice->IVAF() }} </span><span class="USD" style="visibility: hidden"> {{ $invoice->discountedTax() }} </span></td>
+                    <td>$ <span class="MXN"> {{ $invoice->totalF() }} </span><span class="USD" style="visibility: hidden"> {{ $invoice->totalDiscounted() }} </span></td>                  
                 </tr>
             @foreach ($invoice->payments as $payment)
                 <tr class="table-success">
                     <td>{{ $payment->date->format('d-m-Y') }}</td>
                     <td>{{ $payment->number}}</td>
                     <td>{{ $payment->concept()}}</td>
-                    <td>$ {{ $payment->total()}}</td>
+                    <td>$ <span class="MXN"> {{ $payment->total() }} </span><span class="USD" style="visibility: hidden"> {{ $payment->amountPaid() }} </span></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -39,7 +39,7 @@
                     <td>{{ $invoice->credit->date->format('d-m-Y') }}</td>
                     <td>{{ $invoice->credit->number}}</td>
                     <td>{{ $invoice->credit->concept()}}</td>
-                    <td>$ {{ $invoice->credit->total()}}</td>
+                    <td>$ <span class="MXN"> {{ $invoice->credit->total() }}</span> <span class="USD" style="visibility: hidden"> {{ $invoice->credit->amountDue() }} </span></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -49,9 +49,9 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="4" class="text-right">Subtotal: {{ $invoices_totals->getSubtotalM() }}</td>
-                <td>IVA:  {{ $invoices_totals->getIVA() }}</td>
-                <td>Total:  {{ $invoices_totals->getTotalM() }}</td>
+                <td colspan="4" class="text-right">Subtotal: <span class="MXN"> {{ $invoices_totals->getSubtotalM() }} </span> <span class="USD" style="visibility: hidden"> {{ $invoices_totals->getSubtotal() }}</span></td>
+                <td>IVA: <span class="MXN"> {{ $invoices_totals->getIVA() }} </span> <span class="USD" style="visibility: hidden"> {{ $invoices_totals->getDTax() }}</span></td>
+                <td>Total:  <span class="MXN"> {{ $invoices_totals->getTotalM() }} </span> <span class="USD" style="visibility: hidden"> {{ $invoices_totals->getTotal_with_discounts() }}</span></td>
             </tr>
         </tfoot>
     </table>

@@ -33,19 +33,19 @@ class Payment extends Model
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 
-    public function getAmountPaidAttribute($value)
+    public function amountPaid()
     {
-        return number_format($value, 4);
-    }
-
-    public function getExchangeRateAttribute($value)
-    {
-        return number_format($value, 4);
+        return number_format($this->amount_paid, 4);
     }
 
     public function invoice()
     {
         return $this->belongsTo('App\Invoice');
+    }
+
+    public function exchangeRate()
+    {
+        return number_format($this->exchange_rate, 4);
     }
 
     public function method()
@@ -84,7 +84,7 @@ class Payment extends Model
 
     public function total()
     {
-        $mxn = (float) str_replace(',', '', $this->amount_paid) * (float) str_replace(',', '', $this->exchange_rate);
+        $mxn = $this->amount_paid * $this->exchange_rate;
 
         return number_format($mxn, 4);
     }

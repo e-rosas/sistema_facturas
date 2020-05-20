@@ -18,14 +18,19 @@ class Credit extends Model
 
     protected $dates = ['date', 'created_at', 'updated_at'];
 
-    public function getAmountDueAttribute($value)
+    public function amountDue()
     {
-        return number_format($value, 4);
+        return number_format($this->amount_due, 4);
+    }
+
+    public function exchangeRate()
+    {
+        return number_format($this->exchange_rate, 4);
     }
 
     public function total()
     {
-        $mxn = (float) str_replace(',', '', $this->amount_due) * (float) str_replace(',', '', $this->exchange_rate);
+        $mxn = $this->amount_due * $this->exchange_rate;
 
         return number_format($mxn, 4);
     }

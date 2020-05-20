@@ -20,7 +20,7 @@ class VerifyPaymentAmount
         if (1 == $this->invoice->status) {
             return 3;
         }
-        $new_amount_due = (float) str_replace(',', '', $this->invoice->amount_due) - $this->amount;
+        $new_amount_due = $this->invoice->amount_due - $this->amount;
         if ($new_amount_due >= 0) {
             return $this->updateInvoice($new_amount_due);
         }
@@ -33,7 +33,7 @@ class VerifyPaymentAmount
         if (1 == $this->invoice->status) {
             return 3;
         }
-        $new_amount_due = (float) str_replace(',', '', $this->invoice->amount_due) + $old_payment_amount - $this->amount;
+        $new_amount_due = $this->invoice->amount_due + $old_payment_amount - $this->amount;
         if ($new_amount_due >= 0) {
             return $this->updateInvoice($new_amount_due);
         }

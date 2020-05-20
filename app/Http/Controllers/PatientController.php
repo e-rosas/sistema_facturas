@@ -58,7 +58,7 @@ class PatientController extends Controller
         $insuree = 0;
         if ($request->insuree > 0) {
             $insuree = 1;
-            $insurers = Insurer::take(10)->get();
+            $insurers = Insurer::get();
 
             return view('patients.create', compact('insurers', 'insuree'));
         }
