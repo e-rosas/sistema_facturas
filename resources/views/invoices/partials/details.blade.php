@@ -58,7 +58,7 @@
                 {{--  number --}}
                 <div class="col-md-5 col-auto form-group">
                     <label class="form-control-label" for="label-number">Tipo de cambio</label>
-                    <label id="label-exchange_rate">{{ $invoice->exchange_rate }}</label>
+                    <label id="label-exchange_rate">{{ $invoice->exchangeRate() }}</label>
 
                 </div>
                 
@@ -126,19 +126,19 @@
                 {{--  tax  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-tax">IVA</label>
-                    <label id="label-tax">{{ $invoice->tax }}</label>
+                    <span class="MXN" style="display: none"> {{ $invoice->IVAF() }} </span><span class="USD"> {{ $invoice->discountedTax() }} </span>
 
                 </div>
                 {{--  sub_total  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-sub_total">Subtotal</label>
-                    <label id="label-sub_total">{{ $invoice->sub_total }}</label>
+                    <span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD" > {{ $invoice->subtotalDiscounted() }} </span> 
 
                 </div>
                 {{--  total  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-total">Total</label>
-                    <label id="label-total">{{ $invoice->total }}</label>
+                    <span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD" > {{ $invoice->totalDiscounted() }} </span> 
 
                 </div>
             </div>
