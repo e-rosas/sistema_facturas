@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DiagnosisService extends Model
 {
+    public $discounted_price_mxn = 0;
+    public $total_discounted_price_mxn = 0;
     public $dates = ['DOS', 'DOS_to', 'updated_at'];
     public $fillable = [
         'service_id',
@@ -98,6 +100,16 @@ class DiagnosisService extends Model
     public function totalDiscountedPrice()
     {
         return number_format($this->total_discounted_price, 4);
+    }
+
+    public function totalPriceMXN()
+    {
+        return number_format($this->total_price_mxn, 4);
+    }
+
+    public function totalDiscountedPriceMXN()
+    {
+        return number_format($this->total_discounted_price_mxn, 4);
     }
 
     public function invoice()
