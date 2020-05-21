@@ -680,8 +680,7 @@
     function addServiceToCartFromInvoice(service_id, description, price, discounted_price,
          quantity, id, DOS, items, descripcion, code, pointers, DOS_to) {
         
-        var service = new Service(service_id, description, parseFloat(price.replace(/,/g,'')), 
-            parseFloat(discounted_price.replace(/,/g,'')), quantity, 
+        var service = new Service(service_id, description, price, discounted_price, quantity, 
                 services.length, DOS, DOS_to, descripcion, code, pointers);
         for(var i in items){
             var tax = false;

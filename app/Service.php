@@ -37,14 +37,14 @@ class Service extends Model
         'category_id' => 'integer',
     ];
 
-    public function getPriceAttribute($value)
+    public function price()
     {
-        return number_format($value, 3);
+        return number_format($this->price, 4);
     }
 
-    public function getDiscountedPriceAttribute($value)
+    public function discountedPrice()
     {
-        return number_format($value, 3);
+        return number_format($this->discounted_price, 4);
     }
 
     public function category()

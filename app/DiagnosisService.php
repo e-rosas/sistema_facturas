@@ -60,44 +60,44 @@ class DiagnosisService extends Model
         'quantity' => 'integer',
     ];
 
-    public function getTaxAttribute($value)
+    public function price()
     {
-        return number_format($value, 3);
+        return number_format($this->price, 4);
     }
 
-    public function getDtaxAttribute($value)
+    public function discountedPrice()
     {
-        return number_format($value, 3);
+        return number_format($this->discounted_price, 4);
     }
 
-    public function getSubTotalAttribute($value)
+    public function tax()
     {
-        return number_format($value, 3);
+        return number_format($this->tax, 4);
     }
 
-    public function getSubTotalDiscountedAttribute($value)
+    public function dTax()
     {
-        return number_format($value, 3);
+        return number_format($this->dtax, 4);
     }
 
-    public function getTotalPriceAttribute($value)
+    public function subtotal()
     {
-        return number_format($value, 3);
+        return number_format($this->sub_total, 4);
     }
 
-    public function getTotalDiscountedPriceAttribute($value)
+    public function subTotalDiscounted()
     {
-        return number_format($value, 3);
+        return number_format($this->sub_total_discounted, 4);
     }
 
-    public function getPriceAttribute($value)
+    public function totalPrice()
     {
-        return number_format($value, 3);
+        return number_format($this->total_price, 4);
     }
 
-    public function getDiscountedPriceAttribute($value)
+    public function totalDiscountedPrice()
     {
-        return number_format($value, 3);
+        return number_format($this->total_discounted_price, 4);
     }
 
     public function invoice()
