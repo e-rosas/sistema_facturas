@@ -102,14 +102,14 @@ class DiagnosisService extends Model
         return number_format($this->total_discounted_price, 4);
     }
 
-    public function totalPriceMXN()
+    public function totalPriceMXN($exchange_rate)
     {
-        return number_format($this->total_price_mxn, 4);
+        return number_format($this->total_price * $exchange_rate, 4);
     }
 
-    public function totalDiscountedPriceMXN()
+    public function totalDiscountedPriceMXN($exchange_rate)
     {
-        return number_format($this->total_discounted_price_mxn, 4);
+        return number_format($this->total_discounted_price * $exchange_rate, 4);
     }
 
     public function invoice()

@@ -15,18 +15,15 @@
         </thead>
         <tbody>
                 @foreach ($invoice->services2 as $service)
-                {{ $service->discounted_price_mxn =  $service->discounted_price * $invoice->exchange_rate 
-                    $service->total_discounted_price_mxn =  $service->total_discounted_price * $invoice->exchange_rate 
-                }}
                     <tr> 
                         <td><a  href="{{ route('services.show', $service->service) }}">{{ $service->service->code }}</a></td>
                         <td>{{ $service->description}}</td>
                         <td>{{ $service->diagnoses_pointers}}</td>
                         <td>{{ $service->DOS->format('d-m-Y') }}</td>
                         <td>{{ $service->DOS_to->format('d-m-Y') }}</td>
-                        <td><span class="MXN" style="display: none"> {{ $service->totalPrice() }} </span><span class="USD" > {{ $service->totalPriceMXN() }} </span> </td>
+                        <td><span class="MXN" style="display: none"> {{ $service->totalPriceMXN($invoice->exchange_rate) }} </span><span class="USD" > {{ $service->totalPrice() }} </span> </td>
                         <td>{{ $service->quantity}}</td>
-                        <td><span class="MXN" style="display: none"> {{ $service->totalDiscountedPrice() }} </span><span class="USD" > {{ $service->totalDiscountedPriceMXN() }} </span> </td>
+                        <td><span class="MXN" style="display: none"> {{ $service->totalDiscountedPriceMXN($invoice->exchange_rate) }} </span><span class="USD" > {{ $service->totalDiscountedPrice() }} </span> </td>
                     </tr>
                 @endforeach
         </tbody>
