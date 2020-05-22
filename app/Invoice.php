@@ -62,6 +62,7 @@ class Invoice extends Model
         'amount_paid' => 'decimal:13',
         'amount_due' => 'decimal:13',
         'type' => 'integer',
+        'registered' => 'boolean',
     ];
 
     protected $dates = ['date', 'created_at', 'updated_at', 'DOS'];

@@ -198,6 +198,7 @@ class InvoiceController extends Controller
         $invoice = Invoice::findOrFail($validated['invoice_id']);
         if ('Pendiente' != $validated['number']) {
             $invoice->status = 2;
+            $invoice->registered = 1;
         }
         $invoice->fill($validated);
 
@@ -293,6 +294,4 @@ class InvoiceController extends Controller
 
         return new InvoiceStatsResource($invoice);
     }
-
-    
 }
