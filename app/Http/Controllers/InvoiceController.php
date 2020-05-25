@@ -237,6 +237,7 @@ class InvoiceController extends Controller
             $service['invoice_id'] = $invoice->id;
             $diagnosis_service = DiagnosisService::create($service);
             if (isset($service['items'])) {
+                $invoice->status = 4;
                 $items = $service['items'];
                 foreach ($items as $item) {
                     $item['diagnosis_service_id'] = $diagnosis_service->id;
