@@ -94,6 +94,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('reports/stats', 'ReportController@stats')->name('reports.stats');
     Route::get('reports', 'ReportController@index')->name('reports.index');
 
+    Route::get('fill', 'PaymentFormController@test')->name('fill.test');
+
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
 
     Route::get('/import_items', 'ImportController@getImportItems')->name('import.items');
