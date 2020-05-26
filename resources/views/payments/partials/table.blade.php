@@ -12,7 +12,7 @@
         </thead>
         <tbody>
             @foreach ($payments as $payment)
-                <tr>
+                <tr class="{{ $payment->type == 1 ? 'table-info' : '' }}">
                     <td>{{ $payment->number}}</td>
                     <td>{{ $payment->date->format('d-m-Y')}}</td>
                     <td><span class="MXN" style="display: none"> {{ $payment->amountPaidMXN($invoice->exchange_rate) }} </span><span class="USD" > {{ $payment->amountPaid() }} </span> </td>
@@ -36,17 +36,21 @@
     function DisplayPayments(data){
         var payments = data;
         var output = "";
+        var bg = "";
         for(var i = 0; i < payments.length; i++){
-            output += "<tr value="+payments[i].id+">"
+            bg = payments[i].type2 == 1 ? "table-info" : "";
+            output += "<tr class="+bg+" value="+payments[i].id+">"
                 + "<td>" + payments[i].number + "</td>"
                 + "<td>" + payments[i].date + "</td>"
-                + "<td>" + payments[i].amount_paid + "</td>"
+                + '<td> <span class="MXN" style="display: none">' + payments[i].amount_paidMXN + '</span><span class="USD" > '+payments[i].amount_paid +'</span> </td>'
                 + "<td>" + payments[i].comments + "</td>"
                 +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="showEditModal(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
                 +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
                 +  "</tr>";
         }
         $('#payments_table tbody').html(output);
+        var currency = document.getElementById("customRadioInlineUSD").checked;
+        displayUSD(currency);
     }
     function Delete(id){
         var r = confirm("Eliminar el pago?");

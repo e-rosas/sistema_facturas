@@ -19,6 +19,7 @@ class PaymentResource extends JsonResource
             'id' => $this->id,
             'invoice' => $this->invoice->code,
             'amount_paid' => $this->amountPaid(),
+            'amount_paidMXN' => $this->amountPaidMXN($this->exchange_rate),
             'number' => $this->number,
             'method' => $this->method(),
             'method2' => $this->method,
@@ -27,6 +28,8 @@ class PaymentResource extends JsonResource
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->date->format('d-m-Y'),
             'date2' => $this->date->format('Y-m-d'),
+            'type' => $this->type(),
+            'type2' => $this->type,
         ];
     }
 }

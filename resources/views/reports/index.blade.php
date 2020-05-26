@@ -119,7 +119,7 @@
         </div>
     </form>
     <div class="row">
-        @include('components.currencySwitch')
+        @include('components.currencySwitch', ['USD' => 0])
     </div>
     <div class="row">
         <div class="col-xl-12">
