@@ -111,19 +111,19 @@
         success: function (response) {
                 displayPaymentModal(response.data.id, response.data.number,
                     response.data.date2, response.data.amount_paid, 
-                    response.data.comments,response.data.method, response.data.exchange_rate);
+                    response.data.comments,response.data.method2, response.data.exchange_rate);
             }
         });
         return false;
     }
-    function displayPaymentModal(payment_id, number, date, amount, comments, method, exchange_rate){
+    function displayPaymentModal(payment_id, number, date, amount, comments, method2, exchange_rate){
         document.getElementById("update-payment-id").value = payment_id;
         document.getElementById("update-payment-number").value = number;
         document.getElementById("update-payment-date").value = date;
         document.getElementById("update-payment-amount").value = parseFloat(amount.replace(/,/g, ''));;
         document.getElementById("update-payment-comments").value = comments;
         document.getElementById("update-payment-exchange_rate").value = parseFloat(exchange_rate.replace(/,/g, ''));;
-        document.getElementById("update-payment-method").value = method;
+        document.getElementById("update-payment-method").value = method2;
 
       }
     function updatePayment(id, amount, date, comments, method, exchange_rate, number){

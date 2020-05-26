@@ -5,14 +5,14 @@
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
-                @include('components.invoiceStatsCard', ['id' => 'total','title' => 'Total', 'value' => $invoice->totalDiscounted()])
-                @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' => 'Pagado', 'value' => $invoice->amountPaid()])
+                @include('components.invoiceStatsCard', ['idUSD' => 'totalUSD','title' => 'Total', 'value' => $invoice->totalDiscounted(), 'idMXN' => 'totalMXN', 'valueMXN' => $invoice->totalDiscountedMXN()])
+                @include('components.invoiceStatsCard', ['idUSD' => 'amount-paid','title' => 'Pagado', 'value' => $invoice->amountPaid(), 'idMXN' => 'amount-paidMXN', 'valueMXN' => $invoice->amountPaidMXN()])
                 @if (is_null($invoice->charge))
-                    @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Debe', 'value' => $invoice->amountDue()])
+                    @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe', 'value' => $invoice->amountDue(), 'idMXN' => 'amount-dueMXN', 'valueMXN' => $invoice->debeF()])
                 @else
-                    @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Debe', 'value' => $invoice->chargeAmountDue()])
+                    @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe', 'value' => $invoice->chargeAmountDue(), 'idMXN' => 'amount-dueMXN', 'valueMXN' => $invoice->chargeAmountDueMXN()])
                 @endif
-                @include('components.invoiceStatsCard', ['id' => 'invoice-status','title' => 'Estado', 'value' => $invoice->status()])
+                @include('components.invoiceStatsCard', ['idUSD' => 'invoice-status','title' => 'Estado', 'value' => $invoice->status(), 'valueMXN' => $invoice->status(), 'idMXN' => 'invoice-status'])
             </div>
             
         </div>

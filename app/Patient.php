@@ -129,4 +129,9 @@ class Patient extends Model
     {
         return $this->city.', '.$this->state.'.  '.$this->zip_code;
     }
+
+    public function name()
+    {
+        return $this->last_name.','.$this->name;
+    }
 }

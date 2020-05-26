@@ -143,7 +143,7 @@
                 </div>
             </div>
             <div class="form-row">
-                @include('components.currencySwitch')
+                @include('components.currencySwitch', ['USD' => 1])
             </div>
             {{-- <div class="form-row">
                 

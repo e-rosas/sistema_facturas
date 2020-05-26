@@ -21,6 +21,7 @@ class PaymentResource extends JsonResource
             'amount_paid' => $this->amountPaid(),
             'number' => $this->number,
             'method' => $this->method(),
+            'method2' => $this->method,
             'concept' => $this->concept(),
             'exchange_rate' => $this->exchangeRate(),
             'comments' => is_null($this->comments) ? '' : $this->comments,

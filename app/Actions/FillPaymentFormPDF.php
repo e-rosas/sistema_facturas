@@ -65,60 +65,6 @@ class FillPaymentFormPDF
       height: 11.754
     
     
-    MEDICARE: 
-         llx: 18.8976
-         lly: 672.819
-         urx: 30.2047
-         ury: 684.126
-       width: 11.3071
-      height: 11.307
-    
-    
-    MEDICAID: 
-         llx: 67.1258
-         lly: 673.016
-         urx: 79.8108
-         ury: 684.52
-       width: 12.685
-      height: 11.504
-    
-    
-    TRICARE: 
-         llx: 117.519
-         lly: 673.41
-         urx: 130.007
-         ury: 684.323
-       width: 12.488
-      height: 10.913
-    
-    
-    CHAMPVA: 
-         llx: 181.692
-         lly: 673.213
-         urx: 194.574
-         ury: 684.717
-       width: 12.882
-      height: 11.504
-    
-    
-    GHP: 
-         llx: 232.283
-         lly: 674
-         urx: 245.558
-         ury: 685.307
-       width: 13.275
-      height: 11.307
-    
-    
-    FECA: 
-         llx: 291.141
-         lly: 674.394
-         urx: 302.251
-         ury: 685.307
-       width: 11.11
-      height: 10.913
-    
-    
     OTHER: 
          llx: 334.251
          lly: 673.607
@@ -317,7 +263,7 @@ class FillPaymentFormPDF
       height: 11.024
     
     
-    INSURED_SEX F: 
+    INSURED_SEXF: 
          llx: 551.77
          lly: 531.765
          urx: 562.4
@@ -1152,6 +1098,7 @@ class FillPaymentFormPDF
 
     private function getInvoiceData()
     {
+        /* return Patient::where('id', $dependent->insuree_id)->first();
         $this->data = [
             'DOCTOR' => [
                 'size' => 14,
@@ -1177,18 +1124,70 @@ class FillPaymentFormPDF
                 'style' => 'B',
                 'value' => $this->invoice->number,
             ],
-            'INVOICE_PAID' => [
+            'PATIENT_PHONE' => [
                 'size' => 14,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->amountPaid(),
+                'value' => $this->invoice->patient->phone_number,
             ],
-            'INVOICE_TOTAL' => [
+            'PATIENT_ZIP' => [
                 'size' => 14,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->totalDiscounted(),
+                'value' => $this->invoice->patient->zip_code,
+            ],
+            'PATIENT_YY' => [
+              'size' => 14,
+              'family' => 'Arial',
+              'style' => 'B',
+              'value' => $this->invoice->patient->birth_date->format('y'),
+            ],
+            'PATIENT_DD' => [
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->patient->birth_date->day,
+            ],
+            'PATIENT_MM' => [
+              'size' => 14,
+              'family' => 'Arial',
+              'style' => 'B',
+              'value' => $this->invoice->patient->birth_date->month,
+            ],
+            'STATE' => [
+              'size' => 14,
+              'family' => 'Arial',
+              'style' => 'B',
+              'value' => $this->invoice->patient->state,
+            ],
+            'PATIENT_NAME' => [
+              'size' => 14,
+              'family' => 'Arial',
+              'style' => 'B',
+              'value' => $this->invoice->patient->name(),
+            ],
+            'CITY' => [
+              'size' => 14,
+              'family' => 'Arial',
+              'style' => 'B',
+              'value' => $this->invoice->patient->city,
+            ],
+            'PATIENT_ADDRESS' => [
+              'size' => 14,
+              'family' => 'Arial',
+              'style' => 'B',
+              'value' => $this->invoice->patient->address(),
             ],
         ];
+        if ($this->invoice->patient->insured) {
+          $insured = $this->invoice->patient->insuree;;
+          //add insured data
+
+          $
+      }
+      else {
+        //add data
+
+      } */
     }
 }

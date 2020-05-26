@@ -92,6 +92,13 @@ class Invoice extends Model
         return number_format($this->amount_paid, 4);
     }
 
+    public function amountPaidMXN()
+    {
+        $mxn = $this->amount_paid * $this->exchange_rate;
+
+        return number_format($mxn, 4);
+    }
+
     public function exchangeRate()
     {
         return number_format($this->exchange_rate, 4);
@@ -138,6 +145,11 @@ class Invoice extends Model
         return $this->total_with_discounts * $this->exchange_rate;
     }
 
+    public function totalDiscountedMXN()
+    {
+        return number_format($this->total_with_discounts * $this->exchange_rate, 4);
+    }
+
     public function debeF()
     {
         $mxn = $this->amount_due * $this->exchange_rate;
@@ -155,6 +167,13 @@ class Invoice extends Model
         $charge_due = $this->charge->amount_charged - $this->amount_paid;
 
         return number_format($charge_due, 4);
+    }
+
+    public function chargeAmountDueMXN()
+    {
+        $charge_due = $this->charge->amount_charged - $this->amount_paid;
+
+        return number_format($charge_due * $this->exchange_rate, 4);
     }
 
     public function chargeAmountDue()
@@ -219,6 +238,17 @@ class Invoice extends Model
     public function patient()
     {
         return $this->belongsTo('App\Patient');
+    }
+
+    public function insured()
+    {
+        if ($this->patient->insured) {
+            return $this->patient;
+        }
+
+        $beneficiary = Dependent::where('patient_id', $this->patient->id)->first();
+
+        return Patient::where('id', $beneficiary->insuree_id)->first();
     }
 
     public function services()

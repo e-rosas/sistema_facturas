@@ -182,6 +182,8 @@
         document.getElementById("invoice-type").innerHTML = response.data.type;
         document.getElementById("amount-paid").innerHTML = response.data.amount_paid;
         document.getElementById("amount-due").innerHTML = response.data.amount_due;
+        document.getElementById("amount-paidMXN").innerHTML = response.data.amount_paidMXN;
+        document.getElementById("amount-dueMXN").innerHTML = response.data.amount_dueMXN;
         document.getElementById("label-status").innerHTML = response.data.status;
         document.getElementById("invoice-status").innerHTML = response.data.status;
         document.getElementById("invoice-type").innerHTML = response.data.type;

@@ -15,7 +15,7 @@
                 <tr>
                     <td>{{ $payment->number}}</td>
                     <td>{{ $payment->date->format('d-m-Y')}}</td>
-                    <td>{{ $payment->amount_paid}}</td>
+                    <td><span class="MXN" style="display: none"> {{ $payment->amountPaidMXN($invoice->exchange_rate) }} </span><span class="USD" > {{ $payment->amountPaid() }} </span> </td>
                     <td>{{ $payment->comments}}</td>
                      <td class="td-actions text-right">
                         <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $payment->id }})">

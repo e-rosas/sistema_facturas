@@ -52,7 +52,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input type="date" name="date" id="input-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                        <input type="date" name="date" id="input-call-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
                                         value="{{ $today->format('Y-m-d')}}" required>
                                         @if ($errors->has('date'))
                                             <span class="invalid-feedback" role="alert">
@@ -83,7 +83,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
-                                        <textarea type="text" rows="3" name="comments" id="input-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
+                                        <textarea type="text" rows="3" name="comments" id="input-call-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
                                         value="{{ old('comments') }}" placeholder="{{ __('Comentarios') }}"></textarea>
                                         @if ($errors->has('comments'))
                                             <span class="invalid-feedback" role="alert">
@@ -163,8 +163,8 @@
     $("#save_call").click(function(){
         var number = document.getElementById("input-number").value;
         var claim = document.getElementById("input-claim").value;
-        var date = document.getElementById("input-date").value;
-        var comments = document.getElementById("input-comments").value;
+        var date = document.getElementById("input-call-date").value;
+        var comments = document.getElementById("input-call-comments").value;
         var status = document.getElementById("input-status").value;
         sendCall(number, claim, date, comments, status);
 

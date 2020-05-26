@@ -105,4 +105,9 @@ class Payment extends Model
                 break;
         }
     }
+
+    public function amountPaidMXN($exchange_rate)
+    {
+        return number_format($this->amount_paid * $exchange_rate, 4);
+    }
 }

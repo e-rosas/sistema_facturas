@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">{{ $title }}</h5>
-                    <p id="{{$id ?? ''}}" class="h2 font-weight-bold mb-0">{{ $value }}</p>
+                    <span id="{{ $idMXN }}" class="MXN" style="display: none"> {{ $valueMXN }} </span><span id="{{ $idUSD }}" class="USD" > {{ $value }} </span> 
                 </div>
                 <div class="col-auto">
                     <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
