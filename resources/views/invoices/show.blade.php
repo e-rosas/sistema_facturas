@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => 'Factura'])
 
 @section('content')
-    @include('layouts.headers.header', ['title' => 'Factura ' . $invoice->code])
+    @include('layouts.headers.header', ['title' => 'Factura, num. de cobro ' . $invoice->code])
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
