@@ -195,6 +195,9 @@
             document.getElementById("add-payment").style.display = 'block';
             document.getElementById("add-credit").style.display = 'block';
         }
+        document.getElementById("payment-exchange_rate").value = 0;
+        document.getElementById("input-charge-exchange_rate").value = 0;
+        document.getElementById("input-credit-exchange_rate").value = 0;
     }
 
     
