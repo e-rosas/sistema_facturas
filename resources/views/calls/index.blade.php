@@ -67,7 +67,7 @@
                         <br />
                         <div class="form-row">
                             <div class="form-group col-lg-11 col-auto">
-                                <input name="search" class="form-control" type="search"  placeholder="{{ __('Paciente, factura, numero de cobro...') }}" value="{{ $search ?? '' }}">
+                                <input name="search" class="form-control" type="search"  placeholder="{{ __('Factura, numero de cobro...') }}" value="{{ $search ?? '' }}">
                             </div>
                             <div class="col-lg-1 col-auto text-right">
                                 <button type="submit" class="btn btn-primary btn-fab btn-icon">
