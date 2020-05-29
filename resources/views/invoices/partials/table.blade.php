@@ -5,7 +5,7 @@
                 <th scope="col">{{ __('Num. de Cobro') }}</th>
                 <th scope="col">CONTPAQ</th>
                 <th scope="col">{{ __('Paciente') }}</th>
-                <th scope="col">{{ __('Fecha') }}</th>
+                <th scope="col">{{ __('DOS') }}</th>
                 <th scope="col">{{ __('Tipo') }}</th>
                 <th scope="col">{{ __('Estado') }}</th>
                 <th scope="col">Subtotal</th>
@@ -24,12 +24,12 @@
                     </td>
                     <td>{{ $invoice->code() }}</td>
                     <td><a  href="{{ route('patients.show', $invoice->patient) }}">{{  $invoice->patient->full_name  }}</a></td>
-                    <td>{{ $invoice->date->format('d-m-Y') }}</td>
+                    <td>{{ $invoice->DOS->format('d-M-Y') }}</td>
                     <td>{{ $invoice->type() }}</td>
                     <td>{{ $invoice->status() }}</td>
-                    <td><span class="MXN"> {{ $invoice->subtotalF() }} </span><span class="USD" style="display: none"> {{ $invoice->subtotalDiscounted() }} </span> </td>
-                    <td><span class="MXN"> {{ $invoice->IVAF() }} </span><span class="USD" style="display: none"> {{ $invoice->discountedTax() }} </span></td>
-                    <td><span class="MXN"> {{ $invoice->totalF() }} </span><span class="USD" style="display: none"> {{ $invoice->totalDiscounted() }} </span></td>  
+                    <td><span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD" > {{ $invoice->subtotalDiscounted() }} </span> </td>
+                    <td><span class="MXN" style="display: none"> {{ $invoice->IVAF() }} </span><span class="USD" > {{ $invoice->discountedTax() }} </span></td>
+                    <td><span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD"> {{ $invoice->totalDiscounted() }} </span></td>  
                     <td class="td-actions text-right">
                         <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button"  href="{{ route('invoices.show', $invoice) }}">
                             <i class="fas fa-eye "></i>

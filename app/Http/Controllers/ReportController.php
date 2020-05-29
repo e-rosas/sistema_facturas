@@ -13,12 +13,12 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        if (!is_null($request['start'] && !is_null($request['end']))) {
+        if (!empty($request['start'] && !empty($request['end']))) {
             $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
         } else {
             $end = Carbon::today()->addDay();
-            $start = Carbon::today()->subMonths(1);
+            $start = Carbon::today()->subMonths(3);
         }
 
         if (!is_null($request->perPage)) {

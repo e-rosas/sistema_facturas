@@ -12,7 +12,6 @@ use App\Http\Resources\InvoiceStatsResource;
 use App\Insuree;
 use App\Invoice;
 use App\InvoiceDiagnosis;
-use App\InvoiceDiagnosisList;
 use App\ItemService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,6 +29,13 @@ class InvoiceController extends Controller
             $perPage = $request->perPage;
         } else {
             $perPage = 15;
+        }
+        if (!empty($request['start'] && !empty($request['end']))) {
+            $start = Carbon::parse($request->start);
+            $end = Carbon::parse($request->end);
+        } else {
+            $end = Carbon::today()->addDay();
+            $start = Carbon::today()->subMonths(3);
         }
 
         if (is_null($request['search'])) {
@@ -52,28 +58,32 @@ class InvoiceController extends Controller
             $invoices = Invoice::with('patient')
                 ->where([['type', $type], ['status', $status]])
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
+                ->whereBetween('date', [$start, $end])
                 ->paginate($perPage)
         ;
         } elseif ($type >= 3 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where('status', $status)
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
+                ->whereBetween('date', [$start, $end])
                 ->paginate($perPage)
         ;
         } elseif ($type < 3 && $status >= 6) {
             $invoices = Invoice::with('patient')
                 ->where('type', $type)
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
+                ->whereBetween('date', [$start, $end])
                 ->paginate($perPage)
         ;
         } else {
             $invoices = Invoice::with('patient')
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
+                ->whereBetween('date', [$start, $end])
                 ->paginate($perPage)
             ;
         }
 
-        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status'));
+        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start', ));
     }
 
     /**
