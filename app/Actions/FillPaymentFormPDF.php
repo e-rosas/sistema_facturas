@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Invoice;
+use App\Patient;
 use FormFiller\PDF\Converter\Converter;
 use FormFiller\PDF\Field;
 
@@ -1094,11 +1095,13 @@ class FillPaymentFormPDF
         foreach ($fields as $field) {
             $fieldEntities[] = Field::fieldFromArray($field);
         }
+
+        $this->getInvoiceData();
     }
 
     private function getInvoiceData()
     {
-        /* return Patient::where('id', $dependent->insuree_id)->first();
+        //return
         $this->data = [
             'DOCTOR' => [
                 'size' => 14,
@@ -1137,10 +1140,10 @@ class FillPaymentFormPDF
                 'value' => $this->invoice->patient->zip_code,
             ],
             'PATIENT_YY' => [
-              'size' => 14,
-              'family' => 'Arial',
-              'style' => 'B',
-              'value' => $this->invoice->patient->birth_date->format('y'),
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->patient->birth_date->format('y'),
             ],
             'PATIENT_DD' => [
                 'size' => 14,
@@ -1149,45 +1152,222 @@ class FillPaymentFormPDF
                 'value' => $this->invoice->patient->birth_date->day,
             ],
             'PATIENT_MM' => [
-              'size' => 14,
-              'family' => 'Arial',
-              'style' => 'B',
-              'value' => $this->invoice->patient->birth_date->month,
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->patient->birth_date->month,
             ],
             'STATE' => [
-              'size' => 14,
-              'family' => 'Arial',
-              'style' => 'B',
-              'value' => $this->invoice->patient->state,
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->patient->state,
             ],
             'PATIENT_NAME' => [
-              'size' => 14,
-              'family' => 'Arial',
-              'style' => 'B',
-              'value' => $this->invoice->patient->name(),
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->patient->name(),
             ],
             'CITY' => [
-              'size' => 14,
-              'family' => 'Arial',
-              'style' => 'B',
-              'value' => $this->invoice->patient->city,
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->patient->city,
             ],
             'PATIENT_ADDRESS' => [
-              'size' => 14,
-              'family' => 'Arial',
-              'style' => 'B',
-              'value' => $this->invoice->patient->address(),
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->patient->address(),
+            ],
+            'SEXF' => [
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => (1 == $this->invoice->patient->gender) ? 'X' : '',
+            ],
+            'SEXM' => [
+                'size' => 14,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => (1 == $this->invoice->patient->gender) ? '' : 'X',
             ],
         ];
         if ($this->invoice->patient->insured) {
-          $insured = $this->invoice->patient->insuree;;
-          //add insured data
+            $insured = $this->invoice->patient->insuree;
 
-          $
-      }
-      else {
+            //add insured data
+            $insured_data = [
+                'INSURED_ID' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insurance_id,
+                ],
+                'INSURED_PHONE' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->phone_number,
+                ],
+                'INSURED_ZIP' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->zip_code,
+                ],
+                'INSURED_YY' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->birth_date->format('y'),
+                ],
+                'INSURED_DD' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->birth_date->day,
+                ],
+                'INSURED_MM' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->birth_date->month,
+                ],
+                'INSURED_STATE' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->state,
+                ],
+                'INSURED_NAME' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->name(),
+                ],
+                'INSURED_CITY' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->city,
+                ],
+                'INSURED_ADDRESS' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $this->invoice->patient->address(),
+                ],
+                'SELF' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => 'X',
+                ],
+                'INSURED_SEXF' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => (1 == $this->invoice->patient->gender) ? 'X' : '',
+                ],
+                'INSURED_SEXM' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => (1 == $this->invoice->patient->gender) ? '' : 'X',
+                ],
+            ];
+
+            $this->data = $this->data + $insured_data;
+        } else {
+            $insured = Patient::where('id', $this->patient->dependent->insuree_id)->first();
+            $insured_data = [
+                'INSURED_ID' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insured->insurance_id,
+                ],
+                'INSURED_PHONE' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->phone_number,
+                ],
+                'INSURED_ZIP' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->zip_code,
+                ],
+                'INSURED_YY' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->birth_date->format('y'),
+                ],
+                'INSURED_DD' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->birth_date->day,
+                ],
+                'INSURED_MM' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->birth_date->month,
+                ],
+                'INSURED_STATE' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->state,
+                ],
+                'INSURED_NAME' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->name(),
+                ],
+                'INSURED_CITY' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->city,
+                ],
+                'INSURED_ADDRESS' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->patient->address(),
+                ],
+                'SELF' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => 'X',
+                ],
+                'INSURED_SEXF' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => (1 == $insured->patient->gender) ? 'X' : '',
+                ],
+                'INSURED_SEXM' => [
+                    'size' => 14,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => (1 == $insured->patient->gender) ? '' : 'X',
+                ],
+            ];
+        }
+
         //add data
+    }
 
-      } */
+    private function getInsuredData($insured)
+    {
     }
 }
