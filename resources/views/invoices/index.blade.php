@@ -77,6 +77,7 @@
                                 </div>
                             </div>   
                             <div class="col-lg-2 col-auto">
+                                <br />
                                 @include('components.currencySwitch', ['USD' => 1])
                             </div>
                         </div>

@@ -61,7 +61,7 @@
 </div>
 <div class="container-fluid">
     <form action="{{ route('reports.index') }}">
-        <div class="row">
+        <div class="form-row">
             {{--  start_date  --}}
             <div class="col-lg-4 col-auto">
                 <label for="start">{{ __('Fecha de facturación de') }}</label>
@@ -104,7 +104,7 @@
             </div>
         </div>
     </form>
-    <div class="row">
+    <div class="form-row">
         @include('components.currencySwitch', ['USD' => false])
     </div>
     <div class="row">

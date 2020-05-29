@@ -17,7 +17,8 @@
                     </div>
                     <form  method="get" action="{{ route('payments.index') }}" >
                         <div class="form-row">
-                            <div class="col-md-1 col-auto">
+                            <div class="col-lg-2 col-auto">
+                                <label for="perPage">{{ __('Cantidad') }}</label>
                                 <select  class="custom-select" name="perPage"> 
                                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
                                     <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
@@ -27,10 +28,39 @@
                                     <option value='10000' {{ $perPage == 10000 ? 'selected' : '' }}>Todas</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-10 col-auto">
+                            {{--  start_date  --}}
+                            <div class="col-lg-4 col-auto">
+                                <label for="start">{{ __('Fecha de') }}</label>
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="date" name="start" id="input-start" class="form-control"
+                                    value="{{ $start->format('Y-m-d') }}">
+                                </div>
+                            </div>
+                            {{--  end_date  --}}
+                            <div class="col-lg-4 col-auto">
+                                <label for="end">{{ __('hasta') }}</label>
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="date" name="end" id="input-end" class="form-control"
+                                    value="{{ $end->format('Y-m-d')  }}">
+                                </div>
+                            </div>  
+                            <div class="col-lg-2 col-auto">
+                                <br />
+                                @include('components.currencySwitch', ['USD' => 1])
+                            </div>
+                            
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-11 col-auto">
                                 <input name="search" class="form-control" type="search"  placeholder="Buscar..." value="{{ $search ?? '' }}">
                             </div>
-                            <div class="col-md-1 col-auto text-right">
+                            <div class="col-lg-1 col-auto text-right">
                                 <button type="submit" class="btn btn-primary btn-fab btn-icon">
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -69,12 +99,12 @@
                                         <td>{{ $payment->number}}</td>
                                         <td>
                                             <a href="{{ route('invoices.show', $payment->invoice) }}">
-                                                {{ $payment->invoice->number}}
+                                                {{ $payment->invoice->code}}
                                             </a>
                                         </td>
                                         <td>{{ $payment->date->format('d-m-Y')}}</td>
 
-                                        <td>{{ $payment->amount_paid }}</td>
+                                        <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD" style="display: none"> {{ $payment->amountPaid() }} </span></td>
                                         <td>{{ $payment->concept()}}</td>
                                         <td>{{ $payment->method()}}</td>
                                         {{-- <td class="td-actions text-right">
@@ -92,7 +122,7 @@
                     </div>
                     <div class="card-footer py-4">
                         <nav class="d-flex justify-content-end" aria-label="...">
-                            {{ $payments->appends(['search'=>$search, 'perPage'=>$perPage])->links() }}
+                            {{ $payments->appends(['start' =>$start->format('Y-m-d'), 'end' => $end->format('Y-m-d'), 'search'=>$search, 'perPage'=>$perPage])->links() }}
                         </nav>
                     </div>
                 </div>

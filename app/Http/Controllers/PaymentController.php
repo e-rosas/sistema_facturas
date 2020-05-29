@@ -7,6 +7,7 @@ use App\Http\Requests\PaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -24,18 +25,27 @@ class PaymentController extends Controller
             $perPage = 15;
         }
 
+        if (!empty($request['start'] && !empty($request['end']))) {
+            $start = Carbon::parse($request->start);
+            $end = Carbon::parse($request->end);
+        } else {
+            $end = Carbon::today()->addDay();
+            $start = Carbon::today()->subMonths(3);
+        }
+
         if (is_null($request['search'])) {
             $search = '';
         } else {
             $search = $request['search'];
         }
         $payments = Payment::with('invoice')
+            ->whereBetween('date', [$start, $end])
             ->whereLike(['number', 'invoice.code', 'invoice.number'], $search)
             ->orderBy('date', 'desc')
             ->paginate($perPage)
         ;
 
-        return view('payments.index', compact('payments', 'search', 'perPage'));
+        return view('payments.index', compact('payments', 'search', 'perPage', 'end', 'start'));
     }
 
     /**
