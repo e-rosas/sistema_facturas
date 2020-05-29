@@ -85,12 +85,12 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">No. de Pago</th>
-                                    <th scope="col">Factura</th>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Concepto</th>
-                                    <th scope="col">Metodo</th>
+                                    <th scope="col">{{ __('No. de Pago') }}</th>
+                                    <th scope="col">{{ __('Num. de Cobro') }}</th>
+                                    <th scope="col">{{ __('Fecha') }}</th>
+                                    <th scope="col">{{ __('Cantidad') }}</th>
+                                    <th scope="col">{{ __('Concepto') }}</th>
+                                    <th scope="col">{{ __('Metodo') }}</th>
                                     {{-- <th scope="col">{{ __('Actions') }}</th> --}}
                                 </tr>
                             </thead>
