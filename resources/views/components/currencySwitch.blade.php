@@ -1,3 +1,4 @@
+<label for="currency"></label>
 <div class="custom-control custom-radio custom-control-inline">
     <input type="radio" onclick="displayUSD(0)"  id="customRadioInlineMXN" {{ $USD ? '' : 'checked'}} value="MXN" name="currency" class="custom-control-input">
     <label class="custom-control-label" for="customRadioInlineMXN">MXN</label>

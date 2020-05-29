@@ -27,36 +27,7 @@
                 @include('reports.partials.shortInvoicesTable', ['invoices' => $invoices, 'invoices_totals'=>$invoices_totals])
             </div>
             <div class="tab-pane fade" id="tabs-calls" role="tabpanel" aria-labelledby="tabs-calls-tab">
-                <div  class="table-responsive">
-                    <table id="calls_table" class="table align-services-center table-flush">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">{{ __('Número') }}</th>
-                                <th scope="col">{{ __('Factura') }}</th>
-                                <th scope="col">{{ __('Fecha') }}</th>
-                                <th scope="col">{{ __('Claim') }}</th>
-                                <th scope="col">{{ __('Estado') }}</th>
-                                <th scope="col">{{ __('Comentarios') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($calls as $call)
-                                <tr>
-                                    <td>{{ $call->number}}</td>
-                                    <td>
-                                        <a href="{{ route('invoices.show', $call->invoice) }}">
-                                            {{ $call->invoice->number}}
-                                        </a>
-                                    </td>
-                                    <td>{{ $call->date->format('d-M-Y')}}</td>
-                                    <td>{{ $call->claim }}</td>
-                                    <td>{{ $call->status() }}</td>
-                                    <td>{{ $call->comments }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                @include('calls.partials.table')
             </div>
             <div class="tab-pane fade" id="tabs-payments" role="tabpanel" aria-labelledby="tabs-payments-tab">
                 <div class="table-responsive">
@@ -67,7 +38,6 @@
                                 <th scope="col">{{ __('Fecha') }}</th>
                                 <th scope="col">{{ __('Cantidad') }}</th>
                                 <th scope="col">{{ __('Comentarios') }}</th>
-                                <th scope="col">{{ __('Acciones') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +45,7 @@
                                 <tr>
                                     <td>{{ $payment->number}}</td>
                                     <td>{{ $payment->date->format('M-d-Y')}}</td>
-                                    <td>{{ $payment->amount_paid}}</td>
+                                    <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD" style="display: none"> {{ $payment->amountPaid() }} </span></td>
                                     <td>{{ $payment->comments}}</td>
                                 </tr>
                             @endforeach

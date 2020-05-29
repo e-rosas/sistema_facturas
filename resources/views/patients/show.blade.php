@@ -101,6 +101,9 @@
                                 <a href="mailto:{{$patient->email}}">{{$patient->email}}</a>
                             </div>
                         </div>
+                        <div class="row text-center">
+                            @include('components.currencySwitch', ['USD' => false])
+                        </div>
                     </div>
                 </div>
             </div>

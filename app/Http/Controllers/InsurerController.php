@@ -58,13 +58,14 @@ class InsurerController extends Controller
 
         $insurees = Insuree::where('insurer_id', $insurer->id)->get();
         foreach ($insurees as $insuree) {
-            $invoicess = Invoice::where('patient_id', $insuree->patient_id)->get();
+            $invoicess = Invoice::with('payments', 'patient', 'credit')
+                ->where('patient_id', $insuree->patient_id)->get();
             foreach ($invoicess as $invoice) {
                 $invoices->add($invoice);
             }
         }
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);
-        $invoices_totals->totalsShort();
+        $invoices_totals->totals();
         /* foreach ($insurer->insurees as $insuree) {
             foreach ($insuree->patient->invoices as $invoice) {
                 $invoice->load('payments', 'credit');

@@ -50,7 +50,7 @@ class Call extends Model
 
                 break;
             case 4:
-                return __('Negada por ');
+                return __('Negada por cobro no llenado');
 
                 break;
             case 5:

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-primary pb-8 pt-5 pt-lg-8">
     <div class="row">
         <div class="col-xl-4 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
@@ -63,7 +63,7 @@
     <form action="{{ route('reports.index') }}">
         <div class="row">
             {{--  start_date  --}}
-            <div class="col-md-4 col-auto">
+            <div class="col-lg-4 col-auto">
                 <label for="start">{{ __('Fecha de facturación de') }}</label>
                 <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
@@ -74,7 +74,7 @@
                 </div>
             </div>
             {{--  end_date  --}}
-            <div class="col-md-4 col-sm-4 col-auto">
+            <div class="col-lg-4 col-auto">
                 <label for="start">{{ __('hasta') }}</label>
                 <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
@@ -84,7 +84,7 @@
                     value="{{ $end->format('Y-m-d')  }}">
                 </div>
             </div>
-            <div class="col-md-2 col-auto">
+            <div class="col-lg-2 col-auto">
                 <label for="perPage">{{ __('Cantidad') }}</label>
                 <select  class="custom-select" name="perPage"> 
                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
@@ -96,8 +96,9 @@
                 </select>
             </div>
             {{--  refresh  --}}
-            <div class="col-md-1 col-auto text-right">
-                <button id="refresh" type="submit" class="btn btn-primary">
+            <div class="col-lg-2 col-auto text-right">
+                <br />
+                <button id="refresh" name="refresh" type="submit" class="btn btn-primary">
                     Aplicar
                 </button>
             </div>

@@ -108,7 +108,7 @@ class PatientController extends Controller
             ->where('patient_id', $patient->id)->get();
 
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);
-        $invoices_totals->totalsShort();
+        $invoices_totals->totals();
 
         $calls = [];
         $payments = [];

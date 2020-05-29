@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Call;
 use App\Http\Requests\UpdateCallRequest;
 use App\Http\Resources\CallResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CallController extends Controller
@@ -14,14 +15,50 @@ class CallController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $calls = Call::with('invoice')
-            ->orderBy('date', 'desc')
-            ->paginate(15)
-        ;
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+        if (!empty($request['start'] && !empty($request['end']))) {
+            $start = Carbon::parse($request->start);
+            $end = Carbon::parse($request->end);
+        } else {
+            $end = Carbon::today()->addDay();
+            $start = Carbon::today()->subMonths(3);
+        }
 
-        return view('calls.index', compact('calls'));
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
+        if (is_null($request['status'])) {
+            $status = 6;
+        } else {
+            $status = $request['status'];
+        }
+
+        if ($status < 6) {
+            $calls = Call::with('invoice')
+                ->where('status', $status)
+                ->whereBetween('date', [$start, $end])
+                ->whereLike(['number', 'invoice.code', 'comments'], $search)
+                ->orderBy('date', 'desc')
+                ->paginate($perPage)
+        ;
+        } else {
+            $calls = Call::with('invoice')
+                ->whereBetween('date', [$start, $end])
+                ->whereLike(['number', 'invoice.code', 'comments'], $search)
+                ->orderBy('date', 'desc')
+                ->paginate($perPage)
+        ;
+        }
+
+        return view('calls.index', compact('calls', 'search', 'perPage', 'status', 'end', 'start'));
     }
 
     /**

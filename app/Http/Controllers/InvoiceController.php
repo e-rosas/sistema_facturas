@@ -83,7 +83,7 @@ class InvoiceController extends Controller
             ;
         }
 
-        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start', ));
+        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start'));
     }
 
     /**

@@ -2,7 +2,7 @@
     <table class="table align-items-center table-flush table-sm">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Fecha') }}</th>
+                <th scope="col">{{ __('Facturación') }}</th>
                 <th scope="col">{{ __('CONTPAQ') }}</th>
                 <th scope="col">{{ __('Paciente') }}</th>
                 <th scope="col">Subtotal</th>

@@ -18,7 +18,7 @@
                     <!-- Search form -->
                     <form  method="get" action="{{ route('invoices.index') }}" >                              
                         <div class="form-row">
-                            <div class="col-md-1 col-auto">
+                            <div class="col-lg-2 col-auto">
                                 <label for="perPage">{{ __('Cantidad') }}</label>
                                 <select id="quantity"  class="custom-select" name="perPage"> 
                                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
@@ -29,7 +29,7 @@
                                     <option value='10000' {{ $perPage == 10000 ? 'selected' : '' }}>Todas</option>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-5">
                                 <label for="type">{{ __('Tipo') }}</label>
                                 <select id='type' class="custom-select" name="type"> 
                                     <option value='3'  {{ $type == 3 ? 'selected' : '' }} >Todas</option>
@@ -38,7 +38,7 @@
                                     <option value='2'  {{ $type == 2 ? 'selected' : '' }}>Pendiente de pago.</option>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-lg-5">
                                 <label for="status">{{ __('Estado') }}</label>
                                 <select id='status' class="custom-select" name="status"> 
                                     <option value='6'  {{ $status == 6 ? 'selected' : '' }}>Todas</option>
@@ -50,8 +50,12 @@
                                     <option value='5' {{ $status == 5 ? 'selected' : '' }}>Aseguranza no pagará.</option>
                                 </select>
                             </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            
                             {{--  start_date  --}}
-                            <div class="col-md-2 col-auto">
+                            <div class="col-lg-5 col-auto">
                                 <label for="start">{{ __('Fecha de servicio de') }}</label>
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
@@ -62,7 +66,7 @@
                                 </div>
                             </div>
                             {{--  end_date  --}}
-                            <div class="col-md-2 col-sm-2 col-auto">
+                            <div class="col-lg-5 col-auto">
                                 <label for="end">{{ __('hasta') }}</label>
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
@@ -71,17 +75,17 @@
                                     <input type="date" name="end" id="input-end" class="form-control"
                                     value="{{ $end->format('Y-m-d')  }}">
                                 </div>
-                            </div>                
+                            </div>   
+                            <div class="col-lg-2 col-auto">
+                                @include('components.currencySwitch', ['USD' => 1])
+                            </div>
                         </div>
                         <br />
                         <div class="form-row">
-                            <div class="col-md-1">
-                                @include('components.currencySwitch', ['USD' => 1])
-                            </div>
-                            <div class="col-md-10">
+                            <div class="col-lg-11">
                                 <input name="search" value="{{ $search ?? '' }}" class="form-control" type="text" placeholder="Cobro, código, paciente, comentarios..." aria-label="Search"> 
                             </div> 
-                            <div class="col-md-1">
+                            <div class="col-lg-1">
                                 <button name="submit" type="submit" class="btn btn-primary btn-fab btn-icon">
                                     <i class="fas fa-search"></i>
                                 </button>

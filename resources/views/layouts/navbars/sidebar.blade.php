@@ -78,6 +78,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('calls.index') }}">
+                        <i class="fas fa-phone mr-2 text-purple"></i> Llamadas
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('payments.index') }}">
                         <i class="fas fa-dollar-sign text-green"></i> Pagos
                     </a>
@@ -89,7 +94,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('charges.index') }}">
-                        <i class="fas fa-money-check-alt text-info"></i> Cargos
+                        <i class="fas fa-money-check-alt text-pink"></i> Cargos
                     </a>
                 </li>
                 <li class="nav-item">
