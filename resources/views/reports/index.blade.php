@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-    {{--  <div class="row">
-        <div class="col-xl-3 col-lg-6">
+    <div class="row">
+        <div class="col-xl-4 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">        
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Total amount due</h5>
-                            <p class="h2 font-weight-bold mb-0"> {{ $stats['total_amount_due'] }} </p>
+                            <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Cargos') }}</h5>
+                            <p class="h2 font-weight-bold mb-0"> <span class="MXN"> {{ $invoices_totals->getTotalM() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getTotal_with_discounts() }}</span></p>
                         </div>
                         <div class="col-auto">
                         <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
@@ -21,13 +21,13 @@
                 </div> 
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-xl-4 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">        
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Total amount due (Insurance)</h5>
-                            <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0">{{ $stats['insurance_amount_due'] }} </p>
+                            <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Abonos') }}</h5>
+                            <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0"><span class="MXN"> {{ $invoices_totals->amountPaidMXN() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getAmountPaid() }}</span></p>
                         </div>
                         <div class="col-auto">
                         <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
@@ -39,13 +39,13 @@
                 </div> 
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6">
+        <div class="col-xl-4 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">        
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Total amount due (Discount)</h5>
-                            <p id="total-amount-due-personal" class="h2 font-weight-bold mb-0">{{ $stats['personal_amount_due']}}</p>
+                            <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Saldo') }}</h5>
+                            <p id="total-amount-paid" class="h2 font-weight-bold mb-0"><span class="MXN"> {{ $invoices_totals->amountDueMXN() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getAmountDue() }}</span></p>
                         </div>
                         <div class="col-auto">
                         <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
@@ -57,31 +57,14 @@
                 </div> 
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6">
-            <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">        
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">Total amount paid</h5>
-                            <p id="total-amount-paid" class="h2 font-weight-bold mb-0">{{ $stats['total_amount_paid']}}</p>
-                        </div>
-                        <div class="col-auto">
-                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        </div>
-                    </div>
-        
-                </div> 
-            </div>
-        </div>
-    </div>  --}}
+    </div>
 </div>
 <div class="container-fluid">
     <form action="{{ route('reports.index') }}">
         <div class="row">
             {{--  start_date  --}}
             <div class="col-md-4 col-auto">
+                <label for="start">{{ __('Fecha de facturación de') }}</label>
                 <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
@@ -92,6 +75,7 @@
             </div>
             {{--  end_date  --}}
             <div class="col-md-4 col-sm-4 col-auto">
+                <label for="start">{{ __('hasta') }}</label>
                 <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
@@ -101,6 +85,7 @@
                 </div>
             </div>
             <div class="col-md-2 col-auto">
+                <label for="perPage">{{ __('Cantidad') }}</label>
                 <select  class="custom-select" name="perPage"> 
                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
                     <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
@@ -119,7 +104,7 @@
         </div>
     </form>
     <div class="row">
-        @include('components.currencySwitch', ['USD' => 0])
+        @include('components.currencySwitch', ['USD' => false])
     </div>
     <div class="row">
         <div class="col-xl-12">
@@ -133,7 +118,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @include('reports.partials.shortInvoicesTable')
+                    @include('reports.partials.medInvoicesTable')
                 </div>
                 <div class="card-footer py-4">
                     <nav class="d-flex justify-content-end" aria-label="...">

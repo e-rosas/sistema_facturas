@@ -50,7 +50,7 @@
                                     </td>
                                     <td>{{ $call->date->format('d-M-Y')}}</td>
                                     <td>{{ $call->claim }}</td>
-                                    <td>{{ $call->status }}</td>
+                                    <td>{{ $call->status() }}</td>
                                     <td>{{ $call->comments }}</td>
                                 </tr>
                             @endforeach

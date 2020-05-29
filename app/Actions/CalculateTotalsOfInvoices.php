@@ -13,6 +13,8 @@ class CalculateTotalsOfInvoices
     public $dtax = 0;
     public $amount_due = 0;
     public $amount_paid = 0;
+    public $amount_due_m = 0;
+    public $amount_paid_m = 0;
     public $subtotal_m = 0;
     public $IVA = 0;
     public $total_m = 0;
@@ -93,11 +95,14 @@ class CalculateTotalsOfInvoices
             $this->total_with_discounts += $invoice->total_with_discounts;
             $this->subtotal_with_discounts += $invoice->sub_total_discounted;
             $this->amount_paid += $invoice->amount_paid;
+            $this->amount_paid_m += $invoice->pago();
             $this->dtax += $invoice->dtax;
             if (is_null($invoice->credit)) {
                 $this->amount_due += $invoice->amount_due;
+                $this->amount_due_m += $invoice->debe();
             } else {
-                $this->amount_paid += $invoice->credit->amount_due;
+                $this->amount_due += $invoice->credit->amount_due;
+                $this->amount_due_m += $invoice->credit->debe();
             }
 
             $this->subtotal_m += $invoice->subtotal();
@@ -113,6 +118,16 @@ class CalculateTotalsOfInvoices
             $this->IVA += $invoice->IVA();
             $this->total_m += $invoice->total();
         }
+    }
+
+    public function amountPaidMXN()
+    {
+        return number_format($this->amount_paid_m, 4);
+    }
+
+    public function amountDueMXN()
+    {
+        return number_format($this->amount_due_m, 4);
     }
 
     public function getSubtotalM()

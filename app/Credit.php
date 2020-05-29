@@ -28,6 +28,11 @@ class Credit extends Model
         return number_format($this->exchange_rate, 4);
     }
 
+    public function debe()
+    {
+        return $this->amount_due * $this->exchange_rate;
+    }
+
     public function total()
     {
         $mxn = $this->amount_due * $this->exchange_rate;

@@ -162,6 +162,11 @@ class Invoice extends Model
         return $this->amount_due * $this->exchange_rate;
     }
 
+    public function pago()
+    {
+        return $this->amount_paid * $this->exchange_rate;
+    }
+
     public function chargeAmountDueF()
     {
         $charge_due = $this->charge->amount_charged - $this->amount_paid;
