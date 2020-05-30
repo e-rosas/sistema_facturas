@@ -1078,7 +1078,7 @@ class FillPaymentFormPDF
     {
         $this->invoice = $invoice;
         $this->addDiagnosisSlots(count($invoice->diagnoses));
-        $this->addServicesSlots(count($invoice->services2));
+        //$this->addServicesSlots(count($invoice->services2));
     }
 
     public function test()
@@ -1097,9 +1097,10 @@ class FillPaymentFormPDF
 
         $this->getInvoiceData();
 
-        $form = Storage::get('pdf/form.pdf');
-        $newForm = 'pdf/newForm.pdf';
+        $form = storage_path('app/pdf/form.pdf');
 
+        Storage::put('pdf/newForm.pdf', '');
+        $newForm = storage_path('app/pdf/newForm.pdf');
         $pdfGenerator = new PDFGenerator($fieldEntities, $this->data, 'P', 'pt', 'A4');
 
         try {
@@ -1446,94 +1447,87 @@ class FillPaymentFormPDF
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
-            /* array_push($diagnosis_list, ['DA' => [
-                'size' => 14,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->diagnoses[$i]->code,
-            ]]) */
             } elseif (1 == $i) {
-                array_push($diagnosis_list, ['DB' => [
+                $diagnosis_list['DB'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (2 == $i) {
-                array_push($diagnosis_list, ['DC' => [
+                $diagnosis_list['DC'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (3 == $i) {
-                array_push($diagnosis_list, ['DD' => [
+                $diagnosis_list['DD'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (4 == $i) {
-                array_push($diagnosis_list, ['DE' => [
+                $diagnosis_list['DE'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (5 == $i) {
-                array_push($diagnosis_list, ['DF' => [
+                $diagnosis_list['DF'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (6 == $i) {
-                array_push($diagnosis_list, ['DG' => [
+                $diagnosis_list['DG'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (7 == $i) {
-                array_push($diagnosis_list, ['DH' => [
+                $diagnosis_list['DH'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (8 == $i) {
-                array_push($diagnosis_list, ['DI' => [
+                $diagnosis_list['DI'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (9 == $i) {
-                array_push($diagnosis_list, ['DJ' => [
+                $diagnosis_list['DJ'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (10 == $i) {
-                array_push($diagnosis_list, ['DK' => [
+                $diagnosis_list['DK'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             } elseif (11 == $i) {
-                array_push($diagnosis_list, ['DL' => [
+                $diagnosis_list['DL'] = [
                     'size' => 14,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
-                ]]);
+                ];
             }
         }
 
         $this->data = $this->data + $diagnosis_list;
-        print_r($this->data);
         //add data
     }
 }
