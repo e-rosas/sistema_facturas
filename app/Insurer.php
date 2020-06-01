@@ -22,6 +22,11 @@ class Insurer extends Model
         return $this->city.', '.$this->state.'.  '.$this->postal_code;
     }
 
+    public function cityZIP()
+    {
+        return $this->city.' '.$this->postal_code;
+    }
+
     public function insurees()
     {
         return $this->hasMany('App\Insuree');

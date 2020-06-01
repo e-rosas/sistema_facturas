@@ -16,16 +16,16 @@ class FillPaymentFormPDF
     
     INSURED_ID: 
          llx: 373.92
-         lly: 675.409
+         lly: 725.409
          urx: 587.52
          ury: 685.823
        width: 213.6
-      height: 10.414
+      height: 10.49
     
     
     INSURED_NAME: 
          llx: 373.133
-         lly: 653.089
+         lly: 703.089
          urx: 586.733
          ury: 664.425
        width: 213.6
@@ -34,7 +34,7 @@ class FillPaymentFormPDF
     
     PATIENT_ADDRESS: 
          llx: 20.2031
-         lly: 625.853
+         lly: 675.853
          urx: 222.445
          ury: 636.377
        width: 202.2419
@@ -43,7 +43,7 @@ class FillPaymentFormPDF
     
     INSURED_ADDRESS: 
          llx: 373.92
-         lly: 627.821
+         lly: 677.821
          urx: 587.52
          ury: 639.306
        width: 213.6
@@ -52,7 +52,7 @@ class FillPaymentFormPDF
     
     CITY: 
          llx: 20.16
-         lly: 602.88
+         lly: 652.88
          urx: 191.78
          ury: 613.041
        width: 171.62
@@ -61,7 +61,7 @@ class FillPaymentFormPDF
     
     INSURED_CITY: 
          llx: 373.68
-         lly: 603.471
+         lly: 653.471
          urx: 530.87
          ury: 615.225
        width: 157.19
@@ -70,7 +70,7 @@ class FillPaymentFormPDF
     
     OTHER: 
          llx: 334.251
-         lly: 673.607
+         lly: 723.607
          urx: 347.33
          ury: 685.504
        width: 13.079
@@ -79,7 +79,7 @@ class FillPaymentFormPDF
     
     SEXM: 
          llx: 313.582
-         lly: 649.591
+         lly: 699.591
          urx: 323.905
          ury: 661.095
        width: 10.323
@@ -88,7 +88,7 @@ class FillPaymentFormPDF
     
     SEXF: 
          llx: 348.818
-         lly: 649.985
+         lly: 699.985
          urx: 360.715
          ury: 661.685
        width: 11.897
@@ -97,17 +97,17 @@ class FillPaymentFormPDF
     
     PATIENT_NAME: 
          llx: 20.2755
-         lly: 650.465
+         lly: 700.465
          urx: 222.243
          ury: 662.079
        width: 201.9675
-      height: 11.614
+      height: 11.69
     
     
     SELF: 
          llx: 247.834
-         lly: 626.363
-         urx: 259.141
+         lly: 676.363
+         urx: 259.91
          ury: 637.473
        width: 11.307
       height: 11.11
@@ -115,7 +115,7 @@ class FillPaymentFormPDF
     
     SPOUSE: 
          llx: 284.842
-         lly: 626.363
+         lly: 676.363
          urx: 295.361
          ury: 636.882
        width: 10.519
@@ -124,7 +124,7 @@ class FillPaymentFormPDF
     
     CHILD: 
          llx: 313.385
-         lly: 626.363
+         lly: 676.363
          urx: 324.495
          ury: 637.473
        width: 11.11
@@ -133,7 +133,7 @@ class FillPaymentFormPDF
     
     R_OTHER: 
          llx: 350.196
-         lly: 627.544
+         lly: 677.544
          urx: 360.715
          ury: 638.26
        width: 10.519
@@ -142,7 +142,7 @@ class FillPaymentFormPDF
     
     STATE: 
          llx: 200.787
-         lly: 602.827
+         lly: 652.827
          urx: 220.669
          ury: 616.213
        width: 19.882
@@ -151,7 +151,7 @@ class FillPaymentFormPDF
     
     INSURED_STATE: 
          llx: 542.518
-         lly: 604.008
+         lly: 654.008
          urx: 585.037
          ury: 615.82
        width: 42.519
@@ -159,8 +159,8 @@ class FillPaymentFormPDF
     
     
     PATIENT_MM: 
-         llx: 227.165
-         lly: 650.465
+         llx: 239.165
+         lly: 698.465
          urx: 250.983
          ury: 659.52
        width: 23.818
@@ -168,17 +168,17 @@ class FillPaymentFormPDF
     
     
     PATIENT_DD: 
-         llx: 255.314
-         lly: 650.662
+         llx: 255.39
+         lly: 698.465
          urx: 274.605
          ury: 658.536
        width: 19.291
-      height: 7.8739999999999
+      height: 9.0549999999999
     
     
     PATIENT_YY: 
-         llx: 277.558
-         lly: 650.465
+         llx: 284.558
+         lly: 698.465
          urx: 304.33
          ury: 659.52
        width: 26.772
@@ -187,7 +187,7 @@ class FillPaymentFormPDF
     
     PATIENT_ZIP: 
          llx: 24.9999
-         lly: 577.434
+         lly: 727.434
          urx: 77.5588
          ury: 591.016
        width: 52.5589
@@ -196,7 +196,7 @@ class FillPaymentFormPDF
     
     PATIENT_PHONE: 
          llx: 121.063
-         lly: 577.631
+         lly: 627.631
          urx: 220.669
          ury: 588.457
        width: 99.606
@@ -205,16 +205,16 @@ class FillPaymentFormPDF
     
     INSURED_ZIP: 
          llx: 372.44
-         lly: 579.009
+         lly: 629.009
          urx: 459.054
          ury: 590.032
-       width: 86.614
+       width: 86.69
       height: 11.023
     
     
     INSURED_PHONE: 
-         llx: 479.329
-         lly: 580.583
+         llx: 483.129
+         lly: 630.583
          urx: 583.659
          ury: 590.426
        width: 104.33
@@ -222,8 +222,8 @@ class FillPaymentFormPDF
     
     
     INSURED_MM: 
-         llx: 384.644
-         lly: 530.584
+         llx: 396.644
+         lly: 579.78
          urx: 412.203
          ury: 540.623
        width: 27.559
@@ -232,16 +232,16 @@ class FillPaymentFormPDF
     
     INSURED_DD: 
          llx: 414.762
-         lly: 530.78
+         lly: 579.78
          urx: 432.676
          ury: 540.229
-       width: 17.914
+       width: 17.99
       height: 9.4490000000001
     
     
     INSURED_YY: 
-         llx: 438.778
-         lly: 530.387
+         llx: 440.778
+         lly: 579.78
          urx: 474.605
          ury: 540.623
        width: 35.827
@@ -250,7 +250,7 @@ class FillPaymentFormPDF
     
     INSURED_SEXM: 
          llx: 500.589
-         lly: 532.158
+         lly: 582.158
          urx: 511.219
          ury: 543.182
        width: 10.63
@@ -259,7 +259,7 @@ class FillPaymentFormPDF
     
     INSURED_SEXF: 
          llx: 551.77
-         lly: 531.765
+         lly: 581.765
          urx: 562.4
          ury: 543.182
        width: 10.63
@@ -268,7 +268,7 @@ class FillPaymentFormPDF
     
     PATIENT_DATE: 
          llx: 273.163
-         lly: 414.546
+         lly: 459.546
          urx: 364.363
          ury: 422.837
        width: 91.2
@@ -277,16 +277,16 @@ class FillPaymentFormPDF
     
     INVOICE_NUMBER: 
          llx: 180.655
-         lly: 102.327
+         lly: 152.327
          urx: 262.909
-         ury: 114.108
+         ury: 19.108
        width: 82.254
       height: 11.781
     
     
     INVOICE_TOTAL: 
          llx: 385.31
-         lly: 102.545
+         lly: 152.545
          urx: 431.128
          ury: 111.927
        width: 45.818
@@ -295,21 +295,57 @@ class FillPaymentFormPDF
     
     INVOICE_PAID: 
          llx: 465.164
-         lly: 102.545
+         lly: 152.545
          urx: 502.037
-         ury: 114.763
+         ury: 19.763
        width: 36.873
       height: 12.218
     
     
     DOCTOR: 
          llx: 24
-         lly: 56.2901
+         lly: 106.2901
          urx: 171.055
          ury: 70.2538
-       width: 147.055
+       width: 97.055
       height: 13.9637
-    ';
+
+
+    INSURANCE_NAME: 
+          llx: 387.217
+          lly: 809.141
+          urx: 586.987
+          ury: 771.836
+        width: 199.77
+        height: 12.695
+
+
+    INSURANCE_ADDRESS: 
+          llx: 387.964
+          lly: 794.205
+          urx: 586.987
+          ury: 756.527
+        width: 199.023
+        height: 12.322
+
+
+    INSURANCE_CITY_ZIP: 
+          llx: 388.711
+          lly: 776.281
+          urx: 586.613
+          ury: 741.217
+        width: 197.902
+        height: 14.936
+
+
+    INSURANCE_PHONE: 
+          llx: 389.084
+          lly: 759.105
+          urx: 542.178
+          ury: 722.921
+        width: 153.094
+        height: 13.816
+        ';
 
     private $invoice;
     private $data;
@@ -318,16 +354,16 @@ class FillPaymentFormPDF
 
       DA: 
            llx: 40.551
-           lly: 316.214
+           lly: 356.29
            urx: 74.2124
            ury: 323.498
-         width: 33.6614
+         width: 33.669
         height: 7.284',
         '
 
         DB: 
              llx: 135.236
-             lly: 316.017
+             lly: 356.017
              urx: 166.338
              ury: 321.726
            width: 31.102
@@ -336,7 +372,7 @@ class FillPaymentFormPDF
 
         DC: 
              llx: 229.527
-             lly: 316.411
+             lly: 356.411
              urx: 261.22
              ury: 322.12
            width: 31.693
@@ -345,7 +381,7 @@ class FillPaymentFormPDF
 
         DD: 
              llx: 327.755
-             lly: 315.82
+             lly: 355.82
              urx: 354.133
              ury: 321.923
            width: 26.378
@@ -354,7 +390,7 @@ class FillPaymentFormPDF
 
         DE: 
              llx: 39.7636
-             lly: 305.387
+             lly: 355.387
              urx: 74.606
              ury: 311.687
            width: 34.8424
@@ -363,7 +399,7 @@ class FillPaymentFormPDF
 
         DF: 
              llx: 134.448
-             lly: 304.403
+             lly: 354.403
              urx: 166.535
              ury: 310.506
            width: 32.087
@@ -372,7 +408,7 @@ class FillPaymentFormPDF
 
         DG: 
              llx: 226.968
-             lly: 304.403
+             lly: 354.403
              urx: 260.629
              ury: 310.506
            width: 33.661
@@ -381,7 +417,7 @@ class FillPaymentFormPDF
 
         DH: 
              llx: 330.117
-             lly: 304.6
+             lly: 354.6
              urx: 354.133
              ury: 310.112
            width: 24.016
@@ -390,7 +426,7 @@ class FillPaymentFormPDF
 
         DI: 
              llx: 41.7321
-             lly: 293.183
+             lly: 343.183
              urx: 73.425
              ury: 299.876
            width: 31.6929
@@ -399,7 +435,7 @@ class FillPaymentFormPDF
 
         DJ: 
              llx: 134.645
-             lly: 292.986
+             lly: 342.986
              urx: 166.338
              ury: 298.104
            width: 31.693
@@ -408,7 +444,7 @@ class FillPaymentFormPDF
 
         DK: 
              llx: 227.165
-             lly: 293.38
+             lly: 343.38
              urx: 261.416
              ury: 299.482
            width: 34.251
@@ -417,7 +453,7 @@ class FillPaymentFormPDF
 
         DL: 
              llx: 329.526
-             lly: 293.38
+             lly: 343.38
              urx: 353.936
              ury: 299.679
            width: 24.41
@@ -428,7 +464,7 @@ class FillPaymentFormPDF
 
         S1_FROM_MM: 
              llx: 20.509
-             lly: 245.238
+             lly: 295.238
              urx: 37.5272
              ury: 256.583
            width: 17.0182
@@ -437,16 +473,16 @@ class FillPaymentFormPDF
         
         S1_FROM_DD: 
              llx: 40.5817
-             lly: 244.801
+             lly: 294.801
              urx: 58.909
-             ury: 256.147
+             ury: 256.97
            width: 18.3273
           height: 11.346
         
         
         S1_FROM_YY: 
              llx: 61.0908
-             lly: 244.801
+             lly: 294.801
              urx: 80.7271
              ury: 255.71
            width: 19.6363
@@ -455,16 +491,16 @@ class FillPaymentFormPDF
         
         S1_TO_MM: 
              llx: 84.8719
-             lly: 244.801
+             lly: 294.801
              urx: 101.89
-             ury: 256.147
+             ury: 256.97
            width: 17.0181
           height: 11.346
         
         
         S1_TO_DD: 
              llx: 104.945
-             lly: 244.365
+             lly: 294.365
              urx: 123.272
              ury: 255.71
            width: 18.327
@@ -473,16 +509,16 @@ class FillPaymentFormPDF
         
         S1_TO_YY: 
              llx: 125.454
-             lly: 244.365
-             urx: 145.09
+             lly: 294.365
+             urx: 95.09
              ury: 255.274
            width: 19.636
           height: 10.909
         
         
         S1_PLACE: 
-             llx: 148.364
-             lly: 244.799
+             llx: 98.364
+             lly: 294.799
              urx: 168
              ury: 255.709
            width: 19.636
@@ -491,7 +527,7 @@ class FillPaymentFormPDF
         
         S1_EMG: 
              llx: 170.618
-             lly: 244.799
+             lly: 294.799
              urx: 186.546
              ury: 255.927
            width: 15.928
@@ -500,7 +536,7 @@ class FillPaymentFormPDF
         
         S1_CODE: 
              llx: 195.709
-             lly: 245.454
+             lly: 295.454
              urx: 239.346
              ury: 254.836
            width: 43.637
@@ -509,7 +545,7 @@ class FillPaymentFormPDF
         
         S1_NAME: 
              llx: 248.509
-             lly: 245.236
+             lly: 295.236
              urx: 332.509
              ury: 255.927
            width: 84
@@ -518,7 +554,7 @@ class FillPaymentFormPDF
         
         S1_POINTERS: 
              llx: 335.346
-             lly: 245.236
+             lly: 295.236
              urx: 370.037
              ury: 255.927
            width: 34.691
@@ -527,7 +563,7 @@ class FillPaymentFormPDF
         
         S1_TOTAL: 
              llx: 375.928
-             lly: 245.454
+             lly: 295.454
              urx: 433.091
              ury: 255.709
            width: 57.163
@@ -536,7 +572,7 @@ class FillPaymentFormPDF
 
         S2_FROM_MM: 
              llx: 20.9454
-             lly: 221.563
+             lly: 271.563
              urx: 37.9636
              ury: 232.909
            width: 17.0182
@@ -545,7 +581,7 @@ class FillPaymentFormPDF
         
         S2_FROM_DD: 
              llx: 41.0181
-             lly: 221.127
+             lly: 271.127
              urx: 59.3454
              ury: 232.472
            width: 18.3273
@@ -554,7 +590,7 @@ class FillPaymentFormPDF
         
         S2_FROM_YY: 
              llx: 61.5272
-             lly: 221.127
+             lly: 271.127
              urx: 81.1635
              ury: 232.036
            width: 19.6363
@@ -563,7 +599,7 @@ class FillPaymentFormPDF
         
         S2_TO_MM: 
              llx: 85.3083
-             lly: 221.127
+             lly: 271.127
              urx: 102.326
              ury: 232.472
            width: 17.0177
@@ -572,7 +608,7 @@ class FillPaymentFormPDF
         
         S2_TO_DD: 
              llx: 105.381
-             lly: 220.69
+             lly: 270.69
              urx: 123.708
              ury: 232.036
            width: 18.327
@@ -581,16 +617,16 @@ class FillPaymentFormPDF
         
         S2_TO_YY: 
              llx: 125.89
-             lly: 220.69
-             urx: 145.526
+             lly: 270.69
+             urx: 95.526
              ury: 231.599
            width: 19.636
           height: 10.909
         
         
         S2_PLACE: 
-             llx: 148.8
-             lly: 221.125
+             llx: 98.8
+             lly: 271.125
              urx: 168.437
              ury: 232.034
            width: 19.637
@@ -599,7 +635,7 @@ class FillPaymentFormPDF
         
         S2_EMG: 
              llx: 171.055
-             lly: 221.125
+             lly: 271.125
              urx: 186.982
              ury: 232.252
            width: 15.927
@@ -607,8 +643,8 @@ class FillPaymentFormPDF
         
         
         S2_CODE: 
-             llx: 196.146
-             lly: 221.78
+             llx: 196.96
+             lly: 271.78
              urx: 239.782
              ury: 231.161
            width: 43.636
@@ -617,7 +653,7 @@ class FillPaymentFormPDF
         
         S2_NAME: 
              llx: 248.946
-             lly: 221.561
+             lly: 271.561
              urx: 332.946
              ury: 232.252
            width: 84
@@ -626,7 +662,7 @@ class FillPaymentFormPDF
         
         S2_POINTERS: 
              llx: 335.782
-             lly: 221.561
+             lly: 271.561
              urx: 370.473
              ury: 232.252
            width: 34.691
@@ -635,7 +671,7 @@ class FillPaymentFormPDF
         
         S2_TOTAL: 
              llx: 376.364
-             lly: 221.78
+             lly: 271.78
              urx: 433.528
              ury: 232.034
            width: 57.164
@@ -644,7 +680,7 @@ class FillPaymentFormPDF
 
         S3_FROM_MM: 
              llx: 21.8909
-             lly: 197.054
+             lly: 247.054
              urx: 38.909
              ury: 208.399
            width: 17.0181
@@ -653,7 +689,7 @@ class FillPaymentFormPDF
         
         S3_FROM_DD: 
              llx: 41.9636
-             lly: 196.618
+             lly: 246.618
              urx: 60.2908
              ury: 207.963
            width: 18.3272
@@ -662,7 +698,7 @@ class FillPaymentFormPDF
         
         S3_FROM_YY: 
              llx: 62.4726
-             lly: 196.618
+             lly: 246.618
              urx: 82.1089
              ury: 207.527
            width: 19.6363
@@ -671,7 +707,7 @@ class FillPaymentFormPDF
         
         S3_TO_MM: 
              llx: 86.2537
-             lly: 196.618
+             lly: 246.618
              urx: 103.272
              ury: 207.963
            width: 17.0183
@@ -680,7 +716,7 @@ class FillPaymentFormPDF
         
         S3_TO_DD: 
              llx: 106.326
-             lly: 196.181
+             lly: 246.181
              urx: 124.654
              ury: 207.527
            width: 18.328
@@ -689,16 +725,16 @@ class FillPaymentFormPDF
         
         S3_TO_YY: 
              llx: 126.835
-             lly: 196.181
-             urx: 146.472
+             lly: 246.181
+             urx: 96.472
              ury: 207.09
            width: 19.637
           height: 10.909
         
         
         S3_PLACE: 
-             llx: 149.746
-             lly: 196.616
+             llx: 99.746
+             lly: 246.616
              urx: 169.382
              ury: 207.525
            width: 19.636
@@ -707,7 +743,7 @@ class FillPaymentFormPDF
         
         S3_EMG: 
              llx: 172
-             lly: 196.616
+             lly: 246.616
              urx: 187.928
              ury: 207.743
            width: 15.928
@@ -716,7 +752,7 @@ class FillPaymentFormPDF
         
         S3_CODE: 
              llx: 197.091
-             lly: 197.27
+             lly: 247.27
              urx: 240.728
              ury: 206.652
            width: 43.637
@@ -725,7 +761,7 @@ class FillPaymentFormPDF
         
         S3_NAME: 
              llx: 249.891
-             lly: 197.052
+             lly: 247.052
              urx: 333.891
              ury: 207.743
            width: 84
@@ -734,7 +770,7 @@ class FillPaymentFormPDF
         
         S3_POINTERS: 
              llx: 336.728
-             lly: 197.052
+             lly: 247.052
              urx: 371.419
              ury: 207.743
            width: 34.691
@@ -743,7 +779,7 @@ class FillPaymentFormPDF
         
         S3_TOTAL: 
              llx: 377.31
-             lly: 197.27
+             lly: 247.27
              urx: 434.473
              ury: 207.525
            width: 57.163
@@ -752,7 +788,7 @@ class FillPaymentFormPDF
 
         S4_FROM_MM: 
              llx: 21.6
-             lly: 172.69
+             lly: 222.69
              urx: 38.6181
              ury: 184.036
            width: 17.0181
@@ -761,7 +797,7 @@ class FillPaymentFormPDF
         
         S4_FROM_DD: 
              llx: 41.6727
-             lly: 172.254
+             lly: 222.254
              urx: 59.9999
              ury: 183.599
            width: 18.3272
@@ -770,7 +806,7 @@ class FillPaymentFormPDF
         
         S4_FROM_YY: 
              llx: 62.1817
-             lly: 172.254
+             lly: 222.254
              urx: 81.818
              ury: 183.163
            width: 19.6363
@@ -779,7 +815,7 @@ class FillPaymentFormPDF
         
         S4_TO_MM: 
              llx: 85.9628
-             lly: 172.254
+             lly: 222.254
              urx: 102.981
              ury: 183.599
            width: 17.0182
@@ -788,7 +824,7 @@ class FillPaymentFormPDF
         
         S4_TO_DD: 
              llx: 106.036
-             lly: 171.818
+             lly: 221.818
              urx: 124.363
              ury: 183.163
            width: 18.327
@@ -797,16 +833,16 @@ class FillPaymentFormPDF
         
         S4_TO_YY: 
              llx: 126.545
-             lly: 171.818
-             urx: 146.181
+             lly: 221.818
+             urx: 96.181
              ury: 182.727
            width: 19.636
           height: 10.909
         
         
         S4_PLACE: 
-             llx: 149.455
-             lly: 172.252
+             llx: 99.455
+             lly: 222.252
              urx: 169.091
              ury: 183.161
            width: 19.636
@@ -815,7 +851,7 @@ class FillPaymentFormPDF
         
         S4_EMG: 
              llx: 171.709
-             lly: 172.252
+             lly: 222.252
              urx: 187.637
              ury: 183.379
            width: 15.928
@@ -824,7 +860,7 @@ class FillPaymentFormPDF
         
         S4_CODE: 
              llx: 196.8
-             lly: 172.907
+             lly: 222.907
              urx: 240.437
              ury: 182.289
            width: 43.637
@@ -833,7 +869,7 @@ class FillPaymentFormPDF
         
         S4_NAME: 
              llx: 249.6
-             lly: 172.689
+             lly: 222.689
              urx: 333.6
              ury: 183.379
            width: 84
@@ -842,7 +878,7 @@ class FillPaymentFormPDF
         
         S4_POINTERS: 
              llx: 336.437
-             lly: 172.689
+             lly: 222.689
              urx: 371.128
              ury: 183.379
            width: 34.691
@@ -851,7 +887,7 @@ class FillPaymentFormPDF
         
         S4_TOTAL: 
              llx: 377.019
-             lly: 172.907
+             lly: 222.907
              urx: 434.182
              ury: 183.161
            width: 57.163
@@ -860,7 +896,7 @@ class FillPaymentFormPDF
 
         S5_FROM_MM: 
              llx: 22.1091
-             lly: 150.145
+             lly: 200.95
              urx: 39.1272
              ury: 161.49
            width: 17.0181
@@ -906,14 +942,14 @@ class FillPaymentFormPDF
         S5_TO_YY: 
              llx: 127.054
              lly: 149.272
-             urx: 146.69
+             urx: 96.69
              ury: 160.181
            width: 19.636
           height: 10.909
         
         
         S5_PLACE: 
-             llx: 149.964
+             llx: 99.964
              lly: 149.707
              urx: 169.6
              ury: 160.616
@@ -924,7 +960,7 @@ class FillPaymentFormPDF
         S5_EMG: 
              llx: 172.218
              lly: 149.707
-             urx: 188.146
+             urx: 188.96
              ury: 160.834
            width: 15.928
           height: 11.127
@@ -932,7 +968,7 @@ class FillPaymentFormPDF
         
         S5_CODE: 
              llx: 197.309
-             lly: 150.361
+             lly: 200.361
              urx: 240.946
              ury: 159.743
            width: 43.637
@@ -941,7 +977,7 @@ class FillPaymentFormPDF
         
         S5_NAME: 
              llx: 250.109
-             lly: 150.143
+             lly: 200.93
              urx: 334.109
              ury: 160.834
            width: 84
@@ -950,7 +986,7 @@ class FillPaymentFormPDF
         
         S5_POINTERS: 
              llx: 336.946
-             lly: 150.143
+             lly: 200.93
              urx: 371.637
              ury: 160.834
            width: 34.691
@@ -959,7 +995,7 @@ class FillPaymentFormPDF
         
         S5_TOTAL: 
              llx: 377.528
-             lly: 150.361
+             lly: 200.361
              urx: 434.691
              ury: 160.616
            width: 57.163
@@ -968,7 +1004,7 @@ class FillPaymentFormPDF
 
         S6_FROM_MM: 
              llx: 21.9636
-             lly: 125.636
+             lly: 175.636
              urx: 38.9817
              ury: 136.981
            width: 17.0181
@@ -977,7 +1013,7 @@ class FillPaymentFormPDF
         
         S6_FROM_DD: 
              llx: 42.0363
-             lly: 125.199
+             lly: 175.199
              urx: 60.3635
              ury: 136.545
            width: 18.3272
@@ -986,7 +1022,7 @@ class FillPaymentFormPDF
         
         S6_FROM_YY: 
              llx: 62.5453
-             lly: 125.199
+             lly: 175.199
              urx: 82.1816
              ury: 136.108
            width: 19.6363
@@ -995,7 +1031,7 @@ class FillPaymentFormPDF
         
         S6_TO_MM: 
              llx: 86.3264
-             lly: 125.199
+             lly: 175.199
              urx: 103.345
              ury: 136.545
            width: 17.0186
@@ -1004,7 +1040,7 @@ class FillPaymentFormPDF
         
         S6_TO_DD: 
              llx: 106.399
-             lly: 124.763
+             lly: 174.763
              urx: 124.726
              ury: 136.108
            width: 18.327
@@ -1013,16 +1049,16 @@ class FillPaymentFormPDF
         
         S6_TO_YY: 
              llx: 126.908
-             lly: 124.763
-             urx: 146.544
+             lly: 174.763
+             urx: 96.544
              ury: 135.672
            width: 19.636
           height: 10.909
         
         
         S6_PLACE: 
-             llx: 149.818
-             lly: 125.198
+             llx: 99.818
+             lly: 175.198
              urx: 169.455
              ury: 136.107
            width: 19.637
@@ -1031,7 +1067,7 @@ class FillPaymentFormPDF
         
         S6_EMG: 
              llx: 172.073
-             lly: 125.198
+             lly: 175.198
              urx: 188
              ury: 136.325
            width: 15.927
@@ -1040,7 +1076,7 @@ class FillPaymentFormPDF
         
         S6_CODE: 
              llx: 197.164
-             lly: 125.852
+             lly: 175.852
              urx: 240.8
              ury: 135.234
            width: 43.636
@@ -1049,7 +1085,7 @@ class FillPaymentFormPDF
         
         S6_NAME: 
              llx: 249.964
-             lly: 125.634
+             lly: 175.634
              urx: 333.964
              ury: 136.325
            width: 84
@@ -1058,7 +1094,7 @@ class FillPaymentFormPDF
         
         S6_POINTERS: 
              llx: 336.8
-             lly: 125.634
+             lly: 175.634
              urx: 371.491
              ury: 136.325
            width: 34.691
@@ -1067,7 +1103,7 @@ class FillPaymentFormPDF
         
         S6_TOTAL: 
              llx: 377.382
-             lly: 125.852
+             lly: 175.852
              urx: 434.546
              ury: 136.107
            width: 57.164
@@ -1129,103 +1165,103 @@ class FillPaymentFormPDF
         //return
         $this->data = [
             'DOCTOR' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->doctor,
             ],
             'INVOICE_PAID' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->amountPaid(),
             ],
             'INVOICE_TOTAL' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->totalDiscounted(),
             ],
             'INVOICE_NUMBER' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->number,
             ],
             'PATIENT_PHONE' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->phone_number,
             ],
             'PATIENT_ZIP' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->zip_code,
             ],
             'PATIENT_DATE' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->date->format('m-d-Y'),
             ],
             'PATIENT_YY' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->birth_date->format('y'),
             ],
             'PATIENT_DD' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->birth_date->day,
             ],
             'PATIENT_MM' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->birth_date->month,
             ],
             'STATE' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->state,
             ],
             'PATIENT_NAME' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->name(),
             ],
             'CITY' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->city,
             ],
             'PATIENT_ADDRESS' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->address(),
             ],
             'SEXF' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => (1 == $this->invoice->patient->gender) ? 'X' : '',
             ],
             'SEXM' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => (1 == $this->invoice->patient->gender) ? '' : 'X',
             ],
             'OTHER' => [
-                'size' => 14,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => 'X',
@@ -1237,204 +1273,258 @@ class FillPaymentFormPDF
             //add insured data
             $insured_data = [
                 'INSURED_ID' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insurance_id,
                 ],
                 'INSURED_PHONE' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->phone_number,
                 ],
                 'INSURED_ZIP' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->zip_code,
                 ],
                 'INSURED_YY' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->birth_date->format('y'),
                 ],
                 'INSURED_DD' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->birth_date->day,
                 ],
                 'INSURED_MM' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->birth_date->month,
                 ],
                 'INSURED_STATE' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->state,
                 ],
                 'INSURED_NAME' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->name(),
                 ],
                 'INSURED_CITY' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->city,
                 ],
                 'INSURED_ADDRESS' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->address(),
                 ],
                 'SELF' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => 'X',
                 ],
                 'CHILD' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => '',
                 ],
                 'SPOUSE' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => '',
                 ],
                 'R_OTHER' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => '',
                 ],
                 'INSURED_SEXF' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $this->invoice->patient->gender) ? 'X' : '',
                 ],
                 'INSURED_SEXM' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $this->invoice->patient->gender) ? '' : 'X',
                 ],
             ];
 
-            $this->data = $this->data + $insured_data;
+            $insurance_data = [
+                'INSURANCE_NAME' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insurer->name,
+                ],
+                'INSURANCE_ADDRESS' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insurer->address,
+                ],
+                'INSURANCE_CITY_ZIP' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insurer->cityZIP(),
+                ],
+                'INSURANCE_PHONE' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insurer->phone_number,
+                ],
+            ];
+
+            $this->data = $this->data + $insured_data + $insurance_data;
         } else {
             $insured = Patient::where('id', $this->patient->dependent->insuree_id)->first();
             $insured_data = [
                 'INSURED_ID' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insured->insurance_id,
                 ],
                 'INSURED_PHONE' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->phone_number,
                 ],
                 'INSURED_ZIP' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->zip_code,
                 ],
                 'INSURED_YY' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->birth_date->format('y'),
                 ],
                 'INSURED_DD' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->birth_date->day,
                 ],
                 'INSURED_MM' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->birth_date->month,
                 ],
                 'INSURED_STATE' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->state,
                 ],
                 'INSURED_NAME' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->name(),
                 ],
                 'INSURED_CITY' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->city,
                 ],
                 'INSURED_ADDRESS' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->address(),
                 ],
                 'SELF' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => '',
                 ],
                 'CHILD' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
                 'SPOUSE' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (2 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
                 'R_OTHER' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (0 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
                 'INSURED_SEXF' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $insured->patient->gender) ? 'X' : '',
                 ],
                 'INSURED_SEXM' => [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $insured->patient->gender) ? '' : 'X',
                 ],
             ];
+            $insurance_data = [
+                'INSURANCE_NAME' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insuree->insurer->name,
+                ],
+                'INSURANCE_ADDRESS' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insuree->insurer->address,
+                ],
+                'INSURANCE_CITY_ZIP' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insuree->insurer->cityZIP(),
+                ],
+                'INSURANCE_PHONE' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => $insured->insuree->insurer->phone_number,
+                ],
+            ];
+            $this->data = $this->data + $insured_data + $insurance_data;
         }
 
         $diagnosis_list = [];
@@ -1442,84 +1532,84 @@ class FillPaymentFormPDF
         for ($i = 0; $i < count($this->invoice->diagnoses); ++$i) {
             if (0 == $i) {
                 $diagnosis_list['DA'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (1 == $i) {
                 $diagnosis_list['DB'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (2 == $i) {
                 $diagnosis_list['DC'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (3 == $i) {
                 $diagnosis_list['DD'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (4 == $i) {
                 $diagnosis_list['DE'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (5 == $i) {
                 $diagnosis_list['DF'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (6 == $i) {
                 $diagnosis_list['DG'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (7 == $i) {
                 $diagnosis_list['DH'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (8 == $i) {
                 $diagnosis_list['DI'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (9 == $i) {
                 $diagnosis_list['DJ'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (10 == $i) {
                 $diagnosis_list['DK'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
                 ];
             } elseif (11 == $i) {
                 $diagnosis_list['DL'] = [
-                    'size' => 14,
+                    'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->code,
