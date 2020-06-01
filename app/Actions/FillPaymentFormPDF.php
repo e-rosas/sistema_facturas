@@ -354,7 +354,7 @@ class FillPaymentFormPDF
 
       DA: 
            llx: 40.551
-           lly: 356.29
+           lly: 363.29
            urx: 74.2124
            ury: 323.498
          width: 33.669
@@ -363,7 +363,7 @@ class FillPaymentFormPDF
 
         DB: 
              llx: 135.236
-             lly: 356.017
+             lly: 363.29
              urx: 166.338
              ury: 321.726
            width: 31.102
@@ -372,7 +372,7 @@ class FillPaymentFormPDF
 
         DC: 
              llx: 229.527
-             lly: 356.411
+             lly: 363.29
              urx: 261.22
              ury: 322.12
            width: 31.693
@@ -381,7 +381,7 @@ class FillPaymentFormPDF
 
         DD: 
              llx: 327.755
-             lly: 355.82
+             lly: 363.29
              urx: 354.133
              ury: 321.923
            width: 26.378
@@ -390,7 +390,7 @@ class FillPaymentFormPDF
 
         DE: 
              llx: 39.7636
-             lly: 355.387
+             lly: 352.3
              urx: 74.606
              ury: 311.687
            width: 34.8424
@@ -399,7 +399,7 @@ class FillPaymentFormPDF
 
         DF: 
              llx: 134.448
-             lly: 354.403
+             lly: 352.3
              urx: 166.535
              ury: 310.506
            width: 32.087
@@ -408,7 +408,7 @@ class FillPaymentFormPDF
 
         DG: 
              llx: 226.968
-             lly: 354.403
+             lly: 352.3
              urx: 260.629
              ury: 310.506
            width: 33.661
@@ -417,7 +417,7 @@ class FillPaymentFormPDF
 
         DH: 
              llx: 330.117
-             lly: 354.6
+             lly: 352.3
              urx: 354.133
              ury: 310.112
            width: 24.016
@@ -426,7 +426,7 @@ class FillPaymentFormPDF
 
         DI: 
              llx: 41.7321
-             lly: 343.183
+             lly: 339.29
              urx: 73.425
              ury: 299.876
            width: 31.6929
@@ -435,7 +435,7 @@ class FillPaymentFormPDF
 
         DJ: 
              llx: 134.645
-             lly: 342.986
+             lly: 339.29
              urx: 166.338
              ury: 298.104
            width: 31.693
@@ -444,7 +444,7 @@ class FillPaymentFormPDF
 
         DK: 
              llx: 227.165
-             lly: 343.38
+             lly: 339.29
              urx: 261.416
              ury: 299.482
            width: 34.251
@@ -453,7 +453,7 @@ class FillPaymentFormPDF
 
         DL: 
              llx: 329.526
-             lly: 343.38
+             lly: 339.29
              urx: 353.936
              ury: 299.679
            width: 24.41
@@ -1114,7 +1114,7 @@ class FillPaymentFormPDF
     {
         $this->invoice = $invoice;
         $this->addDiagnosisSlots(count($invoice->diagnoses));
-        //$this->addServicesSlots(count($invoice->services2));
+        $this->addServicesSlots(count($invoice->services2));
     }
 
     public function test()
@@ -1132,6 +1132,7 @@ class FillPaymentFormPDF
         }
 
         $this->getInvoiceData();
+        $this->addServices($this->invoice->services2);
 
         $form = storage_path('app/pdf/form.pdf');
 
@@ -1144,6 +1145,87 @@ class FillPaymentFormPDF
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function addServices($services)
+    {
+        $services_list = [];
+        for ($i = 0; $i < count($services); ++$i) {
+            $services_list['S'.($i + 1).'_FROM_MM'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->DOS->format('m'),
+            ];
+            $services_list['S'.($i + 1).'_FROM_DD'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->DOS->format('d'),
+            ];
+            $services_list['S'.($i + 1).'_FROM_YY'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->DOS->format('y'),
+            ];
+            $services_list['S'.($i + 1).'_TO_MM'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->DOS_to->format('m'),
+            ];
+            $services_list['S'.($i + 1).'_TO_DD'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->DOS_to->format('d'),
+            ];
+            $services_list['S'.($i + 1).'_TO_YY'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->DOS_to->format('y'),
+            ];
+            $services_list['S'.($i + 1).'_PLACE'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => '11',
+            ];
+            $services_list['S'.($i + 1).'_EMG'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => 'N',
+            ];
+            $services_list['S'.($i + 1).'_CODE'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->code,
+            ];
+            $services_list['S'.($i + 1).'_NAME'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->service->name,
+            ];
+            $services_list['S'.($i + 1).'_POINTERS'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->diagnoses_pointers,
+            ];
+            $services_list['S'.($i + 1).'_TOTAL'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->discountedPrice(),
+            ];
+        }
+
+        $this->data = $this->data + $services_list;
     }
 
     private function addDiagnosisSlots($diagnoses_count)
@@ -1204,7 +1286,7 @@ class FillPaymentFormPDF
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->date->format('m-d-Y'),
+                'value' => $this->invoice->DOS->format('m-d-Y'),
             ],
             'PATIENT_YY' => [
                 'size' => 9,
@@ -1216,13 +1298,13 @@ class FillPaymentFormPDF
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->patient->birth_date->day,
+                'value' => $this->invoice->patient->birth_date->format('d'),
             ],
             'PATIENT_MM' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->patient->birth_date->month,
+                'value' => $this->invoice->patient->birth_date->format('m'),
             ],
             'STATE' => [
                 'size' => 9,
@@ -1300,13 +1382,13 @@ class FillPaymentFormPDF
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->patient->birth_date->day,
+                    'value' => $this->invoice->patient->birth_date->format('d'),
                 ],
                 'INSURED_MM' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->patient->birth_date->month,
+                    'value' => $this->invoice->patient->birth_date->format('m'),
                 ],
                 'INSURED_STATE' => [
                     'size' => 9,
@@ -1535,84 +1617,84 @@ class FillPaymentFormPDF
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (1 == $i) {
                 $diagnosis_list['DB'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (2 == $i) {
                 $diagnosis_list['DC'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (3 == $i) {
                 $diagnosis_list['DD'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (4 == $i) {
                 $diagnosis_list['DE'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (5 == $i) {
                 $diagnosis_list['DF'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (6 == $i) {
                 $diagnosis_list['DG'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (7 == $i) {
                 $diagnosis_list['DH'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (8 == $i) {
                 $diagnosis_list['DI'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (9 == $i) {
                 $diagnosis_list['DJ'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (10 == $i) {
                 $diagnosis_list['DK'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (11 == $i) {
                 $diagnosis_list['DL'] = [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->diagnoses[$i]->code,
+                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             }
         }
