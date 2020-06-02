@@ -8,6 +8,7 @@ use App\Http\Requests\InvoiceRequest;
 use App\Http\Requests\UpdateInvoiceDetailsRequest;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceDetailsResource;
+use App\Http\Resources\InvoiceDiagnosesResource;
 use App\Http\Resources\InvoiceStatsResource;
 use App\Insuree;
 use App\Invoice;
@@ -282,21 +283,13 @@ class InvoiceController extends Controller
 
     public function searchNumber(Request $request)
     {
-        $search = $request->search;
-        $invoices = Invoice::query()
-            ->where('patient_id', $request->patient_id)
-            ->whereLike('number', $search)
-            ->get()->take(8)
+        $number = $request->number;
+        $invoice = Invoice::with('diagnoses', 'patient')
+            ->where('number', $number)
+            ->first()
         ;
-        $response = [];
-        foreach ($invoices as $invoice) {
-            $response[] = [
-                'id' => $invoice->id,
-                'text' => $invoice->number.' '.$invoice->date->format('m-d-y'),
-            ];
-        }
-        echo json_encode($response);
-        exit;
+
+        return new InvoiceDiagnosesResource($invoice);
     }
 
     public function find(Request $request)

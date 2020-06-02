@@ -3,6 +3,7 @@
   <select id='patient_id' class="custom-select form-control" name="patient_id"> 
     <option value='0'>Seleccionar paciente</option>
   </select>
+  <input type="hidden" id="input-patient_id" value=0>
 </div>
 
 @push('js')

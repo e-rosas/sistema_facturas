@@ -168,7 +168,7 @@ class FillPaymentFormPDF
     
     
     PATIENT_DD: 
-         llx: 255.39
+         llx: 258.39
          lly: 698.465
          urx: 274.605
          ury: 658.536
@@ -187,7 +187,7 @@ class FillPaymentFormPDF
     
     PATIENT_ZIP: 
          llx: 24.9999
-         lly: 727.434
+         lly: 627.434
          urx: 77.5588
          ury: 591.016
        width: 52.5589
@@ -305,7 +305,7 @@ class FillPaymentFormPDF
     DOCTOR: 
          llx: 24
          lly: 106.2901
-         urx: 171.055
+         urx: 176.055
          ury: 70.2538
        width: 97.055
       height: 13.9637
@@ -349,6 +349,7 @@ class FillPaymentFormPDF
 
     private $invoice;
     private $data;
+    private $invoice_data;
     private $diagnosis_slots = [
         '
 
@@ -1119,38 +1120,27 @@ class FillPaymentFormPDF
 
     public function test()
     {
-        $converter = new Converter($this->coordinates);
-        $converter->loadPagesWithFieldsCount();
-        $coords = $converter->formatFieldsAsJSON();
-
-        $fields = json_decode($coords, true);
-
-        $fieldEntities = [];
-
-        foreach ($fields as $field) {
-            $fieldEntities[] = Field::fieldFromArray($field);
-        }
-
         $this->getInvoiceData();
         $this->addServices($this->invoice->services2);
 
         $form = storage_path('app/pdf/form.pdf');
-
-        Storage::put('pdf/newForm.pdf', '');
-        $newForm = storage_path('app/pdf/newForm.pdf');
-        $pdfGenerator = new PDFGenerator($fieldEntities, $this->data, 'P', 'pt', 'A4');
-
-        try {
-            $pdfGenerator->start($form, $newForm);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
     }
 
     public function addServices($services)
     {
         $services_list = [];
+        $alphabet = range('A', 'Z');
         for ($i = 0; $i < count($services); ++$i) {
+            $service = explode(' ', $services[$i]->code);
+            $code = '';
+            $modifier = '';
+            if (count($service) > 1) {
+                $modifier = $service[0];
+                $code = $service[1];
+            } else {
+                $code = $service[0];
+            }
+            $services[$i]->pointers_alphabet = $this->realPointers($services[$i]->diagnoses_pointers, $alphabet);
             $services_list['S'.($i + 1).'_FROM_MM'] = [
                 'size' => 9,
                 'family' => 'Arial',
@@ -1203,19 +1193,19 @@ class FillPaymentFormPDF
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->code,
+                'value' => $code,
             ];
             $services_list['S'.($i + 1).'_NAME'] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->service->description,
+                'value' => $modifier,
             ];
             $services_list['S'.($i + 1).'_POINTERS'] = [
-                'size' => 9,
+                'size' => 7,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->diagnoses_pointers,
+                'value' => $services[$i]->pointers_alphabet,
             ];
             $services_list['S'.($i + 1).'_TOTAL'] = [
                 'size' => 9,
@@ -1225,7 +1215,47 @@ class FillPaymentFormPDF
             ];
         }
 
-        $this->data = $this->data + $services_list;
+        return $services_list;
+    }
+
+    private function fillPage($form, $services, $page)
+    {
+        $data = $this->invoice_data;
+        $this->addServicesSlots(count($services));
+        $data = $data.$this->addServices($services);
+
+        $converter = new Converter($this->coordinates);
+        $converter->loadPagesWithFieldsCount();
+        $coords = $converter->formatFieldsAsJSON();
+
+        $fields = json_decode($coords, true);
+
+        $fieldEntities = [];
+
+        foreach ($fields as $field) {
+            $fieldEntities[] = Field::fieldFromArray($field);
+        }
+        $path = 'pdf/invoice/newForm'.$page.'.pdf';
+        Storage::put($path, '');
+        $newForm = storage_path($path);
+        $pdfGenerator = new PDFGenerator($fieldEntities, $data, 'P', 'pt', 'A4');
+
+        try {
+            $pdfGenerator->start($form, $newForm);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    private function realPointers($diagnosis_pointers, $alphabet)
+    {
+        $pointers = explode(',', $diagnosis_pointers);
+        $new_pointers = '';
+        for ($i = 0; $i < count($pointers); ++$i) {
+            $new_pointers = $new_pointers.$alphabet[$pointers[$i] - 1].',';
+        }
+
+        return substr($new_pointers, 0, -1);
     }
 
     private function addDiagnosisSlots($diagnoses_count)
@@ -1237,15 +1267,18 @@ class FillPaymentFormPDF
 
     private function addServicesSlots($services_count)
     {
+        $coordinates = $this->coordinates;
         for ($i = 0; $i < $services_count; ++$i) {
-            $this->coordinates = $this->coordinates.$this->service_slots[$i];
+            $coordinates = $coordinates.$this->service_slots[$i];
         }
+
+        return $coordinates;
     }
 
     private function getInvoiceData()
     {
         //return
-        $this->data = [
+        $this->invoice_data = [
             'DOCTOR' => [
                 'size' => 9,
                 'family' => 'Arial',
@@ -1479,10 +1512,9 @@ class FillPaymentFormPDF
                 ],
             ];
 
-            $this->data = $this->data + $insured_data + $insurance_data;
+            $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;
         } else {
             $insured = Insuree::where('patient_id', $this->invoice->patient->dependent->insuree_id)->first();
-            echo $insured;
             $insured_data = [
                 'INSURED_ID' => [
                     'size' => 9,
@@ -1512,13 +1544,13 @@ class FillPaymentFormPDF
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->patient->birth_date->day,
+                    'value' => $insured->patient->birth_date->format('d'),
                 ],
                 'INSURED_MM' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->patient->birth_date->month,
+                    'value' => $insured->patient->birth_date->format('m'),
                 ],
                 'INSURED_STATE' => [
                     'size' => 9,
@@ -1607,7 +1639,7 @@ class FillPaymentFormPDF
                     'value' => $insured->insurer->phone_number,
                 ],
             ];
-            $this->data = $this->data + $insured_data + $insurance_data;
+            $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;
         }
 
         $diagnosis_list = [];
@@ -1700,7 +1732,7 @@ class FillPaymentFormPDF
             }
         }
 
-        $this->data = $this->data + $diagnosis_list;
+        $this->invoice_data = $this->invoice_data + $diagnosis_list;
         //add data
     }
 }

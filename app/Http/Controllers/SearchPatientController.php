@@ -18,7 +18,7 @@ class SearchPatientController extends Controller
         foreach ($patients as $patient) {
             $response[] = [
                 'id' => $patient->id,
-                'text' => $patient->full_name,
+                'text' => $patient->full_name.' '.$patient->birth_date->format('d-M-Y'),
             ];
         }
         echo json_encode($response);

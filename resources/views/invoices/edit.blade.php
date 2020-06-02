@@ -777,7 +777,7 @@
                                                  
             }
         });
-            return false;
+        return false;
     }
 
     function findDiagnosis(diagnosis_id){

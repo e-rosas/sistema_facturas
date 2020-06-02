@@ -8,6 +8,7 @@ class DiagnosisService extends Model
 {
     public $discounted_price_mxn = 0;
     public $total_discounted_price_mxn = 0;
+    public $pointers_alphabet = '';
     public $dates = ['DOS', 'DOS_to', 'updated_at'];
     public $fillable = [
         'service_id',
