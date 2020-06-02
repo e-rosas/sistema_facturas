@@ -1115,15 +1115,17 @@ class FillPaymentFormPDF
     {
         $this->invoice = $invoice;
         $this->addDiagnosisSlots(count($invoice->diagnoses));
-        $this->addServicesSlots(count($invoice->services2));
     }
 
     public function test()
     {
         $this->getInvoiceData();
-        $this->addServices($this->invoice->services2);
-
+        $pages = round(count($this->invoice->services2) / 6);
         $form = storage_path('app/pdf/form.pdf');
+        for ($i = 0; $i < $pages; ++$i) {
+            $services = $this->invoice->services2->slice($i * 6, 6);
+            $this->fillPage($form, $services, $i);
+        }
     }
 
     public function addServices($services)
@@ -1221,10 +1223,11 @@ class FillPaymentFormPDF
     private function fillPage($form, $services, $page)
     {
         $data = $this->invoice_data;
-        $this->addServicesSlots(count($services));
-        $data = $data.$this->addServices($services);
+        $coordinates = $this->addServicesSlots(count($services));
+        print_r($services);
+        $data = $data + $this->addServices($services);
 
-        $converter = new Converter($this->coordinates);
+        $converter = new Converter($coordinates);
         $converter->loadPagesWithFieldsCount();
         $coords = $converter->formatFieldsAsJSON();
 

@@ -870,6 +870,8 @@
         success: function (response) {
             document.getElementById("patient-name").innerHTML = response.data.patient.full_name + " " + response.data.patient.birth_date;
             document.getElementById("input-date").value = response.data.date;
+            document.getElementById("input-date_service").value = response.data.date;
+            document.getElementById("input-date_service-to").value = response.data.date;
             document.getElementById("input-patient_id").value = response.data.patient.id;
             document.getElementById("input-doctor").value = response.data.doctor;
             document.getElementById("invoice-exchange_rate").value = response.data.exchange_rate;
