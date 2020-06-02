@@ -2,8 +2,8 @@
 
 namespace App\Actions;
 
+use App\Insuree;
 use App\Invoice;
-use App\Patient;
 use FormFiller\PDF\Converter\Converter;
 use FormFiller\PDF\Field;
 use FormFiller\PDF\PDFGenerator;
@@ -464,7 +464,7 @@ class FillPaymentFormPDF
 
         S1_FROM_MM: 
              llx: 20.509
-             lly: 295.238
+             lly: 294.801
              urx: 37.5272
              ury: 256.583
            width: 17.0182
@@ -486,7 +486,7 @@ class FillPaymentFormPDF
              urx: 80.7271
              ury: 255.71
            width: 19.6363
-          height: 10.909
+          height: 11.346
         
         
         S1_TO_MM: 
@@ -500,7 +500,7 @@ class FillPaymentFormPDF
         
         S1_TO_DD: 
              llx: 104.945
-             lly: 294.365
+             lly: 294.801
              urx: 123.272
              ury: 255.71
            width: 18.327
@@ -509,16 +509,16 @@ class FillPaymentFormPDF
         
         S1_TO_YY: 
              llx: 125.454
-             lly: 294.365
+             lly: 294.801
              urx: 95.09
              ury: 255.274
            width: 19.636
-          height: 10.909
+          height: 11.345
         
         
         S1_PLACE: 
-             llx: 98.364
-             lly: 294.799
+             llx: 148.364
+             lly: 294.801
              urx: 168
              ury: 255.709
            width: 19.636
@@ -527,7 +527,7 @@ class FillPaymentFormPDF
         
         S1_EMG: 
              llx: 170.618
-             lly: 294.799
+             lly: 294.801
              urx: 186.546
              ury: 255.927
            width: 15.928
@@ -536,7 +536,7 @@ class FillPaymentFormPDF
         
         S1_CODE: 
              llx: 195.709
-             lly: 295.454
+             lly: 294.801
              urx: 239.346
              ury: 254.836
            width: 43.637
@@ -545,7 +545,7 @@ class FillPaymentFormPDF
         
         S1_NAME: 
              llx: 248.509
-             lly: 295.236
+             lly: 294.801
              urx: 332.509
              ury: 255.927
            width: 84
@@ -554,7 +554,7 @@ class FillPaymentFormPDF
         
         S1_POINTERS: 
              llx: 335.346
-             lly: 295.236
+             lly: 294.801
              urx: 370.037
              ury: 255.927
            width: 34.691
@@ -563,7 +563,7 @@ class FillPaymentFormPDF
         
         S1_TOTAL: 
              llx: 375.928
-             lly: 295.454
+             lly: 294.801
              urx: 433.091
              ury: 255.709
            width: 57.163
@@ -625,7 +625,7 @@ class FillPaymentFormPDF
         
         
         S2_PLACE: 
-             llx: 98.8
+             llx: 148.364
              lly: 271.125
              urx: 168.437
              ury: 232.034
@@ -733,7 +733,7 @@ class FillPaymentFormPDF
         
         
         S3_PLACE: 
-             llx: 99.746
+             llx: 148.364
              lly: 246.616
              urx: 169.382
              ury: 207.525
@@ -841,7 +841,7 @@ class FillPaymentFormPDF
         
         
         S4_PLACE: 
-             llx: 99.455
+             llx: 148.364
              lly: 222.252
              urx: 169.091
              ury: 183.161
@@ -905,7 +905,7 @@ class FillPaymentFormPDF
         
         S5_FROM_DD: 
              llx: 42.1817
-             lly: 149.709
+             lly: 200.95
              urx: 60.509
              ury: 161.054
            width: 18.3273
@@ -914,7 +914,7 @@ class FillPaymentFormPDF
         
         S5_FROM_YY: 
              llx: 62.6908
-             lly: 149.709
+             lly: 200.95
              urx: 82.3271
              ury: 160.618
            width: 19.6363
@@ -923,7 +923,7 @@ class FillPaymentFormPDF
         
         S5_TO_MM: 
              llx: 86.4719
-             lly: 149.708
+             lly: 200.95
              urx: 103.49
              ury: 161.054
            width: 17.0181
@@ -932,7 +932,7 @@ class FillPaymentFormPDF
         
         S5_TO_DD: 
              llx: 106.545
-             lly: 149.272
+             lly: 200.95
              urx: 124.872
              ury: 160.618
            width: 18.327
@@ -941,7 +941,7 @@ class FillPaymentFormPDF
         
         S5_TO_YY: 
              llx: 127.054
-             lly: 149.272
+             lly: 200.95
              urx: 96.69
              ury: 160.181
            width: 19.636
@@ -949,8 +949,8 @@ class FillPaymentFormPDF
         
         
         S5_PLACE: 
-             llx: 99.964
-             lly: 149.707
+             llx: 148.364
+             lly: 200.95
              urx: 169.6
              ury: 160.616
            width: 19.636
@@ -959,7 +959,7 @@ class FillPaymentFormPDF
         
         S5_EMG: 
              llx: 172.218
-             lly: 149.707
+             lly: 200.95
              urx: 188.96
              ury: 160.834
            width: 15.928
@@ -968,7 +968,7 @@ class FillPaymentFormPDF
         
         S5_CODE: 
              llx: 197.309
-             lly: 200.361
+             lly: 200.95
              urx: 240.946
              ury: 159.743
            width: 43.637
@@ -977,7 +977,7 @@ class FillPaymentFormPDF
         
         S5_NAME: 
              llx: 250.109
-             lly: 200.93
+             lly: 200.95
              urx: 334.109
              ury: 160.834
            width: 84
@@ -986,7 +986,7 @@ class FillPaymentFormPDF
         
         S5_POINTERS: 
              llx: 336.946
-             lly: 200.93
+             lly: 200.95
              urx: 371.637
              ury: 160.834
            width: 34.691
@@ -995,7 +995,7 @@ class FillPaymentFormPDF
         
         S5_TOTAL: 
              llx: 377.528
-             lly: 200.361
+             lly: 200.95
              urx: 434.691
              ury: 160.616
            width: 57.163
@@ -1057,7 +1057,7 @@ class FillPaymentFormPDF
         
         
         S6_PLACE: 
-             llx: 99.818
+             llx: 148.364
              lly: 175.198
              urx: 169.455
              ury: 136.107
@@ -1209,7 +1209,7 @@ class FillPaymentFormPDF
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->service->name,
+                'value' => $services[$i]->service->description,
             ];
             $services_list['S'.($i + 1).'_POINTERS'] = [
                 'size' => 9,
@@ -1221,7 +1221,7 @@ class FillPaymentFormPDF
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->discountedPrice(),
+                'value' => number_format($services[$i]->total_discounted_price, 2),
             ];
         }
 
@@ -1256,19 +1256,19 @@ class FillPaymentFormPDF
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->amountPaid(),
+                'value' => number_format($this->invoice->amount_paid, 2),
             ],
             'INVOICE_TOTAL' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->totalDiscounted(),
+                'value' => number_format($this->invoice->total_with_discounts, 2),
             ],
             'INVOICE_NUMBER' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->number,
+                'value' => $this->invoice->code,
             ],
             'PATIENT_PHONE' => [
                 'size' => 9,
@@ -1481,13 +1481,14 @@ class FillPaymentFormPDF
 
             $this->data = $this->data + $insured_data + $insurance_data;
         } else {
-            $insured = Patient::where('id', $this->patient->dependent->insuree_id)->first();
+            $insured = Insuree::where('patient_id', $this->invoice->patient->dependent->insuree_id)->first();
+            echo $insured;
             $insured_data = [
                 'INSURED_ID' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->insured->insurance_id,
+                    'value' => $insured->insurance_id,
                 ],
                 'INSURED_PHONE' => [
                     'size' => 9,
@@ -1585,25 +1586,25 @@ class FillPaymentFormPDF
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->insuree->insurer->name,
+                    'value' => $insured->insurer->name,
                 ],
                 'INSURANCE_ADDRESS' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->insuree->insurer->address,
+                    'value' => $insured->insurer->address,
                 ],
                 'INSURANCE_CITY_ZIP' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->insuree->insurer->cityZIP(),
+                    'value' => $insured->insurer->cityZIP(),
                 ],
                 'INSURANCE_PHONE' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->insuree->insurer->phone_number,
+                    'value' => $insured->insurer->phone_number,
                 ],
             ];
             $this->data = $this->data + $insured_data + $insurance_data;

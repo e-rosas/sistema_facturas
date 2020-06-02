@@ -30,6 +30,7 @@ class PatientRequest extends FormRequest
             'gender' => 'max:255',
             'occupation' => 'max:255',
             'street' => 'max:255',
+            'zip_code' => 'required',
             'street_number' => 'max:255',
             'city' => 'max:255',
             'state' => 'max:255',
