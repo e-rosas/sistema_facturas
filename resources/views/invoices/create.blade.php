@@ -877,7 +877,7 @@
             document.getElementById("invoice-exchange_rate").value = response.data.exchange_rate;
             for(var i = 0; i < response.data.diagnoses.length; i++){
                 addDiagnosisFromInvoice(response.data.diagnoses[i].diagnosis_id, response.data.diagnoses[i].diagnosis_name, 
-                    response.data.diagnoses[i].diagnosis_code, response.data.diagnoses[i].diagnosis_nombre, response.data.diagnoses[i].quantity);   
+                    response.data.diagnoses[i].diagnosis_code, response.data.diagnoses[i].diagnosis_nombre);   
             }
             displayDiagnosisList();            
                                                  
@@ -888,7 +888,7 @@
 
     function addDiagnosisFromInvoice(diagnosis_id, name, code, nombre) {
         
-        var diagnosis = new Diagnosis(diagnosis_id, name,  code, nombre);
+        var diagnosis = new Diagnosis(diagnosis_id, code,  name, nombre);
         this.diagnosesList.push(diagnosis);
     }
    

@@ -672,7 +672,7 @@
     }
     function addDiagnosisFromInvoice(diagnosis_id, name, code, nombre) {
         
-        var diagnosis = new Diagnosis(diagnosis_id, name,  code, nombre);
+        var diagnosis = new Diagnosis(diagnosis_id, code,  name, nombre);
         this.diagnosesList.push(diagnosis);
 
         
@@ -771,7 +771,7 @@
         success: function (response) {
             for(var i = 0; i < response.data.length; i++){
                 addDiagnosisFromInvoice(response.data[i].diagnosis_id, response.data[i].diagnosis_name, 
-                    response.data[i].diagnosis_code, response.data[i].diagnosis_nombre, response.data[i].quantity);   
+                    response.data[i].diagnosis_code, response.data[i].diagnosis_nombre);   
             }
             displayDiagnosisList();            
                                                  

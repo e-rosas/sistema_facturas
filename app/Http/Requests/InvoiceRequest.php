@@ -27,7 +27,7 @@ class InvoiceRequest extends FormRequest
             'series' => 'max:255',
             'number' => 'max:255',
             'doctor' => 'max:255',
-            'code' => 'required|max:255',
+            'code' => 'max:255',
             'concept' => 'max:255',
             'currency' => 'max:255',
             'date' => 'date',

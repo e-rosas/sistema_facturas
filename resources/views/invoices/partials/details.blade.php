@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-md-2 text-right">
                     <div class="dropdown">
-                        <a class="btn  btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="btn  btn-success btn-sm" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             PDF
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -24,7 +24,7 @@
                                 <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
                                     @csrf
                                     <input type="hidden" name="output" value="D">
-                                    <button type="submit" class="dropdown-item">Descarga</button>
+                                    <button type="submit" class="dropdown-item">Descargar</button>
                                 </form>
                                 <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
                                     @csrf

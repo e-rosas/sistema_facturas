@@ -110,6 +110,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/import_parse_patients', 'ImportController@parseImportPatients')->name('import.parse.patients');
     Route::post('/import_process_patients', 'ImportController@processImportPatients')->name('import.process.patients');
 
+    Route::get('/diagnosis_codes', 'DiagnosisController@updateCodes');
+
     Route::get('/import_invoices', 'ImportController@getImportInvoices')->name('import.invoices');
     Route::post('/import_parse_invoices', 'ImportController@parseImportInvoices')->name('import.parse.invoices');
     Route::post('/import_process_invoices', 'ImportController@processImportInvoices')->name('import.process.invoices');

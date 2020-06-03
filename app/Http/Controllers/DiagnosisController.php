@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Diagnosis;
 use App\Http\Requests\DiagnosisRequest;
 use App\Http\Requests\UpdateDiagnosisRequest;
+use App\InvoiceDiagnosis;
 use Illuminate\Http\Request;
 
 class DiagnosisController extends Controller
@@ -63,6 +64,15 @@ class DiagnosisController extends Controller
      */
     public function show(Diagnosis $diagnosis)
     {
+    }
+
+    public function updateCodes()
+    {
+        $all = InvoiceDiagnosis::all();
+        foreach ($all as $diagnosis) {
+            $diagnosis->diagnosis_code = $diagnosis->diagnosis->code;
+            $diagnosis->save();
+        }
     }
 
     /**
