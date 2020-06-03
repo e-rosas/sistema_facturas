@@ -1131,10 +1131,11 @@ class FillPaymentFormPDF
 
     public function addServices($services)
     {
-        print_r($services);
         $services_list = [];
         $alphabet = range('A', 'Z');
+        $total = 0;
         for ($i = 0; $i < count($services); ++$i) {
+            $total += $services[$i]->total_discounted_price;
             $service = explode(' ', $services[$i]->code);
             $code = '';
             $modifier = '';
@@ -1219,7 +1220,14 @@ class FillPaymentFormPDF
             ];
         }
 
-        return $services_list;
+        $total_services = ['INVOICE_TOTAL' => [
+            'size' => 9,
+            'family' => 'Arial',
+            'style' => 'B',
+            'value' => number_format($total, 2),
+        ]];
+
+        return $services_list + $total_services;
     }
 
     private function fillPage($form, $services, $page)
@@ -1293,14 +1301,14 @@ class FillPaymentFormPDF
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => number_format($this->invoice->amount_paid, 2),
-            ],
+                'value' => 0,
+            ], /*
             'INVOICE_TOTAL' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => number_format($this->invoice->total_with_discounts, 2),
-            ],
+            ], */
             'INVOICE_NUMBER' => [
                 'size' => 9,
                 'family' => 'Arial',
