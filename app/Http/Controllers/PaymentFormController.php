@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Actions\FillPaymentFormPDF;
 use App\Invoice;
+use Illuminate\Http\Request;
 
 class PaymentFormController extends Controller
 {
-    public function test()
+    public function fill(Invoice $invoice, Request $request)
     {
-        $filler = new FillPaymentFormPDF(Invoice::findOrFail(12));
-        $filler->test();
+        $output = $request['output'];
+
+        $filler = new FillPaymentFormPDF($invoice);
+        $filler->fill($output);
     }
 }

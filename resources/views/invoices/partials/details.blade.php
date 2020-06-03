@@ -3,22 +3,51 @@
     <div class="card bg-secondary shadow">
         <div class="card-header bg-red border-0">
             <div class="row">
-                <div class="col-4 col-auto">
+                <div class="col-md-2 col-auto">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                 </div>
+                <div class="col-md-2 text-right">
+                    <div class="dropdown">
+                        <a class="btn  btn-primary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            PDF
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                {{--  <form action="{{ route('beneficiary.destroy', $beneficiary) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    
+                                    <a class="dropdown-item" href="{{ route('beneficiary.edit', $beneficiary) }}">{{ __('Edit') }}</a>
+                                    <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this beneficiary?") }}') ? this.parentElement.submit() : ''">
+                                        {{ __('Delete') }}
+                                    </button>
+                                </form>   --}}  
+                                <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
+                                    @csrf
+                                    <input type="hidden" name="output" value="D">
+                                    <button type="submit" class="dropdown-item">Descarga</button>
+                                </form>
+                                <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
+                                    @csrf
+                                    <input type="hidden" name="output" value="I">
+                                    <button type="submit" class="dropdown-item">Ver</button>
+                                </form>
+                        </div>
+                    </div>
+                    
+                </div>
                 @if ($invoice->status != 1)
-                    <div class="col-4 col-auto text-right">
+                    <div class="col-md-4 col-auto text-right">
                         <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
                     </div>
                 @endif
                 @if ($invoice->status != 1) 
-                    <div class="col-4 col-auto text-right">
+                    <div class="col-md-4 col-auto text-right">
                         <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
                         <br />
                     </div>
                 @endif
                 
-                    @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])
+                @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])
                 
             </div>
         </div>

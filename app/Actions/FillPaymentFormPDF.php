@@ -1117,16 +1117,17 @@ class FillPaymentFormPDF
         $this->addDiagnosisSlots(count($invoice->diagnoses));
     }
 
-    public function test()
+    public function fill($output)
     {
         $this->getInvoiceData();
         $pages = ceil(count($this->invoice->services2) / 6);
         $form = storage_path('app/pdf/form.pdf');
         for ($i = 0; $i < $pages; ++$i) {
             $services = $this->invoice->services2->slice($i * 6, 6)->values();
-            echo $i;
             $this->fillPage($form, $services, $i);
         }
+        $merge = new MergePDFs($pages);
+        $merge->merge($this->invoice->code, $output);
     }
 
     public function addServices($services)
