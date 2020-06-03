@@ -9,7 +9,7 @@ class PaymentFormController extends Controller
 {
     public function test()
     {
-        $filler = new FillPaymentFormPDF(Invoice::findOrFail(114));
+        $filler = new FillPaymentFormPDF(Invoice::findOrFail(12));
         $filler->test();
     }
 }

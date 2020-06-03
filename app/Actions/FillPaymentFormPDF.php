@@ -1120,16 +1120,18 @@ class FillPaymentFormPDF
     public function test()
     {
         $this->getInvoiceData();
-        $pages = round(count($this->invoice->services2) / 6);
+        $pages = ceil(count($this->invoice->services2) / 6);
         $form = storage_path('app/pdf/form.pdf');
         for ($i = 0; $i < $pages; ++$i) {
-            $services = $this->invoice->services2->slice($i * 6, 6);
+            $services = $this->invoice->services2->slice($i * 6, 6)->values();
+            echo $i;
             $this->fillPage($form, $services, $i);
         }
     }
 
     public function addServices($services)
     {
+        print_r($services);
         $services_list = [];
         $alphabet = range('A', 'Z');
         for ($i = 0; $i < count($services); ++$i) {
@@ -1224,9 +1226,8 @@ class FillPaymentFormPDF
     {
         $data = $this->invoice_data;
         $coordinates = $this->addServicesSlots(count($services));
-        print_r($services);
-        $data = $data + $this->addServices($services);
 
+        $data = $data + $this->addServices($services);
         $converter = new Converter($coordinates);
         $converter->loadPagesWithFieldsCount();
         $coords = $converter->formatFieldsAsJSON();
@@ -1238,7 +1239,7 @@ class FillPaymentFormPDF
         foreach ($fields as $field) {
             $fieldEntities[] = Field::fieldFromArray($field);
         }
-        $path = 'pdf/invoice/newForm'.$page.'.pdf';
+        $path = 'app/pdf/invoice/newForm'.$page.'.pdf';
         Storage::put($path, '');
         $newForm = storage_path($path);
         $pdfGenerator = new PDFGenerator($fieldEntities, $data, 'P', 'pt', 'A4');
