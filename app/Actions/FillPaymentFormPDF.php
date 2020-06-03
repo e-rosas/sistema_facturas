@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FillPaymentFormPDF
 {
-    private $coordinates = '124 widget annotations found on page 1.
+    private $coordinates = '134 widget annotations found on page 1.
     ----------------------------------------------
     
     INSURED_ID: 
@@ -568,8 +568,18 @@ class FillPaymentFormPDF
              urx: 433.091
              ury: 255.709
            width: 57.163
-          height: 10.255',
+          height: 10.255
+        
+
+        S1_UNITS: 
+             llx: 439.867
+             lly: 294.801
+             urx: 458.163
+             ury: 256.543
+           width: 18.296
+          height: 11.949',
         '
+
 
         S2_FROM_MM: 
              llx: 20.9454
@@ -676,8 +686,18 @@ class FillPaymentFormPDF
              urx: 433.528
              ury: 232.034
            width: 57.164
-          height: 10.254',
+          height: 10.254
+
+        
+        S2_UNITS: 
+             llx: 439.951
+             lly: 271.78
+             urx: 458.248
+             ury: 233.347
+           width: 18.297
+          height: 11.948',
         '
+
 
         S3_FROM_MM: 
              llx: 21.8909
@@ -784,8 +804,18 @@ class FillPaymentFormPDF
              urx: 434.473
              ury: 207.525
            width: 57.163
-          height: 10.255',
+          height: 10.255
+
+        
+        S3_UNITS: 
+             llx: 440.406
+             lly: 247.27
+             urx: 458.703
+             ury: 208.511
+           width: 18.297
+          height: 11.949',
         '
+
 
         S4_FROM_MM: 
              llx: 21.6
@@ -892,8 +922,18 @@ class FillPaymentFormPDF
              urx: 434.182
              ury: 183.161
            width: 57.163
-          height: 10.254',
+          height: 10.254
+
+
+        S4_UNITS: 
+             llx: 440.697
+             lly: 222.907
+             urx: 458.994
+             ury: 184.657
+           width: 18.297
+          height: 11.949',
         '
+
 
         S5_FROM_MM: 
              llx: 22.1091
@@ -1000,8 +1040,18 @@ class FillPaymentFormPDF
              urx: 434.691
              ury: 160.616
            width: 57.163
-          height: 10.255',
+          height: 10.255
+          
+          
+        S5_UNITS: 
+             llx: 440.988
+             lly: 200.95
+             urx: 459.284
+             ury: 161.129
+           width: 18.296
+          height: 11.948',
         '
+
 
         S6_FROM_MM: 
              llx: 21.9636
@@ -1108,7 +1158,16 @@ class FillPaymentFormPDF
              urx: 434.546
              ury: 136.107
            width: 57.164
-          height: 10.255',
+          height: 10.255
+
+
+        S6_UNITS: 
+              llx: 441.442
+              lly: 175.852
+              urx: 459.739
+              ury: 136.947
+            width: 18.297
+           height: 11.948',
     ];
 
     public function __construct(Invoice $invoice)
@@ -1219,6 +1278,12 @@ class FillPaymentFormPDF
                 'style' => 'B',
                 'value' => number_format($services[$i]->total_discounted_price, 2),
             ];
+            $services_list['S'.($i + 1).'_UNITS'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $services[$i]->quantity,
+            ];
         }
 
         $total_services = ['INVOICE_TOTAL' => [
@@ -1237,12 +1302,11 @@ class FillPaymentFormPDF
         $coordinates = $this->addServicesSlots(count($services));
 
         $data = $data + $this->addServices($services);
+
         $converter = new Converter($coordinates);
         $converter->loadPagesWithFieldsCount();
         $coords = $converter->formatFieldsAsJSON();
-
         $fields = json_decode($coords, true);
-
         $fieldEntities = [];
 
         foreach ($fields as $field) {
