@@ -36,7 +36,7 @@ class InvoiceController extends Controller
             $end = Carbon::parse($request->end);
         } else {
             $end = Carbon::today()->addDay();
-            $start = Carbon::today()->subMonths(3);
+            $start = Carbon::today()->subYears(3);
         }
 
         if (is_null($request['search'])) {
