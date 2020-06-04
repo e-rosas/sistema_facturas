@@ -14,6 +14,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'initial' => env('INVOICE_INITIAL', 'B'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

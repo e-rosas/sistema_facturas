@@ -109,13 +109,15 @@ class InvoiceController extends Controller
         $validated = $request->validated();
         $validated['type'] = 2;
         $validated['status'] = 3;
+
         if (is_null($request->code)) {
             $validated['code'] = 'Btemp';
         }
         $invoice = Invoice::create($validated);
 
         if (is_null($request->code)) {
-            $invoice->code = 'B'.$invoice->id;
+            $inital = config('app.initial');
+            $invoice->code = $inital.$invoice->id;
             $invoice->save();
         }
 

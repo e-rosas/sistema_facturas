@@ -10,9 +10,6 @@
                 @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' => 'Amount paid', 'value' => $stats->getAmount_paid()])
                 @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Amount due (insurance)', 'value' => $stats->getAmount_due()])
                 @include('components.invoiceStatsCard', ['id' => 'personal-due','title' => 'Amount due (personal)', 'value' => $stats->getPersonalAmountDue()])
-                @if ($stats->status==2)
-                    @include('components.invoiceStatsCard', ['id' => 'total-total-due','title' => 'Amount due', 'value' => $stats->getTotalAmountDue()])
-                @endif
             </div> --}}
         </div>
         <div class="row mt-5">
