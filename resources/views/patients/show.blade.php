@@ -63,6 +63,9 @@
                         <h3>
                             {{ $patient->full_name }}<span class="font-weight-light"></span>
                         </h3>
+                        <a class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('patients.edit', $patient) }}">
+                            <i class="fas fa-pencil-alt fa-2"></i>
+                        </a> 
                         {{-- <form  method="post" action="{{ route('reports.invoices') }}" >
                             @csrf
                             <div class="form-group col-md-12 col-auto">
