@@ -16,6 +16,7 @@ use App\InvoiceDiagnosis;
 use App\ItemService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -111,15 +112,22 @@ class InvoiceController extends Controller
         $validated['status'] = 3;
 
         if (is_null($request->code)) {
-            $validated['code'] = 'Btemp';
+            $row = DB::table('invoice_counters')->first();
+            $id = $row->counter + 1;
+            $inital = config('app.initial');
+            $validated['code'] = $inital.$id;
+            DB::table('invoice_counters')
+                ->where('id', 1)
+                ->update(['counter' => $id])
+            ;
         }
         $invoice = Invoice::create($validated);
 
-        if (is_null($request->code)) {
+        /* if (is_null($request->code)) {
             $inital = config('app.initial');
             $invoice->code = $inital.$invoice->id;
             $invoice->save();
-        }
+        } */
 
         // $invoice_diagnoses_services = $request->invoice_diagnoses_services;
 
