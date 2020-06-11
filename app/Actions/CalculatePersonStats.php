@@ -12,7 +12,7 @@ class CalculatePersonStats
 
     public function getAllInvoices($patient_id)
     {
-        $allInvoices = Invoice::where('patient_id', $patient_id)->get();
+        $allInvoices = Invoice::with('payments')->where('patient_id', $patient_id)->get();
 
         $total_invoices = new CalculateTotalsOfInvoices($allInvoices);
         $total_invoices->calculateTotals();

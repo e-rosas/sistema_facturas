@@ -11,6 +11,8 @@ class PersonStats extends Model
         'status',
         'amount_paid',
         'amount_due',
+        'amount_paid_mxn',
+        'amount_due_mxn',
         'total_amount_due',
         'patient_id',
     ];
@@ -25,13 +27,17 @@ class PersonStats extends Model
     /**
      * Get the value of amount_due.
      */
-    public function getAmount_due()
+    public function amountDue()
     {
         return number_format($this->amount_due, 3);
     }
 
+    public function amountDueMXN()
+    {
+        return number_format($this->amount_due, 3);
+    }
 
-    public function getTotalAmountDue()
+    public function totalAmountDue()
     {
         return number_format($this->total_amount_due, 3);
     }
@@ -39,19 +45,18 @@ class PersonStats extends Model
     /**
      * Get the value of amount_paid.
      */
-    public function getAmount_paid()
+    public function amountPaid()
     {
         return number_format($this->amount_paid, 3);
     }
 
-    public function getTotal()
+    public function amountPaidMXN()
     {
-        if (1 == $this->status) {
-            $total = $this->amount_paid + $this->personal_amount_due;
+        return number_format($this->amount_paid_mxn, 3);
+    }
 
-            return number_format($total, 3);
-        }
-
+    public function total()
+    {
         $total = $this->amount_paid + $this->amount_due;
 
         return number_format($total, 3);

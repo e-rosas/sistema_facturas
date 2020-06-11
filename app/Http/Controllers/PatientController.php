@@ -104,6 +104,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
+        $patient->load('person_stats');
         $invoices = Invoice::with('patient', 'payments', 'credit', 'calls')
             ->where('patient_id', $patient->id)->get();
 

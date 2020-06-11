@@ -2,8 +2,6 @@
 
 namespace App\Actions;
 
-use App\Payment;
-
 class CalculateTotalsOfInvoices
 {
     public $total = 0;
@@ -74,7 +72,7 @@ class CalculateTotalsOfInvoices
     public function calculateTotals()
     {
         foreach ($this->invoices as $invoice) {
-            $allPayments = Payment::where('invoice_id', $invoice->id)->get();
+            $allPayments = $invoice->payments;
             $total_payments = new CalculateTotalsOfPayments($allPayments);
             $total_payments->calculateTotals();
 
@@ -97,6 +95,7 @@ class CalculateTotalsOfInvoices
             $this->amount_paid += $invoice->amount_paid;
             $this->amount_paid_m += $invoice->pago();
             $this->dtax += $invoice->dtax;
+
             if (is_null($invoice->credit)) {
                 $this->amount_due += $invoice->amount_due;
                 $this->amount_due_m += $invoice->debe();

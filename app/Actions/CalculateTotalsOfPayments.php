@@ -5,6 +5,7 @@ namespace App\Actions;
 class CalculateTotalsOfPayments
 {
     public $amount_paid = 0;
+    public $amount_paid_mxn = 0;
     private $payments = [];
 
     public function __construct($payments)
@@ -31,6 +32,7 @@ class CalculateTotalsOfPayments
     {
         foreach ($this->payments as $payment) {
             $this->amount_paid += $payment->amount_paid;
+            $this->amount_paid_mxn += $payment->amount_paid * $payment->exchange_rate;
         }
     }
 
