@@ -34,7 +34,7 @@
                     <table id="payments_table" class="table align-services-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">{{ __('No. de Pago') }}</th>
+                                <th scope="col">{{ __('Factura') }}</th>
                                 <th scope="col">{{ __('Fecha') }}</th>
                                 <th scope="col">{{ __('Cantidad') }}</th>
                                 <th scope="col">{{ __('Comentarios') }}</th>
@@ -43,7 +43,11 @@
                         <tbody>
                             @foreach ($payments as $payment)
                                 <tr>
-                                    <td>{{ $payment->number}}</td>
+                                    <td>
+                                        <a href="{{ route('invoices.show', $payment->invoice) }}">
+                                            {{ $payment->invoice->code()}}
+                                        </a>
+                                    </td>
                                     <td>{{ $payment->date->format('M-d-Y')}}</td>
                                     <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD" style="display: none"> {{ $payment->amountPaid() }} </span></td>
                                     <td>{{ $payment->comments}}</td>

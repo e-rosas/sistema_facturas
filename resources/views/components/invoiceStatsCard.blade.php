@@ -4,11 +4,11 @@
             <div class="row">
                 <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">{{ $title }}</h5>
-                    <span id="{{ $idMXN }}" class="MXN" style="display: none"> {{ $valueMXN }} </span><span id="{{ $idUSD }}" class="USD" > {{ $value }} </span> 
+                    <span id="{{ $idMXN }}" class="MXN" style="{{ $USD == 1 ? 'display: none' : '' }}"> {{ $valueMXN }} </span><span id="{{ $idUSD }}" class="USD" style="{{ $USD == 1 ? '' : 'display: none' }}" > {{ $value }} </span> 
                 </div>
                 <div class="col-auto">
-                    <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
-                        <i class="fas fa-dollar-sign"></i>
+                    <div class="icon icon-shape {{ $bg ?? 'bg-orange'  }} text-white rounded-circle shadow">
+                        <i class="{{ $icon ?? 'fas fa-dollar-sign' }}  "></i>
                     </div>
                 </div>
             </div>

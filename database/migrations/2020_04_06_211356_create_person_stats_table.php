@@ -17,7 +17,6 @@ class CreatePersonStatsTable extends Migration
             $table->decimal('amount_due', 13, 4)->default(0);
             $table->decimal('amount_paid_mxn', 13, 4)->default(0);
             $table->decimal('amount_due_mxn', 13, 4)->default(0);
-            $table->decimal('total_amount_due', 13, 4)->default(0);
             $table->tinyInteger('status')->default(0);
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
             $table->timestamps();

@@ -80,33 +80,14 @@ class CalculateTotalsOfInvoices
             $invoice->amount_due = $invoice->total_with_discounts - $total_payments->amount_paid;
             $invoice->save();
 
-            $this->amount_paid += $total_payments->amount_paid;
-            $this->total += $invoice->total;
-            $this->total_with_discounts += $invoice->total_with_discounts;
-            $this->amount_due += $invoice->amount_due;
+            $this->sumInvoiceStats($invoice);
         }
     }
 
     public function totals() //stats on report index (medTable)
     {
         foreach ($this->invoices as $invoice) {
-            $this->total_with_discounts += $invoice->total_with_discounts;
-            $this->subtotal_with_discounts += $invoice->sub_total_discounted;
-            $this->amount_paid += $invoice->amount_paid;
-            $this->amount_paid_m += $invoice->pago();
-            $this->dtax += $invoice->dtax;
-
-            if (is_null($invoice->credit)) {
-                $this->amount_due += $invoice->amount_due;
-                $this->amount_due_m += $invoice->debe();
-            } else {
-                $this->amount_due += $invoice->credit->amount_due;
-                $this->amount_due_m += $invoice->credit->debe();
-            }
-
-            $this->subtotal_m += $invoice->subtotal();
-            $this->IVA += $invoice->IVA();
-            $this->total_m += $invoice->total();
+            $this->sumInvoiceStats($invoice);
         }
     }
 
@@ -147,6 +128,28 @@ class CalculateTotalsOfInvoices
     public function getInvoicesCount()
     {
         return count($this->invoices);
+    }
+
+    private function sumInvoiceStats($invoice)
+    {
+        $this->total += $invoice->total;
+        $this->total_with_discounts += $invoice->total_with_discounts;
+        $this->subtotal_with_discounts += $invoice->sub_total_discounted;
+        $this->amount_paid += $invoice->amount_paid;
+        $this->amount_paid_m += $invoice->pago();
+        $this->dtax += $invoice->dtax;
+
+        if (is_null($invoice->credit)) {
+            $this->amount_due += $invoice->amount_due;
+            $this->amount_due_m += $invoice->debe();
+        } else {
+            $this->amount_due += $invoice->credit->amount_due;
+            $this->amount_due_m += $invoice->credit->debe();
+        }
+
+        $this->subtotal_m += $invoice->subtotal();
+        $this->IVA += $invoice->IVA();
+        $this->total_m += $invoice->total();
     }
 
     // Shortens a number and attaches K, M, B, etc. accordingly

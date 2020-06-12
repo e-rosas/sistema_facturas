@@ -12,7 +12,7 @@
                             <p class="h2 font-weight-bold mb-0"> <span class="MXN"> {{ $invoices_totals->getTotalM() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getTotal_with_discounts() }}</span></p>
                         </div>
                         <div class="col-auto">
-                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                        <div class="icon icon-shape bg-pink text-white rounded-circle shadow">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
                         </div>
@@ -30,7 +30,7 @@
                             <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0"><span class="MXN"> {{ $invoices_totals->amountPaidMXN() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getAmountPaid() }}</span></p>
                         </div>
                         <div class="col-auto">
-                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                        <div class="icon icon-shape bg-green text-white rounded-circle shadow">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
                         </div>
@@ -48,7 +48,7 @@
                             <p id="total-amount-paid" class="h2 font-weight-bold mb-0"><span class="MXN"> {{ $invoices_totals->amountDueMXN() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getAmountDue() }}</span></p>
                         </div>
                         <div class="col-auto">
-                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                        <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
                         </div>

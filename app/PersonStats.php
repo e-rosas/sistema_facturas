@@ -13,7 +13,6 @@ class PersonStats extends Model
         'amount_due',
         'amount_paid_mxn',
         'amount_due_mxn',
-        'total_amount_due',
         'patient_id',
     ];
     protected $casts = [
@@ -21,7 +20,6 @@ class PersonStats extends Model
         'status' => 'integer',
         'amount_paid' => 'decimal:13',
         'amount_due' => 'decimal:13',
-        'total_amount_due' => 'decimal:13',
     ];
 
     /**
@@ -34,13 +32,13 @@ class PersonStats extends Model
 
     public function amountDueMXN()
     {
-        return number_format($this->amount_due, 3);
+        return number_format($this->amount_due_mxn, 3);
     }
 
-    public function totalAmountDue()
+    /* public function totalAmountDue()
     {
         return number_format($this->total_amount_due, 3);
-    }
+    } */
 
     /**
      * Get the value of amount_paid.
@@ -60,6 +58,13 @@ class PersonStats extends Model
         $total = $this->amount_paid + $this->amount_due;
 
         return number_format($total, 3);
+    }
+
+    public function totalMXN()
+    {
+        $total_mxn = $this->amount_paid_mxn + $this->amount_due_mxn;
+
+        return number_format($total_mxn, 3);
     }
 
     public function patient()

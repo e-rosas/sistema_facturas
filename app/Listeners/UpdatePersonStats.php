@@ -55,8 +55,10 @@ class UpdatePersonStats
         $stats->calculateAmounts($id);
         $person_stats = PersonStats::where('patient_id', $id)->first();
 
-        $person_stats->total_amount_due = $stats->amount_due_without_discounts;
+        //$person_stats->total_amount_due = $stats->amount_due_without_discounts;
         $person_stats->amount_due = $stats->amount_due;
+        $person_stats->amount_due_mxn = $stats->amount_due_mxn;
+        $person_stats->amount_paid_mxn = $stats->amount_paid_mxn;
 
         $person_stats->amount_paid = $stats->getAmountPaid();
         $person_stats->save();

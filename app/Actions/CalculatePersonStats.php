@@ -9,6 +9,8 @@ class CalculatePersonStats
     public $total_invoices;
     public $amount_due = 0;
     public $amount_due_without_discounts = 0;
+    public $amount_due__mxn = 0;
+    public $amount_paid_mxn = 0;
 
     public function getAllInvoices($patient_id)
     {
@@ -26,8 +28,14 @@ class CalculatePersonStats
         $this->amount_due =
             $this->total_invoices->amount_due;
 
-        $this->amount_due_without_discounts =
-            $this->total_invoices->total - $this->total_invoices->amount_due;
+        $this->amount_due_mxn =
+            $this->total_invoices->amount_due_m;
+
+        $this->amount_paid_mxn =
+            $this->total_invoices->amount_paid_m;
+
+        /* $this->amount_due_without_discounts =
+            $this->total_invoices->total - $this->total_invoices->amount_due; */
     }
 
     /**

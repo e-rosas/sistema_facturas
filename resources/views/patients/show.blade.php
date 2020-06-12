@@ -5,12 +5,12 @@
 
     <div class="container-fluid mt--7">
         <div class="row">
-            {{--  <div class="col-xl-12 mb-5 mb-xl-0 card-group">
-                @include('components.invoiceStatsCard', ['id' => 'total','title' => 'Total', 'value' => $patient->person_stats->total()])
-                @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' =>  __('Pagado') , 'value' => $patient->person_stats->amountPaid()])
-                @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => __('Debe'), 'value' => $patient->person_stats->amountDue()])
+            <div class="col-xl-12 mb-5 mb-xl-0 card-group">
+                @include('components.invoiceStatsCard',  ['idUSD' => 'totalUSD','title' => 'Total', 'USD' => 0, 'value' => $patient->person_stats->total(), 'idMXN' => 'totalMXN', 'valueMXN' => $patient->person_stats->totalMXN()])
+                @include('components.invoiceStatsCard', ['idUSD' => 'amount-paid','title' => 'Pagado', 'bg' => 'bg-green', 'USD' => 0,'value' => $patient->person_stats->amountPaid(), 'idMXN' => 'amount-paidMXN', 'valueMXN' => $patient->person_stats->amountPaidMXN()])
+                @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe', 'bg' => 'bg-yellow', 'USD' => 0,'value' => $patient->person_stats->amountDue(), 'idMXN' => 'amount-dueMXN', 'valueMXN' => $patient->person_stats->amountDueMXN()])
                
-            </div>  --}}
+            </div>
         </div>
         <div class="row mt-5">
             <div class="col-xl-9">
