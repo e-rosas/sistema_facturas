@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Invoices</title>
+    <title>{{ $invoice->code }}</title>
     <style type="text/css">
         body {
             font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -209,12 +209,20 @@
 
         <img src={{url('/img/HM-logo.png')}} class="logo">
 
+        <textarea name="address" cols="30" rows="3">
+            HOSPITAL MEXICO DE BC SA DE CV
+            PO BOX 2508
+            CHULA VISTA CA 91912
+        </textarea>
+
         <h3 class="heading-date-range">{{ $datetime }}</h3>
 
     </header>
     <section class="row-alt">
-        <p class="sub-heading-text">
-            {{ $person->fullName() }}
+        <p style="text-align:left;">"INSURED'S NAME: " <span>{{ $insured->$patient->name() }}</span>
+            <span style="float:right;">
+                "PATIENT'S ACCOUNT NO.: " <span>{{ $invoice->$code }}</span>
+            </span>
         </p>
     </section>
 

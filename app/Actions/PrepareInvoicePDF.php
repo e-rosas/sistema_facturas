@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Actions;
+
+use App\Insuree;
+use App\Invoice;
+
+class PrepareInvoicePDF
+{
+    private $invoice;
+    private $patient;
+    private $insured;
+
+    public function __construct(Invoice $invoice)
+    {
+        $this->invoice = $invoice;
+        $this->patient = $invoice->patient;
+        if ($this->invoice->patient->insured) {
+            $this->insured = $this->invoice->patient->insuree;
+        } else {
+            $this->insured = Insuree::where('patient_id', $this->invoice->patient->dependent->insuree_id)->first();
+        }
+    }
+
+    public function serviceCategories()
+    {
+        $this->invoice->load('services2.service.category');
+        $services = $this->invoice->services2;
+        $categories = $services->pluck('service.category')->unique();
+        foreach ($services as $service) {
+            $category = $categories->firstWhere('id', $service->service->category_id);
+        }
+    }
+}
