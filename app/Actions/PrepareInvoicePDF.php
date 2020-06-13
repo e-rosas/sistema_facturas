@@ -30,5 +30,7 @@ class PrepareInvoicePDF
         foreach ($services as $service) {
             $category = $categories->firstWhere('id', $service->service->category_id);
         }
+
+        return $categories;
     }
 }
