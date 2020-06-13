@@ -207,11 +207,9 @@
 <body>
     <header class="primary-header">
 
-      <h1 class="logo">
-        Hospital México
-      </h1>
+        <img src={{url('/img/HM-logo.png')}} class="logo">
 
-      <h3 class="heading-date-range">{{ $datetime }}</h3>
+        <h3 class="heading-date-range">{{ $datetime }}</h3>
 
     </header>
     <section class="row-alt">
