@@ -94,7 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('reports/stats', 'ReportController@stats')->name('reports.stats');
     Route::get('reports', 'ReportController@index')->name('reports.index');
 
-    Route::get('pdf', 'PDFController@hospitalization');
+    Route::get('invoice/pdf', 'PDFController@hospitalization')->name('invoices.hospitalization');
 
     Route::post('invoices/{invoice}/pdf', 'PaymentFormController@fill')->name('invoice.pdf');
 
