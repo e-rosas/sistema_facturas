@@ -86,7 +86,7 @@
           @foreach ($categories as $category)
             <h5 class="invoice-month-header">{{ $category->name }} </h5>
 
-            <div class="invoice-details">
+            <div class="invoice-detail">
                 <table class="invoice-table">
                     {{--  <thead>
                         <tr>
@@ -113,7 +113,7 @@
                                 </td>
                             </tr>
                         @endforeach
-                        <tr class="calc-row">
+                        <tr class="row-data">
                             <td colspan="2"></td>
                             <td>Total</td>
                             <td>$ {{ $category->total() }}</td>
