@@ -31,7 +31,6 @@
               padding: 8px 0;
               letter-spacing: 0;
           }
-          
           .invoice-table .row-data #unit {
             text-align: center;
           }
