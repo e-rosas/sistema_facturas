@@ -29,6 +29,6 @@ class PDFController extends Controller
 
         $hospPDF = BarryPDF::loadView('pdf.hospitalization');
 
-        return $hospPDF->download($invoice->code);
+        return $hospPDF->download($invoice->code.'-Hosp.pdf');
     }
 }
