@@ -18,4 +18,9 @@ class Category extends Model
         'id' => 'integer',
         'name' => 'string',
     ];
+
+    public function total()
+    {
+        return number_format($this->total, 2);
+    }
 }

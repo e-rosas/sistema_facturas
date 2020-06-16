@@ -9,14 +9,13 @@ use Carbon\Carbon;
 
 class PDFController extends Controller
 {
-    public function hospitalization()
+    public function hospitalization(Invoice $invoice)
     {
-        $invoice = Invoice::find(75);
         $pdf = new PrepareInvoicePDF($invoice);
         $categories = $pdf->serviceCategories();
         $insured = $pdf->insured;
         $patient = $pdf->patient;
-        $invoice_total = $invoice->totalDiscounted();
+        $invoice_total = number_format($invoice->total_with_discounts, 2);
         $datetime = Carbon::now();
 
         view()->share([
@@ -30,6 +29,6 @@ class PDFController extends Controller
 
         $hospPDF = BarryPDF::loadView('pdf.hospitalization');
 
-        return $hospPDF->stream($invoice->code);
+        return $hospPDF->download($invoice->code);
     }
 }

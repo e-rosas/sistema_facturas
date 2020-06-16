@@ -31,6 +31,11 @@
                                     <input type="hidden" name="output" value="I">
                                     <button type="submit" class="dropdown-item">Ver</button>
                                 </form>
+                                <form target="_blank" method="post" action="{{ route('invoice.hospitalization', $invoice) }}">
+                                    @csrf
+                                    <input type="hidden" name="output" value="I">
+                                    <button type="submit" class="dropdown-item">Hospitalización</button>
+                                </form>
                         </div>
                     </div>
                     
