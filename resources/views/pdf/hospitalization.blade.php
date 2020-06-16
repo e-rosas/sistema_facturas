@@ -114,9 +114,8 @@
                             </tr>
                         @endforeach
                         <tr class="row-data">
-                            <td colspan="2"></td>
-                            <td>Total</td>
-                            <td>$ {{ $category->total() }}</td>
+                            <td colspan="3"></td>
+                            <td style="font-weight: bold;">$ {{ $category->total() }}</td>
                         </tr>
                     </tbody>
                 </table>
