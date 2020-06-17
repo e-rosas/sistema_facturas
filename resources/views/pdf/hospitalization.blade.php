@@ -25,7 +25,7 @@
             font-size: 12px;
             letter-spacing: 1px;
             color: grey;
-            padding: 4px 0;
+            padding: 2px 0;
           }
           .invoice-table tbody tr td {
               letter-spacing: 0;
@@ -99,16 +99,16 @@
                     <tbody>
                         @foreach ($category->services as $service)
                             <tr class="row-data">
-                                <td>
+                                <td style="width:15%; word-wrap: break-word">
                                     {{ $service->DOS->format("m/d/Y") }}
                                 </td>
-                                <td>
+                                <td style="width:60%; word-wrap: break-word">
                                     {{ $service->description}}
                                 </td>
-                                <td id="unit">
+                                <td style="width:10%; word-wrap: break-word" id="unit">
                                     {{ $service->quantity }}
                                 </td>
-                                <td>
+                                <td style="width:15%; word-wrap: break-word">
                                     $ {{ number_format($service->total_discounted_price, 2) }}
                                 </td>
                             </tr>
