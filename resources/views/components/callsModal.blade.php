@@ -16,7 +16,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                         </div>
-                                        <input type="number" name="number" id="input-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
+                                        <input type="number" name="number" id="input-call-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
                                         placeholder="Number" required>
                                         @if ($errors->has('number'))
                                             <span class="invalid-feedback" role="alert">
@@ -27,7 +27,7 @@
                                 </div>
                                 {{--  Invoice  --}}
                                 {{--  <div class="form-group">
-                                    <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id"> 
+                                    <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id">
                                         <option value='0'>{{ __('Seleccionar factura') }}</option>
                                     </select>
                                 </div>  --}}
@@ -161,7 +161,7 @@
     }
 
     $("#save_call").click(function(){
-        var number = document.getElementById("input-number").value;
+        var number = document.getElementById("input-call-number").value;
         var claim = document.getElementById("input-claim").value;
         var date = document.getElementById("input-call-date").value;
         var comments = document.getElementById("input-call-comments").value;
