@@ -11,15 +11,15 @@
             <div class="col-lg-12">
                 <div class=" text-justify">
                     <h2 style="color:white" class="card-title text-uppercase mb-0">Paciente</h2>
-                    
+
                 </div>
             </div>
         </div>  --}}
-        <div class="card-body pt-0 pt-md-4">    
+        <div class="card-body pt-0 pt-md-4">
             <div class="text-center">
                 <h3>
                     <a href="{{ route('patients.show', $patient) }}" class="mr-4">{{ $patient->full_name }} </a>
-                    
+
                 </h3>
                 <div class="h4 font-weight-300">
                     <span> <a href="{{ route('patients.show', $patient) }}" class="mr-4">{{ $patient->insurance_id }} </a>  </span>
@@ -44,5 +44,5 @@
     </div>
 </div>
 
-   
+
 

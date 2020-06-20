@@ -31,7 +31,7 @@ class UpdateInvoiceDetailsRequest extends FormRequest
             'concept' => 'max:255',
             'date' => 'date',
             'comments' => 'max:1000',
-            'doctor' => 'max:255',
+            'doctor' => 'required|max:255',
             'exchange_rate' => 'numeric|required|between:0,999999999.999',
         ];
     }

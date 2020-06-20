@@ -12,7 +12,7 @@
                                 {{--  number --}}
                                 <div class="col-md-2 col-auto form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-number">Folio CONTPAQ</label>
-                                    <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}" 
+                                    <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}"
                                     placeholder="Folio" value="{{ $invoice->number }}">
 
                                     @if ($errors->has('number'))
@@ -24,7 +24,7 @@
                                 {{--  series --}}
                                 <div class="col-md-2 col-auto form-group{{ $errors->has('series') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-series">Serie</label>
-                                    <input type="text" name="series" id="input-series" class="form-control form-control-alternative{{ $errors->has('series') ? ' is-invalid' : '' }}" 
+                                    <input type="text" name="series" id="input-series" class="form-control form-control-alternative{{ $errors->has('series') ? ' is-invalid' : '' }}"
                                     placeholder="Serie" value="{{ $invoice->series }}">
 
                                     @if ($errors->has('series'))
@@ -36,7 +36,7 @@
                                 {{--  concept --}}
                                 <div class="col-md-8 col-auto form-group{{ $errors->has('concept') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-concept">Concepto</label>
-                                    <input type="text" name="concept" id="input-concept" class="form-control form-control-alternative{{ $errors->has('concept') ? ' is-invalid' : '' }}" 
+                                    <input type="text" name="concept" id="input-concept" class="form-control form-control-alternative{{ $errors->has('concept') ? ' is-invalid' : '' }}"
                                     placeholder="Concepto" value="{{ $invoice->concept }}">
 
                                     @if ($errors->has('concept'))
@@ -45,14 +45,14 @@
                                         </span>
                                     @endif
                                 </div>
-                                
-                                
+
+
                             </div>
                             <div class="form-row">
                                 {{--  code --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-code">Número</label>
-                                    <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}" 
+                                    <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}"
                                     placeholder="Número" value="{{ $invoice->code }}">
 
                                     @if ($errors->has('code'))
@@ -61,10 +61,10 @@
                                         </span>
                                     @endif
                                 </div>
-                                
+
                                 {{--  date  --}}
                                 <div class="col-md-3 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-date">Fecha</label>
+                                    <label class="form-control-label" for="input-date">Fecha Facturación</label>
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
@@ -79,9 +79,9 @@
                                     @endif
                                 </div>
                                 {{--  exchange_rate --}}
-                                <div class="col-md-2 form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="invoice-exchange_rate">Cambio</label>
-                                    <input type="numeric" name="exchange_rate" id="invoice-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
+                                <div class="col-md-5 form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="invoice-exchange_rate">Cambio (mayor que 0)</label>
+                                    <input type="numeric" name="exchange_rate" id="invoice-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}"
                                     placeholder="Cambio" value="{{ $invoice->exchange_rate }}" required>
 
                                     @if ($errors->has('exchange_rate'))
@@ -95,7 +95,7 @@
                                 {{--  comments --}}
                                 <div class="col-md-12 col-auto form-group{{ $errors->has('comments') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-comments">Observaciones</label>
-                                    <input type="text" name="comments" id="input-comments" class="form-control form-control-alternative{{ $errors->has('comments') ? ' is-invalid' : '' }}" 
+                                    <input type="text" name="comments" id="input-comments" class="form-control form-control-alternative{{ $errors->has('comments') ? ' is-invalid' : '' }}"
                                     placeholder="Observaciones" value="{{ $invoice->comments }}">
 
                                     @if ($errors->has('comments'))
@@ -109,7 +109,7 @@
                                 {{--  doctor --}}
                                 <div class="col-md-12 col-auto form-group{{ $errors->has('doctor') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-doctor">Doctor</label>
-                                    <input type="text" name="doctor" id="input-doctor" class="form-control form-control-alternative{{ $errors->has('doctor') ? ' is-invalid' : '' }}" 
+                                    <input type="text" name="doctor" id="input-doctor" class="form-control form-control-alternative{{ $errors->has('doctor') ? ' is-invalid' : '' }}"
                                     placeholder="Nombre, MD" value="{{ $invoice->doctor }}">
 
                                     @if ($errors->has('doctor'))
@@ -150,7 +150,7 @@
                 "number": number,
                 "doctor": doctor,
             },
-        success: function (response) {         
+        success: function (response) {
             displayDetails(response.data);
             displayStats();
             $('#modal-details').modal('hide');

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => 'Facturas'])
 
 @section('content')
-    @include('layouts.headers.header', ['title' => 'Registrar factura'])   
+    @include('layouts.headers.header', ['title' => 'Registrar factura'])
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -27,8 +27,8 @@
                         <div class="form-row">
                             <h3 id="patient-name"></h3>
                         </div>
-                    </div>                    
-                </div>               
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -47,7 +47,7 @@
                             {{--  number --}}
                             <div class="col-md-2 col-auto form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-number">Folio CONTPAQ</label>
-                                <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}" 
+                                <input type="text" name="number" id="input-number" class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}"
                                 placeholder="Folio" value="Pendiente">
 
                                 @if ($errors->has('number'))
@@ -65,7 +65,7 @@
                             {{--  series --}}
                             <div class="col-md-2 col-auto form-group{{ $errors->has('series') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-series">Serie</label>
-                                <input type="text" name="series" id="input-series" class="form-control form-control-alternative{{ $errors->has('series') ? ' is-invalid' : '' }}" 
+                                <input type="text" name="series" id="input-series" class="form-control form-control-alternative{{ $errors->has('series') ? ' is-invalid' : '' }}"
                                 placeholder="Serie" value="D">
 
                                 @if ($errors->has('series'))
@@ -77,7 +77,7 @@
                             {{--  concept --}}
                             <div class="col-md-5 col-auto form-group{{ $errors->has('concept') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-concept">Concepto</label>
-                                <input type="text" name="concept" id="input-concept" class="form-control form-control-alternative{{ $errors->has('concept') ? ' is-invalid' : '' }}" 
+                                <input type="text" name="concept" id="input-concept" class="form-control form-control-alternative{{ $errors->has('concept') ? ' is-invalid' : '' }}"
                                 placeholder="Concepto" value="Factura dolares Aseguranza">
 
                                 @if ($errors->has('concept'))
@@ -86,14 +86,14 @@
                                     </span>
                                 @endif
                             </div>
-                            
-                            
+
+
                         </div>
                         <div class="form-row">
                             {{--  currency --}}
                             <div class="col-md-3 col-auto form-group{{ $errors->has('currency') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-currency">Moneda</label>
-                                <input type="text" name="currency" id="input-currency" class="form-control form-control-alternative{{ $errors->has('currency') ? ' is-invalid' : '' }}" 
+                                <input type="text" name="currency" id="input-currency" class="form-control form-control-alternative{{ $errors->has('currency') ? ' is-invalid' : '' }}"
                                 placeholder="Moneda" value="USD" required>
 
                                 @if ($errors->has('currency'))
@@ -103,14 +103,14 @@
                                 @endif
                             </div>
 
-                            
-                            
+
+
                         </div>
                         <div class="form-row">
                             {{--  code --}}
                             <div class="col-md-4 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-code">Número</label>
-                                <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}" 
+                                <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}"
                                 placeholder="Número" value="{{ old('code') }}">
 
                                 @if ($errors->has('code'))
@@ -119,10 +119,10 @@
                                     </span>
                                 @endif
                             </div>
-                            
+
                             {{--  date  --}}
                             <div class="col-md-3 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="input-date">Fecha</label>
+                                <label class="form-control-label" for="input-date">Fecha Facturación</label>
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span  class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
@@ -138,7 +138,7 @@
                             {{--  exchange_rate --}}
                             <div class="col-md-2 form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="invoice-exchange_rate">Cambio</label>
-                                <input type="numeric" name="exchange_rate" id="invoice-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="exchange_rate" id="invoice-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}"
                                 placeholder="Cambio" value=0 required>
 
                                 @if ($errors->has('exchange_rate'))
@@ -150,7 +150,7 @@
                             {{--  amount_due  --}}
                             <div class="col-md-3 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-amount_due">Debe</label>
-                                <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}"
                                 placeholder="0" value="{{ old('amount_due') }}" readonly>
 
                                 @if ($errors->has('amount_due'))
@@ -159,72 +159,72 @@
                                     </span>
                                 @endif
                             </div>
-                            
+
                         </div>
                         <div class="form-row">
                             {{--  tax  --}}
                             <div class="col-md-4 col-auto form-group{{ $errors->has('tax') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-tax">IVA</label>
-                                <input type="numeric" name="tax" id="input-tax" class="form-control form-control-alternative{{ $errors->has('tax') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="tax" id="input-tax" class="form-control form-control-alternative{{ $errors->has('tax') ? ' is-invalid' : '' }}"
                                 placeholder="0" value="{{ old('tax') }}" readonly>
-                        
+
                                 @if ($errors->has('tax'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('tax') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                            
-                            
+
+
                             {{--  sub_total  --}}
                             <div class="col-md-4 col-auto form-group{{ $errors->has('sub_total') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-sub_total">Subtotal</label>
-                                <input type="numeric" name="sub_total" id="input-sub_total" class="form-control form-control-alternative{{ $errors->has('sub_total') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="sub_total" id="input-sub_total" class="form-control form-control-alternative{{ $errors->has('sub_total') ? ' is-invalid' : '' }}"
                                 placeholder="0" value="{{ old('sub_total') }}" readonly>
-                        
+
                                 @if ($errors->has('sub_total'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('sub_total') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                        
-                            
-                        
+
+
+
                             {{--  total  --}}
                             <div class="col-md-4 col-auto form-group{{ $errors->has('total') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-total">Total</label>
-                                <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}"
                                 placeholder="0" value="{{ old('total') }}" readonly>
-                        
+
                                 @if ($errors->has('total'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('total') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                            
-                            
+
+
                         </div>
                         <div class="form-row">
                             {{--  dtax  --}}
                             <div class="col-md-4 col-auto form-group">
                                 <label class="form-control-label" for="input-dtax">IVA con descuento</label>
-                                <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative" 
+                                <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative"
                                 placeholder="0" value="0" readonly>
                             </div>
                             {{--  sub_total_discounts  --}}
                             <div class="col-md-4 col-auto form-group">
                                 <label class="form-control-label" for="input-sub_total_discounts">Subtotal con descuento</label>
-                                <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative" 
+                                <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative"
                                 placeholder="0" value="0" readonly>
                             </div>
                             {{--  total_with_discounts  --}}
                             <div class="col-md-4 col-auto form-group{{ $errors->has('total_with_discounts') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-total_with_discounts">Total con descuento</label>
-                                <input type="numeric" name="total_with_discounts" id="input-total_with_discounts" class="form-control form-control-alternative{{ $errors->has('total_with_discounts') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="total_with_discounts" id="input-total_with_discounts" class="form-control form-control-alternative{{ $errors->has('total_with_discounts') ? ' is-invalid' : '' }}"
                                 placeholder="0" value="{{ old('total_with_discounts') }}" readonly>
-                        
+
                                 @if ($errors->has('total_with_discounts'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('total_with_discounts') }}</strong>
@@ -236,7 +236,7 @@
                             {{--  comments --}}
                             <div class="col-md-12 col-auto form-group{{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-comments">Observaciones</label>
-                                <input type="text" name="comments" id="input-comments" class="form-control form-control-alternative{{ $errors->has('comments') ? ' is-invalid' : '' }}" 
+                                <input type="text" name="comments" id="input-comments" class="form-control form-control-alternative{{ $errors->has('comments') ? ' is-invalid' : '' }}"
                                 placeholder="Observaciones" value="{{ old('comments') }}">
 
                                 @if ($errors->has('comments'))
@@ -250,7 +250,7 @@
                             {{--  doctor --}}
                             <div class="col-md-12 col-auto form-group{{ $errors->has('doctor') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-doctor">Doctor</label>
-                                <input type="text" name="doctor" id="input-doctor" class="form-control form-control-alternative{{ $errors->has('doctor') ? ' is-invalid' : '' }}" 
+                                <input type="text" name="doctor" id="input-doctor" class="form-control form-control-alternative{{ $errors->has('doctor') ? ' is-invalid' : '' }}"
                                 placeholder="Nombre, MD" value="">
 
                                 @if ($errors->has('doctor'))
@@ -260,8 +260,8 @@
                                 @endif
                             </div>
                         </div>
-                    </div>                    
-                </div>               
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -281,7 +281,7 @@
                     <div class="card-body">
                         {{--  Diagnoses  --}}
                         <div class="form-row">
-                            @include('components.searchDiagnoses')  
+                            @include('components.searchDiagnoses')
                             <div class="col-md-2">
                                 <label class="form-control-label"></label>
                                 <button type="button" onclick="addDiagnosisList()" id="add_diagnosis" class="btn btn-outline-success btn-lg">Agregar</button>
@@ -304,8 +304,8 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>                    
-                </div>               
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -325,7 +325,7 @@
                     <div class="card-body">
                         {{-- Selecting service --}}
                         <div class="col-xl-12 order-xl-1">
-                                @include('components.searchServices')                        
+                                @include('components.searchServices')
                         </div>
                         <br />
                         <div class="form-row">
@@ -342,25 +342,25 @@
                             {{--  price  --}}
                             <div class="col-lg-2 col-auto form-group">
                                 <label class="form-control-label" for="custom-price">Precio</label>
-                                <input type="numeric"  name="service-price" id="custom-price" class="form-control form-control-alternative" 
+                                <input type="numeric"  name="service-price" id="custom-price" class="form-control form-control-alternative"
                                 placeholder="0" required>
-                            
+
                             </div>
                             {{--  discounted-price  --}}
                             {{-- <div class="col-lg-2 col-auto form-group">
                                 <label class="form-control-label" for="custom-discounted-price">Descuento</label>
-                                <input type="numeric" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
+                                <input type="numeric" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative"
                                 placeholder="0"  required>
-                            
+
                             </div> --}}
-                            <input type="hidden" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
+                            <input type="hidden" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative"
                             placeholder="0"  required>
                             {{--  quantity  --}}
                             <div class="col-lg-1 col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-quantity">Cantidad</label>
-                                <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}"
                                 placeholder="1" value=1 required>
-                            
+
                                 @if ($errors->has('quantity'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('quantity') }}</strong>
@@ -390,12 +390,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
                         <br />
-                        <div class="form-row">                            
+                        <div class="form-row">
                             {{-- Remove --}}
                             <div class="col-md-3 col-auto">
                                 <button type="button" id="remove_selected" class="btn btn-danger btn-sm">Remover servicio seleccionado</button>
@@ -405,8 +405,8 @@
                                 <button type="button" id="save" class="btn btn-success text-right">Confirmar</button>
                             </div>
                         </div>
-                    </div>                    
-                </div>               
+                    </div>
+                </div>
             </div>
         </div>
         @include('items.partials.itemsModal')
@@ -451,7 +451,7 @@
     function addDiagnosisList(){
         var diagnosis_id = Number(document.getElementById("diagnosis_id").value);
         findDiagnosis(diagnosis_id);
-        
+
     }
 
     function displayDiagnosisList(){
@@ -472,11 +472,11 @@
                 output += "</div><div class='form-row'>";
             }
             output += "<div class='col-auto custom-control custom-checkbox custom-control-inline'>"
-                + "<input type='checkbox' class='custom-control-input' id=diag" + diagnosesList[i].diagnosis_id + " data-id=" + diagnosesList[i].diagnosis_id + " data-code="+diagnosesList[i].diagnosis_code +">"     
-                + "<label class='custom-control-label' for=diag" + diagnosesList[i].diagnosis_id + ">"+diagnosesList[i].name +"        </label>" 
+                + "<input type='checkbox' class='custom-control-input' id=diag" + diagnosesList[i].diagnosis_id + " data-id=" + diagnosesList[i].diagnosis_id + " data-code="+diagnosesList[i].diagnosis_code +">"
+                + "<label class='custom-control-label' for=diag" + diagnosesList[i].diagnosis_id + ">"+diagnosesList[i].name +"        </label>"
                 + "<button onclick='removeDiagnosis("+diagnosesList[i].diagnosis_id+")' class='delete-item btn btn-sm btn-danger' id=" + diagnosesList[i].diagnosis_id+ ">X</button>"
                 +"</div>";
-          
+
         }
         $('#diagnoses_list').html(output);*/
     }
@@ -506,7 +506,7 @@
         diagnoses_pointers = "";
         DOS = new Date();
         DOS_to = this.DOS;
-        constructor(service_id, description, price, discounted_price, quantity, id, 
+        constructor(service_id, description, price, discounted_price, quantity, id,
             DOS,DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
             this.description = description;
@@ -532,7 +532,7 @@
         }
 
         // Add to cart
-        addItemToCart(item_id, description, price, discounted_price, quantity, 
+        addItemToCart(item_id, description, price, discounted_price, quantity,
             id, taxable, descripcion, code) {
             for(var item in this.items) {
                 if(this.items[item].item_id === item_id && this.items[item].discounted_price === discounted_price) {
@@ -541,11 +541,11 @@
                     return;
                 }
             }
-            
-            var item = new Item(item_id, description, price, discounted_price, quantity, 
+
+            var item = new Item(item_id, description, price, discounted_price, quantity,
                 id, taxable, descripcion, code);
-            this.items.push(item);   
-            displayItems(this);  
+            this.items.push(item);
+            displayItems(this);
         }
 
         // Remove item from cart
@@ -568,7 +568,7 @@
                 break;
               }
             }
-            displayItems(this);  
+            displayItems(this);
         }
 
         // Total cart
@@ -591,7 +591,7 @@
                 this.total_discounted_price += this.items[item].total_discounted_price;
             }
         }
-        
+
     }
 
     class Item {
@@ -611,7 +611,7 @@
             this.taxable = taxable;
             this.descripcion = descripcion;
             this.code = code;
-            this.calcTotals();          
+            this.calcTotals();
         }
 
         calcTotals() {
@@ -677,7 +677,7 @@
         }
     }
 
-    function addServiceToCart(service_id, description, price, discounted_price, 
+    function addServiceToCart(service_id, description, price, discounted_price,
         quantity, id, descripcion, code, pointers) {
         for(var service in this.services) {
             if(this.services[service].id === id) {
@@ -689,9 +689,9 @@
 
         var DOS = document.getElementById("input-date_service").value;
         var DOS_to = document.getElementById("input-date_service-to").value;
-        var service = new Service(service_id, description, price, discounted_price, 
+        var service = new Service(service_id, description, price, discounted_price,
             quantity, id, DOS,DOS_to, descripcion, code, pointers);
-        this.services.push(service);   
+        this.services.push(service);
         displayCart();
     }
 
@@ -705,13 +705,13 @@
         totalCart();
     }
 
-    function addItemToService(service_id, item_id, description, price, discounted_price, 
+    function addItemToService(service_id, item_id, description, price, discounted_price,
         tax, quantity, id, descripcion, code){
 
         //Find service in array
         var service = this.services.find(s => s.id == service_id);
 
-        service.addItemToCart(item_id, description, price, 
+        service.addItemToCart(item_id, description, price,
                 discounted_price, quantity, this.services.length, tax, descripcion, code);
     }
 
@@ -728,8 +728,8 @@
                 "_token": "{{ csrf_token() }}",
                 "diagnosis_id" : diagnosis_id
             },
-        success: function (response) {      
-                addDiagnosis(diagnosis_id, response.code, response.name, response.nombre);                            
+        success: function (response) {
+                addDiagnosis(diagnosis_id, response.code, response.name, response.nombre);
             }
         });
             return false;
@@ -746,12 +746,12 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id" : id
             },
-        success: function (response) {      
-                         
-                addServiceToCart(response.id, response.description, 
+        success: function (response) {
+
+                addServiceToCart(response.id, response.description,
                     price, discounted_price, quantity, services.length,
-                     response.descripcion, response.code, pointers);   
-                displayCart();                                 
+                     response.descripcion, response.code, pointers);
+                displayCart();
             }
         });
             return false;
@@ -767,17 +767,17 @@
                 "_token": "{{ csrf_token() }}",
                 "item_id" : item_id
             },
-        success: function (response) {                
-                addItemToService(service_id, response.id, response.description, 
-                    price, discounted_price, response.tax, quantity, 
-                    services.length,response.descripcion, response.code);                                    
+        success: function (response) {
+                addItemToService(service_id, response.id, response.description,
+                    price, discounted_price, response.tax, quantity,
+                    services.length,response.descripcion, response.code);
             }
         });
             return false;
     }
 
 
-    function sendInvoice(patient_id, series, number, concept, code, currency, 
+    function sendInvoice(patient_id, series, number, concept, code, currency,
          date, comments){
             var exchange_rate = document.getElementById("invoice-exchange_rate").value;
             exchange_rate = parseFloat(exchange_rate.replace(/,/g,''));
@@ -813,7 +813,7 @@
         success: function (response) {
             setTimeout(function() {
                 window.location.href = response;
-              }, 1000);              
+              }, 1000);
             }
         });
             return false;
@@ -825,7 +825,7 @@
         selectedServiceId = id;
         //Find service in array
         var service = services.find(s => s.id == id);
-        
+
         displayItems(service);
         $('#modal-items').modal('show')
 
@@ -837,7 +837,7 @@
         for(var i in service.items) {
           output += "<tr value="+service.items[i].id+">"
             + "<td>" + service.items[i].description + "</td>"
-            + "<td>" + service.items[i].price + "</td>" 
+            + "<td>" + service.items[i].price + "</td>"
             + "<td>" + service.items[i].discounted_price + "</td>"
             + "<td>" + service.items[i].quantity + "</td>"
             + "<td>" + service.items[i].total_price + "</td>"
@@ -847,12 +847,12 @@
         }
         $('#items_table tbody').html(output);
 
-        
-         
+
+
     }
 
     function searchNumber(){
-        var number = document.getElementById("input-number").value; 
+        var number = document.getElementById("input-number").value;
         if(number.length > 0){
             getInvoiceData(number);
         }
@@ -876,22 +876,22 @@
             document.getElementById("input-doctor").value = response.data.doctor;
             document.getElementById("invoice-exchange_rate").value = response.data.exchange_rate;
             for(var i = 0; i < response.data.diagnoses.length; i++){
-                addDiagnosisFromInvoice(response.data.diagnoses[i].diagnosis_id, response.data.diagnoses[i].diagnosis_name, 
-                    response.data.diagnoses[i].diagnosis_code, response.data.diagnoses[i].diagnosis_nombre);   
+                addDiagnosisFromInvoice(response.data.diagnoses[i].diagnosis_id, response.data.diagnoses[i].diagnosis_name,
+                    response.data.diagnoses[i].diagnosis_code, response.data.diagnoses[i].diagnosis_nombre);
             }
-            displayDiagnosisList();            
-                                                 
+            displayDiagnosisList();
+
             }
         });
         return false;
     }
 
     function addDiagnosisFromInvoice(diagnosis_id, name, code, nombre) {
-        
+
         var diagnosis = new Diagnosis(diagnosis_id, code,  name, nombre);
         this.diagnosesList.push(diagnosis);
     }
-   
+
 
     function displayCart() {
         totalCart();
@@ -910,16 +910,16 @@
                 +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
                 +'</td> </tr>';
             }
-        
+
         $('#services_table tbody').html(output);
         document.getElementById("input-total").value = this.total;
         document.getElementById("input-total_with_discounts").value = this.total_with_discounts;
         document.getElementById("input-amount_due").value = this.total_with_discounts;
         document.getElementById("input-sub_total").value = this.sub_total;
         document.getElementById("input-sub_total_discounts").value = this.sub_total_discounted;
-        document.getElementById("input-tax").value = this.tax; 
-        document.getElementById("input-dtax").value = this.dtax; 
-        
+        document.getElementById("input-tax").value = this.tax;
+        document.getElementById("input-dtax").value = this.dtax;
+
     }
     const current_date = new Date();
     var dd = String(current_date.getDate()).padStart(2, '0');
@@ -943,23 +943,23 @@
                 if($(this).is(":checked")){
                     i++;
                     pointers += i+",";
-                    
+
                 }
-                
+
 
             });
             pointers = pointers.substring(0,pointers.length-1);
-            
+
             if(quantity > 0 && service_id > 0 && pointers.length > 0){
-                
+
                 var price = document.getElementById("custom-price").value;
                 price = parseFloat(price.replace(/,/g,''));
                 var discounted_price = price; /*document.getElementById("custom-discounted-price").value;
                 discounted_price = parseFloat(discounted_price.replace(/,/g,''));*/
-                
+
                 getService(service_id, quantity, price, discounted_price, pointers);
             }
-            
+
         });
 
 
@@ -972,7 +972,7 @@
                 var item_id= $("#item_id").children("option:selected").val();
                 getItem(selectedServiceId, item_id, quantity, price, discounted_price);
             }
-            
+
         });
 
         // Delete item button
@@ -981,7 +981,7 @@
             var service_id = $(this).data('service');
             //Find service in array
             var service = services.find(s => s.id == service_id);
-            
+
             service.removeItemFromCartAll(id);
 
 
@@ -997,33 +997,33 @@
         })
 
 
-        
+
         $("#save").click(function(){
             var patient_id = document.getElementById("input-patient_id").value;
             if(patient_id < 1){
                 patient_id= $("#patient_id").children("option:selected").val();
             }
             if(services.length > 0 && patient_id > 0) {
-                var date = document.getElementById("input-date").value; 
-                var code = document.getElementById("input-code").value; 
+                var date = document.getElementById("input-date").value;
+                var code = document.getElementById("input-code").value;
                 var comments = document.getElementById("input-comments").value;
-                var number = document.getElementById("input-number").value;  
-                var series = document.getElementById("input-series").value; 
-                var concept = document.getElementById("input-concept").value; 
-                var currency = document.getElementById("input-currency").value; 
-               
-                sendInvoice(patient_id, series, number, concept, code, currency, 
+                var number = document.getElementById("input-number").value;
+                var series = document.getElementById("input-series").value;
+                var concept = document.getElementById("input-concept").value;
+                var currency = document.getElementById("input-currency").value;
+
+                sendInvoice(patient_id, series, number, concept, code, currency,
                       date,  comments);
             }
-            
+
             else {
                 alert("Falta agregar servicios a la factura.");
             }
-            
+
 
         });
     });
-    
+
 </script>
-    
+
 @endpush

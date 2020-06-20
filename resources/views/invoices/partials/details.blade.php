@@ -12,15 +12,6 @@
                             PDF
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                {{--  <form action="{{ route('beneficiary.destroy', $beneficiary) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    
-                                    <a class="dropdown-item" href="{{ route('beneficiary.edit', $beneficiary) }}">{{ __('Edit') }}</a>
-                                    <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this beneficiary?") }}') ? this.parentElement.submit() : ''">
-                                        {{ __('Delete') }}
-                                    </button>
-                                </form>   --}}  
                                 <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
                                     @csrf
                                     <input type="hidden" name="output" value="D">
@@ -38,22 +29,22 @@
                                 </form>
                         </div>
                     </div>
-                    
+
                 </div>
                 @if ($invoice->status != 1)
                     <div class="col-md-4 col-auto text-right">
                         <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
                     </div>
                 @endif
-                @if ($invoice->status != 1) 
+                @if ($invoice->status != 1)
                     <div class="col-md-4 col-auto text-right">
                         <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
                         <br />
                     </div>
                 @endif
-                
+
                 @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])
-                
+
             </div>
         </div>
         <div class="card-body">
@@ -95,7 +86,7 @@
                     <label id="label-exchange_rate">{{ $invoice->exchangeRate() }}</label>
 
                 </div>
-                
+
             </div>
             <div class="form-row">
                 {{--  type --}}
@@ -109,7 +100,7 @@
                     <label id="label-status">{{ $invoice->status() }}</label>
                 </div>
                 <div class="col-md-4">
-                    <select id='new-status' class="custom-select" name="status"> 
+                    <select id='new-status' class="custom-select" name="status">
                         <option value='10'>Cambiar estado</option>
                         <option value='0'>Nota de crédito pendiente.</option>
                         <option value='1'>Completada.</option>
@@ -138,8 +129,8 @@
                     <label id="label-amount_due">{{ $invoice->getAmountDue() }}</label>
 
                 </div>
-                
-                
+
+
             </div>  --}}
             <div class="form-row">
                 {{--  Comments  --}}
@@ -154,7 +145,7 @@
                     <label class="form-control-label" for="label-doctor">Doctor</label>
                     <label id="label-doctor">{{ $invoice->doctor }}</label>
                 </div>
-                
+
             </div>
             <div class="form-row">
                 {{--  tax  --}}
@@ -166,13 +157,13 @@
                 {{--  sub_total  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-sub_total">Subtotal</label>
-                    <span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD" > {{ $invoice->subtotalDiscounted() }} </span> 
+                    <span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD" > {{ $invoice->subtotalDiscounted() }} </span>
 
                 </div>
                 {{--  total  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-total">Total</label>
-                    <span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD" > {{ $invoice->totalDiscounted() }} </span> 
+                    <span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD" > {{ $invoice->totalDiscounted() }} </span>
 
                 </div>
             </div>
@@ -180,27 +171,27 @@
                 @include('components.currencySwitch', ['USD' => 1])
             </div>
             {{-- <div class="form-row">
-                
+
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-dtax">IVA con descuento</label>
                     <label id="label-dtax">{{ $invoice->dtax }}</label>
 
                 </div>
-                
+
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-sub_total_with_discounts">Subtotal con descuento</label>
                     <label id="label-num">{{ $invoice->sub_total_discounted }}</label>
 
                 </div>
-                
+
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-total_with_discounts">Total con descuento</label>
                     <label id="label-num">{{ $invoice->total_with_discounts }}</label>
 
                 </div>
             </div> --}}
-        </div>                    
-    </div>               
+        </div>
+    </div>
 </div>
 @push('js')
 <script>
@@ -218,12 +209,12 @@
                 },
             success: function () {
                 displayStats();
-               
+
                 }
             });
             return false;
         }
-        
+
     }
 </script>
 @endpush
