@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button id="save_details" class="btn btn-success mt-4">{{ __('Guardar') }}</button>
+                                <button onclick="saveDetails()" id="save_details" class="btn btn-success mt-4">{{ __('Guardar') }}</button>
                             </div>
                         </div>
                     </div>
@@ -171,8 +171,7 @@
         document.getElementById("label-doctor").innerHTML = data.doctor;
     }
 
-    $("#save_details").click(function(){
-
+    function saveDetails(){
         var date = document.getElementById("input-date").value;
         var exchange_rate = document.getElementById("invoice-exchange_rate").value;
         var series = document.getElementById("input-series").value;
@@ -185,10 +184,10 @@
         if(exchange_rate > 0){
             sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor);
         }
-
-
-
-    });
+        else{
+            alert("Revisar tipo de cambio.");
+        }
+    }
 </script>
 
 @endpush
