@@ -165,8 +165,8 @@ class PatientController extends Controller
     public function update(Patient $patient, UpdatePatientRequest $request)
     {
         $validated = $request->validated();
+        $validated['full_name'] = $validated['last_name'].' '.$validated['name'];
         $patient->fill($validated);
-        $patient->full_name = $patient->last_name.' '.$patient->first_name;
         if ($patient->insured) {
             //$insuree = Insuree::where('patient_id', $patient->id)->first();
             $patient->insuree->insurer_id = $validated['insurer_id'];
