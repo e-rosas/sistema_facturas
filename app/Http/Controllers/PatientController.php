@@ -166,6 +166,7 @@ class PatientController extends Controller
     {
         $validated = $request->validated();
         $patient->fill($validated);
+        $patient->full_name = $patient->last_name.' '.$patient->first_name;
         if ($patient->insured) {
             //$insuree = Insuree::where('patient_id', $patient->id)->first();
             $patient->insuree->insurer_id = $validated['insurer_id'];
