@@ -54,6 +54,8 @@ class ItemService extends Model
         'quantity' => 'integer',
     ];
 
+    protected $dates = ['date'];
+
     public function getIdtaxAttribute($value)
     {
         return number_format($value, 3);

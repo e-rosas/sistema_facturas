@@ -27,7 +27,7 @@ class CreateItemServicesTable extends Migration
             $table->decimal('sub_total_discounted_price', 13, 4);
             $table->decimal('total_price', 13, 4);
             $table->decimal('total_discounted_price', 13, 4);
-
+            $table->date('date'); //date of service from
             $table->foreign('diagnosis_service_id')->references('id')->on('diagnosis_services')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->timestamps();

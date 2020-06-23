@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('diagnoses/find', 'SearchProductController@findDiagnosis')->name('diagnoses.find');
 
     Route::post('rates', 'RateController@rate')->name('rate.find');
+    Route::get('updaterates', 'RateController@updateRates');
 
     Route::get('payments', 'PaymentController@index')->name('payments.index');
     Route::post('payments/add', 'PaymentController@store')->name('payments.store');

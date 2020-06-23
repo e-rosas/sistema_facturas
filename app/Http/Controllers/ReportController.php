@@ -18,7 +18,7 @@ class ReportController extends Controller
             $end = Carbon::parse($request->end);
         } else {
             $end = Carbon::today()->addDay();
-            $start = Carbon::today()->subMonths(3);
+            $start = Carbon::today()->subMonths(6);
         }
 
         if (!is_null($request->perPage)) {
