@@ -7,7 +7,7 @@
                         <h5 class="heading align-centered text-center mb-4">Servicios y productos de la factura {{ $invoice->code }}</h5>
                         <div class="form-row">
                             <div class="col-md-12 text-left">
-                                <h3 class="text-uppercase text-default ls-1 mb-1">Total de servicios: 
+                                <h3 class="text-uppercase text-default ls-1 mb-1">Total de servicios:
                                     <span class="text-success">{{ $invoice->total_with_discounts }}</span>
                                 </h3>
                             </div>
@@ -16,23 +16,22 @@
                     <div class="card-body text-left">
                         <ul class="list-group list-group-flush">
                                 @foreach ($invoice->services2 as $service)
-                                <div class="shadow-sm p-3 mb-3 bg-white rounded">
-                                    <li class="text-uppercase list-group-item">Servicio: 
-                                        <span class="text-primary font-weight-bold">{{ $service->descripcion .' - '. $service->code()}}
-                                            <span class="text-default font-weight-light">Cantidad: </span>{{ $service->quantity  }}
-                                        </span>
-                                        <ul>
-                                            @foreach ($service->items as $item)
-                                                <li class="font-weight-bold">{{$item->descripcion .' - '.   $item->code() }} <span class="text-default font-weight-light">Cantidad: </span>{{ $item->quantity  }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                </div>
-                                    
+                                    <div class="shadow-sm p-3 mb-3 bg-white rounded">
+                                        <li class="text-uppercase list-group-item">Servicio:
+                                            <span class="text-primary font-weight-bold">{{ $service->descripcion .' - '. $service->code()}}
+                                                <span class="text-default font-weight-light">Cantidad: </span>{{ $service->quantity  }}
+                                            </span>
+                                            <ul>
+                                                @foreach ($service->items as $item)
+                                                    <li class="font-weight-bold">{{$item->descripcion .' - '.   $item->code() }} <span class="text-default font-weight-light">Cantidad: </span>{{ $item->quantity  }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    </div>
                                 @endforeach
                         </ul>
-                        
-                        
+
+
                     </div>
                 </div>
             </div>

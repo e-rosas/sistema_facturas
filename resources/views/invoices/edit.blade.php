@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => 'Facturas'])
 
 @section('content')
-    @include('layouts.headers.header', ['title' => 'Editar Factura'])   
+    @include('layouts.headers.header', ['title' => 'Editar Factura'])
 
     <div class="container-fluid mt--7">
         <div class="col-12">
@@ -35,16 +35,16 @@
                                 <label class="form-control-label" for="person_name">{{ __('Paciente') }}</label>
                                 <h3>
                                     <a href="{{ route('patients.show', $invoice->patient) }}" class="mr-4">{{ $invoice->patient->full_name }} </a>
-                                    
+
                                 </h3>
-                            </div>     
+                            </div>
                             {{-- <div class="form-group col-md-6 col-auto text-right">
                                 <button type="button" data-toggle="modal" data-target="#modal-person" class="btn btn-outline-info">Change</button>
-                            </div>  --}}                   
+                            </div>  --}}
                         </div>
-                        
-                    </div>                    
-                </div>               
+
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -56,15 +56,15 @@
                             <div class="col-4 col-auto">
                                 <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                             </div>
-                            {{--  @if ($invoice->status != 1) 
+                            {{--  @if ($invoice->status != 1)
                                 <div class="col-4 col-auto text-right">
                                     <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
                                     <br />
                                 </div>
                             @endif
-                            
+
                             @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])  --}}
-                            
+
                         </div>
                     </div>
                     <div class="card-body">
@@ -80,7 +80,7 @@
                                 <div class="col-md-2 col-auto form-group">
                                     <label class="form-control-label" for="label-date">Fecha de servicio</label>
                                     <label id="label-date">{{ $invoice->DOS->format('d-m-Y') }}</label>
-                
+
                                 </div>
                             </div>
                             <div class="form-row">
@@ -88,27 +88,27 @@
                                 <div class="col-md-2 col-auto form-group">
                                     <label class="form-control-label" for="label-code">No. de Cobro</label>
                                     <label id="label-code">{{ $invoice->code }}</label>
-                
+
                                 </div>
                                 {{--  number --}}
                                 <div class="col-md-2 col-auto form-group">
                                     <label class="form-control-label" for="label-number">Folio de CONTPAQ</label>
                                     <label id="label-number">{{ $invoice->number }}</label>
-                
+
                                 </div>
                                 {{--  date  --}}
                                 <div class="col-md-3 col-auto form-group">
                                     <label class="form-control-label" for="label-date">Fecha</label>
                                     <label id="label-date">{{ $invoice->date->format('d-m-Y') }}</label>
-                
+
                                 </div>
                                 {{--  number --}}
                                 <div class="col-md-5 col-auto form-group">
                                     <label class="form-control-label" for="label-number">Tipo de cambio</label>
                                     <label id="label-exchange_rate">{{ $invoice->exchange_rate }}</label>
-                
+
                                 </div>
-                                
+
                             </div>
                             <div class="form-row">
                                 {{--  type --}}
@@ -122,7 +122,7 @@
                                     <label id="label-status">{{ $invoice->status() }}</label>
                                 </div>
                                 <div class="col-md-4">
-                                    <select id='new-status' class="custom-select" name="status"> 
+                                    <select id='new-status' class="custom-select" name="status">
                                         <option value='10'>Cambiar estado</option>
                                         <option value='0'>Nota de crédito pendiente.</option>
                                         <option value='1'>Completada.</option>
@@ -142,7 +142,7 @@
                                 {{--  amount_due  --}}
                                 <div class="col-md-2 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-amount_due">Debe</label>
-                                    <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}" 
+                                    <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}"
                                     placeholder="0" value="{{ $invoice->amount_due }}" readonly>
 
                                     @if ($errors->has('amount_due'))
@@ -151,28 +151,28 @@
                                         </span>
                                     @endif
                                 </div>
-                                
+
                             </div>
                             <div class="form-row">
                                 {{--  tax  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('tax') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-tax">{{ __('Tax') }}</label>
-                                    <input type="numeric" name="tax" id="input-tax" class="form-control form-control-alternative{{ $errors->has('tax') ? ' is-invalid' : '' }}" 
+                                    <input type="numeric" name="tax" id="input-tax" class="form-control form-control-alternative{{ $errors->has('tax') ? ' is-invalid' : '' }}"
                                     placeholder="{{ __('Tax') }}" value="" readonly>
-                            
+
                                     @if ($errors->has('tax'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('tax') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                                
+
                                 {{--  sub_total  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('sub_total') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-sub_total">{{ __('Subtotal') }}</label>
-                                    <input type="numeric" name="sub_total" id="input-sub_total" class="form-control form-control-alternative{{ $errors->has('sub_total') ? ' is-invalid' : '' }}" 
+                                    <input type="numeric" name="sub_total" id="input-sub_total" class="form-control form-control-alternative{{ $errors->has('sub_total') ? ' is-invalid' : '' }}"
                                     placeholder="{{ __('Subtotal') }}" value="" readonly>
-                            
+
                                     @if ($errors->has('sub_total'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('sub_total') }}</strong>
@@ -183,37 +183,37 @@
                                 {{--  total  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('total') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-total">{{ __('Total') }}</label>
-                                    <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}" 
+                                    <input type="numeric" name="total" id="input-total" class="form-control form-control-alternative{{ $errors->has('total') ? ' is-invalid' : '' }}"
                                     placeholder="{{ __('Total') }}" value="" readonly>
-                            
+
                                     @if ($errors->has('total'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('total') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                                
-                                
+
+
                             </div>
                             <div class="form-row">
                                 {{--  dtax  --}}
                                 <div class="col-md-4 col-auto form-group">
                                     <label class="form-control-label" for="input-dtax">IVA con descuento</label>
-                                    <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative" 
+                                    <input type="numeric" name="dtax" id="input-dtax" class="form-control form-control-alternative"
                                     placeholder="0" value="{{ $invoice->dtax }}" readonly>
                                 </div>
                                 {{--  sub_total_discounts  --}}
                                 <div class="col-md-4 col-auto form-group">
                                     <label class="form-control-label" for="input-sub_total_discounts">Subtotal con descuento</label>
-                                    <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative" 
+                                    <input type="numeric" name="sub_total_discounts" id="input-sub_total_discounts" class="form-control form-control-alternative"
                                     placeholder="0" value="{{ $invoice->sub_total_discounted }}" readonly>
                                 </div>
                                 {{--  total_with_discounts  --}}
                                 <div class="col-md-4 col-auto form-group{{ $errors->has('total_with_discounts') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-total_with_discounts">Total con descuento</label>
-                                    <input type="numeric" name="total_with_discounts" id="input-total_with_discounts" class="form-control form-control-alternative{{ $errors->has('total_with_discounts') ? ' is-invalid' : '' }}" 
+                                    <input type="numeric" name="total_with_discounts" id="input-total_with_discounts" class="form-control form-control-alternative{{ $errors->has('total_with_discounts') ? ' is-invalid' : '' }}"
                                     placeholder="0" value="{{ $invoice->total_with_discounts }}" readonly>
-                            
+
                                     @if ($errors->has('total_with_discounts'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('total_with_discounts') }}</strong>
@@ -222,8 +222,8 @@
                                 </div>
                             </div>
                         </form>
-                    </div>                    
-                </div>               
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -243,7 +243,7 @@
                     <div class="card-body">
                         {{--  Diagnoses  --}}
                         <div class="form-row">
-                            @include('components.searchDiagnoses')  
+                            @include('components.searchDiagnoses')
                             <div class="col-md-2">
                                 <label class="form-control-label"></label>
                                 <button type="button" onclick="addDiagnosisList()" id="add_diagnosis" class="btn btn-outline-success btn-lg">Agregar</button>
@@ -266,8 +266,8 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>                    
-                </div>               
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -287,7 +287,7 @@
                     <div class="card-body">
                         {{-- Selecting service --}}
                         <div class="col-xl-12 order-xl-1">
-                                @include('components.searchServices')                        
+                                @include('components.searchServices')
                         </div>
                         <br />
                         <div class="form-row">
@@ -304,25 +304,25 @@
                             {{--  price  --}}
                             <div class="col-lg-2 col-auto form-group">
                                 <label class="form-control-label" for="custom-price">Precio</label>
-                                <input type="numeric"  name="service-price" id="custom-price" class="form-control form-control-alternative" 
+                                <input type="numeric"  name="service-price" id="custom-price" class="form-control form-control-alternative"
                                 placeholder="0" required>
-                            
+
                             </div>
-                            {{--  discounted-price  
+                            {{--  discounted-price
                             <div class="col-lg-2 col-auto form-group">
                                 <label class="form-control-label" for="custom-discounted-price">Descuento</label>
-                                <input type="numeric" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
+                                <input type="numeric" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative"
                                 placeholder="0"  required>
-                            
+
                             </div>--}}
-                            <input type="hidden" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative" 
+                            <input type="hidden" min="1" name="service-discounted-price" id="custom-discounted-price" class="form-control form-control-alternative"
                             placeholder="0"  required>
                             {{--  quantity  --}}
                             <div class="col-lg-1 col-auto form-group{{ $errors->has('quantity') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-quantity">Cantidad</label>
-                                <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" min="1" name="quantity" id="input-quantity" class="form-control form-control-alternative{{ $errors->has('quantity') ? ' is-invalid' : '' }}"
                                 placeholder="1" value=1 required>
-                            
+
                                 @if ($errors->has('quantity'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('quantity') }}</strong>
@@ -352,12 +352,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
                         <br />
-                        <div class="form-row">                            
+                        <div class="form-row">
                             {{-- Remove --}}
                             <div class="col-md-3 col-auto">
                                 <button type="button" id="remove_selected" class="btn btn-danger btn-sm">Remover servicio seleccionado</button>
@@ -367,15 +367,15 @@
                                 <button type="button" id="save" class="btn btn-success text-right">Confirmar</button>
                             </div>
                         </div>
-                    </div>                    
-                </div>               
+                    </div>
+                </div>
             </div>
         </div>
 
         @include('items.partials.itemsModal')
 
         {{-- @include('components.selectPersonModal', ['invoice_id' => $invoice->id]) --}}
-        
+
         @include('layouts.footers.auth')
     </div>
 @endsection
@@ -395,22 +395,22 @@
                 },
             success: function () {
                 displayStats();
-               
+
                 }
             });
             return false;
         }
-        
+
     }
     function handler(e){
         var date = document.getElementById("input-date").value;
         document.getElementById("input-date_service").value = date;
         getExchangeRate(date);
       }
-      function service_handler(e){
+    function service_handler(e){
         var date = document.getElementById("input-date_service").value;
         document.getElementById("input-date_service-to").value = date;
-    }
+        }
     function getExchangeRate(date){
         $.ajax({
             url: "{{route('rate.find')}}",
@@ -436,7 +436,7 @@
     function addDiagnosisList(){
         var diagnosis_id = Number(document.getElementById("diagnosis_id").value);
         findDiagnosis(diagnosis_id);
-        
+
     }
 
     function displayDiagnosisList(){
@@ -457,11 +457,11 @@
                 output += "</div><div class='form-row'>";
             }
             output += "<div class='col-auto custom-control custom-checkbox custom-control-inline'>"
-                + "<input type='checkbox' class='custom-control-input' id=diag" + diagnosesList[i].diagnosis_id + " data-id=" + diagnosesList[i].diagnosis_id + " data-code="+diagnosesList[i].diagnosis_code +">"     
-                + "<label class='custom-control-label' for=diag" + diagnosesList[i].diagnosis_id + ">"+diagnosesList[i].name +"        </label>" 
+                + "<input type='checkbox' class='custom-control-input' id=diag" + diagnosesList[i].diagnosis_id + " data-id=" + diagnosesList[i].diagnosis_id + " data-code="+diagnosesList[i].diagnosis_code +">"
+                + "<label class='custom-control-label' for=diag" + diagnosesList[i].diagnosis_id + ">"+diagnosesList[i].name +"        </label>"
                 + "<button onclick='removeDiagnosis("+diagnosesList[i].diagnosis_id+")' class='delete-item btn btn-sm btn-danger' id=" + diagnosesList[i].diagnosis_id+ ">X</button>"
                 +"</div>";
-          
+
         }
         $('#diagnoses_list').html(output);*/
     }
@@ -495,7 +495,7 @@
         items_total_price = 0;
         items_total_discounted_price = 0;
 
-        constructor(service_id, description, price, discounted_price, quantity, id, 
+        constructor(service_id, description, price, discounted_price, quantity, id,
             DOS,DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
             this.description = description;
@@ -521,20 +521,20 @@
         }
 
         // Add to cart
-        addItemToCart(item_id, description, price, discounted_price, quantity, 
-            id, taxable, descripcion, code) {
+        addItemToCart(item_id, description, price, discounted_price, quantity,
+            id, taxable, descripcion, code, date) {
             for(var item in this.items) {
-                if(this.items[item].item_id === item_id && this.items[item].discounted_price === discounted_price) {
+                if(this.items[item].item_id === item_id && this.items[item].date === date) {
                     this.items[item].quantity += Number(quantity);
                     displayItems(this);
                     return;
                 }
             }
-            
-            var item = new Item(item_id, description, price, discounted_price, quantity, 
-                id, taxable, descripcion, code);
-            this.items.push(item);   
-            displayItems(this);  
+
+            var item = new Item(item_id, description, price, discounted_price, quantity,
+                id, taxable, descripcion, code, date);
+            this.items.push(item);
+            displayItems(this);
         }
 
         // Remove item from cart
@@ -557,7 +557,7 @@
                 break;
               }
             }
-            displayItems(this);  
+            displayItems(this);
         }
 
         // Total cart
@@ -585,15 +585,17 @@
                 this.items_total_discounted_price += this.items[item].total_discounted_price;
             }
         }
-        
+
     }
 
     class Item {
         quantity = 1;
         itax = 0;
         idtax = 0;
+        date = new Date();
+
         constructor(item_id, description, price, discounted_price, quantity,
-             id, taxable, descripcion, code) {
+             id, taxable, descripcion, code, date) {
             this.item_id = item_id;
             this.description = description;
             this.price = parseFloat(price.replace(/,/g,''));
@@ -605,7 +607,9 @@
             this.taxable = taxable
             this.descripcion = descripcion;
             this.code = code;
-            this.calcTotals();          
+            this.date2 = getCorrectDate(date);
+            this.date = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
+            this.calcTotals();
         }
 
         calcTotals() {
@@ -665,27 +669,27 @@
 
         var DOS = document.getElementById("input-date_service").value;
         var DOS_to = document.getElementById("input-date_service-to").value;
-        var service = new Service(service_id, description, price, discounted_price, 
+        var service = new Service(service_id, description, price, discounted_price,
             quantity, id, DOS,DOS_to, descripcion, code, pointers);
-        this.services.push(service);   
-        displayCart();  
+        this.services.push(service);
+        displayCart();
     }
     function addDiagnosisFromInvoice(diagnosis_id, name, code, nombre) {
-        
+
         var diagnosis = new Diagnosis(diagnosis_id, code,  name, nombre);
         this.diagnosesList.push(diagnosis);
 
-        
+
     }
     function addServiceToCartFromInvoice(service_id, description, price, discounted_price,
          quantity, id, DOS, items, descripcion, code, pointers, DOS_to) {
-        
-        var service = new Service(service_id, description, price, discounted_price, quantity, 
+
+        var service = new Service(service_id, description, price, discounted_price, quantity,
                 services.length, DOS, DOS_to, descripcion, code, pointers);
         for(var i in items){
             var tax = false;
             if(items[i].itax > 0) tax = true;
-            service.addItemToCart(items[i].item_id, items[i].description,items[i].price, items[i].discounted_price, 
+            service.addItemToCart(items[i].item_id, items[i].description,items[i].price, items[i].discounted_price,
             items[i].quantity, services.length, tax, items[i].descripcion, items[i].code);
         }
         this.services.push(service);
@@ -704,7 +708,7 @@
     function clearCart(){
         this.services = [];
     }
-    // Count cart 
+    // Count cart
     function totalCount() {
         var totalCount = 0;
         for(var service in this.services) {
@@ -747,13 +751,13 @@
             },
         success: function (response) {
             for(var i = 0; i < response.length; i++){
-                addServiceToCartFromInvoice(response[i].service_id, response[i].description, 
-                    response[i].price, response[i].discounted_price, response[i].quantity, 
-                    response[i].id, response[i].DOS, response[i].items, 
-                    response[i].descripcion, response[i].code, response[i].diagnoses_pointers, response[i].DOS_to);   
+                addServiceToCartFromInvoice(response[i].service_id, response[i].description,
+                    response[i].price, response[i].discounted_price, response[i].quantity,
+                    response[i].id, response[i].DOS, response[i].items,
+                    response[i].descripcion, response[i].code, response[i].diagnoses_pointers, response[i].DOS_to);
             }
-            displayCart();                
-                                                 
+            displayCart();
+
             }
         });
             return false;
@@ -770,11 +774,11 @@
             },
         success: function (response) {
             for(var i = 0; i < response.data.length; i++){
-                addDiagnosisFromInvoice(response.data[i].diagnosis_id, response.data[i].diagnosis_name, 
-                    response.data[i].diagnosis_code, response.data[i].diagnosis_nombre);   
+                addDiagnosisFromInvoice(response.data[i].diagnosis_id, response.data[i].diagnosis_name,
+                    response.data[i].diagnosis_code, response.data[i].diagnosis_nombre);
             }
-            displayDiagnosisList();            
-                                                 
+            displayDiagnosisList();
+
             }
         });
         return false;
@@ -789,8 +793,8 @@
                 "_token": "{{ csrf_token() }}",
                 "diagnosis_id" : diagnosis_id
             },
-        success: function (response) {      
-                addDiagnosis(diagnosis_id, response.code, response.name, response.nombre);                            
+        success: function (response) {
+                addDiagnosis(diagnosis_id, response.code, response.name, response.nombre);
             }
         });
             return false;
@@ -805,16 +809,16 @@
                 "_token": "{{ csrf_token() }}",
                 "service_id" : id
             },
-        success: function (response) {               
-                addServiceToCart(response.id, response.description, 
+        success: function (response) {
+                addServiceToCart(response.id, response.description,
                     price, discounted_price, quantity, services.length,
-                    response.descripcion, response.code, pointers);                                    
+                    response.descripcion, response.code, pointers);
             }
         });
             return false;
     }
 
-    function getItem(service_id, item_id, quantity, price, discounted_price, tax){
+    function getItem(service_id, item_id, quantity, price, discounted_price, tax, date){
         $.ajax({
             url: "{{route('items.find')}}",
             dataType: 'json',
@@ -823,23 +827,23 @@
                 "_token": "{{ csrf_token() }}",
                 "item_id" : item_id
             },
-        success: function (response) {                
-                addItemToService(service_id, response.id, response.description, 
+        success: function (response) {
+                addItemToService(service_id, response.id, response.description,
                     price, discounted_price, tax, quantity,
-                     services.length, response.descripcion, response.code);                                    
+                     services.length, response.descripcion, response.code, date);
             }
         });
             return false;
     }
 
     function addItemToService(service_id, item_id, description, price, discounted_price,
-         tax, quantity, id, descripcion, code){
+         tax, quantity, id, descripcion, code, date){
 
         //Find service in array
         var service = this.services.find(s => s.id == service_id);
 
-        service.addItemToCart(item_id, description, price, 
-                discounted_price, quantity, services.length, tax, descripcion, code);
+        service.addItemToCart(item_id, description, price,
+                discounted_price, quantity, services.length, tax, descripcion, code, date);
     }
 
     function sendInvoice(){
@@ -864,7 +868,7 @@
         success: function (response) {
             setTimeout(function() {
                 window.location.href = response;
-              }, 1000);              
+              }, 1000);
             }
         });
             return false;
@@ -877,7 +881,7 @@
         selectedServiceId = id;
         //Find service in array
         var service = services.find(s => s.id == id);
-        
+
         displayItems(service);
         $('#modal-items').modal('show')
 
@@ -889,37 +893,39 @@
         document.getElementById("modal-service-description").innerHTML = service.description;
         document.getElementById("modal-service-discounted_total").innerHTML = service.total_discounted_price;
         if(service.items_total_discounted_price > service.total_discounted_price){
-            document.getElementById("modal-items-discounted_total").className = "text-danger"; 
+            document.getElementById("modal-items-discounted_total").className = "text-danger";
             document.getElementById("save").disabled = true;
         }
         else if(service.items_total_discounted_price < service.total_discounted_price) {
             document.getElementById("modal-items-discounted_total").className = "text-yellow";
         }
         else {
-            document.getElementById("modal-items-discounted_total").className = "text-success"; 
+            document.getElementById("modal-items-discounted_total").className = "text-success";
         }
         document.getElementById("modal-items-discounted_total").innerHTML = service.items_total_discounted_price;
+        document.getElementById("input-date_item").value = service.date2.toISOString().split('T')[0];
+        console.log(service.date2.toISOString().split('T')[0]);
         for(var i in service.items) {
           output += "<tr value="+service.items[i].id+">"
+            + "<td>" + service.items[i].date + "</td>"
             + "<td>" + service.items[i].description + "</td>"
-            + "<td>" + service.items[i].price + "</td>" 
-            + "<td>" + service.items[i].discounted_price + "</td>"
+            + "<td>" + service.items[i].price + "</td>"
             + "<td>" + service.items[i].quantity + "</td>"
             + "<td>" + service.items[i].total_price + "</td>"
-            + "<td>" + service.items[i].total_discounted_price +"</td>"
             + "<td><button class='delete-item btn btn-sm btn-danger' data-service=" + service.id + " data-id=" + service.items[i].id + ">X</button></td>"
         +"</tr>";
         }
         $('#items_table tbody').html(output);
 
-        
-         
+
+
     }
-   
+
 
     function displayCart() {
         totalCart();
         var output = "";
+        console.log(this.services);
         for(var i in this.services) {
 
           output += "<tr value="+this.services[i].id+">"
@@ -940,7 +946,7 @@
         document.getElementById("input-amount_due").value = this.total_with_discounts;
         document.getElementById("input-sub_total").value = this.sub_total;
         document.getElementById("input-sub_total_discounts").value = this.sub_total_discounted;
-        document.getElementById("input-tax").value = this.tax; 
+        document.getElementById("input-tax").value = this.tax;
         document.getElementById("input-dtax").value = this.dtax;
     }
     const current_date = new Date();
@@ -963,35 +969,33 @@
                 if($(this).is(":checked")){
                     i++;
                     pointers += i+",";
-                    
                 }
-                
+
 
             });
             pointers = pointers.substring(0,pointers.length-1);
-            
             if(quantity > 0 && service_id > 0 && pointers.length > 0){
-                
                 var price = document.getElementById("custom-price").value;
                 price = parseFloat(price.replace(/,/g,''));
                 var discounted_price = price; /*document.getElementById("custom-discounted-price").value;
                 discounted_price = parseFloat(discounted_price.replace(/,/g,''));*/
-                
+
                 getService(service_id, quantity, price, discounted_price, pointers);
             }
-            
+
         });
 
         $("#add_item").click(function(){
             var quantity = Number(document.getElementById("input-product-quantity").value);
             if(quantity > 0){
                 var price = document.getElementById("custom-product-price").value;
-                var discounted_price = document.getElementById("custom-product-discounted-price").value;
-                var item_id = $("#item_id").children("option:selected").val();
+                var discounted_price = price;
+                var item_id = document.getElementById("item_id").value;
                 var tax = document.getElementById("custom-product-tax").checked;
-                getItem(selectedServiceId, item_id, quantity, price, discounted_price, tax);
+                var date = document.getElementById("input-date_item").value;
+                getItem(selectedServiceId, item_id, quantity, price, discounted_price, tax, date);
             }
-            
+
         });
 
         // Delete item button
@@ -1000,7 +1004,7 @@
             var service_id = $(this).data('service');
             //Find service in array
             var service = services.find(s => s.id == service_id);
-            
+
             service.removeItemFromCartAll(id);
 
 
@@ -1010,25 +1014,18 @@
             var service_id = $(this).data('id');
             removeServiceFromCartAll(service_id);
             displayCart();
-
-
         })
 
-        
         $("#save").click(function(){
             if(services.length > 0 ) {
                 sendInvoice();
             }
-            
             else {
                 alert("Falta agregar servicios a la factura.");
             }
-            
-            
-
         });
     });
-    
+
 </script>
-    
+
 @endpush

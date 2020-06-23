@@ -21,6 +21,7 @@ class ItemService extends Model
         'price',
         'discounted_price',
         'quantity',
+        'date',
     ];
     public static $rules = [
         'diagnosis_service_id' => 'required',

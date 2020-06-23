@@ -23,30 +23,37 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            {{--  date  --}}
+                            <div class="col-lg-3 col-auto">
+                                <label class="form-control-label" for="input-date_item">Fecha</label>
+                                <input name="date_item" id="input-date_item"
+                                    class="form-control form-control-alternative" type="date" required>
+                            </div>
                             {{--  price  --}}
                             <div class="col-lg-3 col-auto form-group">
                                 <label class="form-control-label" for="custom-product-price">Precio</label>
-                                <input type="numeric"  name="product-price" id="custom-product-price" class="form-control form-control-alternative" 
+                                <input type="numeric"  name="product-price" id="custom-product-price" class="form-control form-control-alternative"
                                 placeholder="0" required>
-                            
+
                             </div>
-                            {{--  discounted-price  --}}
+                            <input type="hidden" min="1" name="product-discounted-price" id="custom-product-discounted-price"
+                                class="form-control form-control-alternative" placeholder="0" required>
+                            {{--  discounted-price
                             <div class="col-lg-3 col-auto form-group">
                                 <label class="form-control-label" for="custom-product-discounted-price">Descuento</label>
-                                <input type="numeric" min="1" name="product-discounted-price" id="custom-product-discounted-price" class="form-control form-control-alternative" 
+                                <input type="numeric" min="1" name="product-discounted-price" id="custom-product-discounted-price" class="form-control form-control-alternative"
                                 placeholder="0"  required>
-                            
-                            </div>
+                            </div> --}}
                             {{--  quantity  --}}
                             <div class=" col-lg-3 col-auto form-group">
                                 <label class="form-control-label" for="input-product-quantity">Cantidad</label>
-                                <input type="numeric" min="1" name="product-quantity" id="input-product-quantity" class="form-control form-control-alternative" 
-                                placeholder="1" value="1" required>                          
+                                <input type="numeric" min="1" name="product-quantity" id="input-product-quantity" class="form-control form-control-alternative"
+                                placeholder="1" value="1" required>
                             </div>
                             {{-- tax --}}
-                            <div class="col-lg-1 custom-control custom-checkbox">                                   
-                                <input type="checkbox" name="product-tax" id="custom-product-tax" class="custom-control-input">        
-                                <label class="custom-control-label" for="custom-product-tax">IVA</label>       
+                            <div class="col-lg-1 custom-control custom-checkbox">
+                                <input type="checkbox" name="product-tax" id="custom-product-tax" class="custom-control-input">
+                                <label class="custom-control-label" for="custom-product-tax">IVA</label>
                             </div>
                             {{-- Add --}}
                             <div class="col-lg-2">
@@ -57,7 +64,7 @@
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         @include('items.partials.itemsTable')
-                        
+
                     </div>
                 </div>
             </div>
