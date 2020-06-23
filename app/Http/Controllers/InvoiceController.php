@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\PrepareInvoicePDF;
 use App\DiagnosisService;
 use App\Events\InvoiceEvent;
 use App\Http\Requests\InvoiceRequest;
@@ -187,7 +188,10 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        $invoice = $invoice->load('patient', 'payments', 'calls', 'services2.service', 'services2.items', 'diagnoses.diagnosis');
+        $invoice = $invoice->load('patient', 'payments', 'calls', 'diagnoses.diagnosis');
+
+        $pdf = new PrepareInvoicePDF($invoice);
+        $categories = $pdf->serviceCategories();
 
         //$diagnoses_services = InvoiceDiagnosis::with('diagnoses', 'services.service', 'services.items')->where('invoice_id', $invoice->id)->get();
         $today = Carbon::today();
@@ -203,7 +207,7 @@ class InvoiceController extends Controller
             //return view('invoices.show', compact('invoice', 'insuree', 'today'));
         }
 
-        return view('invoices.show', compact('invoice', 'insuree', 'today'));
+        return view('invoices.show', compact('invoice', 'insuree', 'today', 'categories'));
     }
 
     /**
