@@ -690,7 +690,7 @@
             var tax = false;
             if(items[i].itax > 0) tax = true;
             service.addItemToCart(items[i].item_id, items[i].description,items[i].price, items[i].discounted_price,
-            items[i].quantity, services.length, tax, items[i].descripcion, items[i].code);
+            items[i].quantity, services.length, tax, items[i].descripcion, items[i].code, items[i].date);
         }
         this.services.push(service);
     }
