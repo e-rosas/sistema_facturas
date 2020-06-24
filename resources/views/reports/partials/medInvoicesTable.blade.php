@@ -20,24 +20,24 @@
                 <tr>
                     <td>{{ $invoice->date->format('d-M-Y') }}</td>
                     <td>{{ $invoice->series }}</td>
-                    <td><a  href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>        
+                    <td><a  href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>
                     <td>{{ $invoice->concept }}</td>
                     <td>
                         <a href="{{ route('patients.show', $invoice->patient) }}">
                             {{ $invoice->patient->full_name}}
                         </a>
                     </td>
-                    <td><span class="MXN"> {{ $invoice->totalF() }} </span><span class="USD" style="display: none"> {{ $invoice->totalDiscounted() }} </span></td>    
+                    <td><span class="MXN"> {{ $invoice->totalF() }} </span><span class="USD" style="display: none"> {{ $invoice->totalDiscounted() }} </span></td>
                     <td><span class="MXN"> {{ $invoice->amountPaidMXN() }} </span><span class="USD" style="display: none"> {{ $invoice->amountPaid() }} </span></td>
                     @if (!is_null($invoice->credit))
                         <td>0.0000</td>
                     @else
                         <td><span class="MXN"> {{ $invoice->debeF() }} </span><span class="USD" style="display: none"> {{ $invoice->amountDue() }} </span></td>
                     @endif
-                    
+
                     <td>{{ $invoice->date->format('d-M-Y') }}</td>
-                    <td>{{ $invoice->exchangeRate() }}</td>     
-                    <td>{{ $invoice->status() }}</td>         
+                    <td>{{ $invoice->exchangeRate() }}</td>
+                    <td>{{ $invoice->status() }}</td>
                 </tr>
             @foreach ($invoice->payments as $payment)
                 <tr class="{{ $payment->type == 1 ? 'table-info' : 'table-success' }}">
@@ -69,7 +69,22 @@
                     <td></td>
                 </tr>
             @endif
-
+            @if (!is_null($invoice->charge))
+            <tr class="table-warning">
+                <td>{{ $invoice->charge->date->format('d-M-Y') }}</td>
+                <td>C</td>
+                <td>C-{{  $invoice->code }}</td>
+                <td>{{ $invoice->charge->concept()}}</td>
+                <td></td>
+                <td></td>
+                <td><span class="MXN"> {{ $invoice->charge->total() }} </span><span class="USD" style="display: none">
+                        {{ $invoice->charge->getAmountCharged() }} </span></td>
+                <td></td>
+                <td></td>
+                <td>{{ $invoice->charge->getExchangeRate() }}</td>
+                <td></td>
+            </tr>
+            @endif
             @endforeach
         </tbody>
         <tfoot>

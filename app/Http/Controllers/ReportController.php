@@ -29,7 +29,9 @@ class ReportController extends Controller
 
         $invoices = Invoice::with('payments', 'patient', 'credit')
             ->whereBetween('date', [$start, $end])
+            ->orderBy('number', 'asc')
             ->paginate($perPage)
+
         ;
 
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);

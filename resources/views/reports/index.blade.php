@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-xl-4 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">        
+                <div class="card-body">
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Cargos') }}</h5>
@@ -17,13 +17,13 @@
                         </div>
                         </div>
                     </div>
-        
-                </div> 
+
+                </div>
             </div>
         </div>
         <div class="col-xl-4 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">        
+                <div class="card-body">
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Abonos') }}</h5>
@@ -35,13 +35,13 @@
                         </div>
                         </div>
                     </div>
-        
-                </div> 
+
+                </div>
             </div>
         </div>
         <div class="col-xl-4 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
-                <div class="card-body">        
+                <div class="card-body">
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Saldo') }}</h5>
@@ -53,8 +53,8 @@
                         </div>
                         </div>
                     </div>
-        
-                </div> 
+
+                </div>
             </div>
         </div>
     </div>
@@ -86,7 +86,7 @@
             </div>
             <div class="col-lg-2 col-auto">
                 <label for="perPage">{{ __('Cantidad') }}</label>
-                <select  class="custom-select" name="perPage"> 
+                <select  class="custom-select" name="perPage">
                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
                     <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
                     <option value='50' {{ $perPage == 50 ? 'selected' : '' }}>50</option>
@@ -177,7 +177,7 @@
 
 
 @endsection
-@push('headjs')
+{{-- @push('headjs')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-@endpush
+@endpush --}}
 

@@ -52,6 +52,13 @@ class Charge extends Model
         return number_format($this->exchange_rate, 4);
     }
 
+    public function total()
+    {
+        $mxn = $this->amount_charged * $this->exchange_rate;
+
+        return number_format($mxn, 4);
+    }
+
     public function invoice()
     {
         return $this->belongsTo('App\Invoice');

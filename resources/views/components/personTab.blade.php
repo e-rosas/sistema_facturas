@@ -1,22 +1,22 @@
 <div class="nav-wrapper">
     <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
         <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-invoices-tab" data-toggle="tab" href="#tabs-invoices" role="tab" 
+            <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-invoices-tab" data-toggle="tab" href="#tabs-invoices" role="tab"
                 aria-controls="tabs-invoices" aria-selected="true"><i class="fas fa-file-invoice-dollar  mr-2"></i> {{ __('Facturas') }} </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-calls-tab" data-toggle="tab" href="#tabs-calls" role="tab" 
+            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-calls-tab" data-toggle="tab" href="#tabs-calls" role="tab"
                 aria-controls="tabs-calls" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Llamadas') }}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-payments-tab" data-toggle="tab" href="#tabs-payments" role="tab" 
+            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-payments-tab" data-toggle="tab" href="#tabs-payments" role="tab"
                 aria-controls="tabs-payments" aria-selected="false"><i class="fas fa-dollar-sign mr-2"></i> {{ __('Pagos') }}</a>
         </li>
         @if ($patient->insured)
-        <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-dependents-tab" data-toggle="tab" href="#tabs-dependents" role="tab" 
-                aria-controls="tabs-dependents" aria-selected="false"><i class="fas fa-user-friends mr-2"></i> {{ __('Dependientes') }}</a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-dependents-tab" data-toggle="tab" href="#tabs-dependents" role="tab"
+                    aria-controls="tabs-dependents" aria-selected="false"><i class="fas fa-user-friends mr-2"></i> {{ __('Dependientes') }}</a>
+            </li>
         @endif
     </ul>
 </div>
