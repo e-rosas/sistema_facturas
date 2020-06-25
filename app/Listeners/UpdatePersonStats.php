@@ -49,7 +49,7 @@ class UpdatePersonStats
         );
     }
 
-    private function updateStats($id)
+    public function updateStats($id)
     {
         $stats = new CalculatePersonStats();
         $stats->calculateAmounts($id);

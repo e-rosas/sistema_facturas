@@ -7,6 +7,7 @@ use App\DiagnosisService;
 use App\Events\InvoiceEvent;
 use App\Http\Requests\InvoiceRequest;
 use App\Http\Requests\UpdateInvoiceDetailsRequest;
+use App\Http\Requests\UpdateInvoicePatient;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceDetailsResource;
 use App\Http\Resources\InvoiceDiagnosesResource;
@@ -15,6 +16,8 @@ use App\Insuree;
 use App\Invoice;
 use App\InvoiceDiagnosis;
 use App\ItemService;
+use App\Listeners\UpdatePersonStats;
+use App\Patient;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -238,6 +241,25 @@ class InvoiceController extends Controller
         $invoice->save();
 
         return new InvoiceDetailsResource($invoice);
+    }
+
+    public function updatePatient(UpdateInvoicePatient $request)
+    {
+        $new_patient_id = $request->patient_id;
+        $invoice_id = $request->invoice_id;
+
+        $invoice = Invoice::findOrFail($invoice_id);
+        $new_patient = Patient::findOrFail($new_patient_id);
+        $old_patient_id = $invoice->patient_id;
+
+        $invoice->patient_id = $new_patient->id;
+        $invoice->save();
+
+        event(new InvoiceEvent($invoice)); //update stats for new patient
+        $update_stats = new UpdatePersonStats();
+        $update_stats->updateStats($old_patient_id); //update stats for old patient
+
+        return back()->withStatus(__('Paciente actualizado exitosamente.'));
     }
 
     /**

@@ -35,12 +35,13 @@
                                 <label class="form-control-label" for="person_name">{{ __('Paciente') }}</label>
                                 <h3>
                                     <a href="{{ route('patients.show', $invoice->patient) }}" class="mr-4">{{ $invoice->patient->full_name }} </a>
-
                                 </h3>
                             </div>
-                            {{-- <div class="form-group col-md-6 col-auto text-right">
-                                <button type="button" data-toggle="modal" data-target="#modal-person" class="btn btn-outline-info">Change</button>
-                            </div>  --}}
+                            <div class="form-group col-md-6 col-auto text-right">
+                                <button type="button" data-toggle="modal" data-target="#modal-person"
+                                    class="btn btn-outline-info">{{ __('Cambiar') }}</button>
+                            </div>
+                            @include('components.selectPersonModal')
                         </div>
 
                     </div>

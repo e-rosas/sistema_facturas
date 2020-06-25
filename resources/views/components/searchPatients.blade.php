@@ -1,6 +1,6 @@
 <!-- For defining autocomplete -->
 <div class="row">
-  <select id='patient_id' class="custom-select form-control" name="patient_id"> 
+  <select id='patient_id' class="custom-select form-control" name="patient_id" style="width: 100%">
     <option value='0'>Seleccionar paciente</option>
   </select>
   <input type="hidden" id="input-patient_id" value=0>
@@ -14,11 +14,11 @@
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function(){
 
-    
+
 
   $("#patient_id").select2({
     minimumInputLength: 3,
-    ajax: { 
+    ajax: {
       url: "{{route('patients.searchName')}}",
       type:'post',
       dataType: 'json',

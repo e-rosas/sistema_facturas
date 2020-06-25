@@ -32,16 +32,21 @@
 
                 </div>
                 @if ($invoice->status != 1)
-                    <div class="col-md-4 col-auto text-right">
+                    <div class="col-md-3 col-auto text-right">
                         <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
                     </div>
                 @endif
                 @if ($invoice->status != 1)
-                    <div class="col-md-4 col-auto text-right">
+                    <div class="col-md-3 col-auto text-right">
                         <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
                         <br />
                     </div>
                 @endif
+                <div class="col-md-2 col-auto text-right">
+                    <button type="button" data-toggle="modal" data-target="#modal-person"
+                        class="btn btn-sm btn-primary">{{ __('Cambiar paciente') }}</button>
+                </div>
+                @include('components.selectPersonModal')
 
                 @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])
 
