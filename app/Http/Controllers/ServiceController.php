@@ -27,7 +27,7 @@ class ServiceController extends Controller
             $services = Service::with('category')->paginate($perPage);
         } else {
             $search = $request->search;
-            $services = Service::with('category')->where('code', $search)
+            $services = Service::with('category')->whereLike(['code', 'description', 'descripcion', 'SAT'], $search)
                 ->paginate($perPage)
         ;
         }

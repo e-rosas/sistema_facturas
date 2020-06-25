@@ -27,7 +27,7 @@ class ItemController extends Controller
         ;
         } else {
             $search = $request->search;
-            $items = Item::with('category')->where('code', $search)
+            $items = Item::with('category')->whereLike(['code', 'description', 'descripcion', 'SAT'], $search)
                 ->paginate($perPage)
         ;
         }
