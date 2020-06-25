@@ -31,6 +31,11 @@
                     <td><span class="MXN"> {{ $invoice->amountPaidMXN() }} </span><span class="USD" style="display: none"> {{ $invoice->amountPaid() }} </span></td>
                     @if (!is_null($invoice->credit))
                         <td>0.0000</td>
+                    {{-- @elseif(!is_null($invoice->charge))
+                        <td><span class="MXN"> {{ $invoice->charge->total() }} </span><span class="USD"
+                                style="display: none">
+                                {{ $invoice->charge->getAmountCharged() }} </span>
+                        </td> --}}
                     @else
                         <td><span class="MXN"> {{ $invoice->debeF() }} </span><span class="USD" style="display: none"> {{ $invoice->amountDue() }} </span></td>
                     @endif
@@ -76,9 +81,10 @@
                 <td>C-{{  $invoice->code }}</td>
                 <td>{{ $invoice->charge->concept()}}</td>
                 <td></td>
-                <td></td>
                 <td><span class="MXN"> {{ $invoice->charge->total() }} </span><span class="USD" style="display: none">
                         {{ $invoice->charge->getAmountCharged() }} </span></td>
+                <td>{{-- <span class="MXN"> {{ $invoice->charge->total() }} </span><span class="USD" style="display: none">
+                        {{ $invoice->charge->getAmountCharged() }} </span> --}}</td>
                 <td></td>
                 <td></td>
                 <td>{{ $invoice->charge->getExchangeRate() }}</td>

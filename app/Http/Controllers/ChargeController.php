@@ -62,7 +62,7 @@ class ChargeController extends Controller
             event(new InvoiceEvent($invoice)); //update invoice stats
             $validated['original_amount_due'] = $invoice->amount_due;
             $charge = Charge::create($validated);
-            $invoice->status = 5; //insurance wont pay
+            $invoice->status = 5; //insurance won't pay
             $invoice->save();
 
             return new ChargeResource($charge);
