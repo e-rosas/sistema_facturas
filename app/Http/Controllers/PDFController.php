@@ -31,4 +31,13 @@ class PDFController extends Controller
 
         return $hospPDF->download($invoice->code.'-Hosp.pdf');
     }
+
+    public function categories(Invoice $invoice)
+    {
+        $pdf = new PrepareInvoicePDF($invoice);
+        $categories = $pdf->serviceCategories();
+        $insured = $pdf->insured;
+        $patient = $pdf->patient;
+        $datetime = Carbon::now();
+    }
 }

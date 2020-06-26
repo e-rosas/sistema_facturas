@@ -23,4 +23,13 @@ class Category extends Model
     {
         return number_format($this->total, 2);
     }
+
+    public function name()
+    {
+        if (1 == $this->id) {
+            return 'ROOM AND BOARD';
+        }
+
+        return $this->name;
+    }
 }
