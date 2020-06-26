@@ -21,7 +21,7 @@
                     <form  method="get" action="{{ route('services.index') }}" >
                         <div class="form-row">
                             <div class="col-md-1 col-auto">
-                                <select  class="custom-select" name="perPage"> 
+                                <select  class="custom-select" name="perPage">
                                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
                                     <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
                                     <option value='50' {{ $perPage == 50 ? 'selected' : '' }}>50</option>
@@ -40,9 +40,9 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                     </form>
-                    
+
                     <div class="col-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -69,13 +69,13 @@
                             <tbody>
                                 @foreach ($services as $service)
                                     <tr>
-                                        <td data-container="body" data-toggle="tooltip" data-placement="bottom" 
+                                        <td data-container="body" data-toggle="tooltip" data-placement="bottom"
                                             title="{{ $service->clave() }}">{{ $service->code }}</td>
-                                        <td  data-container="body" data-toggle="tooltip" data-placement="bottom" 
+                                        <td  data-container="body" data-toggle="tooltip" data-placement="bottom"
                                             title="{{ $service->description }}">{{ $service->descripcion }}</td>
-                                        
-                                        <td>{{ $service->price }}</td>
-                                        <td>{{ $service->discounted_price }}</td>
+
+                                        <td>{{ $service->price() }}</td>
+                                        <td>{{ $service->discountedPrice() }}</td>
                                         <td>{{ $service->category->nombre }}</td>
                                         <td class="td-actions text-right">
                                             <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('services.show', $service) }}">
@@ -84,7 +84,7 @@
                                             <a  class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('services.edit', $service) }}">
                                                 <i class="fas fa-pencil-alt fa-2"></i>
                                             </a>
-                                            
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-            
+
         @include('layouts.footers.auth')
     </div>
 @endsection

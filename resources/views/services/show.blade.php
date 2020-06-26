@@ -4,16 +4,17 @@
     @include('layouts.headers.header', ['title' => $service->description, 'description' => $service->code])
 
     <div class="container-fluid mt--7">
-        <div class="row"> 
+        <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
-                @include('components.invoiceStatsCard', ['title' => 'Price', 'value' => $service->price])
-                @include('components.invoiceStatsCard', ['title' => 'Discounted price', 'value' => $service->discounted_price])
+                @include('components.invoiceStatsCard', ['title' => 'Price', 'value' => $service->price(), 'USD' => 1])
+                @include('components.invoiceStatsCard', ['title' => 'Discounted price', 'value' =>
+                $service->discountedPrice(), 'USD' => 1])
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-xl-8 col-lg-6">
                 <div class="card card-stats mb-4 mb-xl-0">
-                    <div class="card-body">        
+                    <div class="card-body">
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Categoria') }}</h5>
@@ -25,13 +26,13 @@
                                 </div>
                             </div>
                         </div>
-            
-                    </div> 
+
+                    </div>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-6">
                 <div class="card card-stats mb-4 mb-xl-0">
-                    <div class="card-body">        
+                    <div class="card-body">
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Facturas') }}</h5>
@@ -43,8 +44,8 @@
                                 </div>
                             </div>
                         </div>
-            
-                    </div> 
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,10 +62,10 @@
                             </div>
                         </div>
                     </div>
-                    @include('services.partials.invoicesTable', ['invoices' => $service->invoices])
-                    
+                    {{-- @include('services.partials.invoicesTable', ['invoices' => $service->invoices]) --}}
+
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 @endsection
