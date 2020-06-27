@@ -33,6 +33,7 @@ class UpdateInvoiceDetailsRequest extends FormRequest
             'comments' => 'max:1000',
             'doctor' => 'required|max:255',
             'exchange_rate' => 'numeric|required|between:0,999999999.999',
+            'hospitalization' => 'boolean',
         ];
     }
 }

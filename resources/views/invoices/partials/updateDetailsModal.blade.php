@@ -143,7 +143,7 @@
 @push('js')
 
 <script>
-    function sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor){
+    function sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor, isHospitalization){
         $.ajax({
             url: "{{route('invoices.details')}}",
             dataType: 'json',
