@@ -102,9 +102,6 @@
                                     </span>
                                 @endif
                             </div>
-
-
-
                         </div>
                         <div class="form-row">
                             {{--  code --}}
@@ -265,6 +262,15 @@
                                         <strong>{{ $errors->first('doctor') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-1"></div>
+                            {{-- hosp --}}
+                            <div class="col-lg-2 custom-control custom-checkbox">
+                                <input type="checkbox" name="input-hospitalization" id="input-hospitalization"
+                                    class="custom-control-input">
+                                <label class="custom-control-label" for="input-hospitalization">Hospitalización</label>
                             </div>
                         </div>
                     </div>
@@ -540,9 +546,9 @@
 
         // Add to cart
         addItemToCart(item_id, description, price, discounted_price, quantity,
-            id, taxable, descripcion, code) {
+            id, taxable, descripcion, code, date) {
             for(var item in this.items) {
-                if(this.items[item].item_id === item_id && this.items[item].discounted_price === discounted_price) {
+                if(this.items[item].item_id === item_id && this.items[item].date === date) {
                     this.items[item].quantity += Number(quantity);
                     displayItems(this);
                     return;
@@ -550,7 +556,7 @@
             }
 
             var item = new Item(item_id, description, price, discounted_price, quantity,
-                id, taxable, descripcion, code);
+                id, taxable, descripcion, code, date);
             this.items.push(item);
             displayItems(this);
         }
@@ -605,8 +611,9 @@
         quantity = 1;
         itax = 0;
         idtax = 0;
+        date = new Date();
         constructor(item_id, description, price, discounted_price, quantity, id,
-         taxable, descripcion, code) {
+         taxable, descripcion, code, date) {
             this.item_id = item_id;
             this.description = description;
             this.price = parseFloat(price.replace(/,/g,''));
@@ -618,6 +625,8 @@
             this.taxable = taxable;
             this.descripcion = descripcion;
             this.code = code;
+            this.date2 = getCorrectDate(date);
+            this.date = this.date2.toISOString().split('T')[0]+' '+this.date2.toTimeString().split(' ')[0];
             this.calcTotals();
         }
 
@@ -713,13 +722,13 @@
     }
 
     function addItemToService(service_id, item_id, description, price, discounted_price,
-        tax, quantity, id, descripcion, code){
+        tax, quantity, id, descripcion, code, date){
 
         //Find service in array
         var service = this.services.find(s => s.id == service_id);
 
         service.addItemToCart(item_id, description, price,
-                discounted_price, quantity, this.services.length, tax, descripcion, code);
+                discounted_price, quantity, this.services.length, tax, descripcion, code, date);
     }
 
     function totalDiscounts() {
@@ -765,7 +774,7 @@
     }
 
 
-    function getItem(service_id, item_id, quantity, price, discounted_price){
+    function getItem(service_id, item_id, quantity, price, discounted_price, tax, date){
         $.ajax({
             url: "{{route('items.find')}}",
             dataType: 'json',
@@ -776,8 +785,8 @@
             },
         success: function (response) {
                 addItemToService(service_id, response.id, response.description,
-                    price, discounted_price, response.tax, quantity,
-                    services.length,response.descripcion, response.code);
+                price, discounted_price, tax, quantity,
+                services.length, response.descripcion, response.code, date);
             }
         });
             return false;
@@ -785,7 +794,7 @@
 
 
     function sendInvoice(patient_id, series, number, concept, code, currency,
-         date, comments){
+         date, comments, isHospitalization){
             var exchange_rate = document.getElementById("invoice-exchange_rate").value;
             exchange_rate = parseFloat(exchange_rate.replace(/,/g,''));
             var doctor =  document.getElementById("input-doctor").value;
@@ -815,7 +824,8 @@
                 "amount_paid" : 0,
                 "exchange_rate": exchange_rate,
                 "doctor": doctor,
-                "DOS": DOS
+                "DOS": DOS,
+                "hospitalization": isHospitalization
             },
         success: function (response) {
             setTimeout(function() {
@@ -841,23 +851,32 @@
     function displayItems(service) {
         displayCart(); //displayCart -> totalCart -> totalItemsCart
         var output = "";
+        document.getElementById("modal-service-description").innerHTML = service.description;
+        document.getElementById("modal-service-discounted_total").innerHTML = service.total_discounted_price;
+        if(service.items_total_discounted_price > service.total_discounted_price){
+        document.getElementById("modal-items-discounted_total").className = "text-danger";
+        document.getElementById("save").disabled = true;
+        }
+        else if(service.items_total_discounted_price < service.total_discounted_price) {
+            document.getElementById("modal-items-discounted_total").className="text-yellow" ; } else {
+            document.getElementById("modal-items-discounted_total").className="text-success" ; }
+            document.getElementById("modal-items-discounted_total").innerHTML=service.items_total_discounted_price;
+            document.getElementById("input-date_item").value=service.date2.toISOString().split('T')[0];
         for(var i in service.items) {
-          output += "<tr value="+service.items[i].id+">"
-            + "<td>" + service.items[i].description + "</td>"
-            + "<td>" + service.items[i].price + "</td>"
-            + "<td>" + service.items[i].discounted_price + "</td>"
-            + "<td>" + service.items[i].quantity + "</td>"
-            + "<td>" + service.items[i].total_price + "</td>"
-            + "<td>" + service.items[i].total_discounted_price +"</td>"
-            + "<td><button class='delete-item btn btn-sm btn-danger' data-service=" + service.id + " data-id=" + service.items[i].id + ">X</button></td>"
-        +"</tr>";
+            output += "<tr value="+service.items[i].id+">"
+                + "<td>" + service.items[i].date + "</td>"
+                + "<td>" + service.items[i].description + "</td>"
+                + "<td>" + service.items[i].price + "</td>"
+                + "<td>" + service.items[i].quantity + "</td>"
+                + "<td>" + service.items[i].total_price + "</td>"
+                + "<td><button class='delete-item btn btn-sm btn-danger' data-service=" + service.id + "data-id=" + service.items[i].id + ">X</button></td>"
+                +"</tr>";
         }
         $('#items_table tbody').html(output);
 
 
 
     }
-
     function searchNumber(){
         var number = document.getElementById("input-number").value;
         if(number.length > 0){
@@ -943,6 +962,7 @@
     var yyyy = current_date.getFullYear();
 
     var today = yyyy + '-' + mm + '-' + dd;
+    getExchangeRate(today);
     $(document).ready(function(){
         document.getElementById("input-date").value = today;
         document.getElementById("input-date_service").value = today;
@@ -986,7 +1006,9 @@
                 var price = document.getElementById("custom-product-price").value;
                 var discounted_price = document.getElementById("custom-product-discounted-price").value;
                 var item_id= $("#item_id").children("option:selected").val();
-                getItem(selectedServiceId, item_id, quantity, price, discounted_price);
+                var tax = document.getElementById("custom-product-tax").checked;
+                var date = document.getElementById("input-date_item").value;
+                getItem(selectedServiceId, item_id, quantity, price, discounted_price, tax, date);
             }
 
         });
@@ -1027,9 +1049,15 @@
                 var series = document.getElementById("input-series").value;
                 var concept = document.getElementById("input-concept").value;
                 var currency = document.getElementById("input-currency").value;
+                var isHospitalization = document.getElementById("input-hospitalization").checked;
+                if(isHospitalization){
+                    isHospitalization = 1;
+                }else{
+                    isHospitalization = 0;
+                }
 
                 sendInvoice(patient_id, series, number, concept, code, currency,
-                      date,  comments);
+                      date,  comments, isHospitalization);
             }
 
             else {

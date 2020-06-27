@@ -34,6 +34,7 @@ class Invoice extends Model
         'patient_id',
         'DOS',
         'doctor',
+        'hospitalization',
     ];
     /**
      * The event map for the model.

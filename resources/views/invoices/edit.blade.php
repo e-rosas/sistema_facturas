@@ -905,7 +905,6 @@
         }
         document.getElementById("modal-items-discounted_total").innerHTML = service.items_total_discounted_price;
         document.getElementById("input-date_item").value = service.date2.toISOString().split('T')[0];
-        console.log(service.date2.toISOString().split('T')[0]);
         for(var i in service.items) {
           output += "<tr value="+service.items[i].id+">"
             + "<td>" + service.items[i].date + "</td>"
@@ -914,19 +913,15 @@
             + "<td>" + service.items[i].quantity + "</td>"
             + "<td>" + service.items[i].total_price + "</td>"
             + "<td><button class='delete-item btn btn-sm btn-danger' data-service=" + service.id + " data-id=" + service.items[i].id + ">X</button></td>"
-        +"</tr>";
+            +"</tr>";
         }
         $('#items_table tbody').html(output);
-
-
-
     }
 
 
     function displayCart() {
         totalCart();
         var output = "";
-        console.log(this.services);
         for(var i in this.services) {
 
           output += "<tr value="+this.services[i].id+">"

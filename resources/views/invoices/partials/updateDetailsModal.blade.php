@@ -119,6 +119,16 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="col-lg-1"></div>
+                                {{-- hosp --}}
+                                <div class="col-lg-2 custom-control custom-checkbox">
+                                    <input type="checkbox" name="input-hospitalization" id="input-hospitalization"
+                                        class="custom-control-input"  {{ $invoice->hospitalization ? 'checked' : '' }}>
+                                    <label class="custom-control-label"
+                                        for="input-hospitalization">Hospitalización</label>
+                                </div>
+                            </div>
                             <div class="text-center">
                                 <button onclick="saveDetails()" id="save_details" class="btn btn-success mt-4">{{ __('Guardar') }}</button>
                             </div>
@@ -149,6 +159,7 @@
                 "code": code,
                 "number": number,
                 "doctor": doctor,
+                "hospitalization": isHospitalization
             },
         success: function (response) {
             displayDetails(response.data);
@@ -181,8 +192,15 @@
         var doctor = document.getElementById("input-doctor").value;
         var comments = document.getElementById("input-comments").value;
 
+        var isHospitalization = document.getElementById("input-hospitalization").checked;
+        if(isHospitalization){
+            isHospitalization = 1;
+        }else{
+            isHospitalization = 0;
+        }
+
         if(exchange_rate > 0){
-            sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor);
+            sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor, isHospitalization);
         }
         else{
             alert("Revisar tipo de cambio.");
