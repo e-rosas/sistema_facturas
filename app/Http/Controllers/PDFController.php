@@ -38,6 +38,20 @@ class PDFController extends Controller
         $categories = $pdf->serviceCategories();
         $insured = $pdf->insured;
         $patient = $pdf->patient;
+        $invoice_total = number_format($invoice->total_with_discounts, 2);
         $datetime = Carbon::now();
+
+        view()->share([
+            'patient' => $patient,
+            'insured' => $insured,
+            'invoice' => $invoice,
+            'categories' => $categories,
+            'invoice_total' => $invoice_total,
+            'datetime' => $datetime,
+        ]);
+
+        $hospPDF = BarryPDF::loadView('pdf.category');
+
+        return $hospPDF->download($invoice->code.'-test.pdf');
     }
 }

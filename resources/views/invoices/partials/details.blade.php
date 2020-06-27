@@ -24,8 +24,12 @@
                                 </form>
                                 <form target="_blank" method="post" action="{{ route('invoice.hospitalization', $invoice) }}">
                                     @csrf
-                                    <input type="hidden" name="output" value="I">
                                     <button type="submit" class="dropdown-item">Hospitalización</button>
+                                </form>
+                                <form target="_blank" method="post"
+                                    action="{{ route('invoice.categories', $invoice) }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Categorias</button>
                                 </form>
                         </div>
                     </div>
