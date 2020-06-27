@@ -56,7 +56,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <label class="form-control-label" for="search-code">Buscar factura</label>
                                 <button id="search_number" name="search-code" class="btn btn-info btn-fab btn-icon" onclick="searchNumber()">
                                     <i class="fas fa-search"></i>
@@ -108,8 +108,8 @@
                         </div>
                         <div class="form-row">
                             {{--  code --}}
-                            <div class="col-md-4 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="input-code">Número</label>
+                            <div class="col-md-3 col-auto form-group{{ $errors->has('code') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-code">Número (cobro)</label>
                                 <input type="text" name="code" id="input-code" class="form-control form-control-alternative{{ $errors->has('code') ? ' is-invalid' : '' }}"
                                 placeholder="Número" value="{{ old('code') }}">
 
@@ -119,9 +119,16 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="col-md-1">
+                                <label class="form-control-label" for="search-claim">Buscar cobro</label>
+                                <button id="search_claim" name="search-claim" class="btn btn-info btn-fab btn-icon"
+                                    onclick="searchClaim()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
 
                             {{--  date  --}}
-                            <div class="col-md-3 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
+                            <div class="col-md-4 col-auto form-group{{ $errors->has('date') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-date">Fecha Facturación</label>
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
@@ -148,7 +155,7 @@
                                 @endif
                             </div>
                             {{--  amount_due  --}}
-                            <div class="col-md-3 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
+                            <div class="col-md-2 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-amount_due">Debe</label>
                                 <input type="numeric" name="amount_due" id="input-amount_due" class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}"
                                 placeholder="0" value="{{ old('amount_due') }}" readonly>
@@ -858,6 +865,14 @@
         }
     }
 
+    function searchClaim(){
+        var claim = document.getElementById("input-code").value;
+        if(claim.length > 0){
+            getInvoiceData(claim);
+            document.getElementById("input-code").value = "";
+        }
+    }
+
     function getInvoiceData(number){
         $.ajax({
             url: "{{route('invoices.searchNumber')}}",
@@ -875,6 +890,7 @@
             document.getElementById("input-patient_id").value = response.data.patient.id;
             document.getElementById("input-doctor").value = response.data.doctor;
             document.getElementById("invoice-exchange_rate").value = response.data.exchange_rate;
+            diagnosesList = [];
             for(var i = 0; i < response.data.diagnoses.length; i++){
                 addDiagnosisFromInvoice(response.data.diagnoses[i].diagnosis_id, response.data.diagnoses[i].diagnosis_name,
                     response.data.diagnoses[i].diagnosis_code, response.data.diagnoses[i].diagnosis_nombre);

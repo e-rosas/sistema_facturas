@@ -329,7 +329,7 @@ class InvoiceController extends Controller
     {
         $number = $request->number;
         $invoice = Invoice::with('diagnoses', 'patient')
-            ->where('number', $number)
+            ->whereLike(['number', 'code'], $number)
             ->first()
         ;
 
