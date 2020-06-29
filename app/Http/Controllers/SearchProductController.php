@@ -83,6 +83,8 @@ class SearchProductController extends Controller
                 'price' => $item->price,
                 'discounted_price' => $item->discounted_price,
                 'tax' => $item->tax,
+                'description' => $item->description,
+                'descripcion' => $item->descripcion,
             ];
         }
         echo json_encode($response);

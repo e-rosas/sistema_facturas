@@ -23,6 +23,22 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            {{--  name  --}}
+                            <div class="col-lg-12 col-auto form-group">
+                                <label class="form-control-label" for="custom-product-name">Name</label>
+                                <input type="text" name="product-name" id="custom-product-name"
+                                    class="form-control form-control-alternative" placeholder="0" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            {{--  nombre  --}}
+                            <div class="col-lg-12 col-auto form-group">
+                                <label class="form-control-label" for="custom-product-nombre">Nombre</label>
+                                <input type="text" name="product-nombre" id="custom-product-nombre"
+                                    class="form-control form-control-alternative" placeholder="0" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
                             {{--  date  --}}
                             <div class="col-lg-3 col-auto">
                                 <label class="form-control-label" for="input-date_item">Fecha</label>
@@ -55,10 +71,13 @@
                                 <input type="checkbox" name="product-tax" id="custom-product-tax" class="custom-control-input">
                                 <label class="custom-control-label" for="custom-product-tax">IVA</label>
                             </div>
+
+                        </div>
+                        <div class="form-row">
                             {{-- Add --}}
-                            <div class="col-lg-2">
+                            <div class="col-lg-12">
                                 <label class="form-control-label"></label>
-                                <button type="button" id="add_item" class="btn btn-outline-success">Agregar</button>
+                                <button type="button" id="add_item" class="btn btn-block btn-outline-success">Agregar</button>
                             </div>
                         </div>
                     </div>

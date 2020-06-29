@@ -523,13 +523,13 @@
             DOS,DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
             this.description = description;
-            this.base_price = price;
-            this.base_discounted_price = discounted_price;
+            this.base_price = Number(price);
+            this.base_discounted_price = Number(discounted_price);
             this.price = this.base_price;
             this.discounted_price = this.base_discounted_price;
-            this.quantity = quantity;
-            this.total_price = quantity * price;
-            this.total_discounted_price = quantity * discounted_price;
+            this.quantity = Number(quantity);
+            this.total_price = Number(quantity * price);
+            this.total_discounted_price = Number(quantity * discounted_price);
             this.id = id;
             this.descripcion = descripcion;
             this.code = code;
@@ -542,6 +542,13 @@
 
         get date(){
             return this.date2.toLocaleDateString();
+        }
+
+        totalDiscountedPrice(){
+            return "$" + this.total_discounted_price.toFixed(4);
+        }
+        discountedPrice(){
+            return "$" + this.discounted_price.toFixed(4);
         }
 
         // Add to cart
@@ -618,9 +625,9 @@
             this.description = description;
             this.price = parseFloat(price.replace(/,/g,''));
             this.discounted_price = parseFloat(discounted_price.replace(/,/g,''));
-            this.quantity = quantity;
-            this.sub_total_price = quantity * price;
-            this.sub_total_discounted_price = quantity * discounted_price;
+            this.quantity = Number(quantity);
+            this.sub_total_price = Number(quantity * price);
+            this.sub_total_discounted_price = Number(quantity * discounted_price);
             this.id = id;
             this.taxable = taxable;
             this.descripcion = descripcion;
@@ -638,7 +645,13 @@
                 this.idtax = this.sub_total_discounted_price * TAX;
             }
             this.total_price = this.sub_total_price + this.itax;
-            this.total_discounted_price = this.sub_total_discounted_price + this.idtax;
+            this.total_discounted_price = Number(this.sub_total_discounted_price + this.idtax);
+        }
+        totalDiscountedPrice(){
+            return "$" + this.total_discounted_price.toFixed(4);
+        }
+        basePrice(){
+            return "$" + this.price.toFixed(4);
         }
     }
 
@@ -722,7 +735,7 @@
     }
 
     function addItemToService(service_id, item_id, description, price, discounted_price,
-        tax, quantity, id, descripcion, code, date){
+        tax, quantity, descripcion, code, date){
 
         //Find service in array
         var service = this.services.find(s => s.id == service_id);
@@ -774,7 +787,7 @@
     }
 
 
-    function getItem(service_id, item_id, quantity, price, discounted_price, tax, date){
+    function getItem(service_id, item_id, quantity, price, discounted_price, tax, date, name, nombre){
         $.ajax({
             url: "{{route('items.find')}}",
             dataType: 'json',
@@ -784,9 +797,9 @@
                 "item_id" : item_id
             },
         success: function (response) {
-                addItemToService(service_id, response.id, response.description,
+                addItemToService(service_id, response.id, name,
                 price, discounted_price, tax, quantity,
-                services.length, response.descripcion, response.code, date);
+                 nombre, response.code, date);
             }
         });
             return false;
@@ -866,9 +879,9 @@
             output += "<tr value="+service.items[i].id+">"
                 + "<td>" + service.items[i].date2.toISOString().split('T')[0] + "</td>"
                 + "<td>" + service.items[i].descripcion + "</td>"
-                + "<td>" + service.items[i].price + "</td>"
+                + "<td>" + service.items[i].basePrice() + "</td>"
                 + "<td>" + service.items[i].quantity + "</td>"
-                + "<td>" + service.items[i].total_price + "</td>"
+                + "<td>" + service.items[i].totalDiscountedPrice() + "</td>"
                 + "<td><button class='delete-item btn btn-sm btn-danger' data-service=" + service.id + "data-id=" + service.items[i].id + ">X</button></td>"
                 +"</tr>";
         }
@@ -939,9 +952,9 @@
                 + "<td>" + this.services[i].date + "</td>"
                 + "<td>" + this.services[i].description + "</td>"
                 + "<td>" + this.services[i].diagnoses_pointers+ "</td>"
-                + "<td>" + this.services[i].discounted_price + "</td>"
+                + "<td>" + this.services[i].discountedPrice() + "</td>"
                 + "<td>" + this.services[i].quantity + "</td>"
-                + "<td>" + this.services[i].total_discounted_price + '</td>'
+                + "<td>" + this.services[i].totalDiscountedPrice() + '</td>'
                 + "<td>" + this.services[i].items.length + '</td>'
                 +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
                 +'</td> </tr>';
@@ -1003,13 +1016,15 @@
 
         $("#add_item").click(function(){
             var quantity = Number(document.getElementById("input-product-quantity").value);
+            var name = document.getElementById("custom-product-name").value;
+            var nombre = document.getElementById("custom-product-nombre").value;
             if(quantity > 0){
                 var price = document.getElementById("custom-product-price").value;
                 var discounted_price = document.getElementById("custom-product-discounted-price").value;
                 var item_id= $("#item_id").children("option:selected").val();
                 var tax = document.getElementById("custom-product-tax").checked;
                 var date = document.getElementById("input-date_item").value;
-                getItem(selectedServiceId, item_id, quantity, price, discounted_price, tax, date);
+                getItem(selectedServiceId, item_id, quantity, price, discounted_price, tax, date, name,nombre);
             }
 
         });

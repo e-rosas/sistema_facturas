@@ -13,7 +13,10 @@
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 $(document).ready(function(){
 
-
+  $('#service_id').on('select2:select', function (e) {
+  var data = e.params.data;
+    document.getElementById("custom-price").value = parseFloat(data.price.replace(/,/g,''));
+  });
 
   $("#service_id").select2({
     minimumInputLength: 3,
@@ -29,7 +32,6 @@ $(document).ready(function(){
         };
       },
       processResults: function (response) {
-        document.getElementById("custom-price").value = parseFloat(response[0].price.replace(/,/g,''));
         /*document.getElementById("custom-discounted-price").value = parseFloat(response[0].price.replace(/,/g,'')); */
         return {
           results: response
