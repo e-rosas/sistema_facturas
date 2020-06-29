@@ -61,75 +61,169 @@
     </style>
 </head>
 <body>
-  @foreach ($categories as $category)
+  @foreach($categories as $category)
     <div class="invoice">
-      <div class="invoice-content">
-        <div class="invoice-company">
-          <div class="invoice-company-logo" style="text-align: left">
-            <img height="80px" src="{{public_path().'/img/HM-logo.png'}}" />
-          </div>
-          <div class="invoice-company-info" style="text-align: right">
-            <span>HOSPITAL MEXICO DE BC SA DE CV</span> <br>
-            <span>PO BOX 2508</span> <br>
-            <span>CHULA VISTA CA 91912</span><br>
-            <span>619 482 8608</span>
-          </div>
-        </div>
-        <div class="invoice-company-info">
-          <p style="text-align:left; font-weight: bold;">INSURED&#39S NAME: <span
-              style="font-weight: 400;">{{ $insured->patient->name() }}</span>
-            <span style="float:right; font-weight: bold;">
-              PATIENT&#39S ACCOUNT NO. <span style="font-weight: 400;">{{ $invoice->code }}</span>
-            </span>
-          </p>
-          <p style="text-align:left; font-weight: bold;">PATIENT&#39S NAME: <span
-              style="font-weight: 400;">{{ $patient->name() }}</span>
-            <span style="float:right;">
-              INSURED&#39S I.D NUMBER: <span style="font-weight: 400;">{{ $insured->insurance_id }}</span>
-            </span>
-          </p>
-          <p style="font-weight: bold;">PATIENT&#39S DATE OF BIRTH: <span style="font-weight: 400;">
-              {{ $patient->birth_date->format('m/d/Y') }}</span></p>
-        </div>
-        <h5 class="invoice-month-header">{{ $category->name()}} </h5>
+        <div class="invoice-content">
+            <div class="invoice-company">
+                <div class="invoice-company-logo" style="text-align: left">
+                    <img height="80px" src="{{public_path().'/img/HM-logo.png'}}" />
+                </div>
+                <div class="invoice-company-info" style="text-align: right">
+                    <span>HOSPITAL MEXICO DE BC SA DE CV</span> <br>
+                    <span>PO BOX 2508</span> <br>
+                    <span>CHULA VISTA CA 91912</span><br>
+                    <span>619 482 8608</span>
+                </div>
+            </div>
+            <div class="invoice-company-info">
+              <table style="width: 100%">
+                <tr>
+                  <td style="font-weight: bold; width:50%">INSURED&#39S NAME: <span style="font-weight: 400;">{{ $insured->patient->name() }}</span></td>
+                  <td style="width: 20%"></td>
+                  <td style="font-weight: bold; width:30%">PATIENT&#39S ACCOUNT NO. <span style="font-weight: 400;">{{ $invoice->code }}</span></td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold; width:50%">PATIENT&#39S NAME: <span
+                            style="font-weight: 400;">{{ $patient->name() }}</span></td>
+                    <td style="width: 20%"></td>
+                    <td style="font-weight: bold; width:30%">INSURED&#39S I.D NUMBER: <span
+                            style="font-weight: 400;">{{ $insured->insurance_id }}</span></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold;">PATIENT&#39S DATE OF BIRTH: <span
+                          style="font-weight: 400;">{{ $patient->birth_date->format('m/d/Y') }}</span></td>
+                </tr>
+              </table>
+            </div>
+            <h5 class="invoice-month-header">{{ $category->name()}} </h5>
 
-        <div class="invoice-detail">
-          <table class="invoice-table">
-            <thead>
-              <tr>
-                <td>Date</td>
-                <td>Description</td>
-                <td>Quantity</td>
-                <td>Price</td>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($category->services as $service)
-              <tr class="row-data">
-                <td style="width:15%; word-wrap: break-word">
-                  {{ $service->DOS->format("m/d/Y") }}
-                </td>
-                <td style="width:60%; word-wrap: break-word">
-                  {{ $service->description}}
-                </td>
-                <td style="width:10%; word-wrap: break-word" id="unit">
-                  {{ $service->quantity }}
-                </td>
-                <td style="width:15%; word-wrap: break-word">
-                  $ {{ number_format($service->total_discounted_price, 2) }}
-                </td>
-              </tr>
-              @endforeach
-              <tr class="row-data">
-                <td colspan="2"></td>
-                <td>SUBTOTAL</td>
-                <td style="font-weight: bold;">$ {{ $category->total() }}</td>
-              </tr>
-            </tbody>
-          </table>
+            <div class="invoice-detail">
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <td style="font-weight: bold;">Date</td>
+                            <td style="font-weight: bold;">Description</td>
+                            <td style="font-weight: bold;">Quantity</td>
+                            <td style="font-weight: bold;">Price</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      @if ($category->id == 2 || $category->id == 6) //SURGERY AND LAB
+                          @foreach ($category->services as $service)
+                            <tr class="row-data">
+                                <td style="width:15%; word-wrap: break-word">
+                                    {{ $service->DOS->format("m/d/Y") }}
+                                </td>
+                                <td style="width:60%; word-wrap: break-word">
+                                    {{ $service->description}}
+                                </td>
+                                <td style="width:10%; word-wrap: break-word" id="unit">
+                                    {{ $service->quantity }}
+                                </td>
+                                <td style="width:15%; word-wrap: break-word">
+                                    $ {{ number_format($service->total_discounted_price, 2) }}
+                                </td>
+                            </tr>
+                          @endforeach
+                      @else
+                          @foreach ($category->services as $service)
+                            @foreach ($service->items as $item)
+                                <tr class="row-data">
+                                    <td style="width:15%; word-wrap: break-word">
+                                        {{ $item->date->format("m/d/Y") }}
+                                    </td>
+                                    <td style="width:60%; word-wrap: break-word">
+                                        {{ $item->description}}
+                                    </td>
+                                    <td style="width:10%; word-wrap: break-word" id="unit">
+                                        {{ $item->quantity }}
+                                    </td>
+                                    <td style="width:15%; word-wrap: break-word">
+                                        $ {{ number_format($item->total_discounted_price, 2) }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                          @endforeach
+                      @endif
+
+                        <tr class="row-data">
+                            <td colspan="2"></td>
+                            <td style="font-weight: bold;">SUBTOTAL</td>
+                            <td style="font-weight: bold;">$ {{ $category->total() }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="page-break"></div>
+
   @endforeach
+    <div class="invoice">
+        <div class="invoice-content">
+            <div class="invoice-company">
+                <div class="invoice-company-logo" style="text-align: left">
+                    <img height="80px" src="{{public_path().'/img/HM-logo.png'}}" />
+                </div>
+                <div class="invoice-company-info" style="text-align: right">
+                    <span>HOSPITAL MEXICO DE BC SA DE CV</span> <br>
+                    <span>PO BOX 2508</span> <br>
+                    <span>CHULA VISTA CA 91912</span><br>
+                    <span>619 482 8608</span>
+                </div>
+            </div>
+            <div class="invoice-company-info">
+                <table style="width: 100%">
+                    <tr>
+                        <td style="font-weight: bold; width:50%">INSURED&#39S NAME: <span
+                                style="font-weight: 400;">{{ $insured->patient->name() }}</span></td>
+                        <td style="width: 20%"></td>
+                        <td style="font-weight: bold; width:30%">PATIENT&#39S ACCOUNT NO. <span
+                                style="font-weight: 400;">{{ $invoice->code }}</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; width:50%">PATIENT&#39S NAME: <span
+                                style="font-weight: 400;">{{ $patient->name() }}</span></td>
+                        <td style="width: 20%"></td>
+                        <td style="font-weight: bold; width:30%">INSURED&#39S I.D NUMBER: <span
+                                style="font-weight: 400;">{{ $insured->insurance_id }}</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">PATIENT&#39S DATE OF BIRTH: <span
+                                style="font-weight: 400;">{{ $patient->birth_date->format('m/d/Y') }}</span></td>
+                    </tr>
+                </table>
+            </div>
+            <h4></h4>
+            <div class="invoice-detail">
+                <table class="invoice-table" style="margin-left: auto; margin-right: auto; width:50%">
+                    {{-- <thead>
+                        <tr>
+                            <td style="font-weight: bold;">Date</td>
+                            <td style="font-weight: bold;">Description</td>
+                            <td style="font-weight: bold;">Quantity</td>
+                            <td style="font-weight: bold;">Price</td>
+                        </tr>
+                    </thead> --}}
+                    <tbody>
+                        @foreach ($categories as $category)
+                        <tr class="row-data">
+                            <td style="word-wrap: break-word">
+                                {{ $category->name() }}
+                            </td>
+                            <td style="word-wrap: break-word">
+                                $ {{ $category->total() }}
+                            </td>
+                        </tr>
+                        @endforeach
+                        <tr class="row-data">
+                            <td style="font-weight: bold;">TOTAL</td>
+                            <td style="font-weight: bold;">$ {{ $invoice_total }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

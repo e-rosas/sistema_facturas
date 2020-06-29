@@ -33,6 +33,6 @@ class PrepareInvoicePDF
             $category->total += $service->total_discounted_price;
         }
 
-        return $categories;
+        return $categories->values();
     }
 }

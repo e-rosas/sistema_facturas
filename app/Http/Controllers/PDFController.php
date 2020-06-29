@@ -52,6 +52,6 @@ class PDFController extends Controller
 
         $hospPDF = BarryPDF::loadView('pdf.category');
 
-        return $hospPDF->download($invoice->code.'-test.pdf');
+        return $hospPDF->download($invoice->code.'-categorias.pdf');
     }
 }
