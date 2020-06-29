@@ -880,26 +880,27 @@
     function searchNumber(){
         var number = document.getElementById("input-number").value;
         if(number.length > 0){
-            getInvoiceData(number);
+            getInvoiceData(number, 0);
         }
     }
 
     function searchClaim(){
         var claim = document.getElementById("input-code").value;
         if(claim.length > 0){
-            getInvoiceData(claim);
+            getInvoiceData(claim, 1);
             document.getElementById("input-code").value = "";
         }
     }
 
-    function getInvoiceData(number){
+    function getInvoiceData(number, claim){
         $.ajax({
             url: "{{route('invoices.searchNumber')}}",
             dataType: 'json',
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "number" : number
+                "number" : number,
+                "claim": claim
             },
         success: function (response) {
             document.getElementById("patient-name").innerHTML = response.data.patient.full_name + " " + response.data.patient.birth_date;

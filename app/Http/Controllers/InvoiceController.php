@@ -328,10 +328,18 @@ class InvoiceController extends Controller
     public function searchNumber(Request $request)
     {
         $number = $request->number;
-        $invoice = Invoice::with('diagnoses', 'patient')
-            ->whereLike(['number', 'code'], $number)
-            ->first()
+        $claim = $request->claim;
+        if ($claim > 0) {
+            $invoice = Invoice::with('diagnoses', 'patient')
+                ->where('code', $number)
+                ->first()
         ;
+        } else {
+            $invoice = Invoice::with('diagnoses', 'patient')
+                ->where('number', $number)
+                ->first()
+        ;
+        }
 
         return new InvoiceDiagnosesResource($invoice);
     }
