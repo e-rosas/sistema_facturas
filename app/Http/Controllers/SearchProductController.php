@@ -29,6 +29,16 @@ class SearchProductController extends Controller
         exit;
     }
 
+    public function findServiceName(Request $request)
+    {
+        $service_id = $request->service_id;
+        $service = Service::find($service_id)
+        ;
+
+        echo json_encode($service);
+        exit;
+    }
+
     public function findService(Request $request)
     {
         $service_id = $request->service_id;

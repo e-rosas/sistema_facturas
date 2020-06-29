@@ -22,13 +22,20 @@
                                 @include('items.partials.searchItems')
                             </div>
                         </div>
+
                         <form action="">
                             <div class="form-row">
                                 {{--  name  --}}
-                                <div class="col-lg-12 col-auto form-group">
+                                <div class="col-lg-11 col-auto form-group">
                                     <label class="form-control-label" for="custom-product-name">Name</label>
                                     <input type="text" name="product-name" id="custom-product-name" autocomplete="on"
                                         class="form-control form-control-alternative" placeholder="0" required>
+                                </div>
+                                <div class="col-lg-1">
+                                    <button id="search_service" name="search-service" class="btn btn-info btn-fab btn-icon"
+                                        onclick="searchService()">
+                                        <i class="fas fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -94,3 +101,41 @@
         </div>
     </div>
 </div>
+@push('js')
+<!-- Script -->
+<script type="text/javascript">
+    function searchService(){
+        var service = document.getElementById("custom-product-name").value;
+        if(service.length > 0){
+            searchServiceName(service);
+        }
+    }
+
+    function searchServiceName(service){
+        $.ajax({
+        url: "{{route('invoices.searchNumber')}}",
+        dataType: 'json',
+        type:"post",
+        data: {
+        "_token": "{{ csrf_token() }}",
+        "number" : number,
+        "claim": claim
+        },
+        success: function (response) {
+        document.getElementById("patient-name").innerHTML = response.data.patient.full_name + " " +
+        response.data.patient.birth_date;
+        document.getElementById("input-date").value = response.data.date;
+        document.getElementById("input-date_service").value = response.data.date;
+        document.getElementById("input-date_service-to").value = response.data.date;
+        document.getElementById("input-patient_id").value = response.data.patient.id;
+        document.getElementById("input-doctor").value = response.data.doctor;
+        document.getElementById("invoice-exchange_rate").value = response.data.exchange_rate;
+        diagnosesList = [];
+        for(var i = 0; i < response.data.diagnoses.length; i++){
+            addDiagnosisFromInvoice(response.data.diagnoses[i].diagnosis_id, response.data.diagnoses[i].diagnosis_name,
+            response.data.diagnoses[i].diagnosis_code, response.data.diagnoses[i].diagnosis_nombre); }
+            displayDiagnosisList(); } }); return false;
+    }
+
+</script>
+@endpush
