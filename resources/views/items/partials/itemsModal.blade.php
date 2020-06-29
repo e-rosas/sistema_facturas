@@ -22,22 +22,26 @@
                                 @include('items.partials.searchItems')
                             </div>
                         </div>
-                        <div class="form-row">
-                            {{--  name  --}}
-                            <div class="col-lg-12 col-auto form-group">
-                                <label class="form-control-label" for="custom-product-name">Name</label>
-                                <input type="text" name="product-name" id="custom-product-name"
-                                    class="form-control form-control-alternative" placeholder="0" required>
+                        <form action="">
+                            <div class="form-row">
+                                {{--  name  --}}
+                                <div class="col-lg-12 col-auto form-group">
+                                    <label class="form-control-label" for="custom-product-name">Name</label>
+                                    <input type="text" name="product-name" id="custom-product-name" autocomplete="on"
+                                        class="form-control form-control-alternative" placeholder="0" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            {{--  nombre  --}}
-                            <div class="col-lg-12 col-auto form-group">
-                                <label class="form-control-label" for="custom-product-nombre">Nombre</label>
-                                <input type="text" name="product-nombre" id="custom-product-nombre"
-                                    class="form-control form-control-alternative" placeholder="0" required>
+                            <div class="form-row">
+                                {{--  nombre  --}}
+                                <div class="col-lg-12 col-auto form-group">
+                                    <label class="form-control-label" for="custom-product-nombre">Nombre</label>
+                                    <input type="text" name="product-nombre" id="custom-product-nombre"
+                                        autocomplete="on" class="form-control form-control-alternative" placeholder="0"
+                                        required>
+                                </div>
                             </div>
-                        </div>
+                        </form>
+
                         <div class="form-row">
                             {{--  date  --}}
                             <div class="col-lg-3 col-auto">

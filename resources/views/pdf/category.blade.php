@@ -108,7 +108,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                      @if ($category->id == 6) //SURGERY AND LAB
+                      {{-- @if ($category->id == 6) //SURGERY AND LAB
                           @foreach ($category->services as $service)
                             <tr class="row-data">
                                 <td style="width:15%; word-wrap: break-word">
@@ -125,7 +125,7 @@
                                 </td>
                             </tr>
                           @endforeach
-                      @else
+                      @else --}}
                           @foreach ($category->services as $service)
                             @foreach ($service->items as $item)
                                 <tr class="row-data">
@@ -144,7 +144,7 @@
                                 </tr>
                             @endforeach
                           @endforeach
-                      @endif
+                      {{-- @endif --}}
 
                         <tr class="row-data">
                             <td colspan="2"></td>
