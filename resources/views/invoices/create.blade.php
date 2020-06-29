@@ -728,7 +728,7 @@
         var service = this.services.find(s => s.id == service_id);
 
         service.addItemToCart(item_id, description, price,
-                discounted_price, quantity, this.services.length, tax, descripcion, code, date);
+                discounted_price, quantity, service.items.length, tax, descripcion, code, date);
     }
 
     function totalDiscounts() {
@@ -864,8 +864,8 @@
             document.getElementById("input-date_item").value=service.date2.toISOString().split('T')[0];
         for(var i in service.items) {
             output += "<tr value="+service.items[i].id+">"
-                + "<td>" + service.items[i].date + "</td>"
-                + "<td>" + service.items[i].description + "</td>"
+                + "<td>" + service.items[i].date2.toISOString().split('T')[0] + "</td>"
+                + "<td>" + service.items[i].descripcion + "</td>"
                 + "<td>" + service.items[i].price + "</td>"
                 + "<td>" + service.items[i].quantity + "</td>"
                 + "<td>" + service.items[i].total_price + "</td>"
