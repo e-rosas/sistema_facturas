@@ -797,6 +797,17 @@
                 "item_id" : item_id
             },
         success: function (response) {
+            var code = document.getElementById("custom-product-discounted-price").value;
+            if(code.length <= 0){
+                code=response.code;
+            }
+            else{
+                document.getElementById("custom-product-discounted-price").value="" ;
+                document.getElementById("custom-product-price").value=0;
+                document.getElementById("custom-product-name").value="" ;
+                document.getElementById("custom-product-nombre").value="" ;
+                document.getElementById("custom-product-discounted-price").value="" ;
+            }
                 addItemToService(service_id, response.id, name,
                 price, discounted_price, tax, quantity,
                  nombre, response.code, date);

@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('patients/search', 'SearchPatientController@search')->name('patients.searchName');
     Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
     Route::post('services/find', 'SearchProductController@findService')->name('services.find');
+    Route::post('services/findname', 'SearchProductController@findServiceName')->name('services.findName');
 
     Route::post('diagnoses/search', 'SearchProductController@searchDiagnosis')->name('diagnoses.search');
     Route::post('diagnoses/find', 'SearchProductController@findDiagnosis')->name('diagnoses.find');

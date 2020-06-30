@@ -843,9 +843,20 @@
                 "item_id" : item_id
             },
         success: function (response) {
+                var code = document.getElementById("custom-product-discounted-price").value;
+                if(code.length <= 0){
+                    code = response.code;
+                }else{
+                    document.getElementById("custom-product-discounted-price").value = "";
+                    document.getElementById("custom-product-price").value = 0;
+                    document.getElementById("custom-product-name").value = "";
+                    document.getElementById("custom-product-nombre").value = "";
+                    document.getElementById("custom-product-discounted-price").value = "";
+                }
+
                 addItemToService(service_id, response.id, name,
                     price, discounted_price, tax, quantity,
-                    nombre, response.code, date);
+                    nombre, code, date);
             }
         });
             return false;
@@ -1001,6 +1012,8 @@
             var quantity = Number(document.getElementById("input-product-quantity").value);
             var name = document.getElementById("custom-product-name").value;
             var nombre = document.getElementById("custom-product-nombre").value;
+
+
             if(quantity > 0){
                 var price = document.getElementById("custom-product-price").value;
                 var discounted_price = price;

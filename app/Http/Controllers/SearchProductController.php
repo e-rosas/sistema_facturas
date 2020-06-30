@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Diagnosis;
+use App\Http\Resources\ServiceSmallResource;
 use App\Item;
 use App\Service;
 use Illuminate\Http\Request;
@@ -31,12 +32,12 @@ class SearchProductController extends Controller
 
     public function findServiceName(Request $request)
     {
-        $service_id = $request->service_id;
-        $service = Service::find($service_id)
+        $service_name = $request->service_name;
+        $service = Service::whereLike(['code', 'description', 'descripcion'], $service_name)
+            ->first()
         ;
 
-        echo json_encode($service);
-        exit;
+        return new ServiceSmallResource($service);
     }
 
     public function findService(Request $request)

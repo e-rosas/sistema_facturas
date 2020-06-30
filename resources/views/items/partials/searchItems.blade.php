@@ -16,8 +16,6 @@ $(document).ready(function(){
   $('#item_id').on('select2:select', function (e) {
     var data = e.params.data;
     document.getElementById("custom-product-price").value = parseFloat(data.price.replace(/,/g,''));
-    document.getElementById("custom-product-discounted-price").value =
-    parseFloat(data.discounted_price.replace(/,/g,''));
     document.getElementById("custom-product-tax").checked = data.tax;
     document.getElementById("custom-product-name").value = data.description;
     document.getElementById("custom-product-nombre").value = data.descripcion;
