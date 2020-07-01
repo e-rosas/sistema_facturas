@@ -12,7 +12,7 @@
                 @else
                     @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe',  'bg' => 'bg-yellow', 'USD' => 1, 'value' => $invoice->chargeAmountDue(), 'idMXN' => 'amount-dueMXN', 'valueMXN' => $invoice->chargeAmountDueMXN()])
                 @endif
-                @include('components.invoiceStatsCard', ['idUSD' => 'invoice-status','title' => 'Estado', 'bg' => 'bg-blue', 'USD' => 1, 'icon' => 'fas fa-info-circle', 'value' => $invoice->status(), 'valueMXN' => $invoice->status(), 'idMXN' => 'invoice-status'])
+                @include('components.invoiceStatsCard', ['idUSD' => 'invoice-status','title' => 'Estado', 'bg' => 'bg-blue', 'USD' => 1, 'icon' => 'fas fa-info-circle', 'value' => $invoice->status(), 'valueMXN' => $invoice->status(), 'idMXN' => 'invoice-statusMXN'])
             </div>
 
         </div>

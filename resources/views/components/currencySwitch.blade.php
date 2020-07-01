@@ -11,28 +11,29 @@
 <script>
     function displayUSD(block){
         if(block){
+            document.getElementById("customRadioInlineUSD").checked = true;
             var elementsMXN = document.getElementsByClassName("MXN"); //elementsMXN is an array
             for(var i = 0; i < elementsMXN.length; i++){
-                elementsMXN[i].style.display = "none"; 
+                elementsMXN[i].style.display = "none";
             }
             var elementsUSD = document.getElementsByClassName("USD"); //elementsUSD is an array
             for(var i = 0; i < elementsUSD.length; i++){
-                elementsUSD[i].style.display = "block"; 
+                elementsUSD[i].style.display = "block";
             }
 
         }
         else{
             var elementsMXN = document.getElementsByClassName("MXN"); //elementsMXN is an array
             for(var i = 0; i < elementsMXN.length; i++){
-                elementsMXN[i].style.display = "block"; 
+                elementsMXN[i].style.display = "block";
             }
             var elementsUSD = document.getElementsByClassName("USD"); //elementsUSD is an array
             for(var i = 0; i < elementsUSD.length; i++){
-                elementsUSD[i].style.display = "none"; 
+                elementsUSD[i].style.display = "none";
             }
         }
     }
+    displayUSD(true);
 </script>
 @endpush
-  
-  
+

@@ -60,10 +60,12 @@ class CreditController extends Controller
             $validated['number'] = $validated['invoice_number'].'- NC'.rand(1, 1000);
             event(new InvoiceEvent($invoice)); //update invoice stats
             $validated['amount_due'] = $invoice->amount_due;
+            $invoice->amount_due = 0;
             $credit = Credit::create($validated);
             $invoice->status = 1;
             $invoice->type = 0;
             $invoice->save();
+            event(new InvoiceEvent($invoice));
 
             return new CreditResource($credit);
         }

@@ -122,6 +122,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/import_parse_invoices', 'ImportController@parseImportInvoices')->name('import.parse.invoices');
     Route::post('/import_process_invoices', 'ImportController@processImportInvoices')->name('import.process.invoices');
 
+    Route::get('invoice/update_amount_due', 'InvoiceController@updateAmountDue');
+
     Route::get('invoice/update_services', 'InvoiceServiceController@updatePrices')->name('invoice.updateServices');
     Route::any('invoices_migrate_hm', 'InvoiceDiagnosisController@migrate')->name('invoices.migrate');
 });

@@ -325,6 +325,15 @@ class InvoiceController extends Controller
     {
     }
 
+    public function updateAmountDue()
+    {
+        $invoices = Invoice::where('type', 0)->get();
+        foreach ($invoices as $invoice) {
+            $stats = new UpdatePersonStats();
+            $stats->updateStats($invoice->patient->id);
+        }
+    }
+
     public function searchNumber(Request $request)
     {
         $number = $request->number;

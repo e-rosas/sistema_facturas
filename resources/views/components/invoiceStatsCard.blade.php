@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">{{ $title }}</h5>
+                    <h5 id="stats-title" class="card-title text-uppercase text-muted mb-0">{{ $title }}</h5>
                     <span id="{{ $idMXN ?? 'mxn' }}" class="MXN" style="{{ $USD == 1 ? 'display: none' : '' }}"> {{ $valueMXN ?? 0 }} </span><span id="{{ $idUSD ?? 'idUSD' }}" class="USD" style="{{ $USD == 1 ? '' : 'display: none' }}" > {{ $value }} </span>
                 </div>
                 <div class="col-auto">

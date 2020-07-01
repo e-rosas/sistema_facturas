@@ -53,7 +53,7 @@
                             {{--  exchange_rate --}}
                             <div class="form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-exchange_rate">Cambio</label>
-                                <input type="numeric" name="exchange_rate" id="payment-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="exchange_rate" id="payment-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}"
                                 placeholder="Cambio" value=0 required>
 
                                 @if ($errors->has('exchange_rate'))
@@ -65,12 +65,12 @@
                             {{--  method  --}}
                             <div class="form-group{{ $errors->has('method') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-method">Método</label>
-                                <select id='payment-method' class="custom-select" name="method"> 
+                                <select id='payment-method' class="custom-select" name="method">
                                     <option value='0' selected>Transferencia</option>
                                     <option value='1' >Cheque</option>
                                 </select>
                             </div>
-                            
+
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -186,6 +186,7 @@
         document.getElementById("amount-dueMXN").innerHTML = response.data.amount_dueMXN;
         document.getElementById("label-status").innerHTML = response.data.status;
         document.getElementById("invoice-status").innerHTML = response.data.status;
+        document.getElementById("invoice-statusMXN").innerHTML = response.data.status;
         document.getElementById("invoice-type").innerHTML = response.data.type;
         if(response.data.status_n == 1){ /*completed*/
             document.getElementById("add-payment").style.display = 'none';
@@ -200,7 +201,7 @@
         document.getElementById("input-credit-exchange_rate").value = 0;
     }
 
-    
+
 
     $("#save_payment").click(function(){
 
