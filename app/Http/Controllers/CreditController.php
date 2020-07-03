@@ -58,14 +58,14 @@ class CreditController extends Controller
         $invoice = Invoice::where('id', $validated['invoice_id'])->first();
         if (1 != $invoice->type && (0 == $invoice->status)) { //different than one unique payment
             $validated['number'] = $validated['invoice_number'].'- NC'.rand(1, 1000);
-            event(new InvoiceEvent($invoice)); //update invoice stats
+            event(new InvoiceEvent($invoice)); //update invoice stats BEFORE
             $validated['amount_due'] = $invoice->amount_due;
             $invoice->amount_due = 0;
             $credit = Credit::create($validated);
             $invoice->status = 1;
             $invoice->type = 0;
             $invoice->save();
-            event(new InvoiceEvent($invoice));
+            event(new InvoiceEvent($invoice)); //AFTER
 
             return new CreditResource($credit);
         }

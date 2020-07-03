@@ -21,7 +21,8 @@
                                         <div class="shadow-sm p-3 mb-3 bg-white rounded">
                                             <li class="text-uppercase list-group-item">Servicio:
                                                 <span
-                                                    class="text-primary font-weight-bold">{{ $service->descripcion .' - '. $service->code()}}
+                                                    class="text-primary
+                                                    font-weight-bold">{{ $service->descripcion .' - '. $service->clave()}}
                                                     <span class="text-default font-weight-light">Cantidad:
                                                     </span>{{ $service->quantity  }}
                                                 </span>

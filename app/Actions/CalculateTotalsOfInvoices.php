@@ -76,14 +76,20 @@ class CalculateTotalsOfInvoices
             $total_payments = new CalculateTotalsOfPayments($allPayments);
             $total_payments->calculateTotals();
 
+            if (!is_null(($invoice->charge))) {
+                $amount_due = $invoice->charge->amount_charged;
+            } else {
+                $amount_due = $invoice->total_with_discounts;
+            }
+
             if (is_null(($invoice->credit))) {
                 $credit = 0;
             } else {
                 $credit = $invoice->credit->amount_due;
             }
 
-            $invoice->amount_paid = $total_payments->amount_paid;
-            $invoice->amount_due = $invoice->total_with_discounts - $total_payments->amount_paid - $credit;
+            $invoice->amount_paid = $total_payments->amount_paid + $credit;
+            $invoice->amount_due = $amount_due - $invoice->amount_paid;
             $invoice->save();
 
             $this->sumInvoiceStats($invoice);
@@ -145,13 +151,16 @@ class CalculateTotalsOfInvoices
         $this->amount_paid_m += $invoice->pago();
         $this->dtax += $invoice->dtax;
 
-        if (is_null($invoice->credit)) {
+        $this->amount_due += $invoice->amount_due;
+        $this->amount_due_m += $invoice->debe();
+
+        /* if (is_null($invoice->credit)) {
             $this->amount_due += $invoice->amount_due;
             $this->amount_due_m += $invoice->debe();
         } else {
             $this->amount_due += $invoice->credit->amount_due;
             $this->amount_due_m += $invoice->credit->debe();
-        }
+        } */
 
         $this->subtotal_m += $invoice->subtotal();
         $this->IVA += $invoice->IVA();

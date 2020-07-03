@@ -56,14 +56,15 @@ class ChargeController extends Controller
     {
         $validated = $request->validated();
         $invoice = Invoice::findOrFail($validated['invoice_id']);
-        if ($invoice->amount_due >= $validated['amount_charged']) {
+        if ($invoice->amount_due >= $validated['amount_charged'] && (is_null($invoice->credit))) {
             $validated['number'] = $validated['invoice_number'].'- C'.rand(1, 10000);
             $validated['status'] = 0;
-            event(new InvoiceEvent($invoice)); //update invoice stats
+            event(new InvoiceEvent($invoice)); //update invoice stats BEFORE
             $validated['original_amount_due'] = $invoice->amount_due;
             $charge = Charge::create($validated);
             $invoice->status = 5; //insurance won't pay
             $invoice->save();
+            event(new InvoiceEvent($invoice)); //AFTER
 
             return new ChargeResource($charge);
         }
