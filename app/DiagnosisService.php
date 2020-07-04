@@ -132,4 +132,9 @@ class DiagnosisService extends Model
     {
         return 'A'.$this->code;
     }
+
+    public function clave()
+    {
+        return $this->service->clave();
+    }
 }
