@@ -32,17 +32,17 @@
                             <div class="col-lg-5">
                                 <label for="type">{{ __('Tipo') }}</label>
                                 <select id='type' class="custom-select" name="type">
-                                    <option value='4'  {{ $type == 3 ? 'selected' : '' }} >Todas</option>
+                                    <option value='4'  {{ $type == 4 ? 'selected' : '' }} >Todas</option>
                                     <option value='0'  {{ $type == 0 ? 'selected' : '' }}>Nota de crédito.</option>
                                     <option value='1'  {{ $type == 1 ? 'selected' : '' }}>Un solo pago completo.</option>
                                     <option value='2'  {{ $type == 2 ? 'selected' : '' }}>Pendiente de pago.</option>
-                                    <option value='3' {{ $status == 5 ? 'selected' : '' }}>Cargo al paciente.</option>
+                                    <option value='3' {{ $status == 3 ? 'selected' : '' }}>Cargo al paciente.</option>
                                 </select>
                             </div>
                             <div class="col-lg-5">
                                 <label for="status">{{ __('Estado') }}</label>
                                 <select id='status' class="custom-select" name="status">
-                                    <option value='5'  {{ $status == 6 ? 'selected' : '' }}>Todas</option>
+                                    <option value='5'  {{ $status == 5 ? 'selected' : '' }}>Todas</option>
                                     <option value='0' {{ $status == 0 ? 'selected' : '' }}>Nota de crédito pendiente.</option>
                                     <option value='1' {{ $status == 1 ? 'selected' : '' }}>Completa.</option>
                                     <option value='2' {{ $status == 2 ? 'selected' : '' }}>Pendiente de pago.</option>
