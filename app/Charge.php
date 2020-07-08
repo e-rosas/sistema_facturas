@@ -29,14 +29,10 @@ class Charge extends Model
 
                 break;
             case 2:
-                return __('Paid');
-
-                break;
-            case 3:
                 return __('Denied for untimely filing');
 
                 break;
-            case 4:
+            case 3:
                 return __('Other');
 
                 break;

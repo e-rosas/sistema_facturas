@@ -112,7 +112,7 @@
                     </div>
                     <div class="tab-pane fade" id="tab-charge" role="tabpanel" aria-labelledby="tab-charge-tab">
                         <div class="col-md-12 col-auto text-right">
-                            @if ($invoice->status != 5)
+                            @if ($invoice->type != 3)
                                 <button id="add-charge" type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-charge">Registrar</i></button>
                                 <br />
                             @endif

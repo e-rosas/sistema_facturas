@@ -46,9 +46,9 @@
                                     </div>
                                     <select class="form-control" id="input-charge-status">
                                         <option value="0">{{ __('Deductibles') }}</option>
-                                        <option value="2">{{ __('Denied for non covered charges') }}</option>
-                                        <option value="3">{{ __('Denied for untimely filing') }}</option>
-                                        <option value="4">{{ __('Other') }}</option>
+                                        <option value="1">{{ __('Denied for non covered charges') }}</option>
+                                        <option value="2">{{ __('Denied for untimely filing') }}</option>
+                                        <option value="3">{{ __('Other') }}</option>
                                     </select>
                                 </div>
                             </div>
