@@ -18,7 +18,7 @@
                     <form  method="get" action="{{ route('charges.index') }}" >
                         <div class="form-row">
                             <div class="col-md-1 col-auto">
-                                <select  class="custom-select" name="perPage"> 
+                                <select  class="custom-select" name="perPage">
                                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
                                     <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
                                     <option value='50' {{ $perPage == 50 ? 'selected' : '' }}>50</option>
@@ -36,9 +36,9 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                     </form>
-                    
+
                     <div class="col-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -58,12 +58,12 @@
                                                         <form action="{{ route('charge.destroy', $charge) }}" method="post">
                                                             @csrf
                                                             @method('delete')
-                                                            
+
                                                             <a class="dropdown-item" href="{{ route('charge.edit', $charge) }}">{{ __('Edit') }}</a>
                                                             <button type="button" class="dropdown-item" onclick="confirm('{{ __("Are you sure you want to delete this charge?") }}') ? this.parentElement.submit() : ''">
                                                                 {{ __('Delete') }}
                                                             </button>
-                                                        </form> 
+                                                        </form>
                                                         <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
                                                 </div>
                                             </div>
@@ -72,31 +72,27 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Número</th>
                                     <th scope="col">Fecha</th>
-                                    <th scope="col">Factura</th>
-                                    <th scope="col">Cargo</th>
-                                    <th scope="col">Cambio</th>
-                                    <th scope="col">Observaciones</th>                                    
+                                    <th scope="col">Num. de Cobro</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Observaciones</th>
                                     {{-- <th scope="col"></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($charges as $charge)
                                     <tr>
-                                        <td>{{ $charge->number}}</td>                                              
-                                        <td>{{ $charge->date->format('d-m-Y') }}</td>
+                                        <td>{{ $charge->date->format('M-d-Y') }}</td>
                                         <td>
                                             <a href="{{ route('invoices.show', $charge->invoice) }}">
                                                 {{ $charge->invoice->code}}
                                             </a>
                                         </td>
-                                        <td>{{ $charge->amount_charged }}</td>
-                                        <td>{{ $charge->exchange_rate }}</td>
+                                        <td>{{ $charge->status()  }}</td>
                                         <td>{{ $charge->comments  }}</td>
                                     </tr>
                                 @endforeach
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -108,7 +104,7 @@
                 </div>
             </div>
         </div>
-            
+
         @include('layouts.footers.auth')
     </div>
 @endsection

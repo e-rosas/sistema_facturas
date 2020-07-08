@@ -24,12 +24,12 @@
                     </td>
                     <td>{{ $invoice->code() }}</td>
                     <td><a  href="{{ route('patients.show', $invoice->patient) }}">{{  $invoice->patient->full_name  }}</a></td>
-                    <td>{{ $invoice->DOS->format('d-M-Y') }}</td>
+                    <td>{{ $invoice->DOS->format('M-d-Y') }}</td>
                     <td>{{ $invoice->type() }}</td>
                     <td>{{ $invoice->status() }}</td>
                     <td><span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD" > {{ $invoice->subtotalDiscounted() }} </span> </td>
                     <td><span class="MXN" style="display: none"> {{ $invoice->IVAF() }} </span><span class="USD" > {{ $invoice->discountedTax() }} </span></td>
-                    <td><span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD"> {{ $invoice->totalDiscounted() }} </span></td>  
+                    <td><span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD"> {{ $invoice->totalDiscounted() }} </span></td>
                     <td class="td-actions text-right">
                         <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button"  href="{{ route('invoices.show', $invoice) }}">
                             <i class="fas fa-eye "></i>

@@ -19,7 +19,7 @@
                             {{ $call->invoice->number}}
                         </a>
                     </td>
-                    <td>{{ $call->date->format('d-M-Y')}}</td>
+                    <td>{{ $call->date->format('M-d-Y')}}</td>
                     <td>
                         <a href="{{ route('invoices.show', $call->invoice) }}">
                             {{ $call->invoice->code}}
