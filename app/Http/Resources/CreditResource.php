@@ -17,10 +17,10 @@ class CreditResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'amount_due' => $this->amount_due,
+            'amount_due' => $this->amountDue(),
             'number' => $this->number,
             'concept' => $this->concept(),
-            'exchange_rate' => $this->exchange_rate,
+            'exchange_rate' => $this->exchangeRate(),
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->date->format('d-m-Y'),
         ];

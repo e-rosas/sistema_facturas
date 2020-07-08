@@ -3,7 +3,6 @@
     <table id="payments_table" class="table align-services-center table-flush">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('No. de Pago') }}</th>
                 <th scope="col">{{ __('Fecha') }}</th>
                 <th scope="col">{{ __('Cantidad') }}</th>
                 <th scope="col">{{ __('Comentarios') }}</th>
@@ -13,18 +12,22 @@
         <tbody>
             @foreach ($payments as $payment)
                 <tr class="{{ $payment->type == 1 ? 'table-info' : '' }}">
-                    <td>{{ $payment->number}}</td>
-                    <td>{{ $payment->date->format('d-m-Y')}}</td>
+                    <td>{{ $payment->date->format('M-d-Y')}}</td>
                     <td><span class="MXN" style="display: none"> {{ $payment->amountPaidMXN($invoice->exchange_rate) }} </span><span class="USD" > {{ $payment->amountPaid() }} </span> </td>
                     <td>{{ $payment->comments}}</td>
-                     <td class="td-actions text-right">
-                        <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $payment->id }})">
+                    @if ($invoice->status != 1)
+                        <td class="td-actions text-right">
+                            <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
+                                onClick="showEditModal({{ $payment->id }})">
                                 <i class="fas fa-pencil-alt fa-2 "></i>
-                        </button>
-                        <button rel="tooltip" class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete({{ $payment->id }})">
+                            </button>
+                            <button rel="tooltip" class="btn btn-danger btn-sm btn-icon" type="button"
+                                onClick="Delete({{ $payment->id }})">
                                 <i class="fa fa-trash"></i>
-                        </button>
-                    </td>
+                            </button>
+                        </td>
+                    @endif
+
                 </tr>
             @endforeach
         </tbody>
@@ -40,7 +43,6 @@
         for(var i = 0; i < payments.length; i++){
             bg = payments[i].type2 == 1 ? "table-info" : "";
             output += "<tr class="+bg+" value="+payments[i].id+">"
-                + "<td>" + payments[i].number + "</td>"
                 + "<td>" + payments[i].date + "</td>"
                 + '<td> <span class="MXN" style="display: none">' + payments[i].amount_paidMXN + '</span><span class="USD" > '+payments[i].amount_paid +'</span> </td>'
                 + "<td>" + payments[i].comments + "</td>"

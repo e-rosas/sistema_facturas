@@ -12,14 +12,14 @@
                             <div class="col-8 col-auto">
                                 <h3 class="mb-0">Pagos</h3>
                             </div>
-                            
+
                         </div>
                     </div>
                     <form  method="get" action="{{ route('payments.index') }}" >
                         <div class="form-row">
                             <div class="col-lg-2 col-auto">
                                 <label for="perPage">{{ __('Cantidad') }}</label>
-                                <select  class="custom-select" name="perPage"> 
+                                <select  class="custom-select" name="perPage">
                                     <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
                                     <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
                                     <option value='50' {{ $perPage == 50 ? 'selected' : '' }}>50</option>
@@ -49,12 +49,12 @@
                                     <input type="date" name="end" id="input-end" class="form-control"
                                     value="{{ $end->format('Y-m-d')  }}">
                                 </div>
-                            </div>  
+                            </div>
                             <div class="col-lg-2 col-auto">
                                 <br />
                                 @include('components.currencySwitch', ['USD' => 1])
                             </div>
-                            
+
                         </div>
                         <br />
                         <div class="form-row">
@@ -67,9 +67,9 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                     </form>
-                    
+
                     <div class="col-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -85,8 +85,8 @@
                         <table class="table align-items-center table-flush">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">{{ __('No. de Pago') }}</th>
                                     <th scope="col">{{ __('Num. de Cobro') }}</th>
+                                    <th scope="col">{{ __('Tipo') }}</th>
                                     <th scope="col">{{ __('Fecha') }}</th>
                                     <th scope="col">{{ __('Cantidad') }}</th>
                                     <th scope="col">{{ __('Concepto') }}</th>
@@ -96,26 +96,18 @@
                             </thead>
                             <tbody>
                                 @foreach ($payments as $payment)
-                                    <tr>
-                                        <td>{{ $payment->number}}</td>
+                                    <tr class="{{ $payment->type == 1 ? 'table-info' : '' }}">
                                         <td>
                                             <a href="{{ route('invoices.show', $payment->invoice) }}">
                                                 {{ $payment->invoice->code}}
                                             </a>
                                         </td>
+                                        <td>{{ $payment->type() }}</td>
                                         <td>{{ $payment->date->format('d-m-Y')}}</td>
 
                                         <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD" style="display: none"> {{ $payment->amountPaid() }} </span></td>
                                         <td>{{ $payment->concept()}}</td>
                                         <td>{{ $payment->method()}}</td>
-                                        {{-- <td class="td-actions text-right">
-                                            <button class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" onClick="showEditModal({{ $payment->id }})">
-                                                    <i class="fas fa-pencil-alt fa-2 "></i>
-                                            </button>
-                                            <button rel="tooltip" class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete({{ $payment->id }})">
-                                                    <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -129,7 +121,7 @@
                 </div>
             </div>
         </div>
-            
+
         @include('layouts.footers.auth')
     </div>
 @endsection

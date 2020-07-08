@@ -29,8 +29,7 @@ class ChargeRequest extends FormRequest
             'invoice_id' => 'required',
             'number' => 'max:250',
             'invoice_number' => 'required',
-            'exchange_rate' => 'numeric|required|between:0,99.999',
-            'amount_charged' => 'numeric|required|between:0,999999999.999',
+            'status' => 'required',
         ];
     }
 }

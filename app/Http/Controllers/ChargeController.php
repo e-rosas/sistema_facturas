@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Charge;
-use App\Events\InvoiceEvent;
 use App\Http\Requests\ChargeRequest;
 use App\Http\Resources\ChargeResource;
 use App\Invoice;
@@ -55,16 +54,14 @@ class ChargeController extends Controller
     public function store(ChargeRequest $request)
     {
         $validated = $request->validated();
+        $validated['number'] = $validated['invoice_number'].'- C'.rand(1, 10000);
+
         $invoice = Invoice::findOrFail($validated['invoice_id']);
-        if ($invoice->amount_due >= $validated['amount_charged'] && (is_null($invoice->credit))) {
-            $validated['number'] = $validated['invoice_number'].'- C'.rand(1, 10000);
-            $validated['status'] = 0;
-            event(new InvoiceEvent($invoice)); //update invoice stats BEFORE
-            $validated['original_amount_due'] = $invoice->amount_due;
+        if ((is_null($invoice->credit))) {
             $charge = Charge::create($validated);
-            $invoice->status = 5; //insurance won't pay
+
+            $invoice->type = 3; //charge to patient
             $invoice->save();
-            event(new InvoiceEvent($invoice)); //AFTER
 
             return new ChargeResource($charge);
         }

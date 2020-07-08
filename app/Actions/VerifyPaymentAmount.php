@@ -43,7 +43,7 @@ class VerifyPaymentAmount
 
     public function paymentType()
     {
-        if (5 == $this->invoice->status) {
+        if (3 == $this->invoice->type) {
             return 1; //charge
         }
 
@@ -61,17 +61,23 @@ class VerifyPaymentAmount
 
     private function updateInvoice($new_amount_due)
     {
+        if (0 == $new_amount_due) {
+            $this->invoice->status = 1; //completed
+            $this->invoice->save();
+        }
+
         if (2 == $this->invoice->type && 0 == $new_amount_due) {
             $this->invoice->type = 1; //unique payment
-            $this->invoice->status = 1; //completed
             $this->invoice->save();
 
             return 1;
         }
 
-        $this->invoice->type = 0; //credit pending
-        //$this->invoice->status = 0;
-        $this->invoice->save();
+        if (2 == $this->invoice->type) {
+            $this->invoice->type = 0; //credit pending
+            //$this->invoice->status = 0;
+            $this->invoice->save();
+        }
 
         return 0;
     }

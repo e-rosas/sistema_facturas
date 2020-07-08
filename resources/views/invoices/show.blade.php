@@ -7,11 +7,7 @@
             <div class="col-xl-12 mb-5 mb-xl-0 card-group">
                 @include('components.invoiceStatsCard', ['idUSD' => 'totalUSD','title' => 'Total', 'USD' => 1,'value' => $invoice->totalDiscounted(), 'idMXN' => 'totalMXN', 'valueMXN' => $invoice->totalDiscountedMXN()])
                 @include('components.invoiceStatsCard', ['idUSD' => 'amount-paid','title' => 'Pagado', 'bg' => 'bg-green', 'USD' => 1,'value' => $invoice->amountPaid(), 'idMXN' => 'amount-paidMXN', 'valueMXN' => $invoice->amountPaidMXN()])
-                @if (is_null($invoice->charge))
-                    @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe', 'bg' => 'bg-yellow', 'USD' => 1, 'value' => $invoice->amountDue(), 'idMXN' => 'amount-dueMXN', 'valueMXN' => $invoice->debeF()])
-                @else
-                    @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe',  'bg' => 'bg-yellow', 'USD' => 1, 'value' => $invoice->chargeAmountDue(), 'idMXN' => 'amount-dueMXN', 'valueMXN' => $invoice->chargeAmountDueMXN()])
-                @endif
+                @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe', 'bg' => 'bg-yellow', 'USD' => 1, 'value' => $invoice->amountDue(), 'idMXN' => 'amount-dueMXN', 'valueMXN' => $invoice->debeF()])
                 @include('components.invoiceStatsCard', ['idUSD' => 'invoice-status','title' => 'Estado', 'bg' => 'bg-blue', 'USD' => 1, 'icon' => 'fas fa-info-circle', 'value' => $invoice->status(), 'valueMXN' => $invoice->status(), 'idMXN' => 'invoice-statusMXN'])
             </div>
 
@@ -65,7 +61,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link mb-sm-3 mb-md-0" id="tabs-charge-tab" data-toggle="tab" href="#tab-charge" role="tab"
-                        aria-controls="tabs-charge" aria-selected="false"><i class="fas fa-phone mr-2"></i> {{ __('Cargos') }}</a>
+                        aria-controls="tabs-charge" aria-selected="false"><i class="fas fa-money-check-alt mr-2"></i>
+                        {{ __('Cargos') }}</a>
                 </li>
             </ul>
         </div>

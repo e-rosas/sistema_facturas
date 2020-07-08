@@ -35,6 +35,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col">{{ __('Factura') }}</th>
+                                <th scope="col">{{ __('Tipo') }}</th>
                                 <th scope="col">{{ __('Fecha') }}</th>
                                 <th scope="col">{{ __('Cantidad') }}</th>
                                 <th scope="col">{{ __('Comentarios') }}</th>
@@ -42,12 +43,13 @@
                         </thead>
                         <tbody>
                             @foreach ($payments as $payment)
-                                <tr>
+                                <tr class="{{ $payment->type == 1 ? 'table-info' : '' }}">
                                     <td>
                                         <a href="{{ route('invoices.show', $payment->invoice) }}">
                                             {{ $payment->invoice->code()}}
                                         </a>
                                     </td>
+                                    <td>{{ $payment->type() }}</td>
                                     <td>{{ $payment->date->format('M-d-Y')}}</td>
                                     <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD" style="display: none"> {{ $payment->amountPaid() }} </span></td>
                                     <td>{{ $payment->comments}}</td>

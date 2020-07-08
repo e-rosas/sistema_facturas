@@ -34,27 +34,27 @@ class Call extends Model
     {
         switch ($this->status) {
             case 0:
-                return __('En proceso');
+                return __('In process');
 
                 break;
             case 1:
-                return __('Deducibles');
+                return __('Deductibles');
 
                 break;
             case 2:
-                return __('Negada por cargos no cubiertos');
+                return __('Denied for non covered charges');
 
                 break;
             case 3:
-                return __('Pagada');
+                return __('Paid');
 
                 break;
             case 4:
-                return __('Negada por cobro no llenado');
+                return __('Denied for untimely filing');
 
                 break;
             case 5:
-                return __('Otro');
+                return __('Other');
 
                 break;
             default:

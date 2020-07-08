@@ -13,9 +13,6 @@ class CreateChargesTable extends Migration
     {
         Schema::create('charges', function (Blueprint $table) {
             $table->unsignedBigInteger('invoice_id')->primary();
-            $table->decimal('original_amount_due', 13, 4);
-            $table->decimal('amount_charged', 13, 4);
-            $table->decimal('exchange_rate', 13, 4);
             $table->date('date');
             $table->string('number');
             $table->tinyInteger('status')->default(0);

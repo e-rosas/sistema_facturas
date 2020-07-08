@@ -26,7 +26,7 @@ class PaymentResource extends JsonResource
             'concept' => $this->concept(),
             'exchange_rate' => $this->exchangeRate(),
             'comments' => is_null($this->comments) ? '' : $this->comments,
-            'date' => $this->date->format('d-m-Y'),
+            'date' => $this->date->format('M-d-Y'),
             'date2' => $this->date->format('Y-m-d'),
             'type' => $this->type(),
             'type2' => $this->type,

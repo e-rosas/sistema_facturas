@@ -74,7 +74,7 @@
                     <td></td>
                 </tr>
             @endif
-            @if (!is_null($invoice->charge))
+            {{-- @if (!is_null($invoice->charge))
             <tr class="table-warning">
                 <td>{{ $invoice->charge->date->format('d-M-Y') }}</td>
                 <td>C</td>
@@ -83,14 +83,14 @@
                 <td></td>
                 <td><span class="MXN"> {{ $invoice->charge->total() }} </span><span class="USD" style="display: none">
                         {{ $invoice->charge->getAmountCharged() }} </span></td>
-                <td>{{-- <span class="MXN"> {{ $invoice->charge->total() }} </span><span class="USD" style="display: none">
-                        {{ $invoice->charge->getAmountCharged() }} </span> --}}</td>
+                <td><span class="MXN"> {{ $invoice->charge->total() }} </span><span class="USD" style="display: none">
+                        {{ $invoice->charge->getAmountCharged() }} </span> </td>
                 <td></td>
                 <td></td>
                 <td>{{ $invoice->charge->getExchangeRate() }}</td>
                 <td></td>
             </tr>
-            @endif
+            @endif--}}
             @endforeach
         </tbody>
         <tfoot>

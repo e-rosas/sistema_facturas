@@ -8,11 +8,8 @@ class Charge extends Model
 {
     public $primaryKey = 'invoice_id';
     public $fillable = [
-        'original_amount_due',
-        'amount_charged',
         'status',
         'comments',
-        'exchange_rate',
         'date',
         'invoice_id',
         'number',
@@ -24,39 +21,29 @@ class Charge extends Model
     {
         switch ($this->status) {
             case 0:
-                return 'Transferencia.';
+                return __('Deductibles');
 
                 break;
             case 1:
-                return 'Cheque.';
+                return __('Denied for non covered charges');
+
+                break;
+            case 2:
+                return __('Paid');
+
+                break;
+            case 3:
+                return __('Denied for untimely filing');
+
+                break;
+            case 4:
+                return __('Other');
 
                 break;
             default:
                 // code...
                 break;
         }
-    }
-
-    public function getAmountCharged()
-    {
-        return number_format($this->amount_charged, 4);
-    }
-
-    public function getOriginalAmountDue()
-    {
-        return number_format($this->original_amount_due, 4);
-    }
-
-    public function getExchangeRate()
-    {
-        return number_format($this->exchange_rate, 4);
-    }
-
-    public function total()
-    {
-        $mxn = $this->amount_charged * $this->exchange_rate;
-
-        return number_format($mxn, 4);
     }
 
     public function invoice()

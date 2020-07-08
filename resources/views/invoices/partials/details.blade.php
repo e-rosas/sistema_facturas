@@ -112,11 +112,10 @@
                     <select id='new-status' class="custom-select" name="status">
                         <option value='10'>Cambiar estado</option>
                         <option value='0'>Nota de crédito pendiente.</option>
-                        <option value='1'>Completada.</option>
+                        <option value='1'>Completa.</option>
                         <option value='2'>Pendiente de pago.</option>
                         <option value='3'>Pendiente de asignar productos.</option>
                         <option value='4'>Pendiente de facturar.</option>
-                        <option value='5'>Aseguranza no pagará.</option>
                     </select>
                 </div>
                 <div class="col-md-3">

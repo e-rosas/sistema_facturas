@@ -41,7 +41,7 @@
                             {{--  exchange_rate --}}
                             <div class="form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-credit-exchange_rate">Cambio</label>
-                                <input type="numeric" name="exchange_rate" id="input-credit-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="exchange_rate" id="input-credit-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}"
                                 placeholder="Cambio" value=23 required>
 
                                 @if ($errors->has('exchange_rate'))
@@ -50,7 +50,7 @@
                                     </span>
                                 @endif
                             </div>
-                            
+
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -93,7 +93,7 @@
                 "date": date,
                 "comments": comments,
             },
-        success: function (response) {         
+        success: function (response) {
             displayCredit(response.data);
             displayStats();
             $('#modal-credit').modal('hide');
@@ -121,6 +121,9 @@
 
         if(exchange_rate > 0){
             sendCredit(exchange_rate, date, comments);
+        }
+        else {
+            alert("Exchange rate must be higher than 0.")
         }
 
 

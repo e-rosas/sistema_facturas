@@ -11,7 +11,7 @@
                         <div class="form-group">
                             <div class="form-group">
                                 {{--  Number --}}
-                                <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
+                                {{-- <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -24,7 +24,7 @@
                                             </span>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{--  Invoice  --}}
                                 {{--  <div class="form-group">
                                     <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id">
@@ -32,7 +32,7 @@
                                     </select>
                                 </div>  --}}
                                 {{--  Claim  --}}
-                                <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
+                                {{-- <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
@@ -45,7 +45,7 @@
                                             </span>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{--  Date  --}}
                                 <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
@@ -62,18 +62,18 @@
                                     </div>
                                 </div>
                                 {{--  status  --}}
-                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                <div class="form-group {{ $errors->has('status') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
                                         <select class="form-control" id="input-status">
-                                            <option value="0">{{ __('En proceso') }}</option>
-                                            <option value="1">{{ __('Deducibles') }}</option>
-                                            <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
-                                            <option value="3">{{ __('Pagada') }}</option>
-                                            <option value="4">{{ __('Negada por ') }}</option>
-                                            <option value="5">{{ __('Otro') }}</option>
+                                            <option value="0">{{ __('In process') }}</option>
+                                            <option value="1">{{ __('Deductibles') }}</option>
+                                            <option value="2">{{ __('Denied for non covered charges') }}</option>
+                                            <option value="3">{{ __('Paid') }}</option>
+                                            <option value="4">{{ __('Denied for untimely filing') }}</option>
+                                            <option value="5">{{ __('Other') }}</option>
                                           </select>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button id="save_call" class="btn btn-block btn-success">{{ __('Guardar') }}</button>
+                                    <button id="save_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </div>

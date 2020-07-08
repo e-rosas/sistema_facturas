@@ -76,12 +76,6 @@ class CalculateTotalsOfInvoices
             $total_payments = new CalculateTotalsOfPayments($allPayments);
             $total_payments->calculateTotals();
 
-            if (!is_null(($invoice->charge))) {
-                $amount_due = $invoice->charge->amount_charged;
-            } else {
-                $amount_due = $invoice->total_with_discounts;
-            }
-
             if (is_null(($invoice->credit))) {
                 $credit = 0;
             } else {
@@ -89,7 +83,7 @@ class CalculateTotalsOfInvoices
             }
 
             $invoice->amount_paid = $total_payments->amount_paid + $credit;
-            $invoice->amount_due = $amount_due - $invoice->amount_paid;
+            $invoice->amount_due = $invoice->total_with_discounts - $invoice->amount_paid;
             $invoice->save();
 
             $this->sumInvoiceStats($invoice);

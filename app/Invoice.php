@@ -202,6 +202,10 @@ class Invoice extends Model
                 return 'Pendiente de pago.';
 
                 break;
+            case 3:
+                return 'Cargo al paciente.';
+
+                break;
             default:
                 // code...
                 break;
@@ -229,10 +233,6 @@ class Invoice extends Model
                 break;
             case 4:
                 return 'Pendiente de facturar.';
-
-                break;
-            case 5:
-                return 'Aseguranza no pagará.';
 
                 break;
             default:

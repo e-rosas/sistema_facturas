@@ -73,7 +73,7 @@ class Payment extends Model
 
                 break;
             case 1:
-                return 'Cargo.';
+                return 'Cargo a paciente.';
 
                 break;
             default:

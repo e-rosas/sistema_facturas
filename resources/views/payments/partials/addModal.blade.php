@@ -9,7 +9,7 @@
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
                             {{--  Number --}}
-                            <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
+                            {{-- <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
@@ -22,7 +22,7 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div>
+                            </div> --}}
                             {{--  Date  --}}
                             <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -102,21 +102,17 @@
 <script>
     function handler(e){
         var date = document.getElementById("payment-date").value;
-        getExchangeRate(date);
+        getExchangeRate(date, "payment-exchange_rate");
     }
     function credit_handler(e){
         var date = document.getElementById("input-credit-date").value;
-        getExchangeRate(date);
-    }
-    function charge_handler(e){
-        var date = document.getElementById("input-charge-date").value;
-        getExchangeRate(date);
+        getExchangeRate(date, "input-credit-exchange_rate");
     }
     function details_handler(e){
         var date = document.getElementById("input-date").value;
-        getExchangeRate(date);
+        getExchangeRate(date, "invoice-exchange_rate");
     }
-    function getExchangeRate(date){
+    function getExchangeRate(date, element){
         $.ajax({
             url: "{{route('rate.find')}}",
             dataType: 'json',
@@ -126,15 +122,12 @@
                 "date": date,
             },
         success: function (response) {
-            document.getElementById("payment-exchange_rate").value = response.value;
-            document.getElementById("input-credit-exchange_rate").value = response.value;
-            document.getElementById("input-charge-exchange_rate").value = response.value;
-            document.getElementById("invoice-exchange_rate").value = response.value;
+            document.getElementById(element).value = response.value;
             }
         });
         return false;
     }
-    function sendPayment(method, exchange_rate, amount, date, comments, number){
+    function sendPayment(method, exchange_rate, amount, date, comments){
         $.ajax({
             url: "{{route('payments.store')}}",
             dataType: 'json',
@@ -148,7 +141,6 @@
                 "method": method,
                 "date": date,
                 "comments": comments,
-                "number": number
             },
         success: function (response) {
             DisplayPayments(response.data);
@@ -197,7 +189,6 @@
             document.getElementById("add-credit").style.display = 'block';
         }
         document.getElementById("payment-exchange_rate").value = 0;
-        document.getElementById("input-charge-exchange_rate").value = 0;
         document.getElementById("input-credit-exchange_rate").value = 0;
     }
 
@@ -210,11 +201,10 @@
         var date = document.getElementById("payment-date").value;
         var method = document.getElementById("payment-method").value;
         var exchange_rate = document.getElementById("payment-exchange_rate").value;
-        var number = document.getElementById("payment-number").value;
         var comments = document.getElementById("payment-comments").value;
 
         if(amount > 0 && exchange_rate > 0){
-            sendPayment(method , exchange_rate, amount, date, comments, number);
+            sendPayment(method , exchange_rate, amount, date, comments);
         }
         else {
             alert("Falta introducir cantidad de pago y/o tipo de cambio.")

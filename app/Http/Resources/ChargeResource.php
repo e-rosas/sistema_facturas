@@ -17,12 +17,9 @@ class ChargeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'original_amount_due' => $this->original_amount_due,
-            'amount_charged' => $this->getAmountCharged(),
             'status' => $this->status(),
             'concept' => $this->concept(),
             'number' => $this->number,
-            'exchange_rate' => $this->exchange_rate,
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->date->format('d-m-Y'),
         ];

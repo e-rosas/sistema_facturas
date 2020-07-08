@@ -38,8 +38,22 @@
                                     @endif
                                 </div>
                             </div>
+                            {{--  status  --}}
+                            <div class="form-group {{ $errors->has('status') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                    </div>
+                                    <select class="form-control" id="input-charge-status">
+                                        <option value="0">{{ __('Deductibles') }}</option>
+                                        <option value="2">{{ __('Denied for non covered charges') }}</option>
+                                        <option value="3">{{ __('Denied for untimely filing') }}</option>
+                                        <option value="4">{{ __('Other') }}</option>
+                                    </select>
+                                </div>
+                            </div>
                             {{--  amount  --}}
-                            <div class="form-group{{ $errors->has('amount_paid') ? ' has-danger' : '' }}">
+                            {{-- <div class="form-group{{ $errors->has('amount_paid') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-charge-amount_charged">Cantidad</label>
                                 <input type="numeric" name="amount_charged" id="input-charge-amount_charged" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}"
                                 placeholder="Cantidad" value={{ (float) str_replace(',', '', $invoice->amount_due)  }}>
@@ -49,11 +63,11 @@
                                         <strong>{{ $errors->first('amount_paid') }}</strong>
                                     </span>
                                 @endif
-                            </div>
+                            </div> --}}
                             {{--  exchange_rate --}}
-                            <div class="form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
+                            {{-- <div class="form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="input-charge-exchange_rate">Cambio</label>
-                                <input type="numeric" name="exchange_rate" id="input-charge-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}" 
+                                <input type="numeric" name="exchange_rate" id="input-charge-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}"
                                 placeholder="Cambio" value=23 required>
 
                                 @if ($errors->has('exchange_rate'))
@@ -61,8 +75,8 @@
                                         <strong>{{ $errors->first('exchange_rate') }}</strong>
                                     </span>
                                 @endif
-                            </div>
-                            
+                            </div> --}}
+
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -79,7 +93,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button id="save_charge" class="btn btn-success mt-4">Guardar</button>
+                                <button id="save_charge" class="btn btn-success mt-4">{{ __('Save') }}</button>
                             </div>
                         </div>
                     </div>
@@ -92,7 +106,7 @@
 @push('js')
 
 <script>
-    function sendCharge(exchange_rate,  date, comments, amount_charged){
+    function sendCharge(date, comments, status){
         $.ajax({
             url: "{{route('charges.store')}}",
             dataType: 'json',
@@ -101,12 +115,11 @@
                 "_token": "{{ csrf_token() }}",
                 "invoice_id": {{ $invoice->id }},
                 "invoice_number": "{{ $invoice->code }}",
-                "exchange_rate": exchange_rate,
                 "date": date,
                 "comments": comments,
-                "amount_charged": amount_charged
+                "status": status
             },
-        success: function (response) {         
+        success: function (response) {
             displayCharge(response.data);
             displayStats();
             $('#modal-charge').modal('hide');
@@ -118,24 +131,19 @@
 
     function displayCharge(data){
         document.getElementById("charge-date").innerHTML = data.date;
-        document.getElementById("charge-exchange_rate").innerHTML = data.exchange_rate;
         document.getElementById("charge-number").innerHTML = data.number;
         document.getElementById("charge-status").innerHTML = data.status;
         document.getElementById("charge-concept").innerHTML = data.concept;
         document.getElementById("charge-comments").innerHTML = data.comments;
-        document.getElementById("charge-amount_charged").innerHTML = data.amount_charged;
     }
 
     $("#save_charge").click(function(){
 
         var date = document.getElementById("input-charge-date").value;
-        var exchange_rate = document.getElementById("input-charge-exchange_rate").value;
-        var amount_charged = document.getElementById("input-charge-amount_charged").value;
+        var status = document.getElementById("input-charge-status").value;
         var comments = document.getElementById("input-charge-comments").value;
 
-        if(exchange_rate > 0){
-            sendCharge(exchange_rate, date, comments, amount_charged);
-        }
+        sendCharge(date, comments, status);
 
 
 

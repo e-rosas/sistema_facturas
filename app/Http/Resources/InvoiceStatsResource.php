@@ -15,8 +15,8 @@ class InvoiceStatsResource extends JsonResource
      */
     public function toArray($request)
     {
-        $amount_dueMXN = (5 == $this->status ? $this->chargeAmountDueMXN() : $this->debeF());
-        $amount_due = (5 == $this->status ? $this->chargeAmountDue() : $this->amountDue());
+        $amount_dueMXN = $this->debeF();
+        $amount_due = $this->amountDue();
 
         return [
             'id' => $this->id,
