@@ -15,7 +15,7 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
 
     'initial' => env('INVOICE_INITIAL', 'B'),
-    'nombre' => env('NAME', 'HM'),
+    'nombre' => env('NAME', 'HM -'),
 
     /*
     |--------------------------------------------------------------------------
