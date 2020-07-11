@@ -28,35 +28,27 @@
                             </div>
                         @endif
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col-xl-12 mb-5 mb-xl-0">
-                <div class="card">
-                    <div class="row">
-                            <!-- Projects table -->
-                            <div class="table-responsive">
-                                <table  id="categories_table" class=" table dt-responsive table-flushed table-bordered">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($categories as $category)
-                                        <tr>
-                                            <td>{{ $category->nombre }}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                        </div>
+                    <div class="table-responsive">
+                        <table id="categories_table" class=" table dt-responsive table-flushed table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($categories as $category)
+                                <tr>
+                                    <td>{{ $category->nombre }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+
         @include('layouts.footers.auth')
     </div>
 @endsection

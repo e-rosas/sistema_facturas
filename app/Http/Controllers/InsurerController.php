@@ -17,11 +17,23 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $insurers = Insurer::paginate();
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
 
-        return view('insurers.index', compact('insurers'));
+        if (!is_null($request->search)) {
+            $search = $request->search;
+        } else {
+            $search = '';
+        }
+
+        $insurers = Insurer::whereLike('name', $search)->paginate($perPage);
+
+        return view('insurers.index', compact('insurers', 'search', 'perPage'));
     }
 
     /**
