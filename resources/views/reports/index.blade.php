@@ -9,12 +9,14 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Cargos') }}</h5>
-                            <p class="h2 font-weight-bold mb-0"> <span class="MXN"> {{ $invoices_totals->getTotalM() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getTotal_with_discounts() }}</span></p>
+                            <p class="h2 font-weight-bold mb-0"> <span class="MXN"> {{ $invoices_totals->getTotalM() }}
+                                </span> <span class="USD" style="display: none">
+                                    {{ $invoices_totals->getTotal_with_discounts() }}</span></p>
                         </div>
                         <div class="col-auto">
-                        <div class="icon icon-shape bg-pink text-white rounded-circle shadow">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
+                            <div class="icon icon-shape bg-pink text-white rounded-circle shadow">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
                         </div>
                     </div>
 
@@ -27,15 +29,17 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Abonos') }}</h5>
-                            <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0"><span class="MXN"> {{ $invoices_totals->amountPaidMXN() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getAmountPaid() }}</span></p>
+                            <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0"><span class="MXN">
+                                    {{ $invoices_totals->amountPaidMXN() }} </span> <span class="USD"
+                                    style="display: none"> {{ $invoices_totals->getAmountPaid() }}</span><span
+                                    class="text-success mr-2">{{ $invoices_totals->percentagePaid() }}%</span></p>
                         </div>
                         <div class="col-auto">
-                        <div class="icon icon-shape bg-green text-white rounded-circle shadow">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
+                            <div class="icon icon-shape bg-green text-white rounded-circle shadow">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -44,16 +48,19 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Saldo') }}</h5>
-                            <p id="total-amount-paid" class="h2 font-weight-bold mb-0"><span class="MXN"> {{ $invoices_totals->amountDueMXN() }} </span> <span class="USD" style="display: none"> {{ $invoices_totals->getAmountDue() }}</span></p>
+                            <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Saldo') }}
+                            </h5>
+                            <p id="total-amount-paid" class="h2 font-weight-bold mb-0"><span class="MXN">
+                                    {{ $invoices_totals->amountDueMXN() }} </span> <span class="USD"
+                                    style="display: none"> {{ $invoices_totals->getAmountDue() }}</span><span
+                                    class="text-yellow mr-2">{{ 100 - $invoices_totals->percentagePaid() }}%</span></p>
                         </div>
                         <div class="col-auto">
-                        <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
+                            <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -70,7 +77,7 @@
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                     </div>
                     <input type="date" name="start" id="input-start" class="form-control"
-                    value="{{ $start->format('Y-m-d') }}">
+                        value="{{ $start->format('Y-m-d') }}">
                 </div>
             </div>
             {{--  end_date  --}}
@@ -81,13 +88,13 @@
                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                     </div>
                     <input type="date" name="end" id="input-end" class="form-control"
-                    value="{{ $end->format('Y-m-d')  }}">
+                        value="{{ $end->format('Y-m-d')  }}">
                 </div>
             </div>
             <div class="col-lg-2 col-auto">
                 <label for="perPage">{{ __('Cantidad') }}</label>
-                <select  class="custom-select" name="perPage">
-                    <option value='15' {{ $perPage == 15 ? 'selected' : '' }} >15</option>
+                <select class="custom-select" name="perPage">
+                    <option value='15' {{ $perPage == 15 ? 'selected' : '' }}>15</option>
                     <option value='30' {{ $perPage == 30 ? 'selected' : '' }}>30</option>
                     <option value='50' {{ $perPage == 50 ? 'selected' : '' }}>50</option>
                     <option value='100' {{ $perPage == 100 ? 'selected' : '' }}>100</option>
@@ -114,7 +121,8 @@
                     <div class="row align-items-center">
                         <div class="col">
                             <h6 class="text-uppercase text-light ls-1 mb-1">Estado de cuenta</h6>
-                            <h2 class=" mb-0">Facturas del {{ $start->format('d-m-Y') }} al {{ $end->format('d-m-Y') }}</h2>
+                            <h2 class=" mb-0">Facturas del {{ $start->format('d-m-Y') }} al {{ $end->format('d-m-Y') }}
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -180,4 +188,3 @@
 {{-- @push('headjs')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 @endpush --}}
-

@@ -136,6 +136,11 @@ class CalculateTotalsOfInvoices
         return count($this->invoices);
     }
 
+    public function percentagePaid()
+    {
+        return number_format(($this->amount_paid / $this->total_with_discounts) * 100, 2);
+    }
+
     private function sumInvoiceStats($invoice)
     {
         $this->total += $invoice->total;

@@ -103,6 +103,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
 
+    Route::post('charts/stats', 'ChartController@stats')->name('charts.stats');
+
     Route::get('/import_items', 'ImportController@getImportItems')->name('import.items');
     Route::post('/import_parse_items', 'ImportController@parseImportItems')->name('import.parse.items');
     Route::post('/import_process_items', 'ImportController@processImportItems')->name('import.process.items');
