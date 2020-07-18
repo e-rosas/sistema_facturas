@@ -53,7 +53,7 @@
                             <p id="total-amount-paid" class="h2 font-weight-bold mb-0"><span class="MXN">
                                     {{ $invoices_totals->amountDueMXN() }} </span> <span class="USD"
                                     style="display: none"> {{ $invoices_totals->getAmountDue() }}</span><span
-                                    class="text-yellow mr-2">{{ 100 - $invoices_totals->percentagePaid() }}%</span></p>
+                                    class="text-yellow mr-2">{{ $invoices_totals->percentageDue() }}%</span></p>
                         </div>
                         <div class="col-auto">
                             <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">

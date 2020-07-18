@@ -16,6 +16,8 @@ class CalculateTotalsOfInvoices
     public $subtotal_m = 0;
     public $IVA = 0;
     public $total_m = 0;
+    public $percentage_paid = 0;
+    public $percentage_due = 0;
     private $invoices = [];
 
     public function __construct($invoices)
@@ -138,7 +140,16 @@ class CalculateTotalsOfInvoices
 
     public function percentagePaid()
     {
-        return number_format(($this->amount_paid / $this->total_with_discounts) * 100, 2);
+        $this->percentage_paid = ($this->amount_paid / $this->total_with_discounts) * 100;
+
+        $this->percentage_due = 100 - $this->percentage_paid;
+
+        return number_format($this->percentage_paid, 2);
+    }
+
+    public function percentageDue()
+    {
+        return number_format($this->percentage_due, 2);
     }
 
     private function sumInvoiceStats($invoice)
