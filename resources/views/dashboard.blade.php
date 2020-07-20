@@ -74,7 +74,35 @@
 </div>
 <div class="container-fluid mt--7">
     <div class="row">
-        <div class="col-xl-12 mb-5 mb-xl-0">
+        {{--  start_date  --}}
+        <div class="form-group col-md-4">
+            <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                </div>
+                <input type="date" name="start_date" id="input-start_date" class="form-control"
+                    value="{{ $start->format('Y-m-d') }}" required>
+            </div>
+        </div>
+        {{--  end_date  --}}
+        <div class="form-group col-md-4">
+            <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                </div>
+                <input type="date" name="end_date" id="input-end_date" class="form-control"
+                    value="{{ $end->format('Y-m-d')  }}" required>
+            </div>
+        </div>
+        {{--  refresh  --}}
+        <div class="col-md-4 text-right">
+            <button id="refresh" type="button" class="btn btn-info" onclick="RefreshPayments()">
+                Refresh
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 mb-xl-0">
             <div class="card bg-gradient-default shadow">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
@@ -127,6 +155,19 @@
                 borderColor: 'rgb(75, 192, 192)',
                 data: [],
                 fill: false,
+            }, {
+                label: '$',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgb(75, 192, 192)',
+                data: [],
+                fill: false,
+            },
+            {
+                label: '$',
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgb(75, 192, 192)',
+                data: [],
+                fill: false,
             }]
         },
 
@@ -135,7 +176,7 @@
             responsive: true,
             title: {
             display: true,
-            text: "Payment amounts",
+            text: "Reportes",
             },
             legend: {
             display: true
@@ -157,7 +198,7 @@
         var start = document.getElementById("input-start_date").value;
         var end = document.getElementById("input-end_date").value;
         $.ajax({
-            url: "{{route('charts.payments')}}",
+            url: "{{route('charts.invoices')}}",
             dataType: 'json',
             type:"post",
             data: {
@@ -169,15 +210,19 @@
         success: function (response) {
             var labels = [];
             var data = [];
-            var amounts = [];
             for(var i = 0; i < response.length; i++){
-                labels.push(response[i].date);
-                data.push(response[i].total_payments);
-                amounts.push(response[i].total_amount_paid);
+                labels.push(response[i].month);
+                data.push(response[i].total_amount_due);
+                data.push(response[i].total_amount_paid);
+                data.push(response[i].total);
             }
-            addData(paymentsChart, labels, data);
-            addData(reportsChart, labels, amounts);
-            RefreshStats();
+            console.log(response);
+            removeData(reportsChart);
+            reportsChart.data.labels = reportsChart.data.labels.concat(labels);
+            reportsChart.data.datasets[0].data = reportsChart.data.datasets[0].data.concat(data[0]);
+            reportsChart.data.datasets[1].data = reportsChart.data.datasets[1].data.concat(data[1]);
+            reportsChart.data.datasets[2].data = reportsChart.data.datasets[2].data.concat(data[2]);
+            reportsChart.update();
         }});
         return false;
     }

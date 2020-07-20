@@ -97,7 +97,7 @@
         var start = document.getElementById("input-start_date").value;
         var end = document.getElementById("input-end_date").value;
         $.ajax({
-            url: "{{route('charts.payments')}}",
+            url: "{{route('charts.invoices')}}",
             dataType: 'json',
             type:"post",
             data: {

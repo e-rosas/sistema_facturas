@@ -87,6 +87,55 @@ class ReportController extends Controller
         return json_encode($payments);
     }
 
+    public function invoiceStats(ReportRequest $request)
+    {
+        /* $start = Carbon::parse($request->start_date);
+        $end = Carbon::parse($request->end_date); */
+
+        $validated = $request->validated();
+
+        $fromDate = $validated['start_date'];
+        $toDate = $validated['end_date'];
+
+        $invoices = DB::table('invoices')
+            ->select([DB::raw("DATE_FORMAT(date, '%M-%y') AS month"), DB::raw('(COUNT(id)) as total_invoices'),
+                DB::raw('(SUM(amount_paid)) as total_amount_paid'),
+                DB::raw('(SUM(amount_due)) as total_amount_due'),
+                DB::raw('(SUM(total_with_discounts)) as total'), ])
+            ->whereRaw(
+                '(date >= ? AND date <= ?)',
+                [$fromDate.' 00:00:00', $toDate.' 23:59:59']
+            )
+            ->orderBy('date')
+            ->groupBy(DB::raw("DATE_FORMAT(date, '%M-%y')"))
+
+            ->get()
+        ;
+
+        /* foreach ($invoices as $invoice) {
+            $date = new Carbon($invoice->date);
+            $invoice->date = $date->format('M-y');
+        } */
+
+        /* $payments = DB::table('payments')
+            ->select(['date', DB::raw('(COUNT(*)) as total_payments'),  DB::raw('(SUM(amount)) as total_amount_paid')])
+            ->orderBy('date')
+            ->groupBy(DB::raw('MONTH(date)'))
+            ->havingRaw(
+                '(date >= ? AND date <= ?)',
+                [$fromDate.' 00:00:00', $toDate.' 23:59:59']
+            )
+            ->get()
+        ;
+
+        foreach ($payments as $payment) {
+            $date = new Carbon($payment->date);
+            $payment->date = $date->format('M-y');
+        } */
+
+        return json_encode($invoices);
+    }
+
     public function stats(Request $request)
     {
         /* $start = Carbon::parse($request->start_date);

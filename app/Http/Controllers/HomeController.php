@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -19,8 +20,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard');
+        if (!empty($request['start'] && !empty($request['end']))) {
+            $start = Carbon::parse($request->start);
+            $end = Carbon::parse($request->end);
+        } else {
+            $end = Carbon::today()->addDay();
+            $start = Carbon::today()->subMonths(6);
+        }
+
+        return view('dashboard', compact('start', 'end'));
     }
 }
