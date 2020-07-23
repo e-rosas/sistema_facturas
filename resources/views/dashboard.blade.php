@@ -12,8 +12,7 @@
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Cargos') }}</h5>
                                     <p class="h2 font-weight-bold mb-0">
-                                        <span class="MXN" id="totalMXN">0.00</span>
-                                        <span class="USD" style="display: none" id="totalUSD">0.00</span>
+                                        <span class="USD" id="totalUSD">0.00</span>
                                     </p>
                                 </div>
                                 <div class="col-auto">
@@ -33,8 +32,7 @@
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Abonos') }}</h5>
                                     <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0">
-                                        <span class="MXN" id="totalPaidMXN">$0.00</span>
-                                        <span class="USD" style="display: none" id="totalPaidUSD">$0.00</span>
+                                        <span class="USD" id="totalPaidUSD">$0.00</span>
                                         <span class="text-success mr-2" id="totalPaidPercentage">0.00%</span>
                                     </p>
                                 </div>
@@ -55,8 +53,7 @@
                                     <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Saldo') }}
                                     </h5>
                                     <p id="total-amount-paid" class="h2 font-weight-bold mb-0">
-                                        <span class="MXN" id="totalDueMXN">$0.00</span>
-                                        <span class="USD" style="display: none" id="totalDueUSD">$0.00</span>
+                                        <span class="USD" id="totalDueUSD">$0.00</span>
                                         <span class="text-yellow mr-2" id="totalDuePercentage">0.00%</span></p>
                                 </div>
                                 <div class="col-auto">
@@ -96,21 +93,21 @@
         </div>
         {{--  refresh  --}}
         <div class="col-md-4 text-right">
-            <button id="refresh" type="button" class="btn btn-info" onclick="RefreshPayments()">
-                Refresh
+            <button id="refresh" type="button" class="btn btn-info" onclick="RefreshStats()">
+                Actualizar
             </button>
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-12 mb-xl-0">
-            <div class="card bg-gradient-default shadow">
+        <div class="col-xl-6 mb-xl-0">
+            <div class="card shadow">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h6 class="text-uppercase text-light ls-1 mb-1">Reporte</h6>
-                            <h2 class="text-white mb-0" id="period">Periodo</h2>
+                            <h6 class="text-uppercase text-light ls-1 mb-1">Totales</h6>
+                            <h2 class="text-primary mb-0" id="period">Periodo</h2>
                         </div>
-                        <div class="col">
+                        {{-- <div class="col">
                             <ul class="nav nav-pills justify-content-end">
                                 <li class="nav-item mr-2 mr-md-0">
                                     <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
@@ -125,15 +122,42 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="card-body">
                     <!-- Chart -->
-                    <div class="chart">
+                    <div>
                         <!-- Chart wrapper -->
                         <canvas id="chart-reports" class="chart-canvas"></canvas>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Totales</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table id="totals_table" class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Mes</th>
+                                <th scope="col">Cargos</th>
+                                <th scope="col">Abonos</th>
+                                <th scope="col">Saldos</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -150,82 +174,123 @@
         data: {
             labels: [],
             datasets: [{
-                label: '$',
-                backgroundColor: 'rgb(75, 192, 192)',
-                borderColor: 'rgb(75, 192, 192)',
-                data: [],
-                fill: false,
-            }, {
-                label: '$',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgb(75, 192, 192)',
-                data: [],
-                fill: false,
-            },
-            {
-                label: '$',
-                backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                borderColor: 'rgb(75, 192, 192)',
-                data: [],
-                fill: false,
-            }]
+                    label: 'Cargos',
+                    backgroundColor: 'rgb(243, 164, 181)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    data: [],
+                    fill: false,
+                }, {
+                    label: 'Abonos',
+                    backgroundColor: 'rgb(45, 206, 137)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    data: [],
+                    fill: false,
+                },
+                {
+                    label: 'Saldo',
+                    backgroundColor: 'rgb(255, 214, 0)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    data: [],
+                    fill: false,
+                }
+            ]
         },
 
         // Configuration options go here
         options: {
             responsive: true,
             title: {
-            display: true,
-            text: "Reportes",
+                display: true,
+                text: "Reportes",
             },
             legend: {
-            display: true
+                display: true
             },
             scales: {
-            yAxes: [{
-                ticks: {
-                beginAtZero: true,
-                }
-            }]
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }]
             }
         }
     });
 
 
 
-    function RefreshPayments(){
+    function RefreshStats() {
 
         var start = document.getElementById("input-start_date").value;
         var end = document.getElementById("input-end_date").value;
         $.ajax({
             url: "{{route('charts.invoices')}}",
             dataType: 'json',
-            type:"post",
+            type: "post",
             data: {
                 "_token": "{{ csrf_token() }}",
                 'start_date': start,
                 "end_date": end
 
             },
-        success: function (response) {
-            var labels = [];
-            var data = [];
-            for(var i = 0; i < response.length; i++){
-                labels.push(response[i].month);
-                data.push(response[i].total_amount_due);
-                data.push(response[i].total_amount_paid);
-                data.push(response[i].total);
+            success: function (response) {
+                removeData(reportsChart);
+                var total = 0;
+                var total_amount_paid = 0;
+                var total_amount_due = 0;
+                reportsChart.data.datasets[1].data = [];
+                reportsChart.data.datasets[2].data = [];
+                for (var i = 0; i < response.length; i++) {
+                    reportsChart.data.labels = reportsChart.data.labels.concat(response[i].month);
+                    total += Number(response[i].total);
+                    reportsChart.data.datasets[0].data = reportsChart.data.datasets[0].data.concat(response[
+                        i].total);
+                    total_amount_paid += Number(response[i].total_amount_paid);
+                    reportsChart.data.datasets[1].data = reportsChart.data.datasets[1].data.concat(response[
+                        i].total_amount_paid);
+                    total_amount_due += Number(response[i].total_amount_due);
+                    reportsChart.data.datasets[2].data = reportsChart.data.datasets[2].data.concat(response[
+                        i].total_amount_due);
+                    response[i].amount_paid_percentage = Number(((response[i].total_amount_paid / response[
+                        i].total) * 100)).toFixed(2);
+                    response[i].amount_due_percentage = Number(((response[i].total_amount_due / response[i]
+                        .total) * 100)).toFixed(2);
+                }
+                reportsChart.update();
+
+                //display on cards
+                var amount_paid_percentage = ((total_amount_paid / total) * 100).toFixed(2);
+                var amount_due_percentage = ((total_amount_due / total) * 100).toFixed(2);
+
+                document.getElementById("totalUSD").innerHTML = formatter.format(total);
+                document.getElementById("totalPaidUSD").innerHTML = formatter.format(total_amount_paid);
+                document.getElementById("totalDueUSD").innerHTML = formatter.format(total_amount_due);
+                document.getElementById("totalDuePercentage").innerHTML = amount_due_percentage + " %";
+                document.getElementById("totalPaidPercentage").innerHTML = amount_paid_percentage + " %";
+                fillTotalsTable(response);
             }
-            console.log(response);
-            removeData(reportsChart);
-            reportsChart.data.labels = reportsChart.data.labels.concat(labels);
-            reportsChart.data.datasets[0].data = reportsChart.data.datasets[0].data.concat(data[0]);
-            reportsChart.data.datasets[1].data = reportsChart.data.datasets[1].data.concat(data[1]);
-            reportsChart.data.datasets[2].data = reportsChart.data.datasets[2].data.concat(data[2]);
-            reportsChart.update();
-        }});
+        });
         return false;
     }
+
+    function fillTotalsTable(data){
+        var output = "";
+        var bg = "";
+        for(var i = 0; i < data.length; i++){
+            bg = data[i].amount_paid_percentage >= 50 ? "bg-gradient-success" : "bg-gradient-danger";
+            output += "<tr>"
+                + "<td>" + data[i].month + "</td>"
+                + "<td>" + formatter.format(data[i].total) + "</td>"
+                + "<td>" + formatter.format(data[i].total_amount_paid) + "</td>"
+                + "<td>" + formatter.format(data[i].total_amount_due) + "</td>"
+                +'<td><div class="d-flex align-items-center"><span class="mr-2">'+ data[i].amount_paid_percentage + ' %<div><div class="progress"><div class="progress-bar '+bg+'" role="progressbar" aria-valuenow=' + data[i].amount_paid_percentage + ' aria-valuemin="0" aria-valuemax="100" style="width:' + data[i].amount_paid_percentage + '%;"></div></div></div></div></td>'
+                +  "</tr>";
+        }
+        $('#totals_table tbody').html(output);
+    }
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
 
     function addData(chart, labels, data) {
         removeData(chart);
@@ -238,6 +303,7 @@
         chart.data.labels = [];
         chart.data.datasets[0].data = [];
     }
+
 </script>
 @endpush
 @endsection
