@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+{{-- Cards --}}
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
@@ -70,6 +71,7 @@
     </div>
 </div>
 <div class="container-fluid mt--7">
+    {{-- Search row --}}
     <div class="row">
         {{--  start_date  --}}
         <div class="form-group col-md-4">
@@ -98,6 +100,7 @@
             </button>
         </div>
     </div>
+    {{-- Reports total --}}
     <div class="row">
         <div class="col-xl-6 mb-xl-0">
             <div class="card shadow">
