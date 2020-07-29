@@ -116,14 +116,25 @@ class InvoiceController extends Controller
         $validated['status'] = 3;
 
         if (is_null($request->code)) {
-            $row = DB::table('invoice_counters')->first();
-            $id = $row->counter + 1;
-            $inital = config('app.initial');
-            $validated['code'] = $inital.$id;
-            DB::table('invoice_counters')
-                ->where('id', 1)
-                ->update(['counter' => $id])
+            //not cash
+            if ($request->cash < 1) {
+                $row = DB::table('invoice_counters')->first();
+                $id = $row->counter + 1;
+                $inital = config('app.initial');
+                $validated['code'] = $inital.$id;
+                DB::table('invoice_counters')
+                    ->where('id', 1)
+                    ->update(['counter' => $id])
             ;
+            } else {
+                $row = DB::table('invoice_counters')->where('id', 2)->first();
+                $id = $row->counter + 1;
+                $validated['code'] = 'CH.'.$id;
+                DB::table('invoice_counters')
+                    ->where('id', 2)
+                    ->update(['counter' => $id])
+            ;
+            }
         }
         $invoice = Invoice::create($validated);
 

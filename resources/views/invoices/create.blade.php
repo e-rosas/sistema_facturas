@@ -292,6 +292,12 @@
                                 class="custom-control-input">
                             <label class="custom-control-label" for="input-hospitalization">Hospitalización</label>
                         </div>
+                        @if (config('app.initial') == "C")
+                        <div class="col-lg-2 custom-control custom-checkbox">
+                            <input type="checkbox" name="input-cash" id="input-cash" class="custom-control-input">
+                            <label class="custom-control-label" for="input-cash">Cash</label>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -854,6 +860,7 @@
         exchange_rate = parseFloat(exchange_rate.replace(/,/g, ''));
         var doctor = document.getElementById("input-doctor").value;
         var DOS = document.getElementById("input-date_service-to").value;
+        var isCash = document.getElementById("input-cash").checked ? 1 : 0;
         $.ajax({
             url: "{{route('invoices.store')}}",
             type: "post",
@@ -880,7 +887,8 @@
                 "exchange_rate": exchange_rate,
                 "doctor": doctor,
                 "DOS": DOS,
-                "hospitalization": isHospitalization
+                "hospitalization": isHospitalization,
+                "cash": isCash
             },
             success: function (response) {
                 setTimeout(function () {
@@ -1108,7 +1116,11 @@
             var code = document.getElementById("input-code").value;
             var accepted = true;
             if (code.length == 0) {
-                accepted = confirm("Código de cobro está vacío, ¿desea continuar?");
+                var message = "";
+                if(document.getElementById("input-cash").checked){
+                    message = "Se utilizará contador de CASH."
+                }
+                accepted = confirm("Código de cobro está vacío, ¿desea continuar? " + message);
             }
 
             if (accepted) {
