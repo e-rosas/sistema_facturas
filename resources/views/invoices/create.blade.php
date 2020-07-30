@@ -484,7 +484,44 @@
                 "date": date,
             },
             success: function (response) {
-                document.getElementById("invoice-exchange_rate").value = response.value;
+                if (response.value == 0) {
+                    getNewExchangeRate(hoy, date);
+                }
+                else{
+document.getElementById("invoice-exchange_rate").value = response.value;
+                }
+
+            }
+        });
+        return false;
+    }
+
+    function getNewExchangeRate(date, dateUS) {
+        $.ajax({
+            url: "https://sidofqa.segob.gob.mx/dof/sidof/indicadores/" + date,
+            dataType: 'json',
+            type: "get",
+            success: function (response) {
+                const value = response.ListaIndicadores[0].valor;
+                document.getElementById("invoice-exchange_rate").value = value;
+                addNewExchangeRate(dateUS, value);
+            }
+        });
+        return false;
+    }
+
+    function addNewExchangeRate(date, value) {
+        $.ajax({
+            url: "{{route('rate.add')}}",
+            dataType: 'json',
+            type: "post",
+            data: {
+            "_token": "{{ csrf_token() }}",
+            "date": date,
+            "value": value
+            },
+            success: function (response) {
+                alert("Tipo de cambio agregado: " + hoy + " : " + value);
             }
         });
         return false;
@@ -1034,6 +1071,8 @@
     var yyyy = current_date.getFullYear();
 
     var today = yyyy + '-' + mm + '-' + dd;
+    var hoy = dd + '-' + mm + '-' + yyyy;
+
     getExchangeRate(today);
     $(document).ready(function () {
         document.getElementById("input-date").value = today;
@@ -1117,7 +1156,7 @@
             var accepted = true;
             if (code.length == 0) {
                 var message = "";
-                if(document.getElementById("input-cash").checked){
+                if (document.getElementById("input-cash").checked) {
                     message = "Se utilizará contador de CASH."
                 }
                 accepted = confirm("Código de cobro está vacío, ¿desea continuar? " + message);

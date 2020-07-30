@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RateRequest;
 use App\Invoice;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RateController extends Controller
@@ -16,6 +17,15 @@ class RateController extends Controller
         $value = $this->findRate($invoice_date);
 
         return json_encode($value);
+    }
+
+    public function AddRate(Request $request)
+    {
+        $date = $request['date'];
+        $value = $request['value'];
+        $new = DB::table('rates')->insert(['date' => $date, 'value' => $value]);
+
+        return json_encode($new);
     }
 
     public function updateRates()
