@@ -466,7 +466,7 @@
         var date = document.getElementById("input-date").value;
         document.getElementById("input-date_service").value = date;
         document.getElementById("input-date_service-to").value = date;
-        getExchangeRate(date);
+        /* getExchangeRate(date); */
     }
 
     function service_handler(e) {
@@ -484,11 +484,11 @@
                 "date": date,
             },
             success: function (response) {
-                if (response.value == 0) {
-                    getNewExchangeRate(hoy, date);
-                }
-                else{
-document.getElementById("invoice-exchange_rate").value = response.value;
+                if (response.value == -1) {
+                    var fecha = dateToMXFormat(document.getElementById("input-date").valueAsDate);
+                    getNewExchangeRate(fecha, date);
+                } else {
+                    document.getElementById("invoice-exchange_rate").value = response.value;
                 }
 
             }
@@ -502,26 +502,29 @@ document.getElementById("invoice-exchange_rate").value = response.value;
             dataType: 'json',
             type: "get",
             success: function (response) {
-                const value = response.ListaIndicadores[0].valor;
-                document.getElementById("invoice-exchange_rate").value = value;
-                addNewExchangeRate(dateUS, value);
+                if (response.ListaIndicadores.length > 1) {
+                    const value = response.ListaIndicadores[0].valor;
+                    document.getElementById("invoice-exchange_rate").value = value;
+                    addNewExchangeRate(dateUS, value, fecha);
+                }
+
             }
         });
         return false;
     }
 
-    function addNewExchangeRate(date, value) {
+    function addNewExchangeRate(date, value, fecha) {
         $.ajax({
             url: "{{route('rate.add')}}",
             dataType: 'json',
             type: "post",
             data: {
-            "_token": "{{ csrf_token() }}",
-            "date": date,
-            "value": value
+                "_token": "{{ csrf_token() }}",
+                "date": date,
+                "value": value
             },
             success: function (response) {
-                alert("Tipo de cambio agregado: " + hoy + " : " + value);
+                alert("Tipo de cambio agregado: " + fecha + " : " + value);
             }
         });
         return false;
@@ -1065,13 +1068,21 @@ document.getElementById("invoice-exchange_rate").value = response.value;
         document.getElementById("input-dtax").value = this.dtax;
 
     }
+
+    function dateToMXFormat(date){
+        date = getCorrectDate(date);
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0');
+        var yyyy = date.getFullYear();
+        return dd + '-' + mm + '-' + yyyy;
+    }
+
     const current_date = new Date();
     var dd = String(current_date.getDate()).padStart(2, '0');
     var mm = String(current_date.getMonth() + 1).padStart(2, '0');
     var yyyy = current_date.getFullYear();
 
     var today = yyyy + '-' + mm + '-' + dd;
-    var hoy = dd + '-' + mm + '-' + yyyy;
 
     getExchangeRate(today);
     $(document).ready(function () {
@@ -1169,6 +1180,7 @@ document.getElementById("invoice-exchange_rate").value = response.value;
                 }
                 if (services.length > 0 && patient_id > 0) {
                     var date = document.getElementById("input-date").value;
+                    getExchangeRate(date);
 
                     var comments = document.getElementById("input-comments").value;
                     var number = document.getElementById("input-number").value;

@@ -50,7 +50,7 @@ class RateController extends Controller
         }
         $value = DB::table('rates')->select('value')->where('date', $date)->first();
         if (is_null($value)) {
-            $value['value'] = 0;
+            $value['value'] = -1;
         }
 
         return $value;
