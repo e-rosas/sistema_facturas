@@ -297,6 +297,9 @@
                             <input type="checkbox" name="input-cash" id="input-cash" class="custom-control-input">
                             <label class="custom-control-label" for="input-cash">Cash</label>
                         </div>
+                        @else
+                        <input type="checkbox" name="input-cash" id="input-cash" class="custom-control-input"
+                            style="display: none">
                         @endif
                     </div>
                 </div>
