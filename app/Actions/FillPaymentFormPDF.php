@@ -1328,13 +1328,15 @@ class FillPaymentFormPDF
     {
         $pointers = explode(',', $diagnosis_pointers);
         $new_pointers = '';
-        $count_pointers = count($pointers);
-        if ($count_pointers < 5) { //A,B,C,D,E
-            for ($i = 0; $i < $count_pointers; ++$i) {
-                $new_pointers = $new_pointers.$alphabet[$pointers[$i] - 1].',';
-            }
-        } else {
-            return $alphabet[$pointers[0]].'-'.$alphabet[$pointers[$count_pointers - 1]];
+        $count = count($pointers);
+        if($count < 5){
+        for ($i = 0; $i < $count; ++$i) {
+                    $new_pointers = $new_pointers.$alphabet[$pointers[$i] - 1].',';
+                }
+        }
+        else {
+        return $alphabet[$pointers[0]-1].'-'.$alphabet[$pointers[$count-1]-1];
+
         }
 
         return substr($new_pointers, 0, -1);
