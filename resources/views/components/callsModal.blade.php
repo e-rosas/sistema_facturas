@@ -12,103 +12,107 @@
                             <div class="form-group">
                                 {{--  Number --}}
                                 {{-- <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                        </div>
-                                        <input type="number" name="number" id="input-call-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
-                                        placeholder="Number" required>
-                                        @if ($errors->has('number'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('number') }}</strong>
-                                            </span>
-                                        @endif
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                </div> --}}
-                                {{--  Invoice  --}}
-                                {{--  <div class="form-group">
+                                    <input type="number" name="number" id="input-call-number"
+                                        class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
+                                        placeholder="Number" required>
+                                    @if ($errors->has('number'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('number') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div> --}}
+                            {{--  Invoice  --}}
+                            {{--  <div class="form-group">
                                     <select id='invoice_id' class="custom-select form-control"  style="width: 100%" name="invoice_id">
                                         <option value='0'>{{ __('Seleccionar factura') }}</option>
-                                    </select>
-                                </div>  --}}
-                                {{--  Claim  --}}
-                                {{-- <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                        </div>
-                                        <input type="text" name="claim" id="input-claim" class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}"
-                                        value="{{ old('claim') }}" placeholder="{{ __('Claim') }}">
-                                        @if ($errors->has('claim'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('claim') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div> --}}
-                                {{--  Date  --}}
-                                <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                        </div>
-                                        <input type="date" name="date" id="input-call-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                        value="{{ $today->format('Y-m-d')}}" required>
-                                        @if ($errors->has('date'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('date') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                {{--  status  --}}
-                                <div class="form-group {{ $errors->has('status') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
-                                        </div>
-                                        <select class="form-control" id="input-status">
-                                            <option value="0">{{ __('In process') }}</option>
-                                            <option value="1">{{ __('Deductibles') }}</option>
-                                            <option value="2">{{ __('Denied for non covered charges') }}</option>
-                                            <option value="3">{{ __('Paid') }}</option>
-                                            <option value="4">{{ __('Denied for untimely filing') }}</option>
-                                            <option value="5">{{ __('Other') }}</option>
-                                          </select>
-                                    </div>
-                                </div>
-                                {{--  comments  --}}
-                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
-                                        </div>
-                                        <textarea type="text" rows="3" name="comments" id="input-call-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
-                                        value="{{ old('comments') }}" placeholder="{{ __('Comentarios') }}"></textarea>
-                                        @if ($errors->has('comments'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('comments') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button id="save_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
-                                </div>
+                            </select>
+                        </div> --}}
+                        {{--  Claim  --}}
+                        {{-- <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                             </div>
+                            <input type="text" name="claim" id="input-claim"
+                                class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}"
+                                value="{{ old('claim') }}" placeholder="{{ __('Claim') }}">
+                            @if ($errors->has('claim'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('claim') }}</strong>
+                            </span>
+                            @endif
                         </div>
+                    </div> --}}
+                    {{--  Date  --}}
+                    <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="date" name="date" id="input-call-date"
+                                class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                value="{{ $today->format('Y-m-d')}}" required>
+                            @if ($errors->has('date'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('date') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                    {{--  status  --}}
+                    <div class="form-group {{ $errors->has('status') ? ' has-danger' : '' }}">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                            </div>
+                            <select class="form-control" id="input-status">
+                                <option value="0">{{ __('In process') }}</option>
+                                <option value="1">{{ __('Deductibles') }}</option>
+                                <option value="2">{{ __('Denied for non covered charges') }}</option>
+                                <option value="3">{{ __('Paid') }}</option>
+                                <option value="4">{{ __('Denied for untimely filing') }}</option>
+                                <option value="5">{{ __('Other') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    {{--  comments  --}}
+                    <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                            </div>
+                            <textarea type="text" rows="3" name="comments" id="input-call-comments"
+                                class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
+                                value="{{ old('comments') }}" placeholder="{{ __('Comentarios') }}"></textarea>
+                            @if ($errors->has('comments'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('comments') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button id="save_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
+</div>
+</div>
 
 @push('js')
 
 <script>
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    function sendCall(number, claim, date,
+    function sendCall(date,
     comments, status){
         $.ajax({
             url: "{{route('calls.store')}}",
@@ -116,8 +120,8 @@
             type:"post",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "number": number,
-                "claim": claim,
+                "number": '',
+                "claim": '',
                 "date": date,
                 "comments": comments,
                 "status": status,
@@ -148,7 +152,6 @@
                 + "<td>" + calls[i].number + "</td>"
                 + "<td>" + calls[i].invoice + "</td>"
                 + "<td>" + calls[i].date + "</td>"
-                + "<td>" + calls[i].claim + "</td>"
                 + "<td>" + calls[i].status + "</td>"
                 + "<td>" + calls[i].comments+ "</td>"
                 +'<td class="text-right"><button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
@@ -157,16 +160,13 @@
         }
 
         $('#calls_table tbody').html(output);
-        setCallCount();
     }
 
     $("#save_call").click(function(){
-        var number = document.getElementById("input-call-number").value;
-        var claim = document.getElementById("input-claim").value;
         var date = document.getElementById("input-call-date").value;
         var comments = document.getElementById("input-call-comments").value;
         var status = document.getElementById("input-status").value;
-        sendCall(number, claim, date, comments, status);
+        sendCall(date, comments, status);
 
 
     });

@@ -11,7 +11,7 @@
                             <div class="form-group">
                                 {{--  Call --}}
                                 <input readonly type="hidden" name="call_id" id="update-call_id" class="form-control"
-                                 required>
+                                    required>
 
                                 {{--  Number --}}
                                 <div class="form-group ">
@@ -19,7 +19,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                         </div>
-                                        <input type="numeric" readonly name="number" id="update-number" class="form-control" required>
+                                        <input type="numeric" readonly name="number" id="update-number"
+                                            class="form-control" required>
                                     </div>
                                 </div>
 
@@ -29,12 +30,13 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                         </div>
-                                        <input type="text" name="claim" id="update-claim" class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}"
-                                        value="{{ old('claim') }}" placeholder="{{ __('Claim') }}">
+                                        <input type="text" name="claim" id="update-claim"
+                                            class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}"
+                                            value="{{ old('claim') }}" placeholder="{{ __('Claim') }}">
                                         @if ($errors->has('claim'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('claim') }}</strong>
-                                            </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('claim') }}</strong>
+                                        </span>
                                         @endif
                                     </div>
                                 </div>
@@ -44,12 +46,13 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input onchange="handler(event);" type="date" name="date" id="update-date" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                        value="{{ old('date') }}" required>
+                                        <input onchange="handler(event);" type="date" name="date" id="update-date"
+                                            class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                            value="{{ old('date') }}" required>
                                         @if ($errors->has('date'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('date') }}</strong>
-                                            </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('date') }}</strong>
+                                        </span>
                                         @endif
                                     </div>
                                 </div>
@@ -66,7 +69,7 @@
                                             <option value="3">{{ __('Pagada') }}</option>
                                             <option value="4">{{ __('Negada por ') }}</option>
                                             <option value="5">{{ __('Otro') }}</option>
-                                          </select>
+                                        </select>
                                     </div>
                                 </div>
                                 {{--  comments  --}}
@@ -75,12 +78,13 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                         </div>
-                                        <textarea type="text" rows="3" name="comments" id="update-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
-                                        value="{{ old('comments') }}" placeholder="{{ __('Comments') }}"></textarea>
+                                        <textarea type="text" rows="3" name="comments" id="update-comments"
+                                            class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
+                                            value="{{ old('comments') }}" placeholder="{{ __('Comments') }}"></textarea>
                                         @if ($errors->has('comments'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('comments') }}</strong>
-                                            </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('comments') }}</strong>
+                                        </span>
                                         @endif
                                     </div>
                                 </div>
@@ -99,10 +103,6 @@
 @push('js')
 
 <script>
-    function setCallCount(){
-        var n = document.getElementById("calls_table").rows.length;
-        document.getElementById("input-call-number").value = n;
-    }
     function updateCall(id, number, claim, date,
     comments, status){
         $.ajax({
