@@ -8,6 +8,8 @@ class CalculatePersonStats
 {
     public $total_invoices;
     public $amount_due = 0;
+    public $amount_credit = 0;
+    public $amount_credit_mxn = 0;
     public $amount_due_without_discounts = 0;
     public $amount_due__mxn = 0;
     public $amount_paid_mxn = 0;
@@ -33,6 +35,12 @@ class CalculatePersonStats
 
         $this->amount_paid_mxn =
             $this->total_invoices->amount_paid_m;
+
+        $this->amount_credit =
+            $this->total_invoices->amount_credit;
+
+        $this->amount_credit_mxn =
+            $this->total_invoices->amount_credit_m;
 
         /* $this->amount_due_without_discounts =
             $this->total_invoices->total - $this->total_invoices->amount_due; */

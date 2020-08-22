@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="header-body">
             <div class="row">
-                <div class="col-xl-4 col-lg-6">
+                <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
                             <div class="row">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-lg-6">
+                <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
                             <div class="row">
@@ -46,7 +46,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-lg-6">
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Créditos') }}</h5>
+                                    <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0">
+                                        <span class="USD" id="totalCreditUSD">$0.00</span>
+                                        <span class="text-info mr-2" id="totalCreditPercentage">0.00%</span>
+                                    </p>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
                         <div class="card-body">
                             <div class="row">
@@ -154,8 +174,9 @@
                                 <th scope="col">Mes</th>
                                 <th scope="col">Cargos</th>
                                 <th scope="col">Abonos</th>
+                                <th scope="col">Créditos</th>
                                 <th scope="col">Saldos</th>
-                                <th scope="col"></th>
+                                <th scope="col">% Abonos</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -185,6 +206,13 @@
                 }, {
                     label: 'Abonos',
                     backgroundColor: 'rgb(45, 206, 137)',
+                    borderColor: 'rgb(75, 192, 192)',
+                    data: [],
+                    fill: false,
+                },
+                {
+                    label: 'Crédito',
+                    backgroundColor: 'rgb(39, 206, 239)',
                     borderColor: 'rgb(75, 192, 192)',
                     data: [],
                     fill: false,
@@ -240,8 +268,10 @@
                 var total = 0;
                 var total_amount_paid = 0;
                 var total_amount_due = 0;
-                reportsChart.data.datasets[1].data = [];
-                reportsChart.data.datasets[2].data = [];
+                var total_amount_credit = 0;
+                reportsChart.data.datasets[1].data = []; //payments
+                reportsChart.data.datasets[2].data = []; //credits
+                reportsChart.data.datasets[3].data = []; //due
                 for (var i = 0; i < response.length; i++) {
                     reportsChart.data.labels = reportsChart.data.labels.concat(response[i].month);
                     total += Number(response[i].total);
@@ -250,24 +280,32 @@
                     total_amount_paid += Number(response[i].total_amount_paid);
                     reportsChart.data.datasets[1].data = reportsChart.data.datasets[1].data.concat(response[
                         i].total_amount_paid);
-                    total_amount_due += Number(response[i].total_amount_due);
+                    total_amount_credit += Number(response[i].total_amount_credit);
                     reportsChart.data.datasets[2].data = reportsChart.data.datasets[2].data.concat(response[
+                        i].total_amount_credit);
+                    total_amount_due += Number(response[i].total_amount_due);
+                    reportsChart.data.datasets[3].data = reportsChart.data.datasets[3].data.concat(response[
                         i].total_amount_due);
                     response[i].amount_paid_percentage = Number(((response[i].total_amount_paid / response[
                         i].total) * 100)).toFixed(2);
                     response[i].amount_due_percentage = Number(((response[i].total_amount_due / response[i]
                         .total) * 100)).toFixed(2);
+                    response[i].amount_credit_percentage = Number(((response[i].total_amount_credit / response[i]
+                    .total) * 100)).toFixed(2);
                 }
                 reportsChart.update();
 
                 //display on cards
                 var amount_paid_percentage = ((total_amount_paid / total) * 100).toFixed(2);
                 var amount_due_percentage = ((total_amount_due / total) * 100).toFixed(2);
+                var amount_credit_percentage = ((total_amount_credit / total) * 100).toFixed(2);
 
                 document.getElementById("totalUSD").innerHTML = formatter.format(total);
                 document.getElementById("totalPaidUSD").innerHTML = formatter.format(total_amount_paid);
                 document.getElementById("totalDueUSD").innerHTML = formatter.format(total_amount_due);
+                document.getElementById("totalCreditUSD").innerHTML = formatter.format(total_amount_credit);
                 document.getElementById("totalDuePercentage").innerHTML = amount_due_percentage + " %";
+                document.getElementById("totalCreditPercentage").innerHTML = amount_credit_percentage + " %";
                 document.getElementById("totalPaidPercentage").innerHTML = amount_paid_percentage + " %";
                 fillTotalsTable(response);
             }
@@ -275,18 +313,22 @@
         return false;
     }
 
-    function fillTotalsTable(data){
+    function fillTotalsTable(data) {
         var output = "";
         var bg = "";
-        for(var i = 0; i < data.length; i++){
+        for (var i = 0; i < data.length; i++) {
             bg = data[i].amount_paid_percentage >= 50 ? "bg-gradient-success" : "bg-gradient-danger";
-            output += "<tr>"
-                + "<td>" + data[i].month + "</td>"
-                + "<td>" + formatter.format(data[i].total) + "</td>"
-                + "<td>" + formatter.format(data[i].total_amount_paid) + "</td>"
-                + "<td>" + formatter.format(data[i].total_amount_due) + "</td>"
-                +'<td><div class="d-flex align-items-center"><span class="mr-2">'+ data[i].amount_paid_percentage + ' %<div><div class="progress"><div class="progress-bar '+bg+'" role="progressbar" aria-valuenow=' + data[i].amount_paid_percentage + ' aria-valuemin="0" aria-valuemax="100" style="width:' + data[i].amount_paid_percentage + '%;"></div></div></div></div></td>'
-                +  "</tr>";
+            output += "<tr>" +
+                "<td>" + data[i].month + "</td>" +
+                "<td>" + formatter.format(data[i].total) + "</td>" +
+                "<td>" + formatter.format(data[i].total_amount_paid) + "</td>" +
+                "<td>" + formatter.format(data[i].total_amount_credit) + "</td>" +
+                "<td>" + formatter.format(data[i].total_amount_due) + "</td>" +
+                '<td><div class="d-flex align-items-center"><span class="mr-2">' + data[i].amount_paid_percentage +
+                ' %<div><div class="progress"><div class="progress-bar ' + bg + '" role="progressbar" aria-valuenow=' +
+                data[i].amount_paid_percentage + ' aria-valuemin="0" aria-valuemax="100" style="width:' + data[i]
+                .amount_paid_percentage + '%;"></div></div></div></div></td>' +
+                "</tr>";
         }
         $('#totals_table tbody').html(output);
     }

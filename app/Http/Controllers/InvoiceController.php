@@ -136,6 +136,7 @@ class InvoiceController extends Controller
             ;
             }
         }
+
         $invoice = Invoice::create($validated);
 
         /* if (is_null($request->code)) {
@@ -336,12 +337,12 @@ class InvoiceController extends Controller
     {
     }
 
-    public function updateAmountDue()
+    public function updateRegistered()
     {
-        $invoices = Invoice::where('type', 0)->get();
+        $invoices = Invoice::where('number', '!=', 'Pendiente')->get();
         foreach ($invoices as $invoice) {
-            $stats = new UpdatePersonStats();
-            $stats->updateStats($invoice->patient->id);
+            $invoice->registered = 1;
+            $invoice->save();
         }
     }
 

@@ -29,12 +29,14 @@ class Invoice extends Model
         'total_with_discounts',
         'amount_paid',
         'amount_due',
+        'amount_credit',
         'exchange_rate',
         'type',
         'patient_id',
         'DOS',
         'doctor',
         'hospitalization',
+        'registered',
     ];
     /**
      * The event map for the model.
@@ -62,6 +64,7 @@ class Invoice extends Model
         'exchange_rate' => 'decimal:13',
         'amount_paid' => 'decimal:13',
         'amount_due' => 'decimal:13',
+        'amount_credit' => 'decimal:13',
         'type' => 'integer',
         'registered' => 'boolean',
     ];
@@ -91,6 +94,18 @@ class Invoice extends Model
     public function amountPaid()
     {
         return number_format($this->amount_paid, 4);
+    }
+
+    public function amountCredit()
+    {
+        return number_format($this->amount_credit, 4);
+    }
+
+    public function amountCreditMXN()
+    {
+        $mxn = $this->amount_credit * $this->exchange_rate;
+
+        return number_format($mxn, 4);
     }
 
     public function amountPaidMXN()

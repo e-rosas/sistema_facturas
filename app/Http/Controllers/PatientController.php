@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CalculatePersonStats;
 use App\Actions\CalculateTotalsOfInvoices;
 use App\Dependent;
 use App\Http\Requests\PatientRequest;
@@ -10,6 +9,7 @@ use App\Http\Requests\UpdatePatientRequest;
 use App\Insuree;
 use App\Insurer;
 use App\Invoice;
+use App\Listeners\UpdatePersonStats;
 use App\Patient;
 use Illuminate\Http\Request;
 
@@ -205,17 +205,8 @@ class PatientController extends Controller
     {
         $patients = Patient::all();
         foreach ($patients as $patient) {
-            $stats = new CalculatePersonStats();
-            $stats->calculateAmounts($patient->id);
-            $person_stats = $patient->person_stats;
-
-            //$person_stats->total_amount_due = $stats->amount_due_without_discounts;
-            $person_stats->amount_due = $stats->amount_due;
-            $person_stats->amount_due_mxn = $stats->amount_due_mxn;
-            $person_stats->amount_paid_mxn = $stats->amount_paid_mxn;
-
-            $person_stats->amount_paid = $stats->getAmountPaid();
-            $person_stats->save();
+            $stats = new UpdatePersonStats();
+            $stats->updateStats($patient->id);
         }
     }
 }

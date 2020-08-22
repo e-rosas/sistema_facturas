@@ -508,7 +508,7 @@
                 if (response.ListaIndicadores.length > 1) {
                     const value = response.ListaIndicadores[0].valor;
                     document.getElementById("invoice-exchange_rate").value = value;
-                    addNewExchangeRate(dateUS, value, fecha);
+                    addNewExchangeRate(dateUS, value, date);
                 }
 
             }
@@ -931,6 +931,7 @@
                 "doctor": doctor,
                 "DOS": DOS,
                 "hospitalization": isHospitalization,
+                "registered": (number==="Pendiente") ? 0 : 1,
                 "cash": isCash
             },
             success: function (response) {

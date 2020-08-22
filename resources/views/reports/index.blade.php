@@ -3,7 +3,7 @@
 @section('content')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-lg-8">
     <div class="row">
-        <div class="col-xl-4 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                     <div class="row">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                     <div class="row">
@@ -43,7 +43,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-lg-6">
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Créditos') }}</h5>
+                            <p id="total-amount-due-insurance" class="h2 font-weight-bold mb-0"><span class="MXN">
+                                    {{ $invoices_totals->amountCreditMXN() }} </span> <span class="USD"
+                                    style="display: none">
+                                    {{ $invoices_totals->getAmountCredit() }}</span><span
+                                    class="text-info mr-2">{{ $invoices_totals->percentageCredit() }}%</span></p>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
             <div class="card card-stats mb-4 mb-xl-0">
                 <div class="card-body">
                     <div class="row">
@@ -70,7 +91,7 @@
     <form action="{{ route('reports.index') }}">
         <div class="form-row">
             {{--  start_date  --}}
-            <div class="col-lg-4 col-auto">
+            <div class="col-lg-2 col-auto">
                 <label for="start">{{ __('Fecha de facturación de') }}</label>
                 <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
@@ -81,7 +102,7 @@
                 </div>
             </div>
             {{--  end_date  --}}
-            <div class="col-lg-4 col-auto">
+            <div class="col-lg-2 col-auto">
                 <label for="start">{{ __('hasta') }}</label>
                 <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">
@@ -100,6 +121,22 @@
                     <option value='100' {{ $perPage == 100 ? 'selected' : '' }}>100</option>
                     <option value='150' {{ $perPage == 150 ? 'selected' : '' }}>150</option>
                     <option value='10000' {{ $perPage == 10000 ? 'selected' : '' }}>Todas</option>
+                </select>
+            </div>
+            <div class="col-lg-2 col-auto">
+                <label for="payment">{{ __('Pagos') }}</label>
+                <select id='payment' class="custom-select" name="payment">
+                    <option value='3' {{ $payment == 3 ? 'selected' : '' }}>Todas</option>
+                    <option value='1' {{ $payment == 1 ? 'selected' : '' }}>Sin pagos.</option>
+                    <option value='2' {{ $payment == 2 ? 'selected' : '' }}>Con pagos.</option>
+                </select>
+            </div>
+            <div class="col-lg-2 col-auto">
+                <label for="registered">{{ __('CONTPAQ') }}</label>
+                <select id='registered' class="custom-select" name="registered">
+                    <option value='-1' {{ $registered == -1 ? 'selected' : '' }}>Todas</option>
+                    <option value='1' {{ $registered == 1 ? 'selected' : '' }}>Registradas.</option>
+                    <option value='0' {{ $registered == 0 ? 'selected' : '' }}>Sin registrar.</option>
                 </select>
             </div>
             {{--  refresh  --}}
@@ -131,7 +168,7 @@
                 </div>
                 <div class="card-footer py-4">
                     <nav class="d-flex justify-content-end" aria-label="...">
-                        {{ $invoices->appends(['start' =>$start->format('Y-m-d'), 'end' => $end->format('Y-m-d'), 'perPage' => $perPage])->links() }}
+                        {{ $invoices->appends(['start' =>$start->format('Y-m-d'), 'end' => $end->format('Y-m-d'), 'perPage' => $perPage, 'payment' => $payment, 'registered' => $registered])->links() }}
                     </nav>
                 </div>
             </div>
@@ -182,7 +219,6 @@
         </div>
     </div>  --}}
 </div>
-
 
 @endsection
 {{-- @push('headjs')

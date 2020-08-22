@@ -32,6 +32,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('total_with_discounts', 13, 4)->default(0);
             $table->decimal('amount_paid', 13, 4)->default(0);
             $table->decimal('amount_due', 13, 4)->default(0);
+            $table->decimal('amount_credit', 13, 4)->default(0);
 
             $table->string('doctor')->default('Pendiente');
 

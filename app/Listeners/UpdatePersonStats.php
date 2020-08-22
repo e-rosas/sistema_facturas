@@ -60,6 +60,9 @@ class UpdatePersonStats
         $person_stats->amount_due_mxn = $stats->amount_due_mxn;
         $person_stats->amount_paid_mxn = $stats->amount_paid_mxn;
 
+        $person_stats->amount_credit = $stats->amount_credit;
+        $person_stats->amount_credit_mxn = $stats->amount_credit_mxn;
+
         $person_stats->amount_paid = $stats->getAmountPaid();
         $person_stats->save();
     }

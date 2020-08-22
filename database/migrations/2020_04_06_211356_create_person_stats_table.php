@@ -15,6 +15,8 @@ class CreatePersonStatsTable extends Migration
             $table->unsignedBigInteger('patient_id')->primary();
             $table->decimal('amount_paid', 13, 4)->default(0);
             $table->decimal('amount_due', 13, 4)->default(0);
+            $table->decimal('amount_credit', 13, 4)->default(0);
+            $table->decimal('amount_credit_mxn', 13, 4)->default(0);
             $table->decimal('amount_paid_mxn', 13, 4)->default(0);
             $table->decimal('amount_due_mxn', 13, 4)->default(0);
             $table->tinyInteger('status')->default(0);

@@ -44,6 +44,7 @@ class InvoiceRequest extends FormRequest
             'patient_id' => 'required',
             'exchange_rate' => 'numeric|required|between:0,999999999.999',
             'hospitalization' => 'boolean',
+            'registered' => 'boolean',
         ];
     }
 }

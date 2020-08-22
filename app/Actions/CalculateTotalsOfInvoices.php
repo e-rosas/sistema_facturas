@@ -12,12 +12,15 @@ class CalculateTotalsOfInvoices
     public $amount_due = 0;
     public $amount_paid = 0;
     public $amount_due_m = 0;
+    public $amount_credit = 0;
+    public $amount_credit_m = 0;
     public $amount_paid_m = 0;
     public $subtotal_m = 0;
     public $IVA = 0;
     public $total_m = 0;
     public $percentage_paid = 0;
     public $percentage_due = 0;
+    public $percentage_credit = 0;
     private $invoices = [];
 
     public function __construct($invoices)
@@ -71,6 +74,11 @@ class CalculateTotalsOfInvoices
         return number_format($this->amount_paid, 4);
     }
 
+    public function getAmountCredit()
+    {
+        return number_format($this->amount_credit, 4);
+    }
+
     public function calculateTotals()
     {
         foreach ($this->invoices as $invoice) {
@@ -84,8 +92,9 @@ class CalculateTotalsOfInvoices
                 $credit = $invoice->credit->amount_due;
             }
 
-            $invoice->amount_paid = $total_payments->amount_paid + $credit;
-            $invoice->amount_due = $invoice->total_with_discounts - $invoice->amount_paid;
+            $invoice->amount_paid = $total_payments->amount_paid;
+            $invoice->amount_credit = $credit;
+            $invoice->amount_due = $invoice->total_with_discounts - $invoice->amount_paid - $credit;
             $invoice->save();
 
             $this->sumInvoiceStats($invoice);
@@ -111,6 +120,11 @@ class CalculateTotalsOfInvoices
     public function amountPaidMXN()
     {
         return number_format($this->amount_paid_m, 4);
+    }
+
+    public function amountCreditMXN()
+    {
+        return number_format($this->amount_credit_m, 4);
     }
 
     public function amountDueMXN()
@@ -142,13 +156,20 @@ class CalculateTotalsOfInvoices
     {
         $this->percentage_paid = ($this->amount_paid / $this->total_with_discounts) * 100;
 
-        $this->percentage_due = 100 - $this->percentage_paid;
-
         return number_format($this->percentage_paid, 2);
+    }
+
+    public function percentageCredit()
+    {
+        $this->percentage_credit = ($this->amount_credit / $this->total_with_discounts) * 100;
+
+        return number_format($this->percentage_credit, 2);
     }
 
     public function percentageDue()
     {
+        $this->percentage_due = ($this->amount_due / $this->total_with_discounts) * 100;
+
         return number_format($this->percentage_due, 2);
     }
 
@@ -159,6 +180,9 @@ class CalculateTotalsOfInvoices
         $this->subtotal_with_discounts += $invoice->sub_total_discounted;
         $this->amount_paid += $invoice->amount_paid;
         $this->amount_paid_m += $invoice->pago();
+        $this->amount_credit += $invoice->amount_credit;
+        $this->amount_credit_m += $invoice->amount_credit_mxn;
+
         $this->dtax += $invoice->dtax;
 
         $this->amount_due += $invoice->amount_due;
