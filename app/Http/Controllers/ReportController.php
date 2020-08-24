@@ -41,7 +41,7 @@ class ReportController extends Controller
 
         if (1 == $payment) {
             $invoices = Invoice::with('payments', 'patient', 'credit')
-                ->where([['amount_paid', 0], ['registered', 1]])
+                ->where([['amount_paid', 0]])
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('number', 'asc')
                 ->paginate($perPage)
@@ -49,7 +49,7 @@ class ReportController extends Controller
         ;
         } elseif (2 == $payment) {
             $invoices = Invoice::with('payments', 'patient', 'credit')
-                ->where([['amount_paid', '>', 0], ['registered', 1]])
+                ->where([['amount_paid', '>', 0]])
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('number', 'asc')
                 ->paginate($perPage)
@@ -57,7 +57,7 @@ class ReportController extends Controller
         ;
         } else {
             $invoices = Invoice::with('payments', 'patient', 'credit')
-                ->where('registered', '>=', $registered)
+                // ->where('registered', '>=', $registered)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('number', 'asc')
                 ->paginate($perPage)

@@ -131,50 +131,50 @@
                     <option value='2' {{ $payment == 2 ? 'selected' : '' }}>Con pagos.</option>
                 </select>
             </div>
-            <div class="col-lg-2 col-auto">
+            {{-- <div class="col-lg-2 col-auto">
                 <label for="registered">{{ __('CONTPAQ') }}</label>
-                <select id='registered' class="custom-select" name="registered">
-                    <option value='-1' {{ $registered == -1 ? 'selected' : '' }}>Todas</option>
-                    <option value='1' {{ $registered == 1 ? 'selected' : '' }}>Registradas.</option>
-                    <option value='0' {{ $registered == 0 ? 'selected' : '' }}>Sin registrar.</option>
-                </select>
-            </div>
-            {{--  refresh  --}}
-            <div class="col-lg-2 col-auto text-right">
-                <br />
-                <button id="refresh" name="refresh" type="submit" class="btn btn-primary">
-                    Aplicar
-                </button>
-            </div>
+            <select id='registered' class="custom-select" name="registered">
+                <option value='-1' {{ $registered == -1 ? 'selected' : '' }}>Todas</option>
+                <option value='1' {{ $registered == 1 ? 'selected' : '' }}>Registradas.</option>
+                <option value='0' {{ $registered == 0 ? 'selected' : '' }}>Sin registrar.</option>
+            </select>
+        </div> --}}
+        {{--  refresh  --}}
+        <div class="col-lg-2 col-auto text-right">
+            <br />
+            <button id="refresh" name="refresh" type="submit" class="btn btn-primary">
+                Aplicar
+            </button>
         </div>
-    </form>
-    <div class="form-row">
-        @include('components.currencySwitch', ['USD' => false])
-    </div>
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card shadow">
-                <div class="card-header bg-transparent">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="text-uppercase text-light ls-1 mb-1">Estado de cuenta</h6>
-                            <h2 class=" mb-0">Facturas del {{ $start->format('d-m-Y') }} al {{ $end->format('d-m-Y') }}
-                            </h2>
-                        </div>
+</div>
+</form>
+<div class="form-row">
+    @include('components.currencySwitch', ['USD' => false])
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card shadow">
+            <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-light ls-1 mb-1">Estado de cuenta</h6>
+                        <h2 class=" mb-0">Facturas del {{ $start->format('d-m-Y') }} al {{ $end->format('d-m-Y') }}
+                        </h2>
                     </div>
                 </div>
-                <div class="card-body">
-                    @include('reports.partials.medInvoicesTable')
-                </div>
-                <div class="card-footer py-4">
-                    <nav class="d-flex justify-content-end" aria-label="...">
-                        {{ $invoices->appends(['start' =>$start->format('Y-m-d'), 'end' => $end->format('Y-m-d'), 'perPage' => $perPage, 'payment' => $payment, 'registered' => $registered])->links() }}
-                    </nav>
-                </div>
+            </div>
+            <div class="card-body">
+                @include('reports.partials.medInvoicesTable')
+            </div>
+            <div class="card-footer py-4">
+                <nav class="d-flex justify-content-end" aria-label="...">
+                    {{ $invoices->appends(['start' =>$start->format('Y-m-d'), 'end' => $end->format('Y-m-d'), 'perPage' => $perPage, 'payment' => $payment, 'registered' => $registered])->links() }}
+                </nav>
             </div>
         </div>
     </div>
-    {{--  <div class="row">
+</div>
+{{--  <div class="row">
         <div class="col-xl-6">
             <div class="card shadow">
                 <div class="card-header bg-transparent">
