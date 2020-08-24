@@ -86,6 +86,7 @@ class PatientController extends Controller
             $insuree->insurer_id = $validated['insurer_id'];
             $insuree->insurance_id = $validated['insurance_id'];
             $insuree->nss = $validated['insurance_id'];
+            $insuree->group_number = $validated['group_number'];
             $insuree->save();
         } else {
             $dependent = new Dependent();
@@ -171,6 +172,8 @@ class PatientController extends Controller
             //$insuree = Insuree::where('patient_id', $patient->id)->first();
             $patient->insuree->insurer_id = $validated['insurer_id'];
             $patient->insuree->insurance_id = $validated['insurance_id'];
+            $patient->insuree->group_number = $validated['group_number'];
+
             $patient->insuree->save();
             $dependents = Dependent::with('patient')->where('insuree_id', $patient->id)->get();
             foreach ($dependents as $dependent) {

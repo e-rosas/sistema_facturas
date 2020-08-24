@@ -40,6 +40,7 @@ class UpdatePatientRequest extends FormRequest
             'name' => 'required|min:2|max:100',
             'insurer_id' => 'numeric',
             'insurance_id' => 'max:50',
+            'group_number' => 'max:50',
             'insuree_id' => 'numeric',
             'relationship' => 'numeric',
         ];

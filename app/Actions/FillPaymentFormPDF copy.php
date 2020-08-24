@@ -223,7 +223,7 @@ class FillPaymentFormPDF
 
 INSURED_POLICY: 
      llx: 373.03
-     lly: 606.371
+     lly: 556.371
      urx: 585.431
      ury: 567.198
    width: 212.401
