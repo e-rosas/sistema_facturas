@@ -62,6 +62,7 @@
                             </div>
                         </div>
                     </div>
+                    @if ($patient->insured)
                     <div class="row">
                         <div class="col"><span class="h3 font-weight-bold mb-0">{{ $patient->insuree->nss }}</span>
                         </div>
@@ -69,6 +70,8 @@
                                 class="h3 font-weight-bold mb-0">{{ $patient->insuree->group_number }}</span>
                         </div>
                     </div>
+                    @endif
+
 
                 </div>
             </div>
