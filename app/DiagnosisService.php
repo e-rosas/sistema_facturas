@@ -123,6 +123,11 @@ class DiagnosisService extends Model
         return $this->belongsTo('App\Service');
     }
 
+    public function dental()
+    {
+        return $this->hasOne('App\InvoiceDentalService');
+    }
+
     public function items()
     {
         return $this->hasMany('App\ItemService');

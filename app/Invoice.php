@@ -37,6 +37,7 @@ class Invoice extends Model
         'doctor',
         'hospitalization',
         'registered',
+        'dental',
     ];
     /**
      * The event map for the model.
@@ -305,5 +306,10 @@ class Invoice extends Model
     public function charge()
     {
         return $this->hasOne('App\Charge');
+    }
+
+    public function dental()
+    {
+        return $this->hasOne('App\InvoiceDentalDetails');
     }
 }

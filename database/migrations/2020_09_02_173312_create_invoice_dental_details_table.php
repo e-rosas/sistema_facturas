@@ -15,13 +15,14 @@ class CreateInvoiceDentalDetailsTable extends Migration
             $table->unsignedBigInteger('invoice_id')->primary();
             $table->boolean('enclosures')->default(0);
             $table->boolean('orthodontics')->default(0);
-            $table->date('appliance_placed');
+            $table->date('appliance_placed')->nullable();
             $table->tinyInteger('months_remaining')->default(0);
             $table->boolean('prosthesis_replacement')->default(0);
             $table->tinyInteger('treatment_resulting_from')->default(0);
-
-            $table->date('prior_placement');
-
+            $table->date('prior_placement')->nullable();
+            $table->date('accident')->nullable();
+            $table->string('auto_accident_state')->nullable();
+            $table->string('license');
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });

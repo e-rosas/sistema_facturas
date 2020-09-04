@@ -35,6 +35,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('amount_credit', 13, 4)->default(0);
 
             $table->string('doctor')->default('Pendiente');
+            $table->boolean('dental')->default(0);
 
             $table->tinyInteger('type')->default(0);
             $table->text('comments')->nullable();
