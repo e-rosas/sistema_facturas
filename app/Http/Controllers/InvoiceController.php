@@ -14,6 +14,8 @@ use App\Http\Resources\InvoiceDiagnosesResource;
 use App\Http\Resources\InvoiceStatsResource;
 use App\Insuree;
 use App\Invoice;
+use App\InvoiceDentalDetails;
+use App\InvoiceDentalService;
 use App\InvoiceDiagnosis;
 use App\ItemService;
 use App\Listeners\UpdatePersonStats;
@@ -139,6 +141,22 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create($validated);
 
+        if ($validated['dental']) {
+            $dental = new InvoiceDentalDetails();
+            $dental->invoice_id = $invoice->id;
+            $dental->enclosures = $request->enclosures;
+            $dental->orthodontics = $request->orthodontics;
+            $dental->appliance_placed = $request->appliance_placed;
+            $dental->months_remaining = $request->months_remaining;
+            $dental->prosthesis_replacement = $request->prosthesis_replacement;
+            $dental->treatment_resulting_from = $request->treatment_resulting_from;
+            $dental->prior_placement = $request->prior_placement;
+            $dental->accident = $request->accident;
+            $dental->auto_accident_state = $request->auto_accident_state;
+            $dental->license = $request->license;
+            $dental->save();
+        }
+
         /* if (is_null($request->code)) {
             $inital = config('app.initial');
             $invoice->code = $inital.$invoice->id;
@@ -165,33 +183,16 @@ class InvoiceController extends Controller
                     ItemService::create($item);
                 }
             }
+            if ($invoice->dental) {
+                $dental_service = new InvoiceDentalService();
+                $dental_service->diagnosis_service_id = $diagnosis_service->id;
+                $dental_service->oral_cavity = $service->oral_cavity;
+                $dental_service->tooth_system = $service->tooth_system;
+                $dental_service->tooth_numbers = $service->tooth_numbers;
+                $dental_service->tooth_surfaces = $service->tooth_surfaces;
+                $dental_service->save();
+            }
         }
-
-        /* foreach ($invoice_diagnoses_services as $diagnoses_services) {
-            $invoice_diagnosis = new InvoiceDiagnosis();
-            $invoice_diagnosis->invoice_id = $invoice->id;
-            $invoice_diagnosis->save();
-
-            $diagnoses = $diagnoses_services['diagnoses'];
-
-            foreach ($diagnoses as $diagnosis) {
-                $diagnosis['invoice_diagnoses_id'] = $invoice_diagnosis->id;
-                InvoiceDiagnosisList::create($diagnosis);
-            }
-
-            $services = $diagnoses_services['services'];
-            foreach ($services as $service) {
-                $service['invoice_diagnoses_id'] = $invoice_diagnosis->id;
-                $diagnosis_service = DiagnosisService::create($service);
-                if (isset($service['items'])) {
-                    $items = $service['items'];
-                    foreach ($items as $item) {
-                        $item['diagnosis_service_id'] = $diagnosis_service->id;
-                        ItemService::create($item);
-                    }
-                }
-            }
-        } */
 
         return route('invoices.show', [$invoice]);
     }
