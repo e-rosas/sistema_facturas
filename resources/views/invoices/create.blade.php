@@ -596,6 +596,10 @@
         diagnoses_pointers = "";
         DOS = new Date();
         DOS_to = this.DOS;
+        oral_cavity = "";
+        tooth_system = "";
+        tooth_numbers = "";
+        tooth_surfaces = "";
         constructor(service_id, description, price, discounted_price, quantity, id,
             DOS, DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
@@ -741,6 +745,14 @@
     sub_total_discounted = 0;
     total = 0;
     total_with_discounts = 0;
+
+    enclosures = false;
+    orthodontics = false;
+    license = "";
+    auto_accident_state = "";
+    treatment_resulting_from = "";
+    months_remaining = "";
+    prosthesis_replacement = "";
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre) {
         for (var d in this.diagnosesList) {
