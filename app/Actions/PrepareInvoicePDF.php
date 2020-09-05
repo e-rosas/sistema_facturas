@@ -25,6 +25,11 @@ class PrepareInvoicePDF
     public function serviceCategories()
     {
         $this->invoice->load('services2.service.category', 'services2.items');
+
+        if ($this->invoice->dental) {
+            $this->invoice->load('services2.dental');
+        }
+
         $services = $this->invoice->services2;
         $categories = $services->pluck('service.category')->unique();
         foreach ($services as $service) {

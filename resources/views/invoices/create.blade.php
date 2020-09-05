@@ -445,13 +445,9 @@
                     </div>
                     <br />
                     <div class="form-row">
-                        {{-- Remove --}}
-                        <div class="col-md-3 col-auto">
-                            <button type="button" id="remove_selected" class="btn btn-danger btn-sm">Remover servicio
-                                seleccionado</button>
-                        </div>
+
                         {{-- Confirm --}}
-                        <div class="text-right col-md-9 col-auto">
+                        <div class="text-right col-md-12 col-auto">
                             <button type="button" id="save" class="btn btn-success text-right">Confirmar</button>
                         </div>
                     </div>
@@ -931,7 +927,7 @@
                 "doctor": doctor,
                 "DOS": DOS,
                 "hospitalization": isHospitalization,
-                "registered": (number==="Pendiente") ? 0 : 1,
+                "registered": (number === "Pendiente") ? 0 : 1,
                 "cash": isCash
             },
             success: function (response) {
@@ -1073,7 +1069,7 @@
 
     }
 
-    function dateToMXFormat(date){
+    function dateToMXFormat(date) {
         date = getCorrectDate(date);
         var dd = String(date.getDate()).padStart(2, '0');
         var mm = String(date.getMonth() + 1).padStart(2, '0');
