@@ -37,26 +37,40 @@ class PDFController extends Controller
     public function letter(Patient $patient)
     {
         $patient->load('invoices');
+        $invoices = Invoice::where([['patient_id', $patient->id], ['registered', 1], ['status', '!=', 1]])->get();
 
         if ($patient->insured) {
-            $insuree = Insuree::where('insuree_id', $patient->id)->first();
+            $insuree = Insuree::where('patient_id', $patient->id)->first();
         } else {
             $insuree = Insuree::with('patient', 'insurer')
                 ->where('patient_id', $patient->dependent->insuree_id)
                 ->first()
             ;
         }
+
         $datetime = Carbon::now();
+
+        $invoices_codes = '';
+        $invoices_total = 0;
+        foreach ($invoices as $invoice) {
+            $invoices_codes .= $invoice->code.',';
+            $invoices_total += $invoice->total_with_discounts;
+        }
+
+        $invoices_total = number_format($invoices_total, 4);
 
         view()->share([
             'patient' => $patient,
             'insuree' => $insuree,
+            'invoices' => $invoices,
             'datetime' => $datetime,
+            'codes' => $invoices_codes,
+            'total' => $invoices_total,
         ]);
 
         $letterPDF = BarryPDF::loadView('pdf.letter');
 
-        return $letterPDF->download($patient->name.'-Hosp.pdf');
+        return $letterPDF->download($patient->full_name.'-Letter.pdf');
     }
 
     public function categories(Invoice $invoice)

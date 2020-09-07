@@ -82,10 +82,10 @@
         </div>
       </div>
       <div class="invoice-company-info">
-        <p style="text-align:left; font-weight: bold;">insuree&#39S NAME: <span
+        <p style="text-align:left; font-weight: bold;">INSURED&#39S NAME: <span
             style="font-weight: 400;">{{ $insuree->patient->name() }}</span>
           <span style="float:right; font-weight: bold;">
-            PATIENT&#39S ACCOUNT NO. <span style="font-weight: 400;">{{ $invoice->code }}</span>
+            PATIENT&#39S ACCOUNT NO. <span style="font-weight: 400;"></span>
           </span>
         </p>
         <p style="text-align:left; font-weight: bold;">PATIENT&#39S NAME: <span
@@ -96,6 +96,8 @@
         </p>
         <p style="font-weight: bold;">PATIENT&#39S DATE OF BIRTH: <span style="font-weight: 400;">
             {{ $patient->birth_date->format('m/d/Y') }}</span></p>
+        <p style="font-weight: bold;">Cobros<span style="font-weight: 400;">
+          {{ $codes }}</span></p>
       </div>
       <h5 class="invoice-month-header">Cobros</h5>
       <div class="invoice-detail">
@@ -124,13 +126,13 @@
             @endforeach
             <tr class="row-data">
               <td colspan="3"></td>
-              <td style="font-weight: bold;">$ {{ $invoices_total }}</td>
+              <td style="font-weight: bold;">$ {{ $total }}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="invoice-total" style="width: 90%">
-        <h3 style="text-align:left;">Total <span style="float: right">$ {{ $invoice_total }}</span></h3>
+        <h3 style="text-align:left;">Total <span style="float: right">$ {{ $total }}</span></h3>
       </div>
     </div>
 </body>

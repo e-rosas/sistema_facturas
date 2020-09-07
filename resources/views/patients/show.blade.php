@@ -86,6 +86,12 @@
                         href="{{ route('patients.edit', $patient) }}">
                         <i class="fas fa-pencil-alt fa-2"></i>
                     </a>
+                    <form  method="get" action="{{ route('patient.letter', $patient) }}" >
+                        @csrf
+                        <div class="form-group col-md-12 col-auto">
+                            <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('PDF') }}</button>
+                        </div>
+                    </form>
                     {{-- <form  method="post" action="{{ route('reports.invoices') }}" >
                     @csrf
                     <div class="form-group col-md-12 col-auto">
