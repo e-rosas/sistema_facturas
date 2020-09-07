@@ -8,6 +8,7 @@ use App\Invoice;
 use App\Patient;
 use Barryvdh\DomPDF\Facade as BarryPDF;
 use Carbon\Carbon;
+use NumberFormatter;
 
 class PDFController extends Controller
 {
@@ -53,11 +54,14 @@ class PDFController extends Controller
         $invoices_codes = '';
         $invoices_total = 0;
         foreach ($invoices as $invoice) {
-            $invoices_codes .= $invoice->code.',';
+            $invoices_codes .= $invoice->code.', ';
             $invoices_total += $invoice->total_with_discounts;
         }
+        $nf = new NumberFormatter('en', NumberFormatter::SPELLOUT);
 
-        $invoices_total = number_format($invoices_total, 4);
+        $total_spelled = $nf->format($invoices_total);
+
+        $invoices_total = number_format($invoices_total, 2);
 
         view()->share([
             'patient' => $patient,
@@ -66,6 +70,7 @@ class PDFController extends Controller
             'datetime' => $datetime,
             'codes' => $invoices_codes,
             'total' => $invoices_total,
+            'amount' => $total_spelled,
         ]);
 
         $letterPDF = BarryPDF::loadView('pdf.letter');
