@@ -38,6 +38,7 @@
       background: lightgray;
       font-size: 1.15em;
       font-weight: 500;
+      text-align: center;
     }
 
 
@@ -50,6 +51,7 @@
       font-size: 0.9em;
       border: 2px solid #EEE;
       color: rgba(0, 0, 0, 0.6);
+      text-align: center;
     }
 
     .invoice-table .row-total {

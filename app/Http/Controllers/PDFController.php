@@ -85,10 +85,10 @@ class PDFController extends Controller
 
         $store = storage_path('app/pdf/'.$patient->id.'/temp/letter.pdf');
 
-        $letterPDF->save($store);
+        //$letterPDF->save($store);
 
-        return $merger->mergeLetter($invoices, $patient);
-        //return $letterPDF->download($patient->full_name.'-Letter.pdf');
+        //return $merger->mergeLetter($invoices, $patient);
+        return $letterPDF->download($patient->full_name.'-Letter.pdf');
     }
 
     public function categories(Invoice $invoice)
