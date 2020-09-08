@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\FillPaymentFormPDF;
+use App\Actions\MergePDFs;
 use App\Actions\PrepareInvoicePDF;
 use App\Insuree;
 use App\Invoice;
@@ -37,7 +39,6 @@ class PDFController extends Controller
 
     public function letter(Patient $patient)
     {
-        $patient->load('invoices');
         $invoices = Invoice::where([['patient_id', $patient->id], ['registered', 1], ['status', '!=', 1]])->get();
 
         if ($patient->insured) {
@@ -75,7 +76,19 @@ class PDFController extends Controller
 
         $letterPDF = BarryPDF::loadView('pdf.letter');
 
-        return $letterPDF->download($patient->full_name.'-Letter.pdf');
+        foreach ($invoices as $invoice) {
+            $filler = new FillPaymentFormPDF($invoice);
+            $filler->saveFill();
+        }
+
+        $merger = new MergePDFs(0);
+
+        $store = storage_path('app/pdf/'.$patient->id.'/temp/letter.pdf');
+
+        $letterPDF->save($store);
+
+        return $merger->mergeLetter($invoices, $patient);
+        //return $letterPDF->download($patient->full_name.'-Letter.pdf');
     }
 
     public function categories(Invoice $invoice)

@@ -1198,6 +1198,27 @@ INSURED_POLICY:
         $merge->merge($this->invoice->code, $output);
     }
 
+    public function saveFill()
+    {
+        $this->getInvoiceData();
+        $pages = ceil(count($this->invoice->services2) / 6);
+        $directory = 'pdf/'.$this->invoice->patient_id.'/forms';
+        
+        
+        Storage::put($directory.'/'.$this->invoice->code.'.pdf', '');
+        Storage::put('pdf/'.$this->invoice->patient_id.'/temp/letter.pdf', '');
+        $destination = storage_path($directory.'/'.$this->invoice->code.'.pdf');
+        
+        
+        $form = storage_path('app/pdf/form.pdf');
+        for ($i = 0; $i < $pages; ++$i) {
+            $services = $this->invoice->services2->slice($i * 6, 6)->values();
+            $this->fillPage($form, $services, $i);
+        }
+        $merge = new MergePDFs($pages);
+        $merge->saveMerge('app/'.$directory.'/'.$this->invoice->code.'.pdf');
+    }
+
     public function addServices($services)
     {
         $services_list = [];
@@ -1321,6 +1342,7 @@ INSURED_POLICY:
         foreach ($fields as $field) {
             $fieldEntities[] = Field::fieldFromArray($field);
         }
+        
         $path = 'app/pdf/invoice/newForm'.$page.'.pdf';
         Storage::put($path, '');
         $newForm = storage_path($path);
