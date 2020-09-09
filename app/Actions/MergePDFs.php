@@ -58,7 +58,7 @@ class MergePDFs
     {
         $fpdi = new Fpdi();
 
-        $path = 'app/pdf/'.$patient->id.'/temp/letter.pdf';
+        $path = 'app/pdf/'.$patient->id.'/letter.pdf';
 
         $form = storage_path($path);
 
