@@ -46,7 +46,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('invoices/update_patient', 'InvoiceController@updatePatient')->name('invoices.patient');
     Route::patch('invoices/update_details', 'InvoiceController@updateDetails')->name('invoices.details');
     Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
+
     Route::post('patients/find', 'SearchPatientController@findPatient')->name('patients.find');
+
+    Route::post('invoices/files', 'InvoiceDocumentController@upload')->name('files.invoice');
+
+    Route::patch('invoices/files', 'InvoiceDocumentController@update')->name('files.invoice');
+    Route::patch('patients/files', 'PatientDocumentController@update')->name('files.patient');
+
+    Route::post('invoices/file', 'InvoiceDocumentController@find')->name('files.invoice.find');
+    Route::post('patients/file', 'PatientDocumentController@find')->name('files.patient.find');
+
+    Route::delete('invoice/files', 'InvoiceDocumentController@delete')->name('files.invoice');
+    Route::delete('patient/files', 'PatientDocumentController@delete')->name('files.patient');
+
+    Route::post('patients/files', 'PatientDocumentController@upload')->name('files.patient');
+
     //Route::get('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 
     //Route::get('items/searchIndex', 'SearchProductController@searchItemIndex')->name('items.searchIndex');

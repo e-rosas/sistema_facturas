@@ -57,6 +57,11 @@ class Patient extends Model
         return $this->hasOne('App\Dependent', 'patient_id', 'id');
     }
 
+    public function documents()
+    {
+        return $this->hasMany('App\PatientDocument');
+    }
+
     public function gender()
     {
         switch ($this->gender) {
