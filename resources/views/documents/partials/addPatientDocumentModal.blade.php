@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-document" tabindex="-1" role="dialog" aria-labelledby="modal-document"
+<div class="modal fade" id="modal-patient-document" tabindex="-1" role="dialog" aria-labelledby="modal-patient-document"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
@@ -11,8 +11,8 @@
                         <div class="form-group">
                             {{--  name  --}}
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="document-name">Nombre</label>
-                                <input type="text" name="name" id="document-name"
+                                <label class="form-control-label" for="patient-document-name">Nombre</label>
+                                <input type="text" name="name" id="patient-document-name"
                                     class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}"
                                     placeholder="Nombre">
 
@@ -22,10 +22,18 @@
                                 </span>
                                 @endif
                             </div>
+                            {{-- Tipo --}}
+                            <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="patient-document-type">Tipo</label>
+                                <select id='patient-document-type' class="custom-select" name="tipo">
+                                    <option value='0' selected>Formatos</option>
+                                    <option value='1'>Beneficios</option>
+                                </select>
+                            </div>
                             {{--  file --}}
                             <div class="form-group{{ $errors->has('file') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="document-file">Documento (PDF)</label>
-                                <input type="file" name="file" id="document-file"
+                                <label class="form-control-label" for="patient-document-file">Documento (PDF)</label>
+                                <input type="file" name="file" id="patient-document-file"
                                     class="form-control form-control-alternative{{ $errors->has('file') ? ' is-invalid' : '' }}"
                                     required>
 
@@ -36,13 +44,14 @@
                                 @endif
                             </div>
 
+
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                     </div>
-                                    <textarea type="text" rows="3" name="comments" id="document-comments"
+                                    <textarea type="text" rows="3" name="comments" id="patient-document-comments"
                                         class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
                                         value="{{ old('comments') }}" placeholder="Observaciones"></textarea>
                                     @if ($errors->has('comments'))
@@ -68,7 +77,7 @@
 <script>
     function sendDocument(data){
         $.ajax({
-            url: "{{route('files.invoice')}}",
+            url: "{{route('files.patient')}}",
             dataType: 'json',
             type:"post",
             processData: false, // Don't process the files
@@ -76,7 +85,7 @@
             data: data,
         success: function (response) {
             DisplayDocuments(response.data);
-            $('#modal-document').modal('hide');
+            $('#modal-patient-document').modal('hide');
 
             }
         });
@@ -86,27 +95,25 @@
 
     $("#save_document").click(function(){
 
-        var name = document.getElementById("document-name").value;
+        var name = document.getElementById("patient-document-name").value;
 
 
-        var comments = document.getElementById("document-comments").value;
-        var file = document.getElementById("document-file").files[0];
+        var comments = document.getElementById("patient-document-comments").value;
+        var file = document.getElementById("patient-document-file").files[0];
+
         if(name != "" && file){
-
+            var type = document.getElementById("patient-document-type").value;
+            var file = document.getElementById("patient-document-file").files[0];
             var formData = new FormData();
             formData.append('file', file);
             formData.append('name', name);
+            formData.append('type', type);
             formData.append('comments', comments);
             formData.append('name', name);
             var token = "{{ csrf_token() }}";
-            var invoice =  {{ $invoice->id }};
-            var code = "{{ $invoice->code }}";
-            var patient =  {{ $invoice->patient_id }};
+            var patient =  {{ $patient->id }};
             formData.append('_token', token);
-            formData.append('invoice_id', invoice);
-            formData.append('invoice_code', code);
             formData.append('patient_id', patient);
-            console.log(formData.getAll('_token'));
             sendDocument(formData);
         }
         else {

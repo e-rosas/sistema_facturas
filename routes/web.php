@@ -52,15 +52,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('invoices/files', 'InvoiceDocumentController@upload')->name('files.invoice');
 
     Route::patch('invoices/files', 'InvoiceDocumentController@update')->name('files.invoice');
-    Route::patch('patients/files', 'PatientDocumentController@update')->name('files.patient');
+    Route::patch('files/patient', 'PatientDocumentController@update')->name('files.patient');
 
     Route::post('invoices/file', 'InvoiceDocumentController@find')->name('files.invoice.find');
-    Route::post('patients/file', 'PatientDocumentController@find')->name('files.patient.find');
+    Route::post('patient/file', 'PatientDocumentController@find')->name('files.patient.find');
 
     Route::delete('invoice/files', 'InvoiceDocumentController@delete')->name('files.invoice');
-    Route::delete('patient/files', 'PatientDocumentController@delete')->name('files.patient');
+    Route::delete('files/patient', 'PatientDocumentController@delete')->name('files.patient');
 
-    Route::post('patients/files', 'PatientDocumentController@upload')->name('files.patient');
+    Route::post('files/patient', 'PatientDocumentController@upload')->name('files.patient');
 
     //Route::get('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 

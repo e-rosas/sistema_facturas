@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PatientDocumentRequest;
 use App\Http\Requests\UpdatePatientDocumentRequest;
-use App\Http\Resources\PatientDetailsResource;
 use App\Http\Resources\PatientDocumentResource;
 use App\PatientDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PatientDocumentController extends Controller
 {
@@ -27,7 +27,7 @@ class PatientDocumentController extends Controller
             ->get()
         ;
 
-        return PatientDetailsResource::collection($documents);
+        return PatientDocumentResource::collection($documents);
     }
 
     public function update(UpdatePatientDocumentRequest $request)
@@ -54,7 +54,10 @@ class PatientDocumentController extends Controller
         $document = PatientDocument::findOrFail($request['document_id']);
         $patient_id = $document->patient_id;
 
+        $path = $document->path;
         $document->delete();
+
+        Storage::delete($path);
 
         $documents = PatientDocument::where('patient_id', $patient_id)
             ->orderBy('created_at', 'desc')
