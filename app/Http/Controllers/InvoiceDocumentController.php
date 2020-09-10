@@ -15,11 +15,13 @@ class InvoiceDocumentController extends Controller
     {
         $validated = $request->validated();
 
-        $path = 'pdf/patients/'.$validated['patient_id'].'/invoices/'.$validated['invoice_code'].'/';
-        $stored = $request->file('file')->storeAs($path, $validated['name'].'.pdf');
+        $path = 'pdf/patients/'.$validated['patient_id'].'/invoices/';
+        $name = $validated['invoice_code'].'-'.$validated['name'];
+        $request->file('file')->storeAs($path, $validated['invoice_code'].'-'.$validated['name'].'.pdf');
 
         $document = new InvoiceDocument($validated);
-        $document->path = $stored;
+        $document->path = $path;
+        $document->name = $name;
         $document->save();
 
         $documents = InvoiceDocument::where('invoice_id', $validated['invoice_id'])
@@ -36,10 +38,15 @@ class InvoiceDocumentController extends Controller
 
         $document = InvoiceDocument::findOrFail($validated['document_id']);
         $invoice_id = $document->invoice_id;
+        $old_name = $document->name;
 
         $document->fill($validated);
 
         $document->save();
+
+        if ($old_name != $document->name) {
+            Storage::move($document->path.$old_name.'.pdf', $document->path.$document->name.'.pdf');
+        }
 
         $documents = InvoiceDocument::where('invoice_id', $invoice_id)
             ->orderBy('created_at', 'desc')
@@ -54,9 +61,11 @@ class InvoiceDocumentController extends Controller
         $document = InvoiceDocument::findOrFail($request['document_id']);
         $invoice_id = $document->invoice_id;
         $path = $document->path;
+        $name = $document->name;
+
         $document->delete();
 
-        Storage::delete($path);
+        Storage::delete($path.$name.'.pdf');
 
         $documents = InvoiceDocument::where('invoice_id', $invoice_id)
             ->orderBy('created_at', 'desc')
@@ -71,5 +80,12 @@ class InvoiceDocumentController extends Controller
         $document = InvoiceDocument::findOrFail($request['document_id']);
 
         return new InvoiceDocumentResource($document);
+    }
+
+    public function download(InvoiceDocument $document)
+    {
+        $path = $document->path.$document->name.'.pdf';
+
+        return Storage::download($path);
     }
 }

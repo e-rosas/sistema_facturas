@@ -21,7 +21,7 @@ class PatientDocumentResource extends JsonResource
             'name' => $this->name,
             'type' => $this->type(),
             'type2' => $this->type,
-            'path' => $this->path,
+            'path' => $this->path.$this->name.'.pdf',
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->created_at->format('M-d-Y'),
         ];

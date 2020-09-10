@@ -1202,12 +1202,12 @@ INSURED_POLICY:
     {
         $this->getInvoiceData();
         $pages = ceil(count($this->invoice->services2) / 6);
-        $directory = 'pdf/'.$this->invoice->patient_id.'/forms';
+        $directory = 'pdf/patients/'.$this->invoice->patient_id.'/invoices/';
         
         
-        Storage::put($directory.'/'.$this->invoice->code.'.pdf', '');
-        Storage::put('pdf/'.$this->invoice->patient_id.'/temp/letter.pdf', '');
-        $destination = storage_path($directory.'/'.$this->invoice->code.'.pdf');
+        Storage::put($directory.$this->invoice->code.'PaymentForm.pdf', '');
+        Storage::put('pdf/patients/'.$this->invoice->patient_id.'/temp/letter.pdf', '');
+       
         
         
         $form = storage_path('app/pdf/form.pdf');
@@ -1216,7 +1216,7 @@ INSURED_POLICY:
             $this->fillPage($form, $services, $i);
         }
         $merge = new MergePDFs($pages);
-        $merge->saveMerge('app/'.$directory.'/'.$this->invoice->code.'.pdf');
+        $merge->saveMerge('app/'.$directory.$this->invoice->code.'PaymentForm.pdf');
     }
 
     public function addServices($services)

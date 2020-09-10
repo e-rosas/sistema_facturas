@@ -24,6 +24,13 @@
                         onClick="Delete({{ $document->id }})">
                         <i class="fa fa-trash"></i>
                     </button>
+                    <form method="post" action="{{ route('files.invoice.download', $document) }}">
+                        @csrf
+                        <button class="btn btn-success btn-sm btn-icon" type="submit">
+                            <i class="fa fa-download"></i>
+                        </button>
+                    </form>
+
                 </td>
 
             </tr>
@@ -34,38 +41,51 @@
 @include('documents.partials.editModal')
 @push('js')
 <script>
-    function DisplayDocuments(data){
+    function DisplayDocuments(data) {
         var documents = data;
         var output = "";
-        for(var i = 0; i < documents.length; i++){
-            output += "<tr>"
-                + "<td>" + documents[i].name + "</td>"
-                + "<td>" + documents[i].date + "</td>"
-                + "<td>" + documents[i].comments + "</td>"
-                +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="showEditModal(\'' + documents[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
-                +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete(\'' + documents[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
-                +  "</tr>";
+        var token = document.getElementsByName("_token")[0].value;
+        var port = window.location.port;
+        if(port != ""){
+            port = ':'+port;
+        }
+        for (var i = 0; i < documents.length; i++) {
+            output += "<tr>" +
+                "<td>" + documents[i].name + "</td>" +
+                "<td>" + documents[i].date + "</td>" +
+                "<td>" + documents[i].comments + "</td>" +
+                '<td class="text-right"><button class="btn btn-info btn-sm btn-icon" type="button" onClick="showEditModal(\'' +
+                documents[i].id +
+                '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>' +
+                '<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete(\'' + documents[i].id +
+                '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button>'+
+                '<form method="post" action="'+window.location.protocol + '//' + window.location.hostname + port +'/file/invoice/' + documents[i].id +'">'+
+                '<input type ="hidden" name="_token" value="'+token+'">'+
+                '<button class="btn btn-success btn-sm btn-icon" type="submit"><span class="btn-inner--icon"><i class="fa fa-download"></i></span></button>'+
+                '</form></td>' +
+                "</tr>";
         }
         $('#documents_table tbody').html(output);
     }
-    function Delete(id){
+
+    function Delete(id) {
         var r = confirm("Eliminar el documento?");
-        if(r){
+        if (r) {
             $.ajax({
                 url: "{{route('files.invoice')}}",
                 dataType: 'json',
-                type:"delete",
+                type: "delete",
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "document_id" : id
+                    "document_id": id
                 },
-            success: function (response) {
-                DisplayDocuments(response.data);
+                success: function (response) {
+                    DisplayDocuments(response.data);
                 }
             });
             return false;
         }
-
     }
+
 </script>
 @endpush

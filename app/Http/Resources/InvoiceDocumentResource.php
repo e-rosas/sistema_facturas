@@ -19,7 +19,7 @@ class InvoiceDocumentResource extends JsonResource
             'id' => $this->id,
             'invoice_id' => $this->invoice_id,
             'name' => $this->name,
-            'path' => $this->path,
+            'path' => $this->path.$this->name.'.pdf',
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'date' => $this->created_at->format('M-d-Y'),
         ];
