@@ -745,7 +745,7 @@
     sub_total_discounted = 0;
     total = 0;
     total_with_discounts = 0;
-
+    dental = 0;
     enclosures = false;
     orthodontics = false;
     license = "";
@@ -940,7 +940,8 @@
                 "DOS": DOS,
                 "hospitalization": isHospitalization,
                 "registered": (number === "Pendiente") ? 0 : 1,
-                "cash": isCash
+                "cash": isCash,
+                "dental": dental,
             },
             success: function (response) {
                 setTimeout(function () {
