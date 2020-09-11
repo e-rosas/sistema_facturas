@@ -89,12 +89,51 @@
                         href="{{ route('patients.edit', $patient) }}">
                         <i class="fas fa-pencil-alt fa-2"></i>
                     </a>
+                    <br>
+                    <h3>Estado de cuenta</h3>
                     <form method="get" action="{{ route('patient.letter', $patient) }}">
                         @csrf
-                        <div class="form-group col-md-12 col-auto">
-                            <button type="submit"
-                                class="btn btn-success mt-4 btn-block">{{ __('Estado de cuenta') }}</button>
+                        <div class="form-row">
+                            {{--  start_date  --}}
+                            <div class="col-lg-12 col-auto">
+                                <label for="start">{{ __('Fecha de facturación de') }}</label>
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="date" name="start" id="input-start" class="form-control"
+                                        value="{{ $start->format('Y-m-d') }}">
+                                </div>
+                            </div>
+
                         </div>
+                        <div class="form-row">
+                            {{--  end_date  --}}
+                            <div class="col-lg-12 col-auto">
+                                <label for="start">{{ __('hasta') }}</label>
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                    </div>
+                                    <input type="date" name="end" id="input-end" class="form-control"
+                                        value="{{ $end->format('Y-m-d')  }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row pt-md-2">
+                            {{--  Letter  --}}
+                            <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                <input type="checkbox" name="letter" id="input-letter" class="custom-control-input">
+                                <label class="custom-control-label" for="input-letter">Solo carta</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-auto">
+                                <button type="submit"
+                                    class="btn btn-success mt-4 btn-block">{{ __('Descargar') }}</button>
+                            </div>
+                        </div>
+
                     </form>
                     {{-- <form  method="post" action="{{ route('reports.invoices') }}" >
                     @csrf
@@ -105,7 +144,7 @@
                     </div>
                     </form> --}}
                 </div>
-                <div class="card-body pt-0 pt-md-4">
+                <div class="card-body pt-0 pt-md-2">
                     {{--  <div class="row">
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">

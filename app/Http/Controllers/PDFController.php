@@ -10,6 +10,7 @@ use App\Invoice;
 use App\Patient;
 use Barryvdh\DomPDF\Facade as BarryPDF;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use NumberFormatter;
 
 class PDFController extends Controller
@@ -37,14 +38,76 @@ class PDFController extends Controller
         return $hospPDF->download($invoice->code.'-Hosp.pdf');
     }
 
-    public function letter(Patient $patient)
+    public function invoiceLetter(Invoice $invoice)
     {
-        $invoices = Invoice::where([['patient_id', $patient->id], ['registered', 1], ['status', '!=', 1]])->get();
+        $filler = new FillPaymentFormPDF($invoice);
+        $filler->saveFill();
+        $merger = new MergePDFs(0);
+
+        return $merger->mergeInvoice($invoice, $invoice->patient);
+    }
+
+    public function letter(Patient $patient, Request $request)
+    {
+        $start = Carbon::parse($request->start);
+        $end = Carbon::parse($request->end);
+
+        $invoices = Invoice::where([['patient_id', $patient->id],
+            ['registered', 1],
+            ['status', '!=', 1], ])
+            ->whereBetween('date', [$start, $end])
+            ->get()
+        ;
 
         if (count($invoices) < 1) {
             return response('Sin facturas registradas');
         }
 
+        $letterPDF = $this->prepareLetter($patient, $invoices);
+
+        if ($request->letter) {
+            return $letterPDF->download($patient->full_name.'-Carta.pdf');
+        }
+
+        foreach ($invoices as $invoice) {
+            $filler = new FillPaymentFormPDF($invoice);
+            $filler->saveFill();
+        }
+
+        $merger = new MergePDFs(0);
+
+        $store = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
+
+        $letterPDF->save($store);
+
+        return $merger->mergeLetter($patient);
+    }
+
+    public function categories(Invoice $invoice)
+    {
+        $pdf = new PrepareInvoicePDF($invoice);
+        $categories = $pdf->serviceCategories();
+        $insured = $pdf->insured;
+        $patient = $pdf->patient;
+        $invoice_total = number_format($invoice->total_with_discounts, 2);
+        $datetime = Carbon::now();
+
+        view()->share([
+            'patient' => $patient,
+            'insured' => $insured,
+            'invoice' => $invoice,
+            'categories' => $categories,
+            'invoice_total' => $invoice_total,
+            'datetime' => $datetime,
+        ]);
+
+        $hospPDF = BarryPDF::loadView('pdf.category');
+
+        return $hospPDF->download($invoice->code.'-categorias.pdf');
+    }
+
+    private function prepareLetter(Patient $patient, $invoices)
+    {
         if ($patient->insured) {
             $insuree = Insuree::where('patient_id', $patient->id)->first();
         } else {
@@ -78,43 +141,6 @@ class PDFController extends Controller
             'amount' => $total_spelled,
         ]);
 
-        $letterPDF = BarryPDF::loadView('pdf.letter');
-
-        foreach ($invoices as $invoice) {
-            $filler = new FillPaymentFormPDF($invoice);
-            $filler->saveFill();
-        }
-
-        $merger = new MergePDFs(0);
-
-        $store = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
-
-        $letterPDF->save($store);
-
-        return $merger->mergeLetter($patient);
-        //return $letterPDF->download($patient->full_name.'-Letter.pdf');
-    }
-
-    public function categories(Invoice $invoice)
-    {
-        $pdf = new PrepareInvoicePDF($invoice);
-        $categories = $pdf->serviceCategories();
-        $insured = $pdf->insured;
-        $patient = $pdf->patient;
-        $invoice_total = number_format($invoice->total_with_discounts, 2);
-        $datetime = Carbon::now();
-
-        view()->share([
-            'patient' => $patient,
-            'insured' => $insured,
-            'invoice' => $invoice,
-            'categories' => $categories,
-            'invoice_total' => $invoice_total,
-            'datetime' => $datetime,
-        ]);
-
-        $hospPDF = BarryPDF::loadView('pdf.category');
-
-        return $hospPDF->download($invoice->code.'-categorias.pdf');
+        return BarryPDF::loadView('pdf.letter');
     }
 }

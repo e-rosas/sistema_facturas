@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('invoices/{invoice}/categories', 'PDFController@categories')->name('invoice.categories');
     Route::post('invoices/{invoice}/pdf', 'PaymentFormController@fill')->name('invoice.pdf');
     Route::get('patients/{patient}/letter', 'PDFController@letter')->name('patient.letter');
+    Route::get('invoices/{invoice}/letter', 'PDFController@invoiceLetter')->name('invoice.letter');
 
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
 

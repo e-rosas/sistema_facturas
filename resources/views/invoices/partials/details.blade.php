@@ -8,43 +8,49 @@
                 </div>
                 <div class="col-md-2 text-right">
                     <div class="dropdown">
-                        <a class="btn  btn-success btn-sm" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="btn  btn-success btn-sm" href="#" role="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             PDF
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
-                                    @csrf
-                                    <input type="hidden" name="output" value="D">
-                                    <button type="submit" class="dropdown-item">Descargar</button>
-                                </form>
-                                <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
-                                    @csrf
-                                    <input type="hidden" name="output" value="I">
-                                    <button type="submit" class="dropdown-item">Ver</button>
-                                </form>
-                                <form target="_blank" method="post" action="{{ route('invoice.hospitalization', $invoice) }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Hospitalización</button>
-                                </form>
-                                <form target="_blank" method="post"
-                                    action="{{ route('invoice.categories', $invoice) }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Categorias</button>
-                                </form>
+                            <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
+                                @csrf
+                                <input type="hidden" name="output" value="D">
+                                <button type="submit" class="dropdown-item">Descargar</button>
+                            </form>
+                            <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
+                                @csrf
+                                <input type="hidden" name="output" value="I">
+                                <button type="submit" class="dropdown-item">Ver</button>
+                            </form>
+                            <form target="_blank" method="post"
+                                action="{{ route('invoice.hospitalization', $invoice) }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Hospitalización</button>
+                            </form>
+                            <form target="_blank" method="post" action="{{ route('invoice.categories', $invoice) }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Categorias</button>
+                            </form>
+                            <form target="_blank" method="get" action="{{ route('invoice.letter', $invoice) }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Carta</button>
+                            </form>
                         </div>
                     </div>
 
                 </div>
                 @if ($invoice->status != 1)
-                    <div class="col-md-3 col-auto text-right">
-                        <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
-                    </div>
+                <div class="col-md-3 col-auto text-right">
+                    <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
+                </div>
                 @endif
                 @if ($invoice->status != 1)
-                    <div class="col-md-3 col-auto text-right">
-                        <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
-                        <br />
-                    </div>
+                <div class="col-md-3 col-auto text-right">
+                    <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                        data-target="#modal-details">Editar detalles</i></button>
+                    <br />
+                </div>
                 @endif
                 <div class="col-md-2 col-auto text-right">
                     <button type="button" data-toggle="modal" data-target="#modal-person"
@@ -121,85 +127,88 @@
                 <div class="col-md-3">
                     <button id="update-status" onclick="updateStatus()" class="btn btn-success btn-sm">
                         Cambiar
-                      </button>
+                    </button>
                 </div>
             </div>
             {{--  <div class="form-row">
 
                 <div class="col-md-4 col-auto form-group">
                     <label class="form-control-label" for="label-amount_paid">{{ __('Amount paid') }}</label>
-                    <label id="label-amount_paid">{{ $invoice->amount_paid }}</label>
+            <label id="label-amount_paid">{{ $invoice->amount_paid }}</label>
 
-                </div>
+        </div>
 
-                <div class="col-md-4 col-auto form-group">
-                    <label class="form-control-label" for="label-amount_due">{{ __('Amount due') }}</label>
-                    <label id="label-amount_due">{{ $invoice->getAmountDue() }}</label>
+        <div class="col-md-4 col-auto form-group">
+            <label class="form-control-label" for="label-amount_due">{{ __('Amount due') }}</label>
+            <label id="label-amount_due">{{ $invoice->getAmountDue() }}</label>
 
-                </div>
+        </div>
 
 
-            </div>  --}}
-            <div class="form-row">
-                {{--  Comments  --}}
-                <div class="col-md-12 col-auto form-group">
-                    <label class="form-control-label" for="label-comments">Observaciones</label>
-                    <label id="label-comments">{{ $invoice->comments }}</label>
-                </div>
-            </div>
-            <div class="form-row">
-                {{--  Doctor  --}}
-                <div class="col-md-12 col-auto form-group">
-                    <label class="form-control-label" for="label-doctor">Doctor</label>
-                    <label id="label-doctor">{{ $invoice->doctor }}</label>
-                </div>
+    </div> --}}
+    <div class="form-row">
+        {{--  Comments  --}}
+        <div class="col-md-12 col-auto form-group">
+            <label class="form-control-label" for="label-comments">Observaciones</label>
+            <label id="label-comments">{{ $invoice->comments }}</label>
+        </div>
+    </div>
+    <div class="form-row">
+        {{--  Doctor  --}}
+        <div class="col-md-12 col-auto form-group">
+            <label class="form-control-label" for="label-doctor">Doctor</label>
+            <label id="label-doctor">{{ $invoice->doctor }}</label>
+        </div>
 
-            </div>
-            <div class="form-row">
-                {{--  tax  --}}
-                <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-tax">IVA</label>
-                    <span class="MXN" style="display: none"> {{ $invoice->IVAF() }} </span><span class="USD"> {{ $invoice->discountedTax() }} </span>
+    </div>
+    <div class="form-row">
+        {{--  tax  --}}
+        <div class="col-md-3 col-auto form-group">
+            <label class="form-control-label" for="label-tax">IVA</label>
+            <span class="MXN" style="display: none"> {{ $invoice->IVAF() }} </span><span class="USD">
+                {{ $invoice->discountedTax() }} </span>
 
-                </div>
-                {{--  sub_total  --}}
-                <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-sub_total">Subtotal</label>
-                    <span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD" > {{ $invoice->subtotalDiscounted() }} </span>
+        </div>
+        {{--  sub_total  --}}
+        <div class="col-md-3 col-auto form-group">
+            <label class="form-control-label" for="label-sub_total">Subtotal</label>
+            <span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD">
+                {{ $invoice->subtotalDiscounted() }} </span>
 
-                </div>
-                {{--  total  --}}
-                <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-total">Total</label>
-                    <span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD" > {{ $invoice->totalDiscounted() }} </span>
+        </div>
+        {{--  total  --}}
+        <div class="col-md-3 col-auto form-group">
+            <label class="form-control-label" for="label-total">Total</label>
+            <span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD">
+                {{ $invoice->totalDiscounted() }} </span>
 
-                </div>
-            </div>
-            <div class="form-row">
-                @include('components.currencySwitch', ['USD' => 1])
-            </div>
-            {{-- <div class="form-row">
+        </div>
+    </div>
+    <div class="form-row">
+        @include('components.currencySwitch', ['USD' => 1])
+    </div>
+    {{-- <div class="form-row">
 
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-dtax">IVA con descuento</label>
                     <label id="label-dtax">{{ $invoice->dtax }}</label>
 
-                </div>
+</div>
 
-                <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-sub_total_with_discounts">Subtotal con descuento</label>
-                    <label id="label-num">{{ $invoice->sub_total_discounted }}</label>
+<div class="col-md-3 col-auto form-group">
+    <label class="form-control-label" for="label-sub_total_with_discounts">Subtotal con descuento</label>
+    <label id="label-num">{{ $invoice->sub_total_discounted }}</label>
 
-                </div>
+</div>
 
-                <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-total_with_discounts">Total con descuento</label>
-                    <label id="label-num">{{ $invoice->total_with_discounts }}</label>
+<div class="col-md-3 col-auto form-group">
+    <label class="form-control-label" for="label-total_with_discounts">Total con descuento</label>
+    <label id="label-num">{{ $invoice->total_with_discounts }}</label>
 
-                </div>
-            </div> --}}
-        </div>
-    </div>
+</div>
+</div> --}}
+</div>
+</div>
 </div>
 @push('js')
 <script>

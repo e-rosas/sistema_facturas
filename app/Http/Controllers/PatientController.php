@@ -11,6 +11,7 @@ use App\Insurer;
 use App\Invoice;
 use App\Listeners\UpdatePersonStats;
 use App\Patient;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -137,7 +138,10 @@ class PatientController extends Controller
             }
         }
 
-        return view('patients.show', compact('patient', 'invoices', 'invoices_totals', 'calls', 'payments', 'dependents', 'insuree'));
+        $end = Carbon::today()->addDay();
+        $start = Carbon::today()->subMonths(1);
+
+        return view('patients.show', compact('patient', 'invoices', 'invoices_totals', 'calls', 'payments', 'dependents', 'insuree', 'end', 'start'));
     }
 
     /**
