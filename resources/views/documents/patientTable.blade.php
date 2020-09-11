@@ -72,7 +72,7 @@
         var r = confirm("Eliminar el documento?");
         if(r){
             $.ajax({
-                url: "{{route('files.patient')}}",
+                url: "{{route('files.patient.delete')}}",
                 dataType: 'json',
                 type:"delete",
                 data: {

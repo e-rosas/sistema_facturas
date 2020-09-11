@@ -84,7 +84,7 @@
 
     function updateDocument(id, name, comments) {
         $.ajax({
-            url: "{{route('files.invoice')}}",
+            url: "{{route('files.invoice.update')}}",
             dataType: 'json',
             type: "patch",
             data: {

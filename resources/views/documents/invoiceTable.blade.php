@@ -72,7 +72,7 @@
         var r = confirm("Eliminar el documento?");
         if (r) {
             $.ajax({
-                url: "{{route('files.invoice')}}",
+                url: "{{route('files.invoice.delete')}}",
                 dataType: 'json',
                 type: "delete",
                 data: {

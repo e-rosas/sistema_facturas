@@ -49,10 +49,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('patients/find', 'SearchPatientController@findPatient')->name('patients.find');
 
-    Route::post('files/invoice', 'InvoiceDocumentController@upload')->name('files.invoice');
+    Route::post('files/invoice', 'InvoiceDocumentController@upload')->name('files.invoice.upload');
 
-    Route::patch('files/invoice', 'InvoiceDocumentController@update')->name('files.invoice');
-    Route::patch('files/patient', 'PatientDocumentController@update')->name('files.patient');
+    Route::patch('files/invoice', 'InvoiceDocumentController@update')->name('files.invoice.update');
+    Route::patch('files/patient', 'PatientDocumentController@update')->name('files.patient.update');
 
     Route::post('file/invoice', 'InvoiceDocumentController@find')->name('files.invoice.find');
     Route::post('file/patient', 'PatientDocumentController@find')->name('files.patient.find');
@@ -60,10 +60,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('file/invoice/{document}', 'InvoiceDocumentController@download')->name('files.invoice.download');
     Route::post('file/patient/{document}', 'PatientDocumentController@download')->name('files.patient.download');
 
-    Route::delete('files/invoice', 'InvoiceDocumentController@delete')->name('files.invoice');
-    Route::delete('files/patient', 'PatientDocumentController@delete')->name('files.patient');
+    Route::delete('files/invoice', 'InvoiceDocumentController@delete')->name('files.invoice.delete');
+    Route::delete('files/patient', 'PatientDocumentController@delete')->name('files.patient.delete');
 
-    Route::post('files/patient', 'PatientDocumentController@upload')->name('files.patient');
+    Route::post('files/patient', 'PatientDocumentController@upload')->name('files.patient.upload');
 
     //Route::get('services/searchIndex', 'SearchProductController@searchServiceIndex')->name('services.searchIndex');
 

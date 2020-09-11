@@ -93,7 +93,7 @@
 
     function updateDocument(id, name, comments, type) {
         $.ajax({
-            url: "{{route('files.patient')}}",
+            url: "{{route('files.patient.update')}}",
             dataType: 'json',
             type: "patch",
             data: {

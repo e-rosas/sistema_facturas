@@ -77,7 +77,7 @@
 <script>
     function sendDocument(data){
         $.ajax({
-            url: "{{route('files.patient')}}",
+            url: "{{route('files.patient.upload')}}",
             dataType: 'json',
             type:"post",
             processData: false, // Don't process the files
