@@ -31,17 +31,9 @@
                                 </select>
                             </div>
                             {{--  file --}}
-                            <div class="form-group{{ $errors->has('file') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="patient-document-file">Documento (PDF)</label>
-                                <input type="file" name="file" id="patient-document-file"
-                                    class="form-control form-control-alternative{{ $errors->has('file') ? ' is-invalid' : '' }}"
-                                    required>
-
-                                @if ($errors->has('file'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('file') }}</strong>
-                                </span>
-                                @endif
+                            <div class="form-group">
+                                <label class="form-control-label" for="document-file">Documento (PDF)</label>
+                                <input type="file" accept=".pdf" name="file" id="document-file">
                             </div>
 
 
@@ -63,6 +55,12 @@
                             </div>
                             <div class="text-center">
                                 <button id="save_document" class="btn btn-success mt-4">Guardar</button>
+                                <button style="display: none" class="btn btn-success mt-4" type="button" id="loading"
+                                    disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                        aria-hidden="true"></span>
+                                    Subiendo...
+                                </button>
                             </div>
                         </div>
                     </div>

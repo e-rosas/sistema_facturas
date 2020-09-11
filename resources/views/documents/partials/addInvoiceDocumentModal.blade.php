@@ -23,17 +23,9 @@
                                 @endif
                             </div>
                             {{--  file --}}
-                            <div class="form-group{{ $errors->has('file') ? ' has-danger' : '' }}">
+                            <div class="form-group">
                                 <label class="form-control-label" for="document-file">Documento (PDF)</label>
-                                <input type="file" name="file" id="document-file"
-                                    class="form-control form-control-alternative{{ $errors->has('file') ? ' is-invalid' : '' }}"
-                                    required>
-
-                                @if ($errors->has('file'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('file') }}</strong>
-                                </span>
-                                @endif
+                                <input type="file" accept=".pdf" name="file" id="document-file">
                             </div>
 
                             {{--  comments  --}}
@@ -54,6 +46,12 @@
                             </div>
                             <div class="text-center">
                                 <button id="save_document" class="btn btn-success mt-4">Guardar</button>
+                                <button style="display: none" class="btn btn-success mt-4" type="button" id="loading"
+                                    disabled>
+                                    <span class="spinner-border spinner-border-sm" role="status"
+                                        aria-hidden="true"></span>
+                                    Subiendo...
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -67,6 +65,10 @@
 
 <script>
     function sendDocument(data){
+        var x = document.getElementById("save_document");
+        x.style.display = "none";
+        var loading = document.getElementById("loading");
+        loading.style.display = "block";
         $.ajax({
             url: "{{route('files.invoice.upload')}}",
             dataType: 'json',
@@ -75,8 +77,11 @@
             contentType: false,
             data: data,
         success: function (response) {
+
             DisplayDocuments(response.data);
             $('#modal-document').modal('hide');
+            x.style.display = "block";
+            loading.style.display = "none";
 
             }
         });
@@ -106,7 +111,6 @@
             formData.append('invoice_id', invoice);
             formData.append('invoice_code', code);
             formData.append('patient_id', patient);
-            console.log(formData.getAll('_token'));
             sendDocument(formData);
         }
         else {
