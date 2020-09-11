@@ -41,6 +41,10 @@ class PDFController extends Controller
     {
         $invoices = Invoice::where([['patient_id', $patient->id], ['registered', 1], ['status', '!=', 1]])->get();
 
+        if (count($invoices) < 1) {
+            return response('Sin facturas registradas');
+        }
+
         if ($patient->insured) {
             $insuree = Insuree::where('patient_id', $patient->id)->first();
         } else {
@@ -87,7 +91,7 @@ class PDFController extends Controller
 
         $letterPDF->save($store);
 
-        return $merger->mergeLetter($invoices, $patient);
+        return $merger->mergeLetter($patient);
         //return $letterPDF->download($patient->full_name.'-Letter.pdf');
     }
 

@@ -55,16 +55,10 @@ class MergePDFs
         $fpdi->Output('F', $store);
     }
 
-    public function mergeLetter($invoices, $patient)
+    public function mergeLetter($patient)
     {
-        //MERGE LETTER
         $datadir = storage_path('app/pdf/patients/'.$patient->id.'/');
-        $outputNameLetter = $datadir.'merging/letter.pdf';
-        $letter = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
 
-        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter}";
-        shell_exec($cmd);
-        //
         //PATIENT DOCUMENTS
 
         $outputNamePatientDocs = $datadir.'merging/patientDocs.pdf';
@@ -72,13 +66,17 @@ class MergePDFs
 
         $files = glob($datadir.'*.pdf');
 
-        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientDocs} ";
+        $count = count($files);
 
-        foreach ($files as $file) {
-            $cmd .= $file.' ';
+        if ($count > 0) {
+            $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientDocs} ";
+
+            foreach ($files as $file) {
+                $cmd .= $file.' ';
+            }
+
+            shell_exec($cmd);
         }
-
-        shell_exec($cmd);
 
         //PATIENT BENEFITS DOCUMENTS
 
@@ -87,13 +85,16 @@ class MergePDFs
 
         $files = glob($datadir.'/benefits/*.pdf');
 
-        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientBenefitsDocs} ";
+        $count = count($files);
 
-        foreach ($files as $file) {
-            $cmd .= $file.' ';
+        if ($count > 0) {
+            $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientBenefitsDocs} ";
+
+            foreach ($files as $file) {
+                $cmd .= $file.' ';
+            }
+            shell_exec($cmd);
         }
-
-        shell_exec($cmd);
 
         //INVOICE DOCUMENTS
         $outputNamePatientDocs = $datadir.'merging/invoiceDocs.pdf';
@@ -101,13 +102,30 @@ class MergePDFs
 
         $files = glob($datadir.'/invoices/*.pdf');
 
-        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientDocs} ";
+        $count = count($files);
 
-        foreach ($files as $file) {
-            $cmd .= $file.' ';
+        if ($count > 0) {
+            $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientDocs} ";
+
+            foreach ($files as $file) {
+                $cmd .= $file.' ';
+            }
+
+            shell_exec($cmd);
         }
 
+        //MERGE LETTER
+
+        $outputNameLetter = $datadir.'merging/letter.pdf';
+        Storage::put('pdf/patients/'.$patient->id.'/merging/letter.pdf', '');
+
+        $letter = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
+
+        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter}";
         shell_exec($cmd);
+
+        $directory = storage_path('app/pdf/'.$patient->id.'/temp');
+        File::cleanDirectory($directory);
 
         //MERGE DOCUMENTS
 
@@ -116,13 +134,20 @@ class MergePDFs
 
         $files = glob($datadir.'/merging/*.pdf');
 
-        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameAll} ";
+        $count = count($files);
 
-        foreach ($files as $file) {
-            $cmd .= $file.' ';
+        if ($count > 0) {
+            $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameAll} ";
+
+            foreach ($files as $file) {
+                $cmd .= $file.' ';
+            }
+
+            shell_exec($cmd);
         }
 
-        shell_exec($cmd);
+        $directory = storage_path('app/pdf/patients/'.$patient->id.'/merging');
+        File::cleanDirectory($directory);
 
         return Storage::download('pdf/patients/'.$patient->id.'/merges/'.$patient->name.'.pdf');
         /* $fpdi = new Fpdi();

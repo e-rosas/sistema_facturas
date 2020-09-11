@@ -11,6 +11,9 @@
             @include('components.invoiceStatsCard', ['idUSD' => 'amount-paid','title' => 'Pagado', 'bg' => 'bg-green',
             'USD' => 0,'value' => $patient->person_stats->amountPaid(), 'idMXN' => 'amount-paidMXN', 'valueMXN' =>
             $patient->person_stats->amountPaidMXN()])
+            @include('components.invoiceStatsCard', ['idUSD' => 'amount-credit','title' => 'Crédito', 'bg' => 'bg-info',
+            'USD' => 0,'value' => $patient->person_stats->amountCredit(), 'idMXN' => 'amount-creditMXN', 'valueMXN' =>
+            $patient->person_stats->amountCreditMXN()])
             @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe', 'bg' => 'bg-yellow',
             'USD' => 0,'value' => $patient->person_stats->amountDue(), 'idMXN' => 'amount-dueMXN', 'valueMXN' =>
             $patient->person_stats->amountDueMXN()])
@@ -86,10 +89,11 @@
                         href="{{ route('patients.edit', $patient) }}">
                         <i class="fas fa-pencil-alt fa-2"></i>
                     </a>
-                    <form  method="get" action="{{ route('patient.letter', $patient) }}" >
+                    <form method="get" action="{{ route('patient.letter', $patient) }}">
                         @csrf
                         <div class="form-group col-md-12 col-auto">
-                            <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('PDF') }}</button>
+                            <button type="submit"
+                                class="btn btn-success mt-4 btn-block">{{ __('Estado de cuenta') }}</button>
                         </div>
                     </form>
                     {{-- <form  method="post" action="{{ route('reports.invoices') }}" >
