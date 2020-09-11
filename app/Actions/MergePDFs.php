@@ -123,7 +123,6 @@ class MergePDFs
         }
 
         shell_exec($cmd);
-        dd($cmd);
 
         return Storage::download('pdf/patients/'.$patient->id.'/merges/'.$patient->name.'.pdf');
         /* $fpdi = new Fpdi();
