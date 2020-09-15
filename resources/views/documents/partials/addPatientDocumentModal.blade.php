@@ -32,10 +32,9 @@
                             </div>
                             {{--  file --}}
                             <div class="form-group">
-                                <label class="form-control-label" for="document-file">Documento (PDF)</label>
-                                <input type="file" accept=".pdf" name="file" id="document-file">
+                                <label class="form-control-label" for="patient-document-file">Documento (PDF)</label>
+                                <input type="file" accept=".pdf" name="file" id="patient-document-file">
                             </div>
-
 
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
@@ -54,9 +53,9 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button id="save_document" class="btn btn-success mt-4">Guardar</button>
-                                <button style="display: none" class="btn btn-success mt-4" type="button" id="loading"
-                                    disabled>
+                                <button id="save_document" class="btn btn-success mt-4 btn-block">Guardar</button>
+                                <button style="display: none" class="btn btn-success mt-4 btn-block" type="button"
+                                    id="loading" disabled>
                                     <span class="spinner-border spinner-border-sm" role="status"
                                         aria-hidden="true"></span>
                                     Subiendo...
@@ -74,6 +73,10 @@
 
 <script>
     function sendDocument(data){
+        var x = document.getElementById("save_document");
+        x.style.display = "none";
+        var loading = document.getElementById("loading");
+        loading.style.display = "block";
         $.ajax({
             url: "{{route('files.patient.upload')}}",
             dataType: 'json',
@@ -84,6 +87,8 @@
         success: function (response) {
             DisplayDocuments(response.data);
             $('#modal-patient-document').modal('hide');
+            x.style.display = "block";
+            loading.style.display = "none";
 
             }
         });
@@ -100,6 +105,8 @@
         var file = document.getElementById("patient-document-file").files[0];
 
         if(name != "" && file){
+
+
             var type = document.getElementById("patient-document-type").value;
             var file = document.getElementById("patient-document-file").files[0];
             var formData = new FormData();

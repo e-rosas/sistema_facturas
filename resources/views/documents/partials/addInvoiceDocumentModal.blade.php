@@ -45,9 +45,9 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button id="save_document" class="btn btn-success mt-4">Guardar</button>
-                                <button style="display: none" class="btn btn-success mt-4" type="button" id="loading"
-                                    disabled>
+                                <button id="save_document" class="btn btn-success mt-4 btn-block">Guardar</button>
+                                <button style="display: none" class="btn btn-success mt-4 btn-block" type="button"
+                                    id="loading" disabled>
                                     <span class="spinner-border spinner-border-sm" role="status"
                                         aria-hidden="true"></span>
                                     Subiendo...
