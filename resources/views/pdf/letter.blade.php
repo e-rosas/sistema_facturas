@@ -185,42 +185,42 @@
       <p>Beneficiary account: 1001117850</p>
       <p>Tracking # 122238200</p>
     </div>
-    <p style="page-break-before: always"></p>
+    {{-- <p style="page-break-before: always"></p>
     <div class="invoice-company">
       <div style="text-align: left">
         <img height="80px" src="{{public_path().'/img/HM-logo.png'}}" />
-      </div>
-      <div class="invoice-company-info" style="text-align: right">
-        <span>Hospital México de B.C. S.A. de C.V.</span> <br>
-        <span>R.F.C. HMB940222NF8</span> <br>
-        <span>Paseo Tijuana 9077 Empleados Federales 22010 Tijuana, B.C.</span> <br>
-        <span>Tel / Fax 011 52 (664) 683 6363</span><br>
-        <span>1 800 315 8714</span><br><br><br>
-        <span>{{ $datetime->toFormattedDateString() }}</span>
-      </div>
-    </div>
-    <br> <br><br> <br>
-    <p>OR</p>
-    <div class="bank">
-      <p>Via check made out to Hospital Mexico de B.C. S.A. de C.V.</p>
-      <p>P.O. Box 2508,</p>
-      <p>Chula Vista, CA,</p>
-      <p>91912, United States.</p>
-    </div>
-    <div>
-      <p>The Health Insurance Claim Forms corresponding to this patient are found in the annex to this
-        letter.</p>
-      <p>If you have any questions, feel free to contact us at <b>619 482-8608, 619 482-0953</b>, or via e-mail
-        address at <a href="hospitalmexicoclaims@gmail.com">hospitalmexicoclaims@gmail.com</a> with Yamileth and
-        Silvia.
-      </p>
-      <p>We thank you in advance for your cooperation regarding this matter.</p>
-      <p>Sincerely, </p>
-      <address>
-        <p>Manuel Rafael Lazo Aguila, M.D.</p>
-        <p>Hospital México B.C. S.A. de C.V.</p>
-      </address>
-    </div>
+  </div>
+  <div class="invoice-company-info" style="text-align: right">
+    <span>Hospital México de B.C. S.A. de C.V.</span> <br>
+    <span>R.F.C. HMB940222NF8</span> <br>
+    <span>Paseo Tijuana 9077 Empleados Federales 22010 Tijuana, B.C.</span> <br>
+    <span>Tel / Fax 011 52 (664) 683 6363</span><br>
+    <span>1 800 315 8714</span><br><br><br>
+    <span>{{ $datetime->toFormattedDateString() }}</span>
+  </div>
+  </div>
+  <br> <br><br> <br>
+  <p>OR</p>
+  <div class="bank">
+    <p>Via check made out to Hospital Mexico de B.C. S.A. de C.V.</p>
+    <p>P.O. Box 2508,</p>
+    <p>Chula Vista, CA,</p>
+    <p>91912, United States.</p>
+  </div>
+  <div>
+    <p>The Health Insurance Claim Forms corresponding to this patient are found in the annex to this
+      letter.</p>
+    <p>If you have any questions, feel free to contact us at <b>619 482-8608, 619 482-0953</b>, or via e-mail
+      address at <a href="hospitalmexicoclaims@gmail.com">hospitalmexicoclaims@gmail.com</a> with Yamileth and
+      Silvia.
+    </p>
+    <p>We thank you in advance for your cooperation regarding this matter.</p>
+    <p>Sincerely, </p>
+    <address>
+      <p>Manuel Rafael Lazo Aguila, M.D.</p>
+      <p>Hospital México B.C. S.A. de C.V.</p>
+    </address>
+  </div> --}}
 </body>
 
 </html>

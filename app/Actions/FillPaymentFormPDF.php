@@ -1206,7 +1206,6 @@ INSURED_POLICY:
         
         
         Storage::put($directory.$this->invoice->code.'PaymentForm.pdf', '');
-        Storage::put('pdf/patients/'.$this->invoice->patient_id.'/temp/letter.pdf', '');
        
         
         

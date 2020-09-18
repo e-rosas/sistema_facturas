@@ -11,6 +11,7 @@ use App\Patient;
 use Barryvdh\DomPDF\Facade as BarryPDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use NumberFormatter;
 
 class PDFController extends Controller
@@ -65,20 +66,22 @@ class PDFController extends Controller
 
         $letterPDF = $this->prepareLetter($patient, $invoices);
 
+        $store = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
+        Storage::put('pdf/patients/'.$patient->id.'/temp/letter.pdf', '');
+
+        $letterPDF->save($store);
+
+        $merger = new MergePDFs(0);
+
         if ($request->letter) {
-            return $letterPDF->download($patient->full_name.'-Carta.pdf');
+            return $merger->mergeSimpleLetter($patient);
+            // return $letterPDF->download($patient->full_name.'-Carta.pdf');
         }
 
         foreach ($invoices as $invoice) {
             $filler = new FillPaymentFormPDF($invoice);
             $filler->saveFill();
         }
-
-        $merger = new MergePDFs(0);
-
-        $store = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
-
-        $letterPDF->save($store);
 
         return $merger->mergeLetter($patient);
     }

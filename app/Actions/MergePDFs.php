@@ -58,6 +58,10 @@ class MergePDFs
     public function mergeInvoice($invoice, $patient)
     {
         $datadir = storage_path('app/pdf/patients/'.$patient->id.'/');
+
+        $directory = storage_path('app/pdf/'.$patient->id.'/merging');
+        File::cleanDirectory($directory);
+
         $this->patientDocuments($datadir, $patient);
         $this->invoiceDocuments($datadir, $patient, $invoice->code.'*');
         $this->mergeDocuments($datadir, $patient, $invoice->code);
@@ -65,9 +69,31 @@ class MergePDFs
         return Storage::download('pdf/patients/'.$patient->id.'/merges/'.$invoice->code.'.pdf');
     }
 
+    public function mergeSimpleLetter($patient)
+    {
+        $datadir = storage_path('app/pdf/patients/'.$patient->id.'/');
+
+        $outputNameLetter = $datadir.'merging/letter/'.$patient->name.'.pdf';
+        Storage::put('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->name.'.pdf', '');
+
+        $letter = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
+        $letter2 = storage_path('app/pdf/1letter.pdf');
+
+        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter} {$letter2}";
+        shell_exec($cmd);
+
+        $directory = storage_path('app/pdf/patients/'.$patient->id.'/temp');
+        File::cleanDirectory($directory);
+
+        return Storage::download('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->name.'.pdf');
+    }
+
     public function mergeLetter($patient)
     {
         $datadir = storage_path('app/pdf/patients/'.$patient->id.'/');
+
+        $directory = storage_path('app/pdf/patients/'.$patient->id.'/merging');
+        File::cleanDirectory($directory);
 
         $this->patientDocuments($datadir, $patient);
         $this->invoiceDocuments($datadir, $patient, '*');
@@ -75,32 +101,6 @@ class MergePDFs
         $this->mergeDocuments($datadir, $patient, $patient->name);
 
         return Storage::download('pdf/patients/'.$patient->id.'/merges/'.$patient->name.'.pdf');
-        /* $fpdi = new Fpdi();
-
-        $path = 'app/pdf/patients/'.$patient->id.'/temp/letter.pdf';
-
-        $form = storage_path($path);
-
-        $fpdi->setSourceFile($form);
-        $tpl = $fpdi->importPage(1, '/MediaBox');
-        $fpdi->addPage();
-        $fpdi->useTemplate($tpl);
-
-        $directory = storage_path('app/pdf/'.$patient->id.'/temp');
-        File::cleanDirectory($directory);
-
-        foreach ($invoices as $invoice) {
-            $path = 'app/pdf/patients/'.$invoice->patient_id.'/invoices/'.$invoice->code.'/'.$invoice->code.'PaymentForm.pdf';
-
-            $form = storage_path($path);
-
-            $fpdi->setSourceFile($form);
-            $tpl = $fpdi->importPage(1, '/MediaBox');
-            $fpdi->addPage();
-            $fpdi->useTemplate($tpl);
-        }
-
-        $fpdi->Output('D', $patient->full_name.'-Letter.pdf'); */
     }
 
     public function mergeDocuments($datadir, $patient, $docName)
@@ -139,8 +139,9 @@ class MergePDFs
         Storage::put('pdf/patients/'.$patient->id.'/merging/0letter.pdf', '');
 
         $letter = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
+        $letter2 = storage_path('app/pdf/1letter.pdf');
 
-        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter}";
+        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter} {$letter2}";
         shell_exec($cmd);
 
         $directory = storage_path('app/pdf/'.$patient->id.'/temp');
@@ -156,8 +157,8 @@ class MergePDFs
         $count = count($files);
 
         if ($count > 0) {
-            $outputNamePatientDocs = $datadir.'merging/3invoiceDocs.pdf';
-            Storage::put('pdf/patients/'.$patient->id.'/merging/3invoiceDocs.pdf', '');
+            $outputNamePatientDocs = $datadir.'merging/4invoiceDocs.pdf';
+            Storage::put('pdf/patients/'.$patient->id.'/merging/4invoiceDocs.pdf', '');
 
             $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientDocs} ";
 
@@ -178,8 +179,8 @@ class MergePDFs
         $count = count($files);
 
         if ($count > 0) {
-            $outputNamePatientDocs = $datadir.'merging/1patientDocs.pdf';
-            Storage::put('pdf/patients/'.$patient->id.'/merging/1patientDocs.pdf', '');
+            $outputNamePatientDocs = $datadir.'merging/2patientDocs.pdf';
+            Storage::put('pdf/patients/'.$patient->id.'/merging/2patientDocs.pdf', '');
 
             $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientDocs} ";
 
@@ -197,8 +198,8 @@ class MergePDFs
         $count = count($files);
 
         if ($count > 0) {
-            $outputNamePatientBenefitsDocs = $datadir.'merging/2patientBenefitsDocs.pdf';
-            Storage::put('pdf/patients/'.$patient->id.'/merging/2patientBenefitsDocs.pdf', '');
+            $outputNamePatientBenefitsDocs = $datadir.'merging/3patientBenefitsDocs.pdf';
+            Storage::put('pdf/patients/'.$patient->id.'/merging/3patientBenefitsDocs.pdf', '');
 
             $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNamePatientBenefitsDocs} ";
 
