@@ -236,7 +236,7 @@ class Invoice extends Model
 
                 break;
             case 1:
-                return 'Completada.';
+                return 'Completa.';
 
                 break;
             case 2:
@@ -249,6 +249,10 @@ class Invoice extends Model
                 break;
             case 4:
                 return 'Pendiente de facturar.';
+
+                break;
+            case 5:
+                return 'Pendiente de revisar.';
 
                 break;
             default:

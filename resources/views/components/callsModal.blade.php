@@ -71,12 +71,12 @@
                                 <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                             </div>
                             <select class="form-control" id="input-status">
-                                <option value="0">{{ __('In process') }}</option>
-                                <option value="1">{{ __('Deductibles') }}</option>
-                                <option value="2">{{ __('Denied for non covered charges') }}</option>
-                                <option value="3">{{ __('Paid') }}</option>
-                                <option value="4">{{ __('Denied for untimely filing') }}</option>
-                                <option value="5">{{ __('Other') }}</option>
+                                <option value="0">{{ __('En proceso') }}</option>
+                                <option value="1">{{ __('Deducibles') }}</option>
+                                <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
+                                <option value="3">{{ __('Pago') }}</option>
+                                <option value="4">{{ __('Negada por fuera de tiempo') }}</option>
+                                <option value="5">{{ __('Otro') }}</option>
                             </select>
                         </div>
                     </div>
@@ -129,6 +129,7 @@
             },
         success: function (response) {
             displayCalls(response.data);
+            displayStats();
             $('#modal-call').modal('hide')
 
             }

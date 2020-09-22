@@ -5,29 +5,29 @@
                 <th scope="col">{{ __('Número') }}</th>
                 <th scope="col">{{ __('Factura') }}</th>
                 <th scope="col">{{ __('Fecha') }}</th>
-                <th scope="col">{{ __('Claim') }}</th>
+                <th scope="col">{{ __('Cobro') }}</th>
                 <th scope="col">{{ __('Estado') }}</th>
                 <th scope="col">{{ __('Comentarios') }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($calls as $call)
-                <tr>
-                    <td>{{ $call->number}}</td>
-                    <td>
-                        <a href="{{ route('invoices.show', $call->invoice) }}">
-                            {{ $call->invoice->number}}
-                        </a>
-                    </td>
-                    <td>{{ $call->date->format('M-d-Y')}}</td>
-                    <td>
-                        <a href="{{ route('invoices.show', $call->invoice) }}">
-                            {{ $call->invoice->code}}
-                        </a>
-                    </td>
-                    <td>{{ $call->status() }}</td>
-                    <td>{{ $call->comments }}</td>
-                </tr>
+            <tr>
+                <td>{{ $call->number}}</td>
+                <td>
+                    <a href="{{ route('invoices.show', $call->invoice) }}">
+                        {{ $call->invoice->number}}
+                    </a>
+                </td>
+                <td>{{ $call->date->format('M-d-Y')}}</td>
+                <td>
+                    <a href="{{ route('invoices.show', $call->invoice) }}">
+                        {{ $call->invoice->code}}
+                    </a>
+                </td>
+                <td>{{ $call->status() }}</td>
+                <td>{{ $call->comments }}</td>
+            </tr>
             @endforeach
         </tbody>
     </table>

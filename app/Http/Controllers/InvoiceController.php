@@ -57,36 +57,40 @@ class InvoiceController extends Controller
             $type = $request['type'];
         }
         if (is_null($request['status'])) {
-            $status = 5;
+            $status = 6;
         } else {
             $status = $request['status'];
         }
 
-        if ($type < 4 && $status < 5) {
+        if ($type < 4 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where([['type', $type], ['status', $status]])
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
+                ->orderBy('date', 'desc')
                 ->paginate($perPage)
         ;
-        } elseif ($type >= 4 && $status < 5) {
+        } elseif ($type >= 4 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where('status', $status)
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
+                ->orderBy('date', 'desc')
                 ->paginate($perPage)
         ;
-        } elseif ($type < 4 && $status >= 5) {
+        } elseif ($type < 4 && $status >= 6) {
             $invoices = Invoice::with('patient')
                 ->where('type', $type)
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
+                ->orderBy('date', 'desc')
                 ->paginate($perPage)
         ;
         } else {
             $invoices = Invoice::with('patient')
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
+                ->orderBy('date', 'desc')
                 ->paginate($perPage)
             ;
         }
@@ -116,6 +120,11 @@ class InvoiceController extends Controller
         $validated = $request->validated();
         $validated['type'] = 2;
         $validated['status'] = 3;
+
+        if ('Pendiente' != $validated['number']) {
+            $validated['registered'] = 1;
+            $validated['status'] = 2;
+        }
 
         if (is_null($request->code)) {
             //not cash

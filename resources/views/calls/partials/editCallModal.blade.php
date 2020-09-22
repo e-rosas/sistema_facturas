@@ -25,72 +25,71 @@
                                 </div>
 
                                 {{--  Claim  --}}
-                                <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                        </div>
-                                        <input type="text" name="claim" id="update-claim"
-                                            class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}"
-                                            value="{{ old('claim') }}" placeholder="{{ __('Claim') }}">
-                                        @if ($errors->has('claim'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('claim') }}</strong>
-                                        </span>
-                                        @endif
+                                {{-- <div class="form-group {{ $errors->has('claim') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                     </div>
+                                    <input type="text" name="claim" id="update-claim"
+                                        class="form-control {{ $errors->has('claim') ? ' is-invalid' : '' }}"
+                                        value="{{ old('claim') }}" placeholder="{{ __('Claim') }}">
+                                    @if ($errors->has('claim'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('claim') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-                                {{--  Date  --}}
-                                <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                        </div>
-                                        <input onchange="handler(event);" type="date" name="date" id="update-date"
-                                            class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                            value="{{ old('date') }}" required>
-                                        @if ($errors->has('date'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('date') }}</strong>
-                                        </span>
-                                        @endif
+                            </div> --}}
+                            {{--  Date  --}}
+                            <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
+                                    <input onchange="handler(event);" type="date" name="date" id="update-date"
+                                        class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                        value="{{ old('date') }}" required>
+                                    @if ($errors->has('date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('date') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-                                {{--  status  --}}
-                                <div class="form-group {{ $errors->has('status') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
-                                        </div>
-                                        <select class="form-control" id="update-status-call">
-                                            <option value="0">{{ __('En proceso') }}</option>
-                                            <option value="1">{{ __('Deducibles') }}</option>
-                                            <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
-                                            <option value="3">{{ __('Pagada') }}</option>
-                                            <option value="4">{{ __('Negada por ') }}</option>
-                                            <option value="5">{{ __('Otro') }}</option>
-                                        </select>
+                            </div>
+                            {{--  status  --}}
+                            <div class="form-group {{ $errors->has('status') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                     </div>
+                                    <select class="form-control" id="update-status-call">
+                                        <option value="0">{{ __('En proceso') }}</option>
+                                        <option value="1">{{ __('Deducibles') }}</option>
+                                        <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
+                                        <option value="3">{{ __('Pagada') }}</option>
+                                        <option value="4">{{ __('Negada por fuera de tiempo') }}</option>
+                                        <option value="5">{{ __('Otro') }}</option>
+                                    </select>
                                 </div>
-                                {{--  comments  --}}
-                                <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
-                                        </div>
-                                        <textarea type="text" rows="3" name="comments" id="update-comments"
-                                            class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
-                                            value="{{ old('comments') }}" placeholder="{{ __('Comments') }}"></textarea>
-                                        @if ($errors->has('comments'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('comments') }}</strong>
-                                        </span>
-                                        @endif
+                            </div>
+                            {{--  comments  --}}
+                            <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                     </div>
+                                    <textarea type="text" rows="3" name="comments" id="update-comments"
+                                        class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
+                                        value="{{ old('comments') }}" placeholder="{{ __('Comentarios') }}"></textarea>
+                                    @if ($errors->has('comments'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('comments') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
-                                <div class="text-center">
-                                    <button id="update_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
-                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button id="update_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
                             </div>
                         </div>
                     </div>
@@ -98,6 +97,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 @push('js')
@@ -121,6 +121,7 @@
         success: function (response) {
             var calls = response.data;
             displayCalls(calls); //on callsModal
+            displayStats();
 
             $('#modal-update-call').modal('hide')
             }
