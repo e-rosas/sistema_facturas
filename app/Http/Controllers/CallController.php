@@ -126,7 +126,7 @@ class CallController extends Controller
 
         $status = $validated['status'];
 
-        if (0 != $status || 0 != $status) {
+        if (3 != $status || 0 != $status) {
             $invoice = Invoice::findOrFail($validated['invoice_id']);
             if (1 != $invoice->status) {
                 $invoice->status = 5;
