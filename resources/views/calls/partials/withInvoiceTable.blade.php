@@ -6,10 +6,10 @@
                 <th scope="col">{{ __('Num. de Cobro') }}</th>
                 <th scope="col">CONTPAQ</th>
                 <th scope="col">{{ __('Paciente') }}</th>
+                <th scope="col">{{ __('Estado') }}</th>
                 <th scope="col">{{ __('Cargos') }}</th>
                 <th scope="col">{{ __('Abonos') }}</th>
                 <th scope="col">{{ __('Saldo') }}</th>
-                <th scope="col">{{ __('Estado') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -23,16 +23,17 @@
                         {{ $invoice->patient->full_name}}
                     </a>
                 </td>
-                <td><span class="MXN"> {{ $invoice->totalF() }} </span><span class="USD" style="display: none">
-                        {{ $invoice->totalDiscounted() }} </span></td>
-                <td><span class="MXN"> {{ $invoice->amountPaidMXN() }} </span><span class="USD" style="display: none">
-                        {{ $invoice->amountPaid() }} </span></td>
-                <td><span class="MXN"> {{ $invoice->debeF() }} </span><span class="USD" style="display: none">
-                        {{ $invoice->amountDue() }} </span></td>
                 <td>{{ $invoice->status() }}</td>
+                <td>
+                    {{ $invoice->totalDiscounted() }}</td>
+                <td>
+                    {{ $invoice->amountPaid() }}</td>
+                <td>
+                    {{ $invoice->amountDue() }}</td>
+
             </tr>
             @foreach ($invoice->calls as $call)
-            <tr class="{{ ($call->type != 3) ? 'table-warning' : 'table-success' }}">
+            <tr class="{{ ($call->status != 3) ? 'table-warning' : 'table-success' }}">
                 <td></td>
                 <td>{{ $call->date->format('d-M-Y') }}</td>
                 <td>{{ $call->status()}}</td>

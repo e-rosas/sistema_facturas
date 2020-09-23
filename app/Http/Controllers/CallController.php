@@ -47,14 +47,14 @@ class CallController extends Controller
                 ->where('status', $status)
                 ->whereBetween('date', [$start, $end])
                 ->whereLike(['code'], $search)
-                ->orderBy('date', 'desc')
+                ->orderBy('date', 'asc')
                 ->paginate($perPage)
             ;
         } else {
             $invoices = Invoice::with('calls')
                 ->whereBetween('date', [$start, $end])
                 ->whereLike(['code'], $search)
-                ->orderBy('date', 'desc')
+                ->orderBy('date', 'asc')
                 ->paginate($perPage)
         ;
         }

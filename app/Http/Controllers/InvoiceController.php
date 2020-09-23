@@ -349,9 +349,9 @@ class InvoiceController extends Controller
 
     public function updateRegistered()
     {
-        $invoices = Invoice::where('number', '!=', 'Pendiente')->get();
+        $invoices = Invoice::where([['status', '3'], ['number', '!=', 'Pendiente'], ['amount_paid', '0']])->get();
         foreach ($invoices as $invoice) {
-            $invoice->registered = 1;
+            $invoice->status = 2;
             $invoice->save();
         }
     }
