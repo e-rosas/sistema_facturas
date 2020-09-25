@@ -11,24 +11,25 @@
         </thead>
         <tbody>
             @foreach ($payments as $payment)
-                <tr class="{{ $payment->type == 1 ? 'table-info' : '' }}">
-                    <td>{{ $payment->date->format('M-d-Y')}}</td>
-                    <td><span class="MXN" style="display: none"> {{ $payment->amountPaidMXN($invoice->exchange_rate) }} </span><span class="USD" > {{ $payment->amountPaid() }} </span> </td>
-                    <td>{{ $payment->comments}}</td>
-                    @if ($invoice->status != 1)
-                        <td class="td-actions text-right">
-                            <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
-                                onClick="showEditModal({{ $payment->id }})">
-                                <i class="fas fa-pencil-alt fa-2 "></i>
-                            </button>
-                            <button rel="tooltip" class="btn btn-danger btn-sm btn-icon" type="button"
-                                onClick="Delete({{ $payment->id }})">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </td>
-                    @endif
+            <tr class="{{ $payment->type == 1 ? 'table-info' : '' }}">
+                <td>{{ $payment->date->format('M-d-Y')}}</td>
+                <td><span class="MXN" style="display: none"> {{ $payment->amountPaidMXN($invoice->exchange_rate) }}
+                    </span><span class="USD"> {{ $payment->amountPaid() }} </span> </td>
+                <td>{{ $payment->comments}}</td>
+                @if ($invoice->status != 1)
+                <td class="td-actions text-right">
+                    <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
+                        onClick="showEditModal({{ $payment->id }})">
+                        <i class="fas fa-pencil-alt fa-2 "></i>
+                    </button>
+                    <button rel="tooltip" class="btn btn-danger btn-sm btn-icon" type="button"
+                        onClick="DeletePayment({{ $payment->id }})">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+                @endif
 
-                </tr>
+            </tr>
             @endforeach
         </tbody>
     </table>
@@ -47,14 +48,14 @@
                 + '<td> <span class="MXN" style="display: none">' + payments[i].amount_paidMXN + '</span><span class="USD" > '+payments[i].amount_paid +'</span> </td>'
                 + "<td>" + payments[i].comments + "</td>"
                 +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="showEditModal(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
-                +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
+                +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeletePayment(\'' + payments[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
                 +  "</tr>";
         }
         $('#payments_table tbody').html(output);
         var currency = document.getElementById("customRadioInlineUSD").checked;
         displayUSD(currency);
     }
-    function Delete(id){
+    function DeletePayment(id){
         var r = confirm("Eliminar el pago?");
         if(r){
             $.ajax({
@@ -76,4 +77,3 @@
     }
 </script>
 @endpush
-
