@@ -53,7 +53,7 @@
 @push('js')
 
 <script>
-    function showEditModal(id) {
+    function showEditDocumentModal(id) {
         getDocument(id);
         $('#edit-document-modal').modal('show')
     }

@@ -17,7 +17,7 @@
                 <td>{{ $document->comments}}</td>
                 <td class="td-actions text-right">
                     <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
-                        onClick="showEditModal({{ $document->id }})">
+                        onClick="showEditDocumentModal({{ $document->id }})">
                         <i class="fas fa-pencil-alt fa-2 "></i>
                     </button>
                     <button rel="tooltip" class="btn btn-danger btn-sm btn-icon" type="button"
@@ -54,7 +54,7 @@
                 "<td>" + documents[i].name + "</td>" +
                 "<td>" + documents[i].date + "</td>" +
                 "<td>" + documents[i].comments + "</td>" +
-                '<td class="text-right"><button class="btn btn-info btn-sm btn-icon" type="button" onClick="showEditModal(\'' +
+                '<td class="text-right"><button class="btn btn-info btn-sm btn-icon" type="button" onClick="showEditDocumentModal(\'' +
                 documents[i].id +
                 '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>' +
                 '<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="Delete(\'' + documents[i].id +

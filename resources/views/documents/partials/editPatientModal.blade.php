@@ -61,7 +61,7 @@
 @push('js')
 
 <script>
-    function showEditModal(id) {
+    function showPatientEditModal(id) {
         getDocument(id);
         $('#edit-document-modal').modal('show')
     }
