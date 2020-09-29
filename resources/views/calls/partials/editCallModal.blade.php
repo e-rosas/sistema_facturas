@@ -46,7 +46,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
-                                    <input onchange="handler(event);" type="date" name="date" id="update-date"
+                                    <input onchange="handler(event);" type="date" name="date" id="update-call-date"
                                         class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
                                         value="{{ old('date') }}" required>
                                     @if ($errors->has('date'))
@@ -78,7 +78,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                     </div>
-                                    <textarea type="text" rows="3" name="comments" id="update-comments"
+                                    <textarea type="text" rows="3" name="comments" id="update-call-comments"
                                         class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
                                         value="{{ old('comments') }}" placeholder="{{ __('Comentarios') }}"></textarea>
                                     @if ($errors->has('comments'))
@@ -133,9 +133,8 @@
         comments, status){
             document.getElementById("update-call_id").value = call_id;
             document.getElementById("update-number").value = number;
-            document.getElementById("update-claim").value = claim;
-            document.getElementById("update-date").value = date;
-            document.getElementById("update-comments").value = comments;
+            document.getElementById("update-call-date").value = date;
+            document.getElementById("update-call-comments").value = comments;
             document.getElementById("update-status-call").value = status;
     }
 
@@ -188,8 +187,8 @@
             var call_id = document.getElementById("update-call_id").value;
             var number = document.getElementById("update-number").value;
             var claim = document.getElementById("update-claim").value;
-            var date = document.getElementById("update-date").value;
-            var comments = document.getElementById("update-comments").value;
+            var date = document.getElementById("update-call-date").value;
+            var comments = document.getElementById("update-call-comments").value;
             var status = document.getElementById("update-status-call").value;
 
             updateCall(call_id, number, claim, date, comments, status);

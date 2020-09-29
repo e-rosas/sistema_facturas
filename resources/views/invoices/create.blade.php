@@ -25,8 +25,26 @@
                         @include('components.searchPatients')
 
                     </form>
-                    <div class="form-row">
+                    <div id="insurer-area" class="form-row" style="display: none">
+
                         <h3 id="patient-name"></h3>
+                        <div class="card card-stats mb-4 mb-xl-0">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">{{ __('Aseguranza') }}
+                                        </h5>
+                                        <span id="insurer-name" class="h2 font-weight-bold mb-0"></span>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+                                            <i class="fas fa-shield-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
