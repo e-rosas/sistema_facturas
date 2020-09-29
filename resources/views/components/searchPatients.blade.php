@@ -34,7 +34,7 @@
             // Do something
             var insured = $('#patient_id').select2('data')[0]['insured'];
             console.log(insured);
-            if (insured === 1) {
+            if (insured == 1) {
                 var selected_id = $('#patient_id').select2('data')[0]['id'];
                 getInsureeData(selected_id);
             }
