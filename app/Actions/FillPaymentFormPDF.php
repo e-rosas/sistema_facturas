@@ -1622,7 +1622,7 @@ INSURED_POLICY:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->insurer->cityZIP(),
+                    'value' => $insured->insurer->addressDetails(),
                 ],
                 'INSURANCE_PHONE' => [
                     'size' => 9,
