@@ -1,4 +1,5 @@
-<div class="modal fade" id="modal-payment" tabindex="-1" role="dialog" aria-labelledby="modal-payment" aria-hidden="true">
+<div class="modal fade" id="modal-payment" tabindex="-1" role="dialog" aria-labelledby="modal-payment"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
@@ -9,57 +10,61 @@
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="form-group">
                             {{--  Number --}}
-                            {{-- <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
+                            <div class="form-group {{ $errors->has('number') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                     </div>
-                                    <input type="text" name="number" id="payment-number" class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
-                                     placeholder="{{ __('Opcional') }}">
+                                    <input type="text" name="number" id="payment-number"
+                                        class="form-control {{ $errors->has('number') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('Transferencia') }}">
                                     @if ($errors->has('number'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('number') }}</strong>
-                                        </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('number') }}</strong>
+                                    </span>
                                     @endif
                                 </div>
-                            </div> --}}
+                            </div>
                             {{--  Date  --}}
                             <div class="form-group {{ $errors->has('date') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                     </div>
-                                    <input type="date" name="date" id="payment-date" onchange="handler(event)" class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                    value="{{ $today->format('Y-m-d')}}" required>
+                                    <input type="date" name="date" id="payment-date" onchange="handler(event)"
+                                        class="form-control {{ $errors->has('date') ? ' is-invalid' : '' }}"
+                                        value="{{ $today->format('Y-m-d')}}" required>
                                     @if ($errors->has('date'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('date') }}</strong>
-                                        </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('date') }}</strong>
+                                    </span>
                                     @endif
                                 </div>
                             </div>
                             {{--  amount  --}}
                             <div class="form-group{{ $errors->has('amount_paid') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-amount">Cantidad</label>
-                                <input type="numeric" name="amount" id="payment-amount" class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}"
-                                placeholder="Cantidad" value=0>
+                                <input type="numeric" name="amount" id="payment-amount"
+                                    class="form-control form-control-alternative{{ $errors->has('amount') ? ' is-invalid' : '' }}"
+                                    placeholder="Cantidad" value=0>
 
                                 @if ($errors->has('amount_paid'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('amount_paid') }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('amount_paid') }}</strong>
+                                </span>
                                 @endif
                             </div>
                             {{--  exchange_rate --}}
                             <div class="form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                                 <label class="form-control-label" for="payment-exchange_rate">Cambio</label>
-                                <input type="numeric" name="exchange_rate" id="payment-exchange_rate" class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}"
-                                placeholder="Cambio" value=0 required>
+                                <input type="numeric" name="exchange_rate" id="payment-exchange_rate"
+                                    class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}"
+                                    placeholder="Cambio" value=0 required>
 
                                 @if ($errors->has('exchange_rate'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('exchange_rate') }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('exchange_rate') }}</strong>
+                                </span>
                                 @endif
                             </div>
                             {{--  method  --}}
@@ -67,7 +72,7 @@
                                 <label class="form-control-label" for="payment-method">Método</label>
                                 <select id='payment-method' class="custom-select" name="method">
                                     <option value='0' selected>Transferencia</option>
-                                    <option value='1' >Cheque</option>
+                                    <option value='1'>Cheque</option>
                                 </select>
                             </div>
 
@@ -77,12 +82,13 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
                                     </div>
-                                    <textarea type="text" rows="3" name="comments" id="payment-comments" class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
-                                    value="{{ old('comments') }}" placeholder="Observaciones"></textarea>
+                                    <textarea type="text" rows="3" name="comments" id="payment-comments"
+                                        class="form-control {{ $errors->has('comments') ? ' is-invalid' : '' }}"
+                                        value="{{ old('comments') }}" placeholder="Observaciones"></textarea>
                                     @if ($errors->has('comments'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('comments') }}</strong>
-                                        </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('comments') }}</strong>
+                                    </span>
                                     @endif
                                 </div>
                             </div>
@@ -127,7 +133,7 @@
         });
         return false;
     }
-    function sendPayment(method, exchange_rate, amount, date, comments){
+    function sendPayment(method, exchange_rate, amount, date, comments, number){
         $.ajax({
             url: "{{route('payments.store')}}",
             dataType: 'json',
@@ -141,6 +147,7 @@
                 "method": method,
                 "date": date,
                 "comments": comments,
+                "number": number,
             },
         success: function (response) {
             DisplayPayments(response.data);
@@ -198,13 +205,16 @@
 
         var amount = Number(document.getElementById("payment-amount").value);
 
-        var date = document.getElementById("payment-date").value;
-        var method = document.getElementById("payment-method").value;
+
         var exchange_rate = document.getElementById("payment-exchange_rate").value;
-        var comments = document.getElementById("payment-comments").value;
+
 
         if(amount > 0 && exchange_rate > 0){
-            sendPayment(method , exchange_rate, amount, date, comments);
+            var date = document.getElementById("payment-date").value;
+            var method = document.getElementById("payment-method").value;
+            var comments = document.getElementById("payment-comments").value;
+            var number = document.getElementById("payment-number").value;
+            sendPayment(method , exchange_rate, amount, date, comments, number);
         }
         else {
             alert("Falta introducir cantidad de pago y/o tipo de cambio.")
