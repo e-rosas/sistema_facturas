@@ -152,7 +152,7 @@ class PatientController extends Controller
     public function edit(Patient $patient)
     {
         if ($patient->insured) {
-            $insurers = Insurer::take(10)->get();
+            $insurers = Insurer::get();
 
             return view('patients.edit', compact('patient', 'insurers'));
         }
