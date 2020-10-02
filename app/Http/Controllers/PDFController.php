@@ -54,7 +54,7 @@ class PDFController extends Controller
         $end = Carbon::parse($request->end);
 
         $invoices = Invoice::where([['patient_id', $patient->id],
-            ['status', 2], ['registered', 1], ])
+            ['type', 2], ['registered', 1], ])
             ->whereBetween('DOS', [$start, $end])
             ->get()
         ;

@@ -7,7 +7,7 @@
     body {
       font-family: 'Montserrat', sans-serif;
       font-weight: 400;
-      font-size: 12px;
+      font-size: 14px;
       color: #322d28;
       text-align: justify;
     }
@@ -21,7 +21,7 @@
     }
 
     .invoice-company-info {
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .invoice-table {
@@ -55,7 +55,7 @@
     }
 
     .invoice-table .row-total {
-      font-size: 0.85em;
+      font-size: 0.9em;
       color: rgba(15, 15, 15, 0.6);
     }
 
