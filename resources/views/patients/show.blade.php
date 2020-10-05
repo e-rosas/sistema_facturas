@@ -91,7 +91,7 @@
                     </a>
                     <br>
                     <h3>Estado de cuenta</h3>
-                    <form method="get" action="{{ route('patient.letter', $patient) }}">
+                    <form method="get" action="{{ route('patient.letter.send', $patient) }}">
                         @csrf
                         <div class="form-row">
                             {{--  start_date  --}}
@@ -133,6 +133,7 @@
                                     class="btn btn-success mt-4 btn-block">{{ __('Descargar') }}</button>
                             </div>
                         </div>
+
 
                     </form>
                     {{-- <form  method="post" action="{{ route('reports.invoices') }}" >

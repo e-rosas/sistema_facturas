@@ -69,7 +69,7 @@ class MergePDFs
         return Storage::download('pdf/patients/'.$patient->id.'/merges/'.$invoice->code.'.pdf');
     }
 
-    public function mergeSimpleLetter($patient)
+    public function mergeSimpleLetter($patient, $download = true)
     {
         $datadir = storage_path('app/pdf/patients/'.$patient->id.'/');
 
@@ -85,7 +85,11 @@ class MergePDFs
         $directory = storage_path('app/pdf/patients/'.$patient->id.'/temp');
         File::cleanDirectory($directory);
 
-        return Storage::download('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->fullName().'.pdf');
+        if ($download) {
+            return Storage::download('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->fullName().'.pdf');
+        }
+
+        return storage_path('app/pdf/patients/'.$patient->id.'/merging/letter/'.$patient->fullName().'.pdf');
     }
 
     public function mergeLetter($patient)
