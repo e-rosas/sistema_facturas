@@ -96,7 +96,7 @@
                         <div class="form-row">
                             {{--  start_date  --}}
                             <div class="col-lg-12 col-auto">
-                                <label for="start">{{ __('Fecha de servicio de') }}</label>
+                                <label for="start">{{ __('Fecha de facturación de') }}</label>
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>

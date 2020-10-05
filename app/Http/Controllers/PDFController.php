@@ -55,7 +55,7 @@ class PDFController extends Controller
 
         $invoices = Invoice::where([['patient_id', $patient->id],
             ['type', 2], ['registered', 1], ])
-            ->whereBetween('DOS', [$start, $end])
+            ->whereBetween('date', [$start, $end])
             ->get()
         ;
 

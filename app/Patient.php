@@ -139,4 +139,9 @@ class Patient extends Model
     {
         return $this->last_name.','.$this->name;
     }
+
+    public function fullName()
+    {
+        return str_replace(' ', '', $this->full_name);
+    }
 }

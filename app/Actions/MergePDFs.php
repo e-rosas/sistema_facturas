@@ -73,8 +73,8 @@ class MergePDFs
     {
         $datadir = storage_path('app/pdf/patients/'.$patient->id.'/');
 
-        $outputNameLetter = $datadir.'merging/letter/'.$patient->name.'.pdf';
-        Storage::put('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->name.'.pdf', '');
+        $outputNameLetter = $datadir.'merging/letter/'.$patient->fullName().'.pdf';
+        Storage::put('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->fullName().'.pdf', '');
 
         $letter = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
         $letter2 = storage_path('app/pdf/1letter.pdf');
@@ -85,7 +85,7 @@ class MergePDFs
         $directory = storage_path('app/pdf/patients/'.$patient->id.'/temp');
         File::cleanDirectory($directory);
 
-        return Storage::download('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->name.'.pdf');
+        return Storage::download('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->fullName().'.pdf');
     }
 
     public function mergeLetter($patient)
