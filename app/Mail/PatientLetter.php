@@ -34,10 +34,7 @@ class PatientLetter extends Mailable
     {
         return $this->markdown('emails.letters.patient')
             ->subject('PENDING CLAIMS')
-            ->attach($this->letter_path, [
-                'as' => 'letter.pdf',
-                'mime' => 'application/pdf',
-            ])
+            ->attach($this->letter_path)
         ;
     }
 }

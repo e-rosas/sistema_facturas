@@ -143,7 +143,7 @@
       <h5 class="invoice-month-header">INVOICE LIST</h5>
       <div class="invoice-detail">
         <table class="invoice-table">
-          <thead>
+          <thead style="display: table-header-group">
             <tr class="tabletitle">
               <td>Invoice</td>
               <td>Date of Service</td>
@@ -198,8 +198,8 @@
     <span>1 800 315 8714</span><br><br><br>
     <span>{{ $datetime->toFormattedDateString() }}</span>
   </div>
-  </div>
-  <br> <br><br> <br>
+  </div> --}}
+  <br>
   <p>OR</p>
   <div class="bank">
     <p>Via check made out to Hospital Mexico de B.C. S.A. de C.V.</p>
@@ -208,8 +208,6 @@
     <p>91912, United States.</p>
   </div>
   <div>
-    <p>The Health Insurance Claim Forms corresponding to this patient are found in the annex to this
-      letter.</p>
     <p>If you have any questions, feel free to contact us at <b>619 482-8608, 619 482-0953</b>, or via e-mail
       address at <a href="hospitalmexicoclaims@gmail.com">hospitalmexicoclaims@gmail.com</a> with Yamileth and
       Silvia.
@@ -217,10 +215,10 @@
     <p>We thank you in advance for your cooperation regarding this matter.</p>
     <p>Sincerely, </p>
     <address>
-      <p>Manuel Rafael Lazo Aguila, M.D.</p>
+      <p>Billing Manager</p>
       <p>Hospital México B.C. S.A. de C.V.</p>
     </address>
-  </div> --}}
+  </div>
 </body>
 
 </html>
