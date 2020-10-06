@@ -33,7 +33,7 @@ class PatientLetter extends Mailable
     public function build()
     {
         return $this->markdown('emails.letters.patient')
-            ->subject('subject Here')
+            ->subject('PENDING CLAIMS')
             ->attach($this->letter_path, [
                 'as' => 'letter.pdf',
                 'mime' => 'application/pdf',

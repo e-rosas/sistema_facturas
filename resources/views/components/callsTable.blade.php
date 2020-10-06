@@ -20,7 +20,7 @@
                         {{ $call->invoice->number}}
                     </a>
                 </td>
-                <td>{{ $call->date->format('d-M-Y')}}</td>
+                <td>{{ $call->date->format('M-d-Y')}}</td>
                 <td>{{ $call->status() }}</td>
                 <td>{{ $call->comments }}</td>
                 <td class="text-right">

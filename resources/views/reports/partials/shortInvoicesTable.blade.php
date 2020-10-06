@@ -15,7 +15,7 @@
             @foreach ($invoices as $invoice)
             <tr>
                 <td><a href="{{ route('invoices.show', $invoice) }}">{{ $invoice->code }}</a></td>
-                <td>{{ $invoice->date->format('d-m-Y') }}</td>
+                <td>{{ $invoice->date->format('M-d-Y') }}</td>
                 <td><a href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>
                 <td>
                     <a href="{{ route('patients.show', $invoice->patient) }}">
@@ -31,7 +31,7 @@
             </tr>
             @foreach ($invoice->payments as $payment)
             <tr class="table-success">
-                <td>{{ $payment->date->format('d-m-Y') }}</td>
+                <td>{{ $payment->date->format('M-d-Y') }}</td>
                 <td>{{ $payment->number}}</td>
                 <td>{{ $payment->concept()}}</td>
                 <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD" style="display: none">
@@ -42,7 +42,7 @@
             @endforeach
             @if (!is_null($invoice->credit))
             <tr class="table-info">
-                <td>{{ $invoice->credit->date->format('d-m-Y') }}</td>
+                <td>{{ $invoice->credit->date->format('M-d-Y') }}</td>
                 <td>{{ $invoice->credit->number}}</td>
                 <td>{{ $invoice->credit->concept()}}</td>
                 <td><span class="MXN"> {{ $invoice->credit->total() }}</span> <span class="USD" style="display: none">

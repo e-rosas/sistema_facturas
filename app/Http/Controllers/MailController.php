@@ -59,7 +59,7 @@ class MailController extends Controller
         }
 
         $email = new PatientLetter($patient, $letter);
-        Mail::to('hospmex.sistemas@gmail.com')->queue($email);
+        Mail::to('hospmex.sistemas@gmail.com')->send($email);
 
         //SendPatientLetterEmail::dispatch($patient, $letter, 'hospmex.sistemas@gmail.com');
     }

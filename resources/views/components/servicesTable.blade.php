@@ -1,5 +1,5 @@
 {{-- Table of services --}}
-<div  class="table-responsive">
+<div class="table-responsive">
     <table id="services_table" class="table align-services-center table-flush">
         <thead class="thead-light">
             <tr>
@@ -14,18 +14,21 @@
             </tr>
         </thead>
         <tbody>
-                @foreach ($invoice->services2 as $service)
-                    <tr> 
-                        <td><a  href="{{ route('services.show', $service->service) }}">{{ $service->service->code }}</a></td>
-                        <td>{{ $service->description}}</td>
-                        <td>{{ $service->diagnoses_pointers}}</td>
-                        <td>{{ $service->DOS->format('d-m-Y') }}</td>
-                        <td>{{ $service->DOS_to->format('d-m-Y') }}</td>
-                        <td><span class="MXN" style="display: none"> {{ $service->totalPriceMXN($invoice->exchange_rate) }} </span><span class="USD" > {{ $service->totalPrice() }} </span> </td>
-                        <td>{{ $service->quantity}}</td>
-                        <td><span class="MXN" style="display: none"> {{ $service->totalDiscountedPriceMXN($invoice->exchange_rate) }} </span><span class="USD" > {{ $service->totalDiscountedPrice() }} </span> </td>
-                    </tr>
-                @endforeach
+            @foreach ($invoice->services2 as $service)
+            <tr>
+                <td><a href="{{ route('services.show', $service->service) }}">{{ $service->service->code }}</a></td>
+                <td>{{ $service->description}}</td>
+                <td>{{ $service->diagnoses_pointers}}</td>
+                <td>{{ $service->DOS->format('M-d-Y') }}</td>
+                <td>{{ $service->DOS_to->format('M-d-Y') }}</td>
+                <td><span class="MXN" style="display: none"> {{ $service->totalPriceMXN($invoice->exchange_rate) }}
+                    </span><span class="USD"> {{ $service->totalPrice() }} </span> </td>
+                <td>{{ $service->quantity}}</td>
+                <td><span class="MXN" style="display: none">
+                        {{ $service->totalDiscountedPriceMXN($invoice->exchange_rate) }} </span><span class="USD">
+                        {{ $service->totalDiscountedPrice() }} </span> </td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>

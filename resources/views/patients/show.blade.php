@@ -91,7 +91,7 @@
                     </a>
                     <br>
                     <h3>Estado de cuenta</h3>
-                    <form method="get" action="{{ route('patient.letter.send', $patient) }}">
+                    <form method="get" action="{{ route('patient.letter', $patient) }}">
                         @csrf
                         <div class="form-row">
                             {{--  start_date  --}}

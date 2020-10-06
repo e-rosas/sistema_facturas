@@ -209,7 +209,7 @@
         var exchange_rate = document.getElementById("payment-exchange_rate").value;
 
 
-        if(amount > 0 && exchange_rate > 0){
+        if(exchange_rate > 0){
             var date = document.getElementById("payment-date").value;
             var method = document.getElementById("payment-method").value;
             var comments = document.getElementById("payment-comments").value;
