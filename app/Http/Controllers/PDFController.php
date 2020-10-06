@@ -7,10 +7,13 @@ use App\Actions\MergePDFs;
 use App\Actions\PrepareInvoicePDF;
 use App\Insuree;
 use App\Invoice;
+use App\Mail\PatientLetter as MailPatientLetter;
 use App\Patient;
+use App\PatientLetter;
 use Barryvdh\DomPDF\Facade as BarryPDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use NumberFormatter;
 
@@ -63,7 +66,14 @@ class PDFController extends Controller
             return response('Sin facturas registradas');
         }
 
-        $letterPDF = $this->prepareLetter($patient, $invoices);
+        $invoices_codes = '';
+        $invoices_total = 0;
+        foreach ($invoices as $invoice) {
+            $invoices_codes .= $invoice->code.', ';
+            $invoices_total += $invoice->total_with_discounts;
+        }
+
+        $letterPDF = $this->prepareLetter($patient, $invoices, $invoices_codes, $invoices_total);
 
         $store = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
         Storage::put('pdf/patients/'.$patient->id.'/temp/letter.pdf', '');
@@ -75,6 +85,33 @@ class PDFController extends Controller
         if ($request->letter) {
             return $merger->mergeSimpleLetter($patient);
             // return $letterPDF->download($patient->full_name.'-Carta.pdf');
+        }
+
+        if ($request->mail) {
+            $letter = $merger->mergeSimpleLetter($patient, false);
+
+            $patient_letter = new PatientLetter();
+            $patient_letter->patient_id = $patient->id;
+            $patient_letter->sent_on = Carbon::today();
+            $patient_letter->content = $invoices_codes;
+            $patient_letter->comments = $invoices_total;
+
+            $insurer_email = null;
+            if ($patient->insured) {
+                $insurer_email = $patient->insuree->insurer->email;
+            } else {
+                $insurer_email = $patient->dependent->insuree->insurer->email;
+            }
+            if (is_null($insurer_email)) {
+                return response('Correo de aseguranza no especificado.');
+            }
+
+            $email = new MailPatientLetter($patient, $letter);
+            Mail::to('hospmex.sistemas@gmail.com')->send($email);
+
+            $patient_letter->save();
+
+            return redirect()->route('patients.show', [$patient])->withStatus(__('Correo enviado exitosamente.'));
         }
 
         foreach ($invoices as $invoice) {
@@ -108,7 +145,7 @@ class PDFController extends Controller
         return $hospPDF->download($invoice->code.'-categorias.pdf');
     }
 
-    private function prepareLetter(Patient $patient, $invoices)
+    private function prepareLetter(Patient $patient, $invoices, $invoices_codes, $invoices_total)
     {
         if ($patient->insured) {
             $insuree = Insuree::where('patient_id', $patient->id)->first();
@@ -121,12 +158,6 @@ class PDFController extends Controller
 
         $datetime = Carbon::now();
 
-        $invoices_codes = '';
-        $invoices_total = 0;
-        foreach ($invoices as $invoice) {
-            $invoices_codes .= $invoice->code.', ';
-            $invoices_total += $invoice->total_with_discounts;
-        }
         $nf = new NumberFormatter('en', NumberFormatter::SPELLOUT);
 
         $total_spelled = $nf->format($invoices_total);

@@ -77,9 +77,9 @@ class MergePDFs
         Storage::put('pdf/patients/'.$patient->id.'/merging/letter/'.$patient->fullName().'.pdf', '');
 
         $letter = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
-        $letter2 = storage_path('app/pdf/1letter.pdf');
+        //$letter2 = storage_path('app/pdf/1letter.pdf');
 
-        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter} {$letter2}";
+        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter}";
         shell_exec($cmd);
 
         $directory = storage_path('app/pdf/patients/'.$patient->id.'/temp');
@@ -143,9 +143,9 @@ class MergePDFs
         Storage::put('pdf/patients/'.$patient->id.'/merging/0letter.pdf', '');
 
         $letter = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
-        $letter2 = storage_path('app/pdf/1letter.pdf');
+        //$letter2 = storage_path('app/pdf/1letter.pdf');
 
-        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter} {$letter2}";
+        $cmd = "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile={$outputNameLetter} {$letter}";
         shell_exec($cmd);
 
         $directory = storage_path('app/pdf/'.$patient->id.'/temp');

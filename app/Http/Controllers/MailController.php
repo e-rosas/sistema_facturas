@@ -55,7 +55,7 @@ class MailController extends Controller
             $insurer_email = $patient->dependent->insuree->insurer->email;
         }
         if (is_null($insurer_email)) {
-            return response('Correo de aseguranzda no especificado.');
+            return response('Correo de aseguranza no especificado.');
         }
 
         $email = new PatientLetter($patient, $letter);

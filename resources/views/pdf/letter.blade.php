@@ -214,10 +214,13 @@
     </p>
     <p>We thank you in advance for your cooperation regarding this matter.</p>
     <p>Sincerely, </p>
-    <address>
-      <p>Billing Manager</p>
-      <p>Hospital México B.C. S.A. de C.V.</p>
-    </address>
+    <br />
+    <div>
+      <img style="height: 90px" src="{{public_path().'/img/L20.png'}}" />
+    </div>
+
+    <p> &nbsp;&nbsp;&nbsp;&nbsp;Billing Manager</p>
+    <p> &nbsp;&nbsp;&nbsp;&nbsp;Hospital México B.C. S.A. de C.V.</p>
   </div>
 </body>
 

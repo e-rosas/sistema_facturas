@@ -20,6 +20,16 @@
 
         </div>
     </div>
+    <div class="col-12">
+        @if (session('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
+    </div>
     <div class="row mt-5">
         <div class="col-xl-9">
             @if (!$patient->insured)
@@ -122,15 +132,25 @@
                         </div>
                         <div class="form-row pt-md-2">
                             {{--  Letter  --}}
-                            <div class="custom-control custom-control-alternative custom-checkbox mb-3">
-                                <input type="checkbox" name="letter" id="input-letter" class="custom-control-input">
-                                <label class="custom-control-label" for="input-letter">Solo carta</label>
+                            <div class="col-lg-6">
+                                <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                    <input type="checkbox" name="letter" id="input-letter" class="custom-control-input">
+                                    <label class="custom-control-label" for="input-letter">Solo carta</label>
+                                </div>
                             </div>
+                            {{--  Mail  --}}
+                            <div class="col-lg-6">
+                                <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                    <input type="checkbox" name="mail" id="input-mail" class="custom-control-input">
+                                    <label class="custom-control-label" for="input-mail">Enviar</label>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-12 col-auto">
                                 <button type="submit"
-                                    class="btn btn-success mt-4 btn-block">{{ __('Descargar') }}</button>
+                                    class="btn btn-success mt-4 btn-block">{{ __('Aceptar') }}</button>
                             </div>
                         </div>
 
