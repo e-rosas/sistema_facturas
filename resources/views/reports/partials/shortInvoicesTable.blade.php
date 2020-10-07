@@ -3,6 +3,7 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Cobro') }}</th>
+                <th scope="col">{{ __('Tipo') }}</th>
                 <th scope="col">{{ __('Facturación') }}</th>
                 <th scope="col">{{ __('CONTPAQ') }}</th>
                 <th scope="col">{{ __('Paciente') }}</th>
@@ -15,6 +16,7 @@
             @foreach ($invoices as $invoice)
             <tr>
                 <td><a href="{{ route('invoices.show', $invoice) }}">{{ $invoice->code }}</a></td>
+                <td>{{ $invoice->type()}}</td>
                 <td>{{ $invoice->date->format('M-d-Y') }}</td>
                 <td><a href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>
                 <td>

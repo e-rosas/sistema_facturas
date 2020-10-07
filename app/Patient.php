@@ -62,6 +62,11 @@ class Patient extends Model
         return $this->hasMany('App\PatientDocument');
     }
 
+    public function letters()
+    {
+        return $this->hasMany('App\PatientLetter');
+    }
+
     public function gender()
     {
         switch ($this->gender) {

@@ -92,9 +92,11 @@ class PDFController extends Controller
 
             $patient_letter = new PatientLetter();
             $patient_letter->patient_id = $patient->id;
-            $patient_letter->sent_on = Carbon::today();
+            $patient_letter->date = Carbon::today();
             $patient_letter->content = $invoices_codes;
             $patient_letter->comments = $invoices_total;
+            $patient_letter->status = 0;
+            $patient_letter->reply = '';
 
             $insurer_email = null;
             if ($patient->insured) {

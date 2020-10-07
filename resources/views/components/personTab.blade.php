@@ -27,6 +27,11 @@
                 aria-controls="tabs-document" aria-selected="false"><i class="fas fa-file-pdf mr-2"></i>
                 {{ __('Documentos') }}</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-mail-tab" data-toggle="tab" href="#tab-mail" role="tab"
+                aria-controls="tabs-mail" aria-selected="false"><i class="fas fa-envelope mr-2"></i>
+                {{ __('Correos') }}</a>
+        </li>
     </ul>
 </div>
 <div class="card shadow">
@@ -86,6 +91,12 @@
 
                     @include('documents.patientTable', ['documents'=>$patient->documents])
                     @include('documents.partials.addPatientDocumentModal', ['patient' => $patient])
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab-mail" role="tabpanel" aria-labelledby="tab-mail-tab">
+                <div class="col-md-12 col-auto text-right">
+                    @include('emails.partials.emailsTable', ['letters'=>$letters])
+                    @include('emails.partials.editModal')
                 </div>
             </div>
         </div>

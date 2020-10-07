@@ -11,6 +11,7 @@ use App\Insurer;
 use App\Invoice;
 use App\Listeners\UpdatePersonStats;
 use App\Patient;
+use App\PatientLetter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -128,6 +129,8 @@ class PatientController extends Controller
             ;
         }
 
+        $letters = PatientLetter::where('patient_id', $patient->id)->orderBy('date', 'desc')->get();
+
         foreach ($invoices as $invoice) {
             foreach ($invoice->calls as $call) {
                 array_push($calls, $call);
@@ -141,7 +144,7 @@ class PatientController extends Controller
         $end = Carbon::today()->addDay();
         $start = Carbon::today()->subMonths(1);
 
-        return view('patients.show', compact('patient', 'invoices', 'invoices_totals', 'calls', 'payments', 'dependents', 'insuree', 'end', 'start'));
+        return view('patients.show', compact('patient', 'invoices', 'invoices_totals', 'calls', 'payments', 'dependents', 'insuree', 'end', 'start', 'letters'));
     }
 
     /**

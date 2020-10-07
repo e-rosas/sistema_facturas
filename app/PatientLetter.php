@@ -10,10 +10,30 @@ class PatientLetter extends Model
     use HasFactory;
     public $fillable = [
         'patient_id',
-        'sent_on',
+        'date',
+        'status',
+        'content',
         'comments',
+        'reply',
     ];
-    protected $dates = ['sent_on'];
+    protected $dates = ['date'];
+
+    public function status()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Enviado.';
+
+                break;
+            case 1:
+                return 'Aseguranza contestó.';
+
+                break;
+            default:
+                // code...
+                break;
+        }
+    }
 
     public function patient()
     {

@@ -14,8 +14,10 @@ class CreatePatientLettersTable extends Migration
         Schema::create('patient_letters', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('patient_id');
-            $table->date('sent_on');
+            $table->date('date');
             $table->text('content')->nullable();
+            $table->text('reply')->nullable();
+            $table->tinyInteger('status')->default(0);
 
             $table->text('comments')->nullable();
             $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
