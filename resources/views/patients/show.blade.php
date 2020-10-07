@@ -61,11 +61,12 @@
                             <span class="h2 font-weight-bold mb-0"> <a
                                     href="{{ route('insurers.show', $insuree->insurer) }}">
                                     {{ $insuree->insurer->name }}</a></span>
+                            <span class="h4 font-weight-400 mb-2">{{ $insuree->insurer->email }}</span>
                             @else
                             <span class="h2 font-weight-bold mb-0"> <a
                                     href="{{ route('insurers.show', $patient->insuree->insurer) }}">
                                     {{ $patient->insuree->insurer->name }}</a></span>
-
+                            <span class="h4 font-weight-400 mb-2">{{ $patient->insuree->insurer->email }}</span>
                             @endif
 
                         </div>

@@ -107,7 +107,7 @@ class PDFController extends Controller
             }
 
             $email = new MailPatientLetter($patient, $letter);
-            Mail::to($insurer_email)->send($email);
+            Mail::to('hospmex.sistemas@gmail.com')->send($email);
 
             $patient_letter->save();
 

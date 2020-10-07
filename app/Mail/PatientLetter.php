@@ -33,7 +33,7 @@ class PatientLetter extends Mailable
     public function build()
     {
         return $this->markdown('emails.letters.patient')
-            ->subject('PENDING CLAIMS')
+            ->subject('PENDING CLAIMS - '.$this->patient->full_name.' DOB: '.$this->patient->DOB())
             ->attach($this->letter_path)
         ;
     }

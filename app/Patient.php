@@ -144,4 +144,9 @@ class Patient extends Model
     {
         return str_replace(' ', '', $this->full_name);
     }
+
+    public function DOB()
+    {
+        return $this->birth_date->format('m-d-y');
+    }
 }
