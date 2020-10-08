@@ -72,7 +72,7 @@
                 {{--  DOS  --}}
                 <div class="col-md-2 col-auto form-group">
                     <label class="form-control-label" for="label-date">Fecha de servicio</label>
-                    <label id="label-date">{{ $invoice->DOS->format('d-m-Y') }}</label>
+                    <label id="label-DOS">{{ $invoice->DOS->format('M-d-Y') }}</label>
 
                 </div>
             </div>
@@ -92,7 +92,7 @@
                 {{--  date  --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-date">Fecha</label>
-                    <label id="label-date">{{ $invoice->date->format('d-m-Y') }}</label>
+                    <label id="label-date">{{ $invoice->date->format('M-d-Y') }}</label>
 
                 </div>
                 {{--  number --}}

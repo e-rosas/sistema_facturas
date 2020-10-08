@@ -11,6 +11,7 @@ use App\Insuree;
 use App\Invoice;
 use App\Item;
 use App\Patient;
+use App\PatientLetter;
 use App\Payment;
 use App\Service;
 use Carbon\Carbon;
@@ -131,6 +132,40 @@ class ImportController extends Controller
         $count = count($rates);
 
         return view('import.fieldsRates', compact('rates', 'count'));
+    }
+
+    public function getImportLetters()
+    {
+        return view('import.importLetters');
+    }
+
+    public function parseImportLetters(CsvImportRequest $request)
+    {
+        $path = $request->file('csv_file')->getRealPath();
+        $csv_data = array_map('str_getcsv', file($path));
+
+        $letters = [];
+
+        for ($i = 0; $i < count($csv_data); ++$i) {
+            $letter = new PatientLetter();
+            $letter->patient_id = $csv_data[$i][0];
+            $letter->date = Carbon::createFromFormat('m/d/Y', $csv_data[$i][2]);
+            $letter->status = 0;
+            $letter->content = '';
+            $letter->reply = '';
+
+            $letter->comments = 'Total: '.$csv_data[$i][3].' Periodo: 10/01/2019 - 06/10/2020';
+            //$csv_data[$i][2] = $date->format('Y-m-d');
+            /* DB::table('rates')->insert(
+                ['date' => $csv_data[$i][2], 'value' => $csv_data[$i][1]]
+            ); */
+            $letter->save();
+            array_push($letters, $letter);
+        }
+
+        $count = count($letters);
+
+        return view('import.fieldsLetters', compact('letters', 'count'));
     }
 
     public function getImportPatients()

@@ -103,7 +103,7 @@
 @push('js')
 
 <script>
-    function updateCall(id, number, claim, date,
+    function updateCall(id, number,  date,
     comments, status){
         $.ajax({
             url: "{{route('calls.update')}}",
@@ -113,7 +113,6 @@
                 "_token": "{{ csrf_token() }}",
                 "id": id,
                 "number": number,
-                "claim": claim,
                 "date": date,
                 "comments": comments,
                 "status": status
@@ -186,12 +185,11 @@
         $("#update_call").click(function(){
             var call_id = document.getElementById("update-call_id").value;
             var number = document.getElementById("update-number").value;
-            var claim = document.getElementById("update-claim").value;
             var date = document.getElementById("update-call-date").value;
             var comments = document.getElementById("update-call-comments").value;
             var status = document.getElementById("update-status-call").value;
 
-            updateCall(call_id, number, claim, date, comments, status);
+            updateCall(call_id, number, date, comments, status);
 
         });
     });

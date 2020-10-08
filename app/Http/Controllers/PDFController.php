@@ -56,8 +56,13 @@ class PDFController extends Controller
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
 
+        $registered = 1;
+        if ('C' == config('app.initial')) {
+            $registered = 0;
+        }
+
         $invoices = Invoice::where([['patient_id', $patient->id],
-            ['type', 2], ['registered', 1], ])
+            ['type', 2], ['registered', $registered], ])
             ->whereBetween('date', [$start, $end])
             ->get()
         ;
@@ -89,7 +94,7 @@ class PDFController extends Controller
             $patient_letter->patient_id = $patient->id;
             $patient_letter->date = Carbon::today();
             $patient_letter->content = $invoices_codes;
-            $patient_letter->comments = $invoices_total;
+            $patient_letter->comments = 'Total: '.$invoices_total.' Periodo: '.$start->format('M-d-Y').' - '.$end->format('M-d-Y');
             $patient_letter->status = 0;
             $patient_letter->reply = '';
 

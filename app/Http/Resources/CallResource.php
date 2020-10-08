@@ -23,7 +23,7 @@ class CallResource extends JsonResource
             'invoice' => $this->invoice->number,
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'claim' => is_null($this->claim) ? '' : $this->claim,
-            'date' => $this->date->format('d-M-Y'),
+            'date' => $this->date->format('M-d-Y'),
             'date2' => $this->date->format('Y-m-d'),
         ];
     }

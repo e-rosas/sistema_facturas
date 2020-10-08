@@ -17,7 +17,8 @@ class InvoiceDetailsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'date' => $this->date->format('d-m-Y'),
+            'date' => $this->date->format('M-d-Y'),
+            'DOS' => $this->DOS->format('M-d-Y'),
             'concept' => $this->concept,
             'number' => $this->number,
             'code' => $this->code,

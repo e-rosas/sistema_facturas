@@ -2,11 +2,11 @@
     <table class="table table-flush" style="table-layout: fixed" id="letters_table">
         <thead class="thead-light">
             <tr>
-                <th scope="col">{{ __('Fecha') }}</th>
-                <th style="width: 20%;" scope="col">{{ __('Cobros') }}</th>
-                <th scope="col">{{ __('Estado') }}</th>
-                <th scope="col">{{ __('Comentarios') }}</th>
-                <th scope="col">{{ __('Acciones') }}</th>
+                <th style="width: 10%;" scope="col">{{ __('Fecha') }}</th>
+                <th style="width: 50%;" scope="col">{{ __('Cobros') }}</th>
+                <th style="width: 10%;" scope="col">{{ __('Estado') }}</th>
+                <th style="width: 20%;" scope="col">{{ __('Comentarios') }}</th>
+                <th style="width: 10%;" scope="col">{{ __('Acciones') }}</th>
             </tr>
         </thead>
         <tbody>
