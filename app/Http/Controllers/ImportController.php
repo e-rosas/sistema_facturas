@@ -146,12 +146,28 @@ class ImportController extends Controller
 
         $letters = [];
 
+        $start = Carbon::createFromFormat('m/d/Y', '10/01/2019');
+        $end = Carbon::createFromFormat('m/d/Y', '10/06/2020');
+
         for ($i = 0; $i < count($csv_data); ++$i) {
+            $invoices = Invoice::where([['patient_id', $csv_data[$i][0]],
+                ['type', 2], ['registered', 1], ])
+                ->whereBetween('date', [$start, $end])
+                ->get()
+        ;
+
+            $invoices_codes = '';
+            $invoices_total = 0;
+            foreach ($invoices as $invoice) {
+                $invoices_codes .= $invoice->code.', ';
+                $invoices_total += $invoice->total_with_discounts;
+            }
+
             $letter = new PatientLetter();
             $letter->patient_id = $csv_data[$i][0];
             $letter->date = Carbon::createFromFormat('m/d/Y', $csv_data[$i][2]);
             $letter->status = 0;
-            $letter->content = '';
+            $letter->content = $invoices_codes;
             $letter->reply = '';
 
             $letter->comments = 'Total: '.$csv_data[$i][3].' Periodo: 10/01/2019 - 06/10/2020';
