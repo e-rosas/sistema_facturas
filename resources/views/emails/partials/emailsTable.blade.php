@@ -17,7 +17,9 @@
                     <span style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->content }}</span>
                 </td>
                 <td>{{ $letter->status() }}</td>
-                <td>{{ $letter->comments }}</td>
+                <td><span
+                        style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->comments }}</span>
+                </td>
                 <td class="td-actions text-right">
                     <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
                         onClick="showEditLetterModal({{ $letter->id }})">
