@@ -105,6 +105,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('letters/find', 'PatientLetterController@find')->name('letters.find');
     Route::patch('letters/update', 'PatientLetterController@update')->name('letters.update');
+    Route::delete('letter/destroy', 'PatientLetterController@delete')->name('letters.destroy');
 
     //Route::post('reports/invoices', 'ReportController@personInvoicesReport')->name('reports.invoices');
 

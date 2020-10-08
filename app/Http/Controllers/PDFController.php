@@ -82,13 +82,8 @@ class PDFController extends Controller
 
         $merger = new MergePDFs(0);
 
-        if ($request->letter) {
-            return $merger->mergeSimpleLetter($patient);
-            // return $letterPDF->download($patient->full_name.'-Carta.pdf');
-        }
-
         if ($request->mail) {
-            $letter = $merger->mergeSimpleLetter($patient, false);
+            //$letter = $merger->mergeSimpleLetter($patient, false);
 
             $patient_letter = new PatientLetter();
             $patient_letter->patient_id = $patient->id;
@@ -98,7 +93,7 @@ class PDFController extends Controller
             $patient_letter->status = 0;
             $patient_letter->reply = '';
 
-            $insurer_email = null;
+            /* $insurer_email = null;
             if ($patient->insured) {
                 $insurer_email = $patient->insuree->insurer->email;
             } else {
@@ -109,11 +104,16 @@ class PDFController extends Controller
             }
 
             $email = new MailPatientLetter($patient, $letter);
-            Mail::to($insurer_email)->send($email);
+            Mail::to($insurer_email)->send($email); */
 
             $patient_letter->save();
 
-            return redirect()->route('patients.show', [$patient])->withStatus(__('Correo enviado exitosamente.'));
+            //return redirect()->route('patients.show', [$patient])->withStatus(__('Correo enviado exitosamente.'));
+        }
+
+        if ($request->letter) {
+            return $merger->mergeSimpleLetter($patient);
+            // return $letterPDF->download($patient->full_name.'-Carta.pdf');
         }
 
         foreach ($invoices as $invoice) {

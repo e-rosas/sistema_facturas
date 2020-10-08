@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-flush" style="table-layout: fixed">
+    <table class="table table-flush" style="table-layout: fixed" id="letters_table">
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Fecha') }}</th>
@@ -22,6 +22,10 @@
                     <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
                         onClick="showEditLetterModal({{ $letter->id }})">
                         <i class="fas fa-pencil-alt fa-2 "></i>
+                    </button>
+                    <button rel="tooltip" class="btn btn-danger btn-sm btn-icon" type="button"
+                        onClick="DeleteLetter({{ $letter->id }})">
+                        <i class="fa fa-trash"></i>
                     </button>
                 </td>
             </tr>

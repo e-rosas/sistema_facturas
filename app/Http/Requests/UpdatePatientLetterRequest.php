@@ -28,7 +28,6 @@ class UpdatePatientLetterRequest extends FormRequest
             'reply' => 'max:1000',
             'status' => 'required',
             'id' => 'required',
-            'patient_id' => 'required',
         ];
     }
 }

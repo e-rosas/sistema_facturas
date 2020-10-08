@@ -138,6 +138,7 @@
             + "<td>" + letters[i].status + "</td>"
             + "<td>" + letters[i].comments + "</td>"
             +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon" type="button" onClick="showEditLetterModal(\'' + letters[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
+             +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteLetter(\'' + letters[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
             + "</tr>";
             }
         $('#letters_table tbody').html(output);
@@ -150,11 +151,11 @@
             type:"patch",
             data: {
                 "_token": "{{ csrf_token() }}",
-                "letter_id": id,
+                "id": id,
                 "date": date,
                 "comments": comments,
                 "reply": reply,
-                "content": number,
+                "content": content,
                 "status": status,
 
             },
@@ -165,6 +166,26 @@
             }
         });
             return false;
+    }
+
+    function DeleteLetter(id){
+        var r = confirm("Eliminar el correo?");
+        if(r){
+            $.ajax({
+                url: "{{route('letters.destroy')}}",
+                dataType: 'json',
+                type:"delete",
+                data: {
+                "_token": "{{ csrf_token() }}",
+                "letter_id" : id
+                },
+                success: function (response) {
+                    DisplayLetters(response.data);
+            }
+        });
+        return false;
+        }
+
     }
 
 

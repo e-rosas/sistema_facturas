@@ -32,4 +32,18 @@ class PatientLetterController extends Controller
 
         return new PatientLetterResource($letter);
     }
+
+    public function delete(Request $request)
+    {
+        $letter = PatientLetter::find($request['letter_id']);
+        $patient_id = $letter->patient_id;
+        $letter->delete();
+
+        $letters = PatientLetter::where('patient_id', $patient_id)
+            ->orderBy('date', 'desc')
+            ->get()
+        ;
+
+        return PatientLetterResource::collection($letters);
+    }
 }
