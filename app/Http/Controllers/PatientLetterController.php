@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class PatientLetterController extends Controller
 {
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdatePatientLetterRequest $request)
     {
         $validated = $request->validated();
