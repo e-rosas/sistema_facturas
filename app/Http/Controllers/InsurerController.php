@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CalculateTotalsOfInvoices;
+use App\Dependent;
 use App\Http\Requests\InsurerRequest;
 use App\Http\Requests\UpdateInsurer;
 use App\Insuree;
@@ -64,12 +65,26 @@ class InsurerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Insurer $insurer)
+    public function show(Insurer $insurer, Request $request)
     {
-        $invoices = collect();
+        if (!is_null($request->search)) {
+            $search = $request->search;
+        } else {
+            $search = '';
+        }
 
-        $insurees = Insuree::where('insurer_id', $insurer->id)->get();
+        $insurees = Insuree::with('patient')->where('insurer_id', $insurer->id)
+            ->whereLike(['nss', 'insurance_id', 'patient.full_name'], $search)
+            ->paginate(20)
+        ;
+
         foreach ($insurees as $insuree) {
+            $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->patient_id)
+                ->get()
+            ;
+        }
+
+        /* foreach ($insurees as $insuree) {
             $invoicess = Invoice::with('payments', 'patient', 'credit')
                 ->where('patient_id', $insuree->patient_id)->get();
             foreach ($invoicess as $invoice) {
@@ -77,7 +92,7 @@ class InsurerController extends Controller
             }
         }
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);
-        $invoices_totals->totals();
+        $invoices_totals->totals(); */
         /* foreach ($insurer->insurees as $insuree) {
             foreach ($insuree->patient->invoices as $invoice) {
                 $invoice->load('payments', 'credit');
@@ -85,7 +100,7 @@ class InsurerController extends Controller
             }
         } */
 
-        return view('insurers.show', compact('insurer', 'invoices', 'invoices_totals'));
+        return view('insurers.show', compact('insurer', 'insurees', 'search'));
     }
 
     /**

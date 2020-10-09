@@ -20,7 +20,7 @@ class Dependent extends Model
 
     public function insuree()
     {
-        return $this->belongsTo('App\Insuree', 'patient_id', 'insuree_id');
+        return $this->belongsTo('App\Insuree', 'insuree_id', 'patient_id');
     }
 
     public function relationship()
