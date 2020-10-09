@@ -141,11 +141,15 @@ class InvoiceController extends Controller
                 $row = DB::table('invoice_counters')->where('id', 2)->first();
                 $id = $row->counter + 1;
                 $validated['code'] = 'CH.'.$id;
+                $validated['cash'] = 1;
                 DB::table('invoice_counters')
                     ->where('id', 2)
                     ->update(['counter' => $id])
             ;
             }
+        }
+        if ($request->cash > 0) {
+            $validated['cash'] = 1;
         }
 
         $invoice = Invoice::create($validated);

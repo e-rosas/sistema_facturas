@@ -24,6 +24,8 @@ class CreateInvoicesTable extends Migration
             $table->decimal('exchange_rate', 13, 4)->default(0);
             $table->boolean('registered')->default(0); //facturada
             $table->boolean('hospitalization')->default(0);
+            $table->boolean('cash')->default(0);
+
             $table->decimal('tax', 13, 4)->default(0);
             $table->decimal('dtax', 13, 4)->default(0);
             $table->decimal('sub_total', 13, 4)->default(0);

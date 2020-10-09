@@ -166,6 +166,16 @@
                                     <label class="custom-control-label"
                                         for="input-hospitalization">Hospitalización</label>
                                 </div>
+                                @if (config('app.initial') == "C")
+                                <div class="col-lg-2 custom-control custom-checkbox">
+                                    <input type="checkbox" name="update-cash" id="update-cash"
+                                        class="custom-control-input" {{ $invoice->cash ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="update-cash">Cash</label>
+                                </div>
+                                @else
+                                <input type="checkbox" name="update-cash" id="update-cash" class="custom-control-input"
+                                    style="display: none">
+                                @endif
 
                             </div>
                             <div class="text-center">
@@ -183,7 +193,7 @@
 @push('js')
 
 <script>
-    function sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor, isHospitalization, DOS){
+    function sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor, isHospitalization, DOS, cash){
         $.ajax({
             url: "{{route('invoices.details')}}",
             dataType: 'json',
@@ -201,6 +211,7 @@
                 "doctor": doctor,
                 "hospitalization": isHospitalization,
                 "DOS": DOS,
+                "cash": cash
             },
         success: function (response) {
             displayDetails(response.data);
@@ -222,6 +233,12 @@
         document.getElementById("label-code").innerHTML = data.code;
         document.getElementById("label-doctor").innerHTML = data.doctor;
         document.getElementById("label-DOS").innerHTML = data.DOS;
+        if(data.cash == "1"){
+            document.getElementById("cash").checked = true;
+        } else {
+            document.getElementById("cash").checked = false;
+        }
+
     }
 
     function saveDetails(){
@@ -234,16 +251,21 @@
         var doctor = document.getElementById("input-doctor").value;
         var comments = document.getElementById("input-comments").value;
         var DOS = document.getElementById("input-DOS").value;
-
+        var cash = document.getElementById("update-cash").checked;
         var isHospitalization = document.getElementById("input-hospitalization").checked;
         if(isHospitalization){
             isHospitalization = 1;
         }else{
             isHospitalization = 0;
         }
+        if(cash){
+            cash = 1;
+        }else{
+            cash = 0;
+        }
 
         if(exchange_rate > 0){
-            sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor, isHospitalization, DOS);
+            sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor, isHospitalization, DOS, cash);
         }
         else{
             alert("Revisar tipo de cambio.");

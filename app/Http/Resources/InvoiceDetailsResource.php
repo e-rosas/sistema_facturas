@@ -26,6 +26,7 @@ class InvoiceDetailsResource extends JsonResource
             'doctor' => $this->doctor,
             'exchange_rate' => $this->exchange_rate,
             'comments' => is_null($this->comments) ? '' : $this->comments,
+            'cash' => $this->cash,
         ];
     }
 }

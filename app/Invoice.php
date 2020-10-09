@@ -38,6 +38,7 @@ class Invoice extends Model
         'hospitalization',
         'registered',
         'dental',
+        'cash',
     ];
     /**
      * The event map for the model.

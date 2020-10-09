@@ -130,6 +130,19 @@
                     </button>
                 </div>
             </div>
+            <div class="form-row">
+                <div class="col-md-3">
+                    @if (config('app.initial') == "C")
+                    <div class="col-lg-2 custom-control custom-checkbox">
+                        <input type="checkbox" name="cash" id="cash" class="custom-control-input"
+                            {{ $invoice->cash ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="cash">Cash</label>
+                    </div>
+                    @else
+                    <input type="checkbox" name="cash" id="cash" class="custom-control-input" style="display: none">
+                    @endif
+                </div>
+            </div>
             {{--  <div class="form-row">
 
                 <div class="col-md-4 col-auto form-group">
