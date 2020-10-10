@@ -24,8 +24,8 @@ class UpdatePatientLetterRequest extends FormRequest
     public function rules()
     {
         return [
-            'comments' => 'max:1000',
-            'reply' => 'max:1000',
+            'comments' => 'max:2000',
+            'reply' => 'max:2500',
             'status' => 'required',
             'id' => 'required',
         ];
