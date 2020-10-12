@@ -5,10 +5,62 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdatePatientLetterRequest;
 use App\Http\Resources\PatientLetterResource;
 use App\PatientLetter;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PatientLetterController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        if (!is_null($request->perPage)) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+
+        if (!empty($request['start'] && !empty($request['end']))) {
+            $start = Carbon::parse($request->start);
+            $end = Carbon::parse($request->end);
+        } else {
+            $end = Carbon::today()->addDay();
+            $start = Carbon::today()->subMonths(3);
+        }
+
+        if (is_null($request['status'])) {
+            $status = 2;
+        } else {
+            $status = $request['status'];
+        }
+
+        if (is_null($request['search'])) {
+            $search = '';
+        } else {
+            $search = $request['search'];
+        }
+
+        if ($status < 2) {
+            $letters = PatientLetter::with('patient')
+                ->where('status', $status)
+                ->whereLike(['patient.full_name'], $search)
+                ->orderBy('date', 'desc')
+                ->paginate($perPage)
+        ;
+        } else {
+            $letters = PatientLetter::with('patient')
+                ->whereLike(['patient.full_name'], $search)
+                ->orderBy('date', 'desc')
+                ->paginate($perPage)
+        ;
+        }
+
+        return view('letters.index', compact('letters', 'search', 'perPage', 'status'));
+    }
+
     public function update(UpdatePatientLetterRequest $request)
     {
         $validated = $request->validated();

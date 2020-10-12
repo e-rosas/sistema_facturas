@@ -103,6 +103,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('charges/update', 'ChargeController@update')->name('charges.update');
     Route::delete('charges/destroy', 'ChargeController@delete')->name('charges.destroy');
 
+    Route::get('letters', 'PatientLetterController@index')->name('letters.index');
+
     Route::post('letters/find', 'PatientLetterController@find')->name('letters.find');
     Route::patch('letters/update', 'PatientLetterController@update')->name('letters.update');
     Route::delete('letter/destroy', 'PatientLetterController@delete')->name('letters.destroy');
