@@ -46,19 +46,21 @@ class PatientLetterController extends Controller
         if ($status < 2) {
             $letters = PatientLetter::with('patient')
                 ->where('status', $status)
+                ->whereBetween('date', [$start, $end])
                 ->whereLike(['patient.full_name'], $search)
                 ->orderBy('date', 'desc')
                 ->paginate($perPage)
         ;
         } else {
             $letters = PatientLetter::with('patient')
+                ->whereBetween('date', [$start, $end])
                 ->whereLike(['patient.full_name'], $search)
                 ->orderBy('date', 'desc')
                 ->paginate($perPage)
         ;
         }
 
-        return view('letters.index', compact('letters', 'search', 'perPage', 'status'));
+        return view('emails.index', compact('letters', 'search', 'perPage', 'status', 'start', 'end'));
     }
 
     public function update(UpdatePatientLetterRequest $request)

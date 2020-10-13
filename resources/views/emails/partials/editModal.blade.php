@@ -5,9 +5,9 @@
             <div class="modal-body p-0">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent">
-                        <h6 class="heading-small text-muted mb-4">Editar</h6>
+                        <h6 class="heading-small text-muted mb-2">Editar</h6>
                     </div>
-                    <div class="card-body px-lg-5 py-lg-5">
+                    <div class="card-body px-lg-4 py-lg-4">
                         <input type="hidden" id="update-letter-id">
                         <div class="form-group">
                             {{--  Number --}}
@@ -71,7 +71,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-comment-dots"></i></span>
                                     </div>
-                                    <textarea type="text" rows="3" name="reply" id="update-letter-reply"
+                                    <textarea type="text" rows="6" name="reply" id="update-letter-reply"
                                         class="form-control {{ $errors->has('reply') ? ' is-invalid' : '' }}"
                                         value="{{ old('reply') }}" placeholder="Aseguranza contestó..."></textarea>
                                     @if ($errors->has('reply'))

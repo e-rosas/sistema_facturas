@@ -15,7 +15,7 @@
 
                     </div>
                 </div>
-                <form method="get" action="{{ route('calls.index') }}">
+                <form method="get" action="{{ route('letters.index') }}">
                     <div class="form-row">
                         <div class="col-lg-2 col-auto">
                             <label for="perPage">{{ __('Cantidad') }}</label>
@@ -77,14 +77,15 @@
 
                 </form>
                 <div class="table-responsive">
-                    <table class="table table-flush" style="table-layout: fixed" id="letters_table">
+                    <table class="table table-flush" style="table-layout: fixed" id="letters_table_index">
                         <thead class="thead-light">
                             <tr>
                                 <th style="width: 10%;" scope="col">{{ __('Paciente') }}</th>
                                 <th style="width: 10%;" scope="col">{{ __('Fecha') }}</th>
-                                <th style="width: 30%;" scope="col">{{ __('Cobros') }}</th>
+                                <th style="width: 15%;" scope="col">{{ __('Cobros') }}</th>
                                 <th style="width: 10%;" scope="col">{{ __('Estado') }}</th>
-                                <th style="width: 30%;" scope="col">{{ __('Comentarios') }}</th>
+                                <th style="width: 15%;" scope="col">{{ __('Comentarios') }}</th>
+                                <th style="width: 30%;" scope="col">{{ __('Contestó') }}</th>
                                 <th style="width: 10%;" scope="col">{{ __('Acciones') }}</th>
                             </tr>
                         </thead>
@@ -104,6 +105,9 @@
                                 <td>{{ $letter->status() }}</td>
                                 <td><span
                                         style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->comments }}</span>
+                                </td>
+                                <td><span
+                                        style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->reply }}</span>
                                 </td>
                                 <td class="td-actions text-right">
                                     <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
@@ -128,7 +132,7 @@
             </div>
         </div>
     </div>
-
+    @include('emails.partials.editModal')
     @include('layouts.footers.auth')
 </div>
 @endsection
