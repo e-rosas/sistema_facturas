@@ -380,13 +380,8 @@
                     </div>
                     <br />
                     <div class="form-row">
-                        {{-- Remove --}}
-                        <div class="col-md-3 col-auto">
-                            <button type="button" id="remove_selected" class="btn btn-danger btn-sm">Remover servicio
-                                seleccionado</button>
-                        </div>
                         {{-- Confirm --}}
-                        <div class="text-right col-md-9 col-auto">
+                        <div class="text-right col-md-12 col-auto">
                             <button type="button" id="save" class="btn btn-success text-right">Confirmar</button>
                         </div>
                     </div>
@@ -675,7 +670,8 @@
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre){
         for(var d in this.diagnosesList) {
-            if(this.diagnosesList[d].diagnosis_id === diagnosis_id) {
+            if(this.diagnosesList[d].diagnosis_id == diagnosis_id) {
+                alert("Diagnóstico ha sido agregado previamente.")
                 return;
             }
         }
@@ -686,7 +682,8 @@
 
     function removeDiagnosis(id) {
         for(var diagnosis in this.diagnosesList) {
-            if(this.diagnosesList[diagnosis].diagnosis_id === id) {
+            if(this.diagnosesList[diagnosis].diagnosis_id == id) {
+                console.log("Eliminando: ", this.diagnosesList[diagnosis])
                 this.diagnosesList.splice(diagnosis, 1);
                 break;
             }
@@ -1068,11 +1065,11 @@
         })
 
         $("#save").click(function(){
-            if(services.length > 0 ) {
+            if(services.length > 0 && diagnosesList.length > 0) {
                 sendInvoice();
             }
             else {
-                alert("Falta agregar servicios a la factura.");
+                alert("Falta agregar servicios o diagnósticos a la factura.");
             }
         });
     });

@@ -98,15 +98,18 @@
                                     </a>
                                 </td>
                                 <td>{{ $letter->date->format('M-d-Y')}}</td>
-                                <td>
+                                <td data-container="body" data-toggle="tooltip" data-placement="top"
+                                    title="{{ $letter->content }}">
                                     <span
                                         style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->content }}</span>
                                 </td>
                                 <td>{{ $letter->status() }}</td>
-                                <td><span
+                                <td data-container="body" data-toggle="tooltip" data-placement="bottom"
+                                    title="{{ $letter->comments }}"><span
                                         style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->comments }}</span>
                                 </td>
-                                <td><span
+                                <td data-container="body" data-toggle="tooltip" data-placement="top"
+                                    title="{{ $letter->reply }}"><span
                                         style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->reply }}</span>
                                 </td>
                                 <td class="td-actions text-right">

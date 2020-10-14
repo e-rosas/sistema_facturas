@@ -3,9 +3,10 @@
         <thead class="thead-light">
             <tr>
                 <th style="width: 10%;" scope="col">{{ __('Fecha') }}</th>
-                <th style="width: 50%;" scope="col">{{ __('Cobros') }}</th>
+                <th style="width: 30%;" scope="col">{{ __('Cobros') }}</th>
                 <th style="width: 10%;" scope="col">{{ __('Estado') }}</th>
                 <th style="width: 20%;" scope="col">{{ __('Comentarios') }}</th>
+                <th style="width: 20%;" scope="col">{{ __('Contestó') }}</th>
                 <th style="width: 10%;" scope="col">{{ __('Acciones') }}</th>
             </tr>
         </thead>
@@ -17,8 +18,12 @@
                     <span style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->content }}</span>
                 </td>
                 <td>{{ $letter->status() }}</td>
-                <td><span
+                <td>
+                    <span
                         style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->comments }}</span>
+                </td>
+                <td>
+                    <span style="overflow: hidden; text-overflow: ellipsis; display:block">{{ $letter->reply }}</span>
                 </td>
                 <td class="td-actions text-right">
                     <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"

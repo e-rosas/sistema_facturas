@@ -134,9 +134,10 @@
             bg=letters[i].status2==2 ? "table-success" : "" ;
             output +="<tr class=" +bg+"value="+letters[i].id+">"
             + "<td>" + letters[i].date + "</td>"
-            + "<td>" + letters[i].content + "</td>"
+            + "<td><span style='overflow: hidden; text-overflow: ellipsis; display:block'>" + letters[i].content + "</span></td>"
             + "<td>" + letters[i].status + "</td>"
-            + "<td>" + letters[i].comments + "</td>"
+            + "<td><span style='overflow: hidden; text-overflow: ellipsis; display:block'>" + letters[i].comments + "</span></td>"
+            + "<td><span style='overflow: hidden; text-overflow: ellipsis; display:block'>" + letters[i].reply + "</span></td>"
             +'<td class="text-right"><button class="btn btn-info btn-sm btn-icon" type="button" onClick="showEditLetterModal(\'' + letters[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
              +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteLetter(\'' + letters[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
             + "</tr>";
