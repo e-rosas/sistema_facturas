@@ -6,7 +6,8 @@
                 <th scope="col">{{ __('Tipo') }}</th>
                 <th scope="col">{{ __('Facturación') }}</th>
                 <th scope="col">{{ __('CONTPAQ') }}</th>
-                <th scope="col">{{ __('Paciente') }}</th>
+                <th scope="col">{{ __('Fecha de servicio') }}</th>
+                {{-- <th scope="col">{{ __('Paciente') }}</th> --}}
                 <th scope="col">Subtotal</th>
                 <th scope="col">{{ __('IVA') }}</th>
                 <th scope="col">Total</th>
@@ -19,11 +20,12 @@
                 <td>{{ $invoice->type()}}</td>
                 <td>{{ $invoice->date->format('M-d-Y') }}</td>
                 <td><a href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>
-                <td>
+                <td>{{ $invoice->DOS->format('M-d-Y')}}</td>
+                {{-- <td>
                     <a href="{{ route('patients.show', $invoice->patient) }}">
-                        {{ $invoice->patient->full_name}}
-                    </a>
-                </td>
+                {{ $invoice->patient->full_name}}
+                </a>
+                </td> --}}
                 <td><span class="MXN"> {{ $invoice->subtotalF() }} </span><span class="USD" style="display: none">
                         {{ $invoice->subtotalDiscounted() }} </span> </td>
                 <td><span class="MXN"> {{ $invoice->IVAF() }} </span><span class="USD" style="display: none">

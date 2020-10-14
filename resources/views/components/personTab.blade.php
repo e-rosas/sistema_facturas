@@ -66,7 +66,6 @@
                                     </a>
                                 </td>
                                 <td>{{ $payment->type() }}</td>
-                                <td>{{ $payment->date->format('M-d-Y')}}</td>
                                 <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD"
                                         style="display: none"> {{ $payment->amountPaid() }} </span></td>
                                 <td>{{ $payment->comments}}</td>

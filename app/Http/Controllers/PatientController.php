@@ -110,7 +110,8 @@ class PatientController extends Controller
     {
         $patient->load('person_stats');
         $invoices = Invoice::with('patient', 'payments', 'credit', 'calls')
-            ->where('patient_id', $patient->id)->get();
+            ->where('patient_id', $patient->id)
+            ->orderBy('date', 'desc')->get();
 
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);
         $invoices_totals->totals();

@@ -61,11 +61,13 @@
                             <span class="h2 font-weight-bold mb-0"> <a
                                     href="{{ route('insurers.show', $insuree->insurer) }}">
                                     {{ $insuree->insurer->name }}</a></span>
+                            <br />
                             <span class="h4 font-weight-400 mb-2">{{ $insuree->insurer->email }}</span>
                             @else
                             <span class="h2 font-weight-bold mb-0"> <a
                                     href="{{ route('insurers.show', $patient->insuree->insurer) }}">
                                     {{ $patient->insuree->insurer->name }}</a></span>
+                            <br />
                             <span class="h4 font-weight-400 mb-2">{{ $patient->insuree->insurer->email }}</span>
                             @endif
 
@@ -107,7 +109,7 @@
                         <div class="form-row">
                             {{--  start_date  --}}
                             <div class="col-lg-12 col-auto">
-                                <label for="start">{{ __('Fecha de facturación de') }}</label>
+                                <label for="start">{{ __('Fecha de') }}</label>
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-calendar"></i></span>
