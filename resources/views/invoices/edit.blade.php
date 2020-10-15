@@ -241,6 +241,109 @@
             </div>
         </div>
     </div>
+    <div class="row" id="dental-details">
+        {{--  Dental Details  --}}
+        <div class="col-xl-12 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                    <div class="row align-services-center">
+                        <div class="col-8 col-auto">
+                            <h3 class="mb-0">Dental</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        {{-- Enclosures --}}
+                        <div class="col-lg-4 custom-control custom-checkbox">
+                            <input type="checkbox" name="input-enclosures" id="input-enclosures"
+                                class="custom-control-input">
+                            <label class="custom-control-label" for="input-enclosures">Enclosures</label>
+                        </div>
+                        <div class="col-lg-4 custom-control custom-checkbox">
+                            <input type="checkbox" name="input-orthodontics" id="input-orthodontics"
+                                class="custom-control-input">
+                            <label class="custom-control-label" for="input-orthodontics">Tratamiento para
+                                ortodoncia</label>
+                        </div>
+                        <div class="col-lg-4 custom-control custom-checkbox">
+                            <input type="checkbox" name="input-prosthesis" id="input-prosthesis"
+                                class="custom-control-input">
+                            <label class="custom-control-label" for="input-prosthesis">Reemplazo de
+                                prótesis</label>
+                        </div>
+                    </div>
+                    <div id="orthodontics-details" class="form-row">
+                        {{-- Appliance date --}}
+                        <div class="col-md-6 col-auto form-group">
+                            <label class="form-control-label" for="input-placed">Fecha de colocación de aparato</label>
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                </div>
+                                <input name="placed" id="input-placed" class="form-control form-control-alternative"
+                                    type="date" required>
+                            </div>
+                        </div>
+                        {{-- Months remaining --}}
+                        <div class="col-md-4 form-group">
+                            <label class="form-control-label" for="input-months">Meses restantes</label>
+                            <input type="number" name="months-remaining" id="input-months"
+                                class="form-control form-control-alternative" value=0 required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        {{-- Prior placement date --}}
+                        <div class="col-md-6 col-auto form-group">
+                            <label class="form-control-label" for="input-prior-placement">Fecha de colocación
+                                previa</label>
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                </div>
+                                <input name="prior-placement" id="input-prior-placement"
+                                    class="form-control form-control-alternative" type="date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-auto form-group">
+                            <label for="input-treatment">{{ __('Tratamiento resultado de') }}</label>
+                            <select id="input-treatment" class="custom-select" name="input-treatment">
+                                <option value='0'>Lesión / enfermedad ocupacional</option>
+                                <option value='1'>Accidente automovilístico</option>
+                                <option value='2'>Otro accidente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        {{-- Accident date --}}
+                        <div class="col-md-4 col-auto form-group">
+                            <label class="form-control-label" for="input-accident">Fecha de accidente</label>
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                                </div>
+                                <input name="placed" id="input-accident" class="form-control form-control-alternative"
+                                    type="date" required>
+                            </div>
+                        </div>
+                        {{--  Auto Accident State --}}
+                        <div class="col-md-4 col-auto form-group">
+                            <label class="form-control-label" for="input-accident-state">Estado de accidente
+                                automovilístico</label>
+                            <input type="text" name="input-accident-state" id="input-accident-state"
+                                class="form-control form-control-alternative">
+                        </div>
+                        {{--  License --}}
+                        <div class="col-md-4 col-auto form-group">
+                            <label class="form-control-label" for="input-license">Licencia</label>
+                            <input type="text" name="input-license" id="input-license"
+                                class="form-control form-control-alternative">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         {{-- Diagnosticos --}}
         <div class="col-xl-12 order-xl-1">
@@ -512,6 +615,12 @@
         items_sub_total_discounted = 0;
         items_total_price = 0;
         items_total_discounted_price = 0;
+
+        //FOR DENTAL
+        oral_cavity = "";
+        tooth_system = "";
+        tooth_numbers = "";
+        tooth_surfaces = "";
 
         constructor(service_id, description, price, discounted_price, quantity, id,
             DOS,DOS_to, descripcion, code, pointers) {
