@@ -40,15 +40,15 @@ class InvoiceDentalDetails extends Model
     {
         switch ($this->treatment_resulting_from) {
             case 0:
-                return 'Injury.';
+                return 'Lesión / enfermedad ocupacional.';
 
                 break;
             case 1:
-                return 'Auto accident.';
+                return 'Accidente automovilístico.';
 
                 break;
             case 2:
-                return 'Other.';
+                return 'Otro accidente.';
             default:
                 // code...
                 break;

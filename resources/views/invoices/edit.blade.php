@@ -241,6 +241,7 @@
             </div>
         </div>
     </div>
+    @if ($invoice->dental)
     <div class="row" id="dental-details">
         {{--  Dental Details  --}}
         <div class="col-xl-12 order-xl-1">
@@ -257,18 +258,19 @@
                         {{-- Enclosures --}}
                         <div class="col-lg-4 custom-control custom-checkbox">
                             <input type="checkbox" name="input-enclosures" id="input-enclosures"
-                                class="custom-control-input">
+                                class="custom-control-input" {{ $invoice->dental->enclosures ? 'checked' : '' }}>
                             <label class="custom-control-label" for="input-enclosures">Enclosures</label>
                         </div>
                         <div class="col-lg-4 custom-control custom-checkbox">
                             <input type="checkbox" name="input-orthodontics" id="input-orthodontics"
-                                class="custom-control-input">
+                                class="custom-control-input" {{ $invoice->dental->orthodontics ? 'checked' : '' }}>
                             <label class="custom-control-label" for="input-orthodontics">Tratamiento para
                                 ortodoncia</label>
                         </div>
                         <div class="col-lg-4 custom-control custom-checkbox">
                             <input type="checkbox" name="input-prosthesis" id="input-prosthesis"
-                                class="custom-control-input">
+                                class="custom-control-input"
+                                {{ $invoice->dental->prosthesis_replacement ? 'checked' : '' }}>
                             <label class="custom-control-label" for="input-prosthesis">Reemplazo de
                                 prótesis</label>
                         </div>
@@ -282,14 +284,15 @@
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
                                 <input name="placed" id="input-placed" class="form-control form-control-alternative"
-                                    type="date" required>
+                                    type="date" value="{{ $invoice->dental->appliance_placed->format('Y-m-d') }}">
                             </div>
                         </div>
                         {{-- Months remaining --}}
                         <div class="col-md-4 form-group">
                             <label class="form-control-label" for="input-months">Meses restantes</label>
                             <input type="number" name="months-remaining" id="input-months"
-                                class="form-control form-control-alternative" value=0 required>
+                                class="form-control form-control-alternative"
+                                value={{ $invoice->dental->months_remaining }} required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -302,15 +305,22 @@
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
                                 <input name="prior-placement" id="input-prior-placement"
-                                    class="form-control form-control-alternative" type="date" required>
+                                    class="form-control form-control-alternative" type="date"
+                                    value="{{ $invoice->dental->prior_placement->format('Y-m-d') }}">
                             </div>
                         </div>
                         <div class="col-md-6 col-auto form-group">
                             <label for="input-treatment">{{ __('Tratamiento resultado de') }}</label>
                             <select id="input-treatment" class="custom-select" name="input-treatment">
-                                <option value='0'>Lesión / enfermedad ocupacional</option>
-                                <option value='1'>Accidente automovilístico</option>
-                                <option value='2'>Otro accidente</option>
+                                <option value='0'
+                                    {{ $invoice->dental->treatment_resulting_from == 0 ? 'selected' : '' }}>Lesión /
+                                    enfermedad ocupacional</option>
+                                <option value='1'
+                                    {{ $invoice->dental->treatment_resulting_from == 1 ? 'selected' : '' }}>Accidente
+                                    automovilístico</option>
+                                <option value='2'
+                                    {{ $invoice->dental->treatment_resulting_from == 2 ? 'selected' : '' }}>Otro
+                                    accidente</option>
                             </select>
                         </div>
                     </div>
@@ -323,7 +333,7 @@
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
                                 <input name="placed" id="input-accident" class="form-control form-control-alternative"
-                                    type="date" required>
+                                    type="date" value="{{ $invoice->dental->accident->format('Y-m-d') }}">
                             </div>
                         </div>
                         {{--  Auto Accident State --}}
@@ -331,19 +341,22 @@
                             <label class="form-control-label" for="input-accident-state">Estado de accidente
                                 automovilístico</label>
                             <input type="text" name="input-accident-state" id="input-accident-state"
-                                class="form-control form-control-alternative">
+                                class="form-control form-control-alternative"
+                                value="{{ $invoice->dental->auto_accident_state}}">
                         </div>
                         {{--  License --}}
                         <div class="col-md-4 col-auto form-group">
                             <label class="form-control-label" for="input-license">Licencia</label>
                             <input type="text" name="input-license" id="input-license"
-                                class="form-control form-control-alternative">
+                                class="form-control form-control-alternative" value="{{ $invoice->dental->license}}">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @endif
+
     <div class="row">
         {{-- Diagnosticos --}}
         <div class="col-xl-12 order-xl-1">
@@ -776,6 +789,14 @@
     total = 0;
     total_with_discounts = 0;
     dental = 0;
+
+    enclosures = false;
+    orthodontics = false;
+    license = "";
+    auto_accident_state = "";
+    treatment_resulting_from = "";
+    months_remaining = "";
+    prosthesis_replacement = "";
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre){
         for(var d in this.diagnosesList) {

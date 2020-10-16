@@ -55,9 +55,18 @@
         <div class="col-xl-12 order-xl-1">
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
-                    <div class="row align-services-center">
+                    <div class="row align-items-center">
                         <div class="col-8 col-auto">
                             <h3 class="mb-0">Factura</h3>
+                        </div>
+                        <div class="col-4 col-auto">
+                            <label for="dental">Dental</label>
+                            <label class="custom-toggle">
+                                <input type="checkbox" id="dental" name="dental" class="custom-control-input"
+                                    onclick="changeDentalStatusConfirmation(this.checked)">
+                                .
+                                <span class="custom-toggle-slider rounded-circle"></span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -742,6 +751,13 @@
             this.diagnoses_pointers = pointers;
         }
 
+        clearDentalDetails(){
+            this.oral_cavity = "";
+            this.tooth_system = "";
+            this.tooth_numbers = "";
+            this.tooth_surfaces = "";
+        }
+
         get date() {
             return this.date2.toLocaleDateString();
         }
@@ -874,6 +890,49 @@
     treatment_resulting_from = "";
     months_remaining = "";
     prosthesis_replacement = "";
+
+    function changeDentalStatusConfirmation(status){
+        console.log("status:", status);
+        if(status != dental){
+            var r = confirm("Al cambiar estados se eliminarán TODOS los diagnósticos y servicios agregados hasta ahora. ¿Desea continuar?");
+            if (r == true) {
+                dental = status;
+                changeDentalStatus();
+            } else {
+            }
+        }
+    }
+    function changeDentalStatus(){
+        if(dental){
+            alert("Se ha cambiado a dental.");
+        }else {
+            alert("No dental");
+            services.forEach(service => {
+                service.clearDentalDetails();
+            });
+            displayCart();
+        }
+    }
+
+    function showDentalServiceModal(id) {
+        selectedServiceId = id;
+        //Find service in array
+        const service = services.find(s => s.id == id);
+
+        displayDentalDetails(service);
+        $('#modal-dental-service').modal('show')
+
+    }
+
+    function displayItems(service) {
+        var output = "";
+        document.getElementById("modal-dental-service-description").innerHTML = service.description;
+
+        document.getElementById("modal-dental-service-oral-cavity").value = service.oral_cavity;
+        document.getElementById("modal-dental-service-tooth-system").value = service.tooth_system;
+        document.getElementById("modal-dental-service-tooth-surfaces").value = service.tooth_surfaces;
+        document.getElementById("modal-dental-service-tooth-numbers").value = service.tooth_numbers;
+    }
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre) {
         for (var d in this.diagnosesList) {
@@ -1112,9 +1171,6 @@
                 "</tr>";
         }
         $('#items_table tbody').html(output);
-
-
-
     }
 
     function searchNumber() {
@@ -1175,7 +1231,15 @@
     function displayCart() {
         totalCart();
         var output = "";
+        const optionalRow = "";
+
         for (var i in this.services) {
+            if(this.dental){
+                optionalRow = '<td><button class="btn btn-icon btn-outline-primary btn-sm"  type="button" onClick="showDentalServiceModal(\'' +
+                this.services[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-tooth"></i></span></button>';
+            } else {
+                optionalRow = "<td>" + this.services[i].items.length + '</td>';
+            }
 
             output += "<tr value=" + this.services[i].id + ">" +
                 "<td><button class='delete-service btn btn-sm btn-danger' data-id=" + this.services[i].id +
@@ -1186,7 +1250,7 @@
                 "<td>" + this.services[i].discountedPrice() + "</td>" +
                 "<td>" + this.services[i].quantity + "</td>" +
                 "<td>" + this.services[i].totalDiscountedPrice() + '</td>' +
-                "<td>" + this.services[i].items.length + '</td>' +
+                optionalRow +
                 '<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' +
                 this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>' +
                 '</td> </tr>';
