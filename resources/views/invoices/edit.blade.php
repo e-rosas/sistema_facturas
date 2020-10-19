@@ -59,6 +59,15 @@
                         <div class="col-4 col-auto">
                             <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                         </div>
+                        <div class="col-4 col-auto">
+                            <label for="dental">Dental</label>
+                            <label class="custom-toggle">
+                                <input type="checkbox" id="dental" name="dental" class="custom-control-input"
+                                    onclick="changeDentalStatusConfirmation(this.checked)">
+                                .
+                                <span class="custom-toggle-slider rounded-circle"></span>
+                            </label>
+                        </div>
                         {{--  @if ($invoice->status != 1)
                                 <div class="col-4 col-auto text-right">
                                     <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
@@ -241,7 +250,6 @@
             </div>
         </div>
     </div>
-    @if ($invoice->dental)
     <div class="row" id="dental-details">
         {{--  Dental Details  --}}
         <div class="col-xl-12 order-xl-1">
@@ -254,23 +262,23 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="form-row">
+                    <div class="form-row ">
                         {{-- Enclosures --}}
-                        <div class="col-lg-4 custom-control custom-checkbox">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-3 custom-control custom-checkbox mb-3">
                             <input type="checkbox" name="input-enclosures" id="input-enclosures"
-                                class="custom-control-input" {{ $invoice->dental->enclosures ? 'checked' : '' }}>
+                                class="custom-control-input">
                             <label class="custom-control-label" for="input-enclosures">Enclosures</label>
                         </div>
-                        <div class="col-lg-4 custom-control custom-checkbox">
+                        <div class="col-lg-4 custom-control custom-checkbox mb-3">
                             <input type="checkbox" name="input-orthodontics" id="input-orthodontics"
-                                class="custom-control-input" {{ $invoice->dental->orthodontics ? 'checked' : '' }}>
+                                class="custom-control-input" onclick="changeOrthodonticsStatus(this.checked)">
                             <label class="custom-control-label" for="input-orthodontics">Tratamiento para
                                 ortodoncia</label>
                         </div>
-                        <div class="col-lg-4 custom-control custom-checkbox">
+                        <div class="col-lg-4 custom-control custom-checkbox mb-3">
                             <input type="checkbox" name="input-prosthesis" id="input-prosthesis"
-                                class="custom-control-input"
-                                {{ $invoice->dental->prosthesis_replacement ? 'checked' : '' }}>
+                                class="custom-control-input">
                             <label class="custom-control-label" for="input-prosthesis">Reemplazo de
                                 prótesis</label>
                         </div>
@@ -284,15 +292,14 @@
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
                                 <input name="placed" id="input-placed" class="form-control form-control-alternative"
-                                    type="date" value="{{ $invoice->dental->appliance_placed->format('Y-m-d') }}">
+                                    type="date" required>
                             </div>
                         </div>
                         {{-- Months remaining --}}
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-4 col-auto form-group">
                             <label class="form-control-label" for="input-months">Meses restantes</label>
                             <input type="number" name="months-remaining" id="input-months"
-                                class="form-control form-control-alternative"
-                                value={{ $invoice->dental->months_remaining }} required>
+                                class="form-control form-control-alternative" value=0 required>
                         </div>
                     </div>
                     <div class="form-row">
@@ -305,22 +312,16 @@
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
                                 <input name="prior-placement" id="input-prior-placement"
-                                    class="form-control form-control-alternative" type="date"
-                                    value="{{ $invoice->dental->prior_placement->format('Y-m-d') }}">
+                                    class="form-control form-control-alternative" type="date" required>
                             </div>
                         </div>
                         <div class="col-md-6 col-auto form-group">
                             <label for="input-treatment">{{ __('Tratamiento resultado de') }}</label>
                             <select id="input-treatment" class="custom-select" name="input-treatment">
-                                <option value='0'
-                                    {{ $invoice->dental->treatment_resulting_from == 0 ? 'selected' : '' }}>Lesión /
-                                    enfermedad ocupacional</option>
-                                <option value='1'
-                                    {{ $invoice->dental->treatment_resulting_from == 1 ? 'selected' : '' }}>Accidente
-                                    automovilístico</option>
-                                <option value='2'
-                                    {{ $invoice->dental->treatment_resulting_from == 2 ? 'selected' : '' }}>Otro
-                                    accidente</option>
+                                <option value='3' selected>No Aplica</option>
+                                <option value='0'>Lesión / enfermedad ocupacional</option>
+                                <option value='1'>Accidente automovilístico</option>
+                                <option value='2'>Otro accidente</option>
                             </select>
                         </div>
                     </div>
@@ -333,7 +334,7 @@
                                     <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                                 </div>
                                 <input name="placed" id="input-accident" class="form-control form-control-alternative"
-                                    type="date" value="{{ $invoice->dental->accident->format('Y-m-d') }}">
+                                    type="date" required>
                             </div>
                         </div>
                         {{--  Auto Accident State --}}
@@ -341,21 +342,19 @@
                             <label class="form-control-label" for="input-accident-state">Estado de accidente
                                 automovilístico</label>
                             <input type="text" name="input-accident-state" id="input-accident-state"
-                                class="form-control form-control-alternative"
-                                value="{{ $invoice->dental->auto_accident_state}}">
+                                class="form-control form-control-alternative">
                         </div>
                         {{--  License --}}
                         <div class="col-md-4 col-auto form-group">
-                            <label class="form-control-label" for="input-license">Licencia</label>
+                            <label class="form-control-label" for="input-license">Licencia (dentista)</label>
                             <input type="text" name="input-license" id="input-license"
-                                class="form-control form-control-alternative" value="{{ $invoice->dental->license}}">
+                                class="form-control form-control-alternative">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @endif
 
     <div class="row">
         {{-- Diagnosticos --}}
@@ -509,7 +508,7 @@
     @include('items.partials.itemsModal')
 
     {{-- @include('components.selectPersonModal', ['invoice_id' => $invoice->id]) --}}
-
+    @include('invoices.partials.dentalServicesModal')
     @include('layouts.footers.auth')
 </div>
 @endsection
@@ -788,15 +787,90 @@
     sub_total_discounted = 0;
     total = 0;
     total_with_discounts = 0;
-    dental = 0;
+    dental = {!! $invoice->dental !!};
 
-    enclosures = false;
-    orthodontics = false;
+    enclosures = 0;
+    orthodontics = 0;
     license = "";
     auto_accident_state = "";
     treatment_resulting_from = "";
     months_remaining = "";
-    prosthesis_replacement = "";
+    prosthesis_replacement = 0;
+
+    function changeOrthodonticsStatus(status){
+        var orthoDetails = document.getElementById("orthodontics-details");
+        if(status){
+            orthoDetails.style.display = 'block';
+
+        }
+        else {
+            orthoDetails.style.display = 'none';
+        }
+    }
+
+    function changeDentalStatusConfirmation(status){
+        var r = confirm("¿Desea continuar?");
+        if (r == true) {
+            changeDentalStatus(status);
+        }
+    }
+    function changeDentalStatus(status){
+        var dentalSection = document.getElementById("dental-details");
+        if(status){
+            dental = 1;
+
+        //alert("Se ha cambiado a dental.");
+        }else {
+        //alert("No dental");
+            dental = 0;
+
+
+        }
+        showDentalSection(status);
+        displayCart();
+    }
+
+    function showDentalSection(show){
+        var dentalSection = document.getElementById("dental-details");
+        var dentalCheckbox = document.getElementById("dental");
+        dentalCheckbox.checked = show;
+        if(show){
+            dentalSection.style.display = 'block';
+
+        }
+        else {
+            dentalSection.style.display = 'none';
+        }
+    }
+
+    function showDentalServiceModal(id) {
+        selectedServiceId = id;
+        //Find service in array
+        const service = services.find(s => s.id == id);
+
+        displayDentalDetails(service);
+        $('#modal-dental-service').modal('show')
+
+    }
+
+    function updateDentalServiceDetails() {
+        //Find service in array
+        const service = services.find(s => s.id == selectedServiceId);
+        service.oral_cavity = document.getElementById("modal-dental-service-oral-cavity").value;
+        service.tooth_system = document.getElementById("modal-dental-service-tooth-system").value;
+        service.tooth_surfaces = document.getElementById("modal-dental-service-tooth-surfaces").value;
+        service.tooth_numbers = document.getElementById("modal-dental-service-tooth-numbers").value;
+    }
+
+    function displayDentalDetails(service) {
+        var output = "";
+        document.getElementById("modal-dental-service-description").innerHTML = service.description;
+
+        document.getElementById("modal-dental-service-oral-cavity").value = service.oral_cavity;
+        document.getElementById("modal-dental-service-tooth-system").value = service.tooth_system;
+        document.getElementById("modal-dental-service-tooth-surfaces").value = service.tooth_surfaces;
+        document.getElementById("modal-dental-service-tooth-numbers").value = service.tooth_numbers;
+    }
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre){
         for(var d in this.diagnosesList) {
@@ -949,6 +1023,35 @@
         return false;
     }
 
+    function getInvoiceDentalDetails(id){
+        $.ajax({
+            url: "{{route('invoice.dental')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "invoice_id" : id
+            },
+        success: function (response) {
+            var details = response.data;
+            document.getElementById("input-enclosures").checked = details.enclosures;
+            document.getElementById("input-orthodontics").checked = details.orthodontics;
+            changeOrthodonticsStatus(details.orthodontics);
+            document.getElementById("input-prosthesis").checked = details.prosthesis;
+            document.getElementById("input-placed").value = details.appliance_placed2;
+            document.getElementById("input-months").value = details.months_remaining;
+            document.getElementById("input-prior-placement").value = details.prior_placement2;
+            document.getElementById("input-treatment").value = details.treatment_resulting_from;
+            document.getElementById("input-accident").value = details.accident2;
+            document.getElementById("input-accident-state").value = details.auto_accident_state;
+            document.getElementById("input-license").value = details.license;
+            }
+        });
+        return false;
+    }
+
+
+
     function findDiagnosis(diagnosis_id){
         $.ajax({
             url: "{{route('diagnoses.find')}}",
@@ -1023,7 +1126,20 @@
     }
 
     function sendInvoice(){
-            var DOS = document.getElementById("input-date_service-to").value;
+        var DOS = document.getElementById("input-date_service-to").value;
+        var appliance_placed = document.getElementById("input-placed").value;
+        var prior_placement = document.getElementById("input-prior-placement").value;
+        var accident_date = document.getElementById("input-accident").value;
+
+        if(dental) {
+            enclosures = document.getElementById("input-enclosures").checked ? 1 : 0;
+            orthodontics = document.getElementById("input-orthodontics").checked ? 1 : 0;
+            license = document.getElementById("input-license").value;
+            auto_accident_state = document.getElementById("input-accident-state").value;
+            treatment_resulting_from = document.getElementById("input-treatment").value;
+            months_remaining = document.getElementById("input-months").value;
+            prosthesis_replacement = document.getElementById("input-prosthesis").checked ? 1 : 0;
+        }
         $.ajax({
             url: "{{route('invoice.update')}}",
             type:"patch",
@@ -1041,6 +1157,16 @@
                 "amount_due" : total_with_discounts,
                 "DOS": DOS,
                 "dental": dental,
+                "appliance_placed": appliance_placed,
+                "prior_placement": prior_placement,
+                "accident": accident_date,
+                "enclosures": enclosures,
+                "orthodontics": orthodontics,
+                "license": this.license,
+                "auto_accident_state": auto_accident_state,
+                "treatment_resulting_from": treatment_resulting_from,
+                "months_remaining": months_remaining,
+                "prosthesis_replacement": prosthesis_replacement
             },
         success: function (response) {
             setTimeout(function() {
@@ -1100,7 +1226,13 @@
     function displayCart() {
         totalCart();
         var output = "";
+        var optionalRow = "";
         for(var i in this.services) {
+            if(this.dental){
+                optionalRow = '<td><button class="btn btn-icon btn-outline-primary btn-sm" type="button"onClick="showDentalServiceModal(' + this.services[i].id +')"><span class="btn-inner--icon"><i class="fas fa-tooth"></i></span></button>';
+            } else {
+                optionalRow = " <td>" + this.services[i].items.length + '</td>';
+            }
 
           output += "<tr value="+this.services[i].id+">"
             + "<td><button class='delete-service btn btn-sm btn-danger' data-id=" + this.services[i].id + ">X</button></td>"
@@ -1110,7 +1242,7 @@
             + "<td>" + this.services[i].discountedPrice() + "</td>"
             + "<td>" + this.services[i].quantity + "</td>"
             + "<td>" + this.services[i].totalDiscountedPrice() + '</td>'
-            + "<td>" + this.services[i].items.length + '</td>'
+            + optionalRow
             +'<td><button class="btn btn-icon btn-outline-success btn-sm"  type="button" onClick="showProductsModal(\'' + this.services[i].id + '\')"><span class="btn-inner--icon"><i class="ni ni-atom"></i></span></button>'
             +'</td> </tr>';
         }
@@ -1133,6 +1265,11 @@
         document.getElementById("input-date_service").value = today;
         getInvoiceDiagnoses({!! $invoice->id !!});
         getInvoiceServices({!! $invoice->id !!});
+        if(dental){
+            getInvoiceDentalDetails({!! $invoice->id !!});
+            showDentalSection(1);
+        }
+
 
         $("#add_service").click(function(){
             var quantity = Number(document.getElementById("input-quantity").value);

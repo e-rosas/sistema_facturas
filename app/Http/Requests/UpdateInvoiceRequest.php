@@ -31,6 +31,7 @@ class UpdateInvoiceRequest extends FormRequest
             'sub_total_discounted' => 'numeric|required|between:0,999999999.999',
             'total' => 'numeric|required|between:0,999999999.999',
             'total_with_discounts' => 'numeric|required|between:0,999999999.999',
+            'dental' => 'boolean',
         ];
     }
 }

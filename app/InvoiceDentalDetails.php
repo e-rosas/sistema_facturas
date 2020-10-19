@@ -49,6 +49,12 @@ class InvoiceDentalDetails extends Model
                 break;
             case 2:
                 return 'Otro accidente.';
+
+                break;
+            case 3:
+                return 'No aplica.';
+
+                break;
             default:
                 // code...
                 break;

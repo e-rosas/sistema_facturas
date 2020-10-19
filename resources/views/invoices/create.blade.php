@@ -345,20 +345,21 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="form-row">
+                    <div class="form-row ">
                         {{-- Enclosures --}}
-                        <div class="col-lg-4 custom-control custom-checkbox">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-3 custom-control custom-checkbox mb-3">
                             <input type="checkbox" name="input-enclosures" id="input-enclosures"
                                 class="custom-control-input">
                             <label class="custom-control-label" for="input-enclosures">Enclosures</label>
                         </div>
-                        <div class="col-lg-4 custom-control custom-checkbox">
+                        <div class="col-lg-4 custom-control custom-checkbox mb-3">
                             <input type="checkbox" name="input-orthodontics" id="input-orthodontics"
-                                class="custom-control-input">
+                                class="custom-control-input" onclick="changeOrthodonticsStatus(this.checked)">
                             <label class="custom-control-label" for="input-orthodontics">Tratamiento para
                                 ortodoncia</label>
                         </div>
-                        <div class="col-lg-4 custom-control custom-checkbox">
+                        <div class="col-lg-4 custom-control custom-checkbox mb-3">
                             <input type="checkbox" name="input-prosthesis" id="input-prosthesis"
                                 class="custom-control-input">
                             <label class="custom-control-label" for="input-prosthesis">Reemplazo de
@@ -378,7 +379,7 @@
                             </div>
                         </div>
                         {{-- Months remaining --}}
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-4 col-auto form-group">
                             <label class="form-control-label" for="input-months">Meses restantes</label>
                             <input type="number" name="months-remaining" id="input-months"
                                 class="form-control form-control-alternative" value=0 required>
@@ -400,6 +401,7 @@
                         <div class="col-md-6 col-auto form-group">
                             <label for="input-treatment">{{ __('Tratamiento resultado de') }}</label>
                             <select id="input-treatment" class="custom-select" name="input-treatment">
+                                <option value='3' selected>No Aplica</option>
                                 <option value='0'>Lesión / enfermedad ocupacional</option>
                                 <option value='1'>Accidente automovilístico</option>
                                 <option value='2'>Otro accidente</option>
@@ -427,7 +429,7 @@
                         </div>
                         {{--  License --}}
                         <div class="col-md-4 col-auto form-group">
-                            <label class="form-control-label" for="input-license">Licencia</label>
+                            <label class="form-control-label" for="input-license">Licencia (dentista)</label>
                             <input type="text" name="input-license" id="input-license"
                                 class="form-control form-control-alternative">
                         </div>
@@ -586,6 +588,7 @@
         </div>
     </div>
     @include('items.partials.itemsModal')
+    @include('invoices.partials.dentalServicesModal')
     @include('layouts.footers.auth')
 </div>
 @endsection
@@ -883,34 +886,57 @@
     total = 0;
     total_with_discounts = 0;
     dental = 0;
-    enclosures = false;
-    orthodontics = false;
+    enclosures = 0;
+    orthodontics = 0;
     license = "";
     auto_accident_state = "";
     treatment_resulting_from = "";
     months_remaining = "";
-    prosthesis_replacement = "";
+    prosthesis_replacement = 0;
 
-    function changeDentalStatusConfirmation(status){
-        console.log("status:", status);
-        if(status != dental){
-            var r = confirm("Al cambiar estados se eliminarán TODOS los diagnósticos y servicios agregados hasta ahora. ¿Desea continuar?");
-            if (r == true) {
-                dental = status;
-                changeDentalStatus();
-            } else {
-            }
+    function changeOrthodonticsStatus(status){
+        var orthoDetails = document.getElementById("orthodontics-details");
+        if(status){
+            orthoDetails.style.display = 'block';
+
+        }
+        else {
+            orthoDetails.style.display = 'none';
         }
     }
-    function changeDentalStatus(){
-        if(dental){
-            alert("Se ha cambiado a dental.");
+
+    function changeDentalStatusConfirmation(status){
+        var r = confirm("¿Desea continuar?");
+        if (r == true) {
+            changeDentalStatus(status);
+        }
+    }
+    function changeDentalStatus(status){
+        var dentalSection = document.getElementById("dental-details");
+        if(status){
+            dental = 1;
+
+            //alert("Se ha cambiado a dental.");
         }else {
-            alert("No dental");
-            services.forEach(service => {
-                service.clearDentalDetails();
-            });
-            displayCart();
+            //alert("No dental");
+            dental = 0;
+
+
+        }
+        showDentalSection(status);
+        displayCart();
+    }
+
+    function showDentalSection(show){
+        var dentalSection = document.getElementById("dental-details");
+        var dentalCheckbox = document.getElementById("dental");
+        dentalCheckbox.checked = show;
+        if(show){
+            dentalSection.style.display = 'block';
+
+        }
+        else {
+            dentalSection.style.display = 'none';
         }
     }
 
@@ -924,7 +950,16 @@
 
     }
 
-    function displayItems(service) {
+    function updateDentalServiceDetails() {
+        //Find service in array
+        const service = services.find(s => s.id == selectedServiceId);
+        service.oral_cavity = document.getElementById("modal-dental-service-oral-cavity").value;
+        service.tooth_system = document.getElementById("modal-dental-service-tooth-system").value;
+        service.tooth_surfaces = document.getElementById("modal-dental-service-tooth-surfaces").value;
+        service.tooth_numbers = document.getElementById("modal-dental-service-tooth-numbers").value;
+    }
+
+    function displayDentalDetails(service) {
         var output = "";
         document.getElementById("modal-dental-service-description").innerHTML = service.description;
 
@@ -1092,6 +1127,22 @@
         var doctor = document.getElementById("input-doctor").value;
         var DOS = document.getElementById("input-date_service-to").value;
         var isCash = document.getElementById("input-cash").checked ? 1 : 0;
+
+        var appliance_placed = document.getElementById("input-placed").value;
+        var prior_placement = document.getElementById("input-prior-placement").value;
+        var accident_date = document.getElementById("input-accident").value;
+
+        if(dental) {
+            enclosures = document.getElementById("input-enclosures").checked ? 1 : 0;
+            orthodontics = document.getElementById("input-orthodontics").checked ? 1 : 0;
+            license = document.getElementById("input-license").value;
+            auto_accident_state = document.getElementById("input-accident-state").value;
+            treatment_resulting_from = document.getElementById("input-treatment").value;
+            months_remaining = document.getElementById("input-months").value;
+            prosthesis_replacement = document.getElementById("input-prosthesis").checked ? 1 : 0;
+        }
+
+
         $.ajax({
             url: "{{route('invoices.store')}}",
             type: "post",
@@ -1119,9 +1170,19 @@
                 "doctor": doctor,
                 "DOS": DOS,
                 "hospitalization": isHospitalization,
-                "registered": (number === "Pendiente") ? 0 : 1,
+                "registered": (number == "Pendiente") ? 0 : 1,
                 "cash": isCash,
                 "dental": dental,
+                "appliance_placed": appliance_placed,
+                "prior_placement": prior_placement,
+                "accident": accident_date,
+                "enclosures": enclosures,
+                "orthodontics": orthodontics,
+                "license": this.license,
+                "auto_accident_state": auto_accident_state,
+                "treatment_resulting_from": treatment_resulting_from,
+                "months_remaining": months_remaining,
+                "prosthesis_replacement": prosthesis_replacement
             },
             success: function (response) {
                 setTimeout(function () {
@@ -1231,12 +1292,11 @@
     function displayCart() {
         totalCart();
         var output = "";
-        const optionalRow = "";
+        var optionalRow = "";
 
         for (var i in this.services) {
             if(this.dental){
-                optionalRow = '<td><button class="btn btn-icon btn-outline-primary btn-sm"  type="button" onClick="showDentalServiceModal(\'' +
-                this.services[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-tooth"></i></span></button>';
+                optionalRow = '<td><button class="btn btn-icon btn-outline-primary btn-sm"  type="button" onClick="showDentalServiceModal(' + this.services[i].id +')"><span class="btn-inner--icon"><i class="fas fa-tooth"></i></span></button>';
             } else {
                 optionalRow = "<td>" + this.services[i].items.length + '</td>';
             }
@@ -1283,10 +1343,14 @@
     var today = yyyy + '-' + mm + '-' + dd;
 
     getExchangeRate(today);
+    showDentalSection(dental);
+    changeOrthodonticsStatus(0);
     $(document).ready(function () {
         document.getElementById("input-date").value = today;
         document.getElementById("input-date_service").value = today;
-
+        document.getElementById("input-placed").value = today;
+        document.getElementById("input-prior-placement").value = today;
+        document.getElementById("input-accident").value = today;
 
         $("#add_service").click(function () {
 

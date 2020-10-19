@@ -9,6 +9,7 @@ use App\Http\Requests\InvoiceRequest;
 use App\Http\Requests\UpdateInvoiceDetailsRequest;
 use App\Http\Requests\UpdateInvoicePatient;
 use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Resources\InvoiceDentalDetailsResource;
 use App\Http\Resources\InvoiceDetailsResource;
 use App\Http\Resources\InvoiceDiagnosesResource;
 use App\Http\Resources\InvoiceStatsResource;
@@ -199,10 +200,10 @@ class InvoiceController extends Controller
             if ($invoice->dental) {
                 $dental_service = new InvoiceDentalService();
                 $dental_service->diagnosis_service_id = $diagnosis_service->id;
-                $dental_service->oral_cavity = $service->oral_cavity;
-                $dental_service->tooth_system = $service->tooth_system;
-                $dental_service->tooth_numbers = $service->tooth_numbers;
-                $dental_service->tooth_surfaces = $service->tooth_surfaces;
+                $dental_service->oral_cavity = $service['oral_cavity'];
+                $dental_service->tooth_system = $service['tooth_system'];
+                $dental_service->tooth_numbers = $service['tooth_numbers'];
+                $dental_service->tooth_surfaces = $service['tooth_surfaces'];
                 $dental_service->save();
             }
         }
@@ -301,6 +302,41 @@ class InvoiceController extends Controller
         $validated = $request->validated();
         $invoice = Invoice::findOrFail($validated['invoice_id']);
 
+        if ($invoice->dental && !$validated['dental']) {
+            InvoiceDentalDetails::where('invoice_id', $invoice->id)->delete();
+        }
+
+        if ($invoice->dental && $validated['dental']) {
+            $dental = InvoiceDentalDetails::where('invoice_id', $invoice->id)->get();
+            $dental->enclosures = $request->enclosures;
+            $dental->orthodontics = $request->orthodontics;
+            $dental->appliance_placed = $request->appliance_placed;
+            $dental->months_remaining = $request->months_remaining;
+            $dental->prosthesis_replacement = $request->prosthesis_replacement;
+            $dental->treatment_resulting_from = $request->treatment_resulting_from;
+            $dental->prior_placement = $request->prior_placement;
+            $dental->accident = $request->accident;
+            $dental->auto_accident_state = $request->auto_accident_state;
+            $dental->license = $request->license;
+            $dental->save();
+        }
+
+        if (!$invoice->dental && $validated['dental']) {
+            $dental = new InvoiceDentalDetails();
+            $dental->invoice_id = $invoice->id;
+            $dental->enclosures = $request->enclosures;
+            $dental->orthodontics = $request->orthodontics;
+            $dental->appliance_placed = $request->appliance_placed;
+            $dental->months_remaining = $request->months_remaining;
+            $dental->prosthesis_replacement = $request->prosthesis_replacement;
+            $dental->treatment_resulting_from = $request->treatment_resulting_from;
+            $dental->prior_placement = $request->prior_placement;
+            $dental->accident = $request->accident;
+            $dental->auto_accident_state = $request->auto_accident_state;
+            $dental->license = $request->license;
+            $dental->save();
+        }
+
         $invoice->fill($validated);
 
         InvoiceDiagnosis::where('invoice_id', $invoice->id)->delete();
@@ -325,6 +361,16 @@ class InvoiceController extends Controller
                     ItemService::create($item);
                 }
             }
+
+            if ($invoice->dental) {
+                $dental_service = new InvoiceDentalService();
+                $dental_service->diagnosis_service_id = $diagnosis_service->id;
+                $dental_service->oral_cavity = $service['oral_cavity'];
+                $dental_service->tooth_system = $service['tooth_system'];
+                $dental_service->tooth_numbers = $service['tooth_numbers'];
+                $dental_service->tooth_surfaces = $service['tooth_surfaces'];
+                $dental_service->save();
+            }
         }
 
         $invoice->save();
@@ -340,6 +386,13 @@ class InvoiceController extends Controller
         $invoice->save();
 
         return new InvoiceStatsResource($invoice);
+    }
+
+    public function getDentalDetails(Request $request)
+    {
+        $dental = InvoiceDentalDetails::where('invoice_id', $request['invoice_id'])->firstOrFail();
+
+        return new InvoiceDentalDetailsResource($dental);
     }
 
     /**
