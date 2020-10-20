@@ -79,4 +79,14 @@ class DiagnosisServiceController extends Controller
         echo json_encode($services);
         exit;
     }
+
+    public function getInvoiceDentalServices(Request $request)
+    {
+        $invoice_id = $request->invoice_id;
+        $services = DiagnosisService::with('items', 'dental')
+            ->where('invoice_id', $invoice_id)->get();
+
+        echo json_encode($services);
+        exit;
+    }
 }

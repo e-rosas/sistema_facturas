@@ -1348,6 +1348,7 @@
     $(document).ready(function () {
         document.getElementById("input-date").value = today;
         document.getElementById("input-date_service").value = today;
+        document.getElementById("input-date_service-to").value = today;
         document.getElementById("input-placed").value = today;
         document.getElementById("input-prior-placement").value = today;
         document.getElementById("input-accident").value = today;
@@ -1456,8 +1457,14 @@
                         isHospitalization = 0;
                     }
 
+                    if(dental && document.getElementById("input-license").value == "") {
+                        alert("Debe ingresar la licencia del dentista.");
+                        return;
+                    }
                     sendInvoice(patient_id, series, number, concept, code, currency,
-                        date, comments, isHospitalization);
+                    date, comments, isHospitalization);
+
+
                 } else {
                     alert("Falta agregar servicios a la factura.");
                 }

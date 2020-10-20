@@ -122,7 +122,7 @@
     </div>
     {{-- Reports total --}}
     <div class="row">
-        <div class="col-xl-6 mb-xl-0">
+        <div class="col-xl-12 mb-xl-0">
             <div class="card shadow">
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
@@ -157,7 +157,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-6">
+
+    </div>
+    <div class="row">
+        <div class="col-xl-12 mt-2">
             <div class="card shadow">
                 <div class="card-header border-0">
                     <div class="row align-items-center">

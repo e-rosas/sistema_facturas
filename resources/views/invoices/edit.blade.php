@@ -887,7 +887,6 @@
     function removeDiagnosis(id) {
         for(var diagnosis in this.diagnosesList) {
             if(this.diagnosesList[diagnosis].diagnosis_id == id) {
-                console.log("Eliminando: ", this.diagnosesList[diagnosis])
                 this.diagnosesList.splice(diagnosis, 1);
                 break;
             }
@@ -925,6 +924,24 @@
 
         var service = new Service(service_id, description, price, discounted_price, quantity,
                 services.length, DOS, DOS_to, descripcion, code, pointers);
+        for(var i in items){
+            var tax = false;
+            if(items[i].itax > 0) tax = true;
+            service.addItemToCart(items[i].item_id, items[i].description,items[i].price, items[i].discounted_price,
+            items[i].quantity, services.length, tax, items[i].descripcion, items[i].code, items[i].date);
+        }
+        this.services.push(service);
+    }
+
+    function addDentalServiceToCartFromInvoice(service_id, description, price, discounted_price,
+    quantity, id, DOS, items, descripcion, code, pointers, DOS_to, oral_cavity, tooth_numbers, tooth_surfaces, tooth_system) {
+
+        var service = new Service(service_id, description, price, discounted_price, quantity,
+        services.length, DOS, DOS_to, descripcion, code, pointers);
+        service.oral_cavity = oral_cavity;
+        service.tooth_numbers = tooth_numbers;
+        service.tooth_surfaces = tooth_surfaces;
+        service.tooth_system = tooth_system;
         for(var i in items){
             var tax = false;
             if(items[i].itax > 0) tax = true;
@@ -994,6 +1011,30 @@
                     response[i].price, response[i].discounted_price, response[i].quantity,
                     response[i].id, response[i].DOS, response[i].items,
                     response[i].descripcion, response[i].code, response[i].diagnoses_pointers, response[i].DOS_to);
+            }
+            displayCart();
+
+            }
+        });
+            return false;
+    }
+
+    function getInvoiceDentalServices(id){
+        $.ajax({
+            url: "{{route('invoice.dental.services')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "invoice_id" : id
+            },
+        success: function (response) {
+            for(var i = 0; i < response.length; i++){
+                addDentalServiceToCartFromInvoice(response[i].service_id, response[i].description,
+                    response[i].price, response[i].discounted_price, response[i].quantity,
+                    response[i].id, response[i].DOS, response[i].items,
+                    response[i].descripcion, response[i].code, response[i].diagnoses_pointers, response[i].DOS_to,
+                    response[i].dental.oral_cavity, response[i].dental.tooth_numbers, response[i].dental.tooth_surfaces, response[i].dental.tooth_system);
             }
             displayCart();
 
@@ -1263,11 +1304,18 @@
     var today = yyyy + '-' + mm + '-' + dd;
     $(document).ready(function(){
         document.getElementById("input-date_service").value = today;
+        document.getElementById("input-date_service-to").value = today;
+        document.getElementById("input-placed").value = today;
+        document.getElementById("input-prior-placement").value = today;
+        document.getElementById("input-accident").value = today;
         getInvoiceDiagnoses({!! $invoice->id !!});
-        getInvoiceServices({!! $invoice->id !!});
+
         if(dental){
+            getInvoiceDentalServices({!! $invoice->id !!});
             getInvoiceDentalDetails({!! $invoice->id !!});
             showDentalSection(1);
+        } else {
+            getInvoiceServices({!! $invoice->id !!});
         }
 
 
@@ -1333,6 +1381,10 @@
 
         $("#save").click(function(){
             if(services.length > 0 && diagnosesList.length > 0) {
+                if(dental && document.getElementById("input-license").value == "") {
+                    alert("Debe ingresar la licencia del dentista.");
+                    return;
+                }
                 sendInvoice();
             }
             else {
