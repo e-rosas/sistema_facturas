@@ -218,7 +218,11 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        $invoice = $invoice->load('patient', 'payments', 'calls', 'diagnoses.diagnosis');
+        if ($invoice->dental) {
+            $invoice = $invoice->load('patient', 'payments', 'calls', 'diagnoses.diagnosis', 'dental_details');
+        } else {
+            $invoice = $invoice->load('patient', 'payments', 'calls', 'diagnoses.diagnosis');
+        }
 
         $pdf = new PrepareInvoicePDF($invoice);
         $categories = $pdf->serviceCategories();
@@ -307,7 +311,10 @@ class InvoiceController extends Controller
         }
 
         if ($invoice->dental && $validated['dental']) {
-            $dental = InvoiceDentalDetails::where('invoice_id', $invoice->id)->get();
+            InvoiceDentalDetails::where('invoice_id', $invoice->id)->delete();
+
+            $dental = new InvoiceDentalDetails();
+            $dental->invoice_id = $invoice->id;
             $dental->enclosures = $request->enclosures;
             $dental->orthodontics = $request->orthodontics;
             $dental->appliance_placed = $request->appliance_placed;

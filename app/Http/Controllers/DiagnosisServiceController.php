@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DiagnosisService;
+use App\InvoiceDentalService;
 use Illuminate\Http\Request;
 
 class DiagnosisServiceController extends Controller
@@ -87,6 +88,16 @@ class DiagnosisServiceController extends Controller
             ->where('invoice_id', $invoice_id)->get();
 
         echo json_encode($services);
+        exit;
+    }
+
+    public function findInvoiceDentalService(Request $request)
+    {
+        $diagnosis_service_id = $request->diagnosis_service_id;
+        $dental = InvoiceDentalService::where('diagnosis_service_id', $diagnosis_service_id)->firstOrFail()
+        ;
+
+        echo json_encode($dental);
         exit;
     }
 }

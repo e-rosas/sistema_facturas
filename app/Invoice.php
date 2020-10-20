@@ -318,7 +318,7 @@ class Invoice extends Model
         return $this->hasOne('App\Charge');
     }
 
-    public function dental()
+    public function dental_details()
     {
         return $this->hasOne('App\InvoiceDentalDetails');
     }

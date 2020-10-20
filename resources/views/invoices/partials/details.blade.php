@@ -65,12 +65,12 @@
         <div class="card-body">
             <div class="form-row">
                 {{--  Concept  --}}
-                <div class="col-md-10 col-auto form-group">
+                <div class="col-md-6 col-auto form-group">
                     <label class="form-control-label" for="label-concept">Concepto</label>
                     <label id="label-concept">{{ $invoice->concept }}</label>
                 </div>
                 {{--  DOS  --}}
-                <div class="col-md-2 col-auto form-group">
+                <div class="col-md-6 col-auto form-group">
                     <label class="form-control-label" for="label-date">Fecha de servicio</label>
                     <label id="label-DOS">{{ $invoice->DOS->format('M-d-Y') }}</label>
 
@@ -78,13 +78,13 @@
             </div>
             <div class="form-row">
                 {{--  code --}}
-                <div class="col-md-2 col-auto form-group">
+                <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-code">No. de Cobro</label>
                     <label id="label-code">{{ $invoice->code }}</label>
 
                 </div>
                 {{--  number --}}
-                <div class="col-md-2 col-auto form-group">
+                <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-number">Folio de CONTPAQ</label>
                     <label id="label-number">{{ $invoice->number }}</label>
 
@@ -95,8 +95,8 @@
                     <label id="label-date">{{ $invoice->date->format('M-d-Y') }}</label>
 
                 </div>
-                {{--  number --}}
-                <div class="col-md-5 col-auto form-group">
+                {{--  rate --}}
+                <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-number">Tipo de cambio</label>
                     <label id="label-exchange_rate">{{ $invoice->exchangeRate() }}</label>
 
@@ -105,16 +105,19 @@
             </div>
             <div class="form-row">
                 {{--  type --}}
-                <div class="col-md-2 col-auto form-group">
+                <div class="col-md-5 col-auto form-group">
                     <label class="form-control-label" for="label-type">Tipo</label>
                     <label id="invoice-type">{{ $invoice->type() }}</label>
                 </div>
+
+            </div>
+            <div class="form-row">
                 {{--  status --}}
-                <div class="col-md-2 col-auto form-group">
+                <div class="col-md-4 col-auto form-group">
                     <label class="form-control-label" for="label-status">Estado</label>
                     <label id="label-status">{{ $invoice->status() }}</label>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 col-auto form-group">
                     <select id='new-status' class="custom-select" name="status">
                         <option value='10'>Cambiar estado</option>
                         <option value='0'>Nota de crédito pendiente.</option>
@@ -124,12 +127,22 @@
                         <option value='4'>Pendiente de facturar.</option>
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <button id="update-status" onclick="updateStatus()" class="btn btn-success btn-sm">
+                <div class="col-md-4">
+                    <button id="update-status" onclick="updateStatus()" class="btn btn-success btn-lg btn-block">
                         Cambiar
                     </button>
                 </div>
             </div>
+            @if ($invoice->dental)
+            @include('invoices.partials.dentalServiceInfoModal')
+            <div class="form-row">
+                <div class="col-xl-12">
+                    @include('invoices.partials.dentalDetails', ['dental' => $invoice->dental_details])
+                </div>
+
+            </div>
+            @endif
+
             <div class="form-row">
                 <div class="col-md-3">
                     @if (config('app.initial') == "C")

@@ -960,7 +960,6 @@
     }
 
     function displayDentalDetails(service) {
-        var output = "";
         document.getElementById("modal-dental-service-description").innerHTML = service.description;
 
         document.getElementById("modal-dental-service-oral-cavity").value = service.oral_cavity;
