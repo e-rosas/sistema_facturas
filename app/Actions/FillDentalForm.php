@@ -9,7 +9,7 @@ use FormFiller\PDF\Field;
 use FormFiller\PDF\PDFGenerator;
 use Illuminate\Support\Facades\Storage;
 
-class FillPaymentFormPDF
+class FillDentalFormPDF
 {
     private $coordinates = '';
 
