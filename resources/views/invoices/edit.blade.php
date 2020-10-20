@@ -1309,11 +1309,11 @@
         document.getElementById("input-prior-placement").value = today;
         document.getElementById("input-accident").value = today;
         getInvoiceDiagnoses({!! $invoice->id !!});
+        showDentalSection(dental);
 
         if(dental){
             getInvoiceDentalServices({!! $invoice->id !!});
             getInvoiceDentalDetails({!! $invoice->id !!});
-            showDentalSection(1);
         } else {
             getInvoiceServices({!! $invoice->id !!});
         }
