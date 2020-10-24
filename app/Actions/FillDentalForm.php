@@ -27,10 +27,10 @@ class FillDentalFormPDF
     public function fill($output)
     {
         $this->getInvoiceData();
-        $pages = ceil(count($this->invoice->services2) / 6);
-        $form = storage_path('app/pdf/form.pdf');
+        $pages = ceil(count($this->invoice->services2) / 10);
+        $form = storage_path('app/pdf/dentalForm.pdf');
         for ($i = 0; $i < $pages; ++$i) {
-            $services = $this->invoice->services2->slice($i * 6, 6)->values();
+            $services = $this->invoice->services2->slice($i * 10, 10)->values();
             $this->fillPage($form, $services, $i);
         }
         $merge = new MergePDFs($pages);
@@ -40,18 +40,18 @@ class FillDentalFormPDF
     public function saveFill()
     {
         $this->getInvoiceData();
-        $pages = ceil(count($this->invoice->services2) / 6);
+        $pages = ceil(count($this->invoice->services2) / 10);
         $directory = 'pdf/patients/'.$this->invoice->patient_id.'/invoices/';
 
-        Storage::put($directory.$this->invoice->code.'PaymentForm.pdf', '');
+        Storage::put($directory.$this->invoice->code.'DentalForm.pdf', '');
 
-        $form = storage_path('app/pdf/form.pdf');
+        $form = storage_path('app/pdf/dentalForm.pdf');
         for ($i = 0; $i < $pages; ++$i) {
-            $services = $this->invoice->services2->slice($i * 6, 6)->values();
+            $services = $this->invoice->services2->slice($i * 10, 10)->values();
             $this->fillPage($form, $services, $i);
         }
         $merge = new MergePDFs($pages);
-        $merge->saveMerge('app/'.$directory.$this->invoice->code.'PaymentForm.pdf');
+        $merge->saveMerge('app/'.$directory.$this->invoice->code.'DentalForm.pdf');
     }
 
     public function addServices($services)
@@ -227,17 +227,11 @@ class FillDentalFormPDF
     {
         //return
         $this->invoice_data = [
-            'DOCTOR' => [
+            'DENTIST_SIGNATURE' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->doctor,
-            ],
-            'INVOICE_PAID' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => 0,
             ], /*
             'INVOICE_TOTAL' => [
                 'size' => 9,
@@ -245,89 +239,47 @@ class FillDentalFormPDF
                 'style' => 'B',
                 'value' => number_format($this->invoice->total_with_discounts, 2),
             ], */
-            'INVOICE_NUMBER' => [
+            'Patient_DOB' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $this->invoice->code,
+                'value' => $this->invoice->patient->birth_date->format('m/d/y'),
             ],
-            'PATIENT_PHONE' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->patient->phone_number,
-            ],
-            'PATIENT_ZIP' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->patient->zip_code,
-            ],
-            'PATIENT_DATE' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->DOS->format('m-d-Y'),
-            ],
-            'PATIENT_YY' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->patient->birth_date->format('y'),
-            ],
-            'PATIENT_DD' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->patient->birth_date->format('d'),
-            ],
-            'PATIENT_MM' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->patient->birth_date->format('m'),
-            ],
-            'STATE' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->patient->state,
-            ],
-            'PATIENT_NAME' => [
+            'Patient_Name' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->name(),
             ],
-            'CITY' => [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->patient->city,
-            ],
-            'PATIENT_ADDRESS' => [
+            'Patient_Address' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->patient->address(),
             ],
-            'SEXF' => [
+            'Patient_City_State_Zip' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->patient->addressDetails(),
+            ],
+            'Patient_F' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => (1 == $this->invoice->patient->gender) ? 'X' : '',
             ],
-            'SEXM' => [
+            'Patient_M' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => (1 == $this->invoice->patient->gender) ? '' : 'X',
             ],
-            'OTHER' => [
+            'Patient_U' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => 'X',
+                'value' => '',
             ],
         ];
         if ($this->invoice->patient->insured) {
@@ -335,134 +287,110 @@ class FillDentalFormPDF
 
             //add insured data
             $insured_data = [
-                'INSURED_ID' => [
+                'Insurance_ID' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insurance_id,
                 ],
-                'INSURED_PHONE' => [
+                'Patient_Insurance' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->patient->phone_number,
+                    'value' => $insured->insurance_id,
                 ],
-                'INSURED_POLICY' => [
+                'Insurer_Policy_Number' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->group_number,
                 ],
-                'INSURED_ZIP' => [
+                'Insurer_DOB' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->patient->zip_code,
+                    'value' => $this->invoice->patient->birth_date->format('m/d/y'),
                 ],
-                'INSURED_YY' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $this->invoice->patient->birth_date->format('y'),
-                ],
-                'INSURED_DD' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $this->invoice->patient->birth_date->format('d'),
-                ],
-                'INSURED_MM' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $this->invoice->patient->birth_date->format('m'),
-                ],
-                'INSURED_STATE' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $this->invoice->patient->state,
-                ],
-                'INSURED_NAME' => [
+                'Insurer_Name' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->name(),
                 ],
-                'INSURED_CITY' => [
+                'Insurer_City_State_Zip' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $this->invoice->patient->city,
+                    'value' => $this->invoice->patient->addressDetails(),
                 ],
-                'INSURED_ADDRESS' => [
+                'Insurer_Address' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $this->invoice->patient->address(),
                 ],
-                'SELF' => [
+                'Self' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => 'X',
                 ],
-                'CHILD' => [
+                'Dependent Child' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => '',
                 ],
-                'SPOUSE' => [
+                'Spouse' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => '',
                 ],
-                'R_OTHER' => [
+                'Other' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => '',
                 ],
-                'INSURED_SEXF' => [
+                'Insurer_F' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $this->invoice->patient->gender) ? 'X' : '',
                 ],
-                'INSURED_SEXM' => [
+                'Insurer_M' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $this->invoice->patient->gender) ? '' : 'X',
                 ],
+                'Insurer_U' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => '',
+                ],
             ];
 
             $insurance_data = [
-                'INSURANCE_NAME' => [
+                'Company_Name' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insurer->name,
                 ],
-                'INSURANCE_ADDRESS' => [
+                'Company_Address' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insurer->address,
                 ],
-                'INSURANCE_CITY_ZIP' => [
+                'Company_City_State_Zip' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insurer->addressDetails(),
-                ],
-                'INSURANCE_PHONE' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $insured->insurer->phone_number,
                 ],
             ];
 
@@ -470,123 +398,105 @@ class FillDentalFormPDF
         } else {
             $insured = Insuree::where('patient_id', $this->invoice->patient->dependent->insuree_id)->first();
             $insured_data = [
-                'INSURED_ID' => [
+                'Insurance_ID' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insurance_id,
                 ],
-                'INSURED_PHONE' => [
+                'Patient_]Insurance' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->patient->phone_number,
+                    'value' => $insured->insurance_id,
                 ],
-                'INSURED_POLICY' => [
+                'Insurer_Policy_Number' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->group_number,
                 ],
-                'INSURED_ZIP' => [
+                'Insurer_DOB' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->patient->zip_code,
+                    'value' => $insured->patient->birth_date->format('m/d/y'),
                 ],
-                'INSURED_YY' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $insured->patient->birth_date->format('y'),
-                ],
-                'INSURED_DD' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $insured->patient->birth_date->format('d'),
-                ],
-                'INSURED_MM' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $insured->patient->birth_date->format('m'),
-                ],
-                'INSURED_STATE' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => 'B',
-                    'value' => $insured->patient->state,
-                ],
-                'INSURED_NAME' => [
+                'Insurer_Name' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->name(),
                 ],
-                'INSURED_CITY' => [
+                'Insurer_City_State_Zip' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->patient->city,
+                    'value' => $insured->patient->addressDetails(),
                 ],
-                'INSURED_ADDRESS' => [
+                'Insurer_Address' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->patient->address(),
                 ],
-                'SELF' => [
+                'Self' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => '',
                 ],
-                'CHILD' => [
+                'Dependent Child' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
-                'SPOUSE' => [
+                'Spouse' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (2 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
-                'R_OTHER' => [
+                'Other' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (0 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
-                'INSURED_SEXF' => [
+                'Insurer_F' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $insured->patient->gender) ? 'X' : '',
                 ],
-                'INSURED_SEXM' => [
+                'Insurer_M' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => (1 == $insured->patient->gender) ? '' : 'X',
                 ],
+                'Insurer_U' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => 'B',
+                    'value' => '',
+                ],
             ];
             $insurance_data = [
-                'INSURANCE_NAME' => [
+                'Company_Name' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insurer->name,
                 ],
-                'INSURANCE_ADDRESS' => [
+                'Company_Address' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
                     'value' => $insured->insurer->address,
                 ],
-                'INSURANCE_CITY_ZIP' => [
+                'Company_City_State_Zip' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
@@ -604,8 +514,15 @@ class FillDentalFormPDF
 
         $diagnosis_list = [];
 
-        for ($i = 0; $i < count($this->invoice->diagnoses); ++$i) {
-            if (0 == $i) {
+        for ($i = 1; $i <= count($this->invoice->diagnoses); ++$i) {
+            $diagnosis_list['Diagnosis_'.$i] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
+            ];
+
+            /* if (0 == $i) {
                 $diagnosis_list['DA'] = [
                     'size' => 9,
                     'family' => 'Arial',
@@ -689,7 +606,7 @@ class FillDentalFormPDF
                     'style' => 'B',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
-            }
+            } */
         }
 
         $this->invoice_data = $this->invoice_data + $diagnosis_list;
