@@ -71,79 +71,61 @@ class FillDentalFormPDF
                 $code = $service[0];
             }
             $services[$i]->pointers_alphabet = $this->realPointers($services[$i]->diagnoses_pointers, $alphabet);
-            $services_list['S'.($i + 1).'_FROM_MM'] = [
+            $services_list['24 Procedure Date MMDDYYYY'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->DOS->format('m'),
+                'value' => $services[$i]->DOS->format('m/d/y'),
             ];
-            $services_list['S'.($i + 1).'_FROM_DD'] = [
+            $services_list['25 Area of Oral Cavity'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->DOS->format('d'),
+                'value' => $services[$i]->dental->oral_cavity,
             ];
-            $services_list['S'.($i + 1).'_FROM_YY'] = [
+            $services_list['26 Tooth System'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->DOS->format('y'),
+                'value' => $services[$i]->dental->tooth_system,
             ];
-            $services_list['S'.($i + 1).'_TO_MM'] = [
+            $services_list['27 Tooth Numbers or Letters'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->DOS_to->format('m'),
+                'value' => $services[$i]->dental->tooth_numbers,
             ];
-            $services_list['S'.($i + 1).'_TO_DD'] = [
+            $services_list['28 Tooth Surface'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
-                'value' => $services[$i]->DOS_to->format('d'),
+                'value' => $services[$i]->dental->tooth_surfaces,
             ];
-            $services_list['S'.($i + 1).'_TO_YY'] = [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => $services[$i]->DOS_to->format('y'),
-            ];
-            $services_list['S'.($i + 1).'_PLACE'] = [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => '11',
-            ];
-            $services_list['S'.($i + 1).'_EMG'] = [
-                'size' => 9,
-                'family' => 'Arial',
-                'style' => 'B',
-                'value' => 'N',
-            ];
-            $services_list['S'.($i + 1).'_CODE'] = [
+            $services_list['29 Procedure Code'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $code,
             ];
-            $services_list['S'.($i + 1).'_NAME'] = [
+            $services_list['30 Description'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $modifier,
             ];
-            $services_list['S'.($i + 1).'_POINTERS'] = [
+            $services_list['29a Diag Pointer'.($i + 1)] = [
                 'size' => 7,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $services[$i]->pointers_alphabet,
             ];
-            $services_list['S'.($i + 1).'_TOTAL'] = [
+            $services_list['31 Fee'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => number_format($services[$i]->total_discounted_price, 2),
             ];
-            $services_list['S'.($i + 1).'_UNITS'] = [
+            $services_list['29b Qty'.($i + 1)] = [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => 'B',
@@ -151,7 +133,7 @@ class FillDentalFormPDF
             ];
         }
 
-        $total_services = ['INVOICE_TOTAL' => [
+        $total_services = ['Invoice_Total' => [
             'size' => 9,
             'family' => 'Arial',
             'style' => 'B',
@@ -280,6 +262,12 @@ class FillDentalFormPDF
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => '',
+            ],
+            '35 Remarks' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->comments,
             ],
         ];
         if ($this->invoice->patient->insured) {
