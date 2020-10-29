@@ -1810,7 +1810,7 @@ T32:
         $path = 'app/pdf/invoice/newForm'.$page.'.pdf';
         Storage::put($path, '');
         $newForm = storage_path($path);
-        $pdfGenerator = new PDFGenerator($fieldEntities, $data, 'P', 'pt', 'A4');
+        $pdfGenerator = new PDFGenerator($fieldEntities, $data, 'P', 'pt', 'letter');
 
         try {
             $pdfGenerator->start($form, $newForm);
