@@ -1852,9 +1852,12 @@ T32:
         $coordinates = $this->coordinates;
         for ($i = 0; $i < count($services); ++$i) {
             //get number from array
-            $n = (int)$services[$i]->dental->tooth_numbers;
+            $n = $services[$i]->dental->tooth_numbers;
+            if(is_numeric($n)){
             //search for it in slots
             $coordinates = $coordinates.$this->teeth_slots[($n - 1)];
+            }
+            
         }
 
         return $coordinates;
