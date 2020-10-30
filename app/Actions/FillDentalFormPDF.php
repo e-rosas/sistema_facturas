@@ -2165,7 +2165,7 @@ T32:
                     'style' => '',
                     'value' => $insured->insurance_id,
                 ],
-                'Patient_]Insurance' => [
+                'Patient_Insurance' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
