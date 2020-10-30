@@ -58,7 +58,7 @@
                     <div class="form-row">
 
                         {{--  start_date  --}}
-                        <div class="col-lg-5 col-auto">
+                        <div class="col-lg-3 col-auto">
                             <label for="start">{{ __('Fecha de servicio de') }}</label>
                             <div class="input-group input-group-alternative">
                                 <div class="input-group-prepend">
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         {{--  end_date  --}}
-                        <div class="col-lg-5 col-auto">
+                        <div class="col-lg-3 col-auto">
                             <label for="end">{{ __('hasta') }}</label>
                             <div class="input-group input-group-alternative">
                                 <div class="input-group-prepend">
@@ -116,7 +116,7 @@
                 </div>
                 <div class="card-footer py-4">
                     <nav class="d-flex justify-content-end" aria-label="...">
-                        {{ $invoices->appends(['start' =>$start->format('Y-m-d'), 'end' => $end->format('Y-m-d'),'search'=>$search, 'perPage'=>$perPage, 'type'=>$type,'status'=>$status ])->links() }}
+                        {{ $invoices->appends(['start' =>$start->format('Y-m-d'), 'end' => $end->format('Y-m-d'),'search'=>$search, 'perPage'=>$perPage, 'type'=>$type,'status'=>$status])->links() }}
                     </nav>
                 </div>
 

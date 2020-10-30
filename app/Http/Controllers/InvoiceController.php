@@ -39,6 +39,13 @@ class InvoiceController extends Controller
         } else {
             $perPage = 15;
         }
+
+        /* if (!is_null($request->dental)) {
+            $dental = $request->dental;
+        } else {
+            $dental = 2;
+        } */
+
         if (!empty($request['start'] && !empty($request['end']))) {
             $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
@@ -66,6 +73,7 @@ class InvoiceController extends Controller
         if ($type < 4 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where([['type', $type], ['status', $status]])
+
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('date', 'desc')
@@ -74,6 +82,7 @@ class InvoiceController extends Controller
         } elseif ($type >= 4 && $status < 6) {
             $invoices = Invoice::with('patient')
                 ->where('status', $status)
+
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('date', 'desc')
@@ -82,6 +91,7 @@ class InvoiceController extends Controller
         } elseif ($type < 4 && $status >= 6) {
             $invoices = Invoice::with('patient')
                 ->where('type', $type)
+
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('date', 'desc')
@@ -89,6 +99,7 @@ class InvoiceController extends Controller
         ;
         } else {
             $invoices = Invoice::with('patient')
+
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('date', 'desc')

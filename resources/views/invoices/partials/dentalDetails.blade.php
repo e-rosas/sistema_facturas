@@ -1,44 +1,41 @@
-<p>
-    <button class="btn btn-icon btn-2 btn-primary" type="button" data-toggle="collapse" data-target="#dental"
+<div>
+    <button class="btn btn-icon btn-block btn-primary" type="button" data-toggle="collapse" data-target="#dental"
         aria-expanded="false" aria-controls="dental">
         <span class="btn-inner--icon"><i class="fas fa-tooth"></i></span>
     </button>
-</p>
-<form target="_blank" method="post" action="{{ route('invoice.pdf.dental', $invoice) }}">
-    @csrf
-    <input type="hidden" name="output" value="D">
-    <button type="submit" class="dropdown-item">Descargar</button>
-</form>
+</div>
 
 <div class="collapse" id="dental">
     <div class="card shadow">
-        <div class="row">
-            <div class="col-md-10">
-                <div class="card-header bg-primary border-0">
+
+        <div class="card-header bg-primary border-0">
+            <div class="row">
+                <div class="col-md-10">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Dental</h3>
                 </div>
-            </div>
-            <div class="col-md-2 text-right">
-                <div class="dropdown">
-                    <a class="btn  btn-success btn-sm" href="#" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        PDF
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <form target="_blank" method="post" action="{{ route('invoice.pdf.dental', $invoice) }}">
-                            @csrf
-                            <input type="hidden" name="output" value="D">
-                            <button type="submit" class="dropdown-item">Descargar</button>
-                        </form>
-                        <form target="_blank" method="post" action="{{ route('invoice.pdf.dental', $invoice) }}">
-                            @csrf
-                            <input type="hidden" name="output" value="I">
-                            <button type="submit" class="dropdown-item">Ver</button>
-                        </form>
+                <div class="col-md-2 text-right">
+                    <div class="dropdown">
+                        <a class="btn  btn-success btn-sm" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            PDF
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <form target="_blank" method="post" action="{{ route('invoice.pdf.dental', $invoice) }}">
+                                @csrf
+                                <input type="hidden" name="output" value="D">
+                                <button type="submit" class="dropdown-item">Descargar</button>
+                            </form>
+                            <form target="_blank" method="post" action="{{ route('invoice.pdf.dental', $invoice) }}">
+                                @csrf
+                                <input type="hidden" name="output" value="I">
+                                <button type="submit" class="dropdown-item">Ver</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
+
         </div>
 
         <div class="card-body">
