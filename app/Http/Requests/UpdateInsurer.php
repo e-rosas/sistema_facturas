@@ -30,7 +30,7 @@ class UpdateInsurer extends FormRequest
             'address' => 'max:255',
             'city' => 'max:255',
             'state' => 'max:255',
-            'postal_code' => 'digits:5',
+            'postal_code' => 'max:20',
             'phone_number' => 'max:255',
             'email' => 'email',
         ];
