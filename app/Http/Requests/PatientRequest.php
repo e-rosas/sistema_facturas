@@ -35,6 +35,7 @@ class PatientRequest extends FormRequest
             'city' => 'max:255',
             'state' => 'max:255',
             'phone_number' => 'max:255',
+            'insurer_phone_number' => 'max:255',
             'email' => 'max:255',
             'insured' => 'boolean',
             'deductible' => 'numeric',

@@ -89,6 +89,15 @@ class PatientController extends Controller
             $insuree->insurance_id = $validated['insurance_id'];
             $insuree->nss = $validated['insurance_id'];
             $insuree->group_number = $validated['group_number'];
+
+            //No custom phone_number -> take insurer's number
+            if (null == $validated['insurer_phone_number']) {
+                $insurer = Insurer::findOrFail($validated['insurer_id']);
+                $insuree->insurer_phone_number = $insurer->phone_number;
+            } else {
+                $insuree->insurer_phone_number = $validated['insurer_phone_number'];
+            }
+
             $insuree->save();
         } else {
             $dependent = new Dependent();

@@ -17,6 +17,8 @@ class CreateInsureesTable extends Migration
             $table->string('insurance_id', 50)->unique();
             $table->string('nss', 20)->unique();
             $table->string('group_number', 20);
+            $table->string('insurer_phone_number')->nullable();
+
             $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
             $table->foreign('insurer_id')->references('id')->on('insurers')->cascadeOnDelete();
             $table->timestamps();

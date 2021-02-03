@@ -63,51 +63,54 @@
                                 </span>
                                 @endif
                             </div>
-                            {{--  <div class="form-group col-md-3 col-auto">
-                                        <label for="input-nss" class="col-auto col-form-label">No. Seguro Social</label>
-                                        <input type="text" name="nss" id="input-nss" class="form-control form-control-alternative{{ $errors->has('nss') ? ' is-invalid' : '' }}"
-                            placeholder="ID Aseguranza" value="{{ old('nss') }}">
-                            @if ($errors)
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('nss') }}</strong>
-                            </span>
-                            @endif
-                        </div> --}}
-                        <input type="hidden" name="insuree_id" value=0>
-                        <input type="hidden" name="relationship" value=-1>
-                        {{-- <div class="form-group col-auto text-right">
-                                        <a href="{{ route('insurers.create') }}" class="btn btn-sm
-                        btn-primary">{{ __('Add Insurer') }}</a>
-                </div> --}}
-            </div>
-            @else
-            <div class="form-row">
-                <input type="hidden" name="insured" value=0>
-                <div class="col-lg-8 form-group">
-                    <label for="insuree_id" class="col-auto col-form-label">Asegurado</label>
-                    @include('components.searchInsurees')
-                </div>
-                <div class="col-lg-4">
-                    <label class="form-control-label" for="input-status">Relación</label>
-                    <select id='input-relationship' class="custom-select" name="relationship">
-                        <option value='2'>Esposo(a)</option>
-                        <option value='1'>Hijo(a)</option>
-                        <option value='0'>Otro</option>
-                    </select>
-                </div>
-            </div>
-            <input type="hidden" name="insurer_id" value=0>
-            <input type="hidden" name="insurance_id" value=0>
-            @endif
+                            <input type="hidden" name="insuree_id" value=0>
+                            <input type="hidden" name="relationship" value=-1>
+                        </div>
+                        <div class="form-row">
+                            <div
+                                class="col-md-8 form-group{{ $errors->has('insurer_phone_number') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-insurer_phone_number">Teléfono de grupo de
+                                    aseguranza</label>
+                                <input type="text" name="insurer_phone_number" id="input-insurer_phone_number"
+                                    class="form-control form-control-alternative{{ $errors->has('insurer_phone_number') ? ' is-invalid' : '' }}"
+                                    placeholder="Teléfono" value="{{ old('insurer_phone_number') }}" autofocus>
 
-            <div class="pl-lg-4">
-                <button type="submit" class="btn btn-success mt-4 btn-block">Guardar</button>
+                                @if ($errors->has('insurer_phone_number'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('insurer_phone_number') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        @else
+                        <div class="form-row">
+                            <input type="hidden" name="insured" value=0>
+                            <div class="col-lg-8 form-group">
+                                <label for="insuree_id" class="col-auto col-form-label">Asegurado</label>
+                                @include('components.searchInsurees')
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-control-label" for="input-status">Relación</label>
+                                <select id='input-relationship' class="custom-select" name="relationship">
+                                    <option value='2'>Esposo(a)</option>
+                                    <option value='1'>Hijo(a)</option>
+                                    <option value='0'>Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="insurer_id" value=0>
+                        <input type="hidden" name="insurance_id" value=0>
+                        <input type="hidden" name="insurer_phone_number" value="">
+                        @endif
+
+                        <div class="pl-lg-4">
+                            <button type="submit" class="btn btn-success mt-4 btn-block">Guardar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            </form>
         </div>
     </div>
-</div>
-</div>
 </div>
 @include('layouts.footers.auth')
 </div>
