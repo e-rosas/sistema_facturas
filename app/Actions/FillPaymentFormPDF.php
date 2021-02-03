@@ -1628,7 +1628,7 @@ INSURED_POLICY:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->insurer->phone_number,
+                    'value' => $insured->insurer_phone_number,
                 ],
             ];
 

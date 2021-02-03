@@ -278,11 +278,28 @@
                         btn-primary">{{ __('Add Insurer') }}</a>
                 </div> --}}
             </div>
+            <div class="form-row">
+                <div class="col-md-8 form-group{{ $errors->has('insurer_phone_number') ? ' has-danger' : '' }}">
+                    <label class="form-control-label" for="input-insurer_phone_number">Teléfono de grupo de
+                        aseguranza</label>
+                    <input type="text" name="insurer_phone_number" id="input-insurer_phone_number"
+                        class="form-control form-control-alternative{{ $errors->has('insurer_phone_number') ? ' is-invalid' : '' }}"
+                        placeholder="Teléfono de grupo de aseguranza"
+                        value="{{ $patient->insuree->insurer_phone_number }}">
+
+                    @if ($errors->has('insurer_phone_number'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('insurer_phone_number') }}</strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
             @else
             <div class="form-row">
                 <input type="hidden" name="insurer_id" value=0>
                 <input type="hidden" name="insurance_id" value=0>
                 <input type="hidden" name="insuree_id" value=0>
+                <input type="hidden" name="insurer_phone_number" value="">
                 {{-- <div class="col-lg-8 form-group">
                                         <label for="insuree_id" class="col-auto col-form-label">Asegurado</label>
                                         @include('components.searchInsurees')

@@ -73,7 +73,8 @@
                                     aseguranza</label>
                                 <input type="text" name="insurer_phone_number" id="input-insurer_phone_number"
                                     class="form-control form-control-alternative{{ $errors->has('insurer_phone_number') ? ' is-invalid' : '' }}"
-                                    placeholder="Teléfono" value="{{ old('insurer_phone_number') }}" autofocus>
+                                    placeholder="Teléfono de grupo de aseguranza"
+                                    value="{{ old('insurer_phone_number') }}">
 
                                 @if ($errors->has('insurer_phone_number'))
                                 <span class="invalid-feedback" role="alert">

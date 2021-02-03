@@ -158,7 +158,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/diagnosis_codes', 'DiagnosisController@updateCodes'); */
     Route::get('/update_patients_stats', 'PatientController@updateStats');
-    Route::get('/update_registered', 'InvoiceController@updateRegistered');
+    //Route::get('/update_registered', 'InvoiceController@updateRegistered');
+
+    Route::get('/update_insurees_phones', 'InsureeController@updateInsurerPhone');
 
     /* Route::get('/import_invoices', 'ImportController@getImportInvoices')->name('import.invoices');
     Route::post('/import_parse_invoices', 'ImportController@parseImportInvoices')->name('import.parse.invoices');
