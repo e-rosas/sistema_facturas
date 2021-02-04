@@ -126,6 +126,11 @@
                         <i class="fas fa-cube text-warning"></i> Categorias
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('locations.index') }}">
+                        <i class="fas fa-map-marker-alt text-blue"></i> Ubicaciones
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

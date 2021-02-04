@@ -230,9 +230,9 @@ class InvoiceController extends Controller
     public function show(Invoice $invoice)
     {
         if ($invoice->dental) {
-            $invoice = $invoice->load('patient', 'payments', 'calls', 'diagnoses.diagnosis', 'dental_details');
+            $invoice = $invoice->load('patient', 'payments', 'calls', 'location', 'diagnoses.diagnosis', 'dental_details');
         } else {
-            $invoice = $invoice->load('patient', 'payments', 'calls', 'diagnoses.diagnosis');
+            $invoice = $invoice->load('patient', 'payments', 'calls', 'location', 'diagnoses.diagnosis');
         }
 
         $pdf = new PrepareInvoicePDF($invoice);

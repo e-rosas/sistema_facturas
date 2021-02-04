@@ -2267,7 +2267,7 @@ T32:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
-                    'value' => $insured->insurer->phone_number,
+                    'value' => $insured->insurer_phone_number,
                 ],
             ];
             $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;

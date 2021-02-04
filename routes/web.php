@@ -140,6 +140,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('charts/stats', 'ReportController@invoiceStats')->name('charts.invoices');
 
+    Route::resource('locations', 'LocationController');
+
     /* Route::get('/import_items', 'ImportController@getImportItems')->name('import.items');
     Route::post('/import_parse_items', 'ImportController@parseImportItems')->name('import.parse.items');
     Route::post('/import_process_items', 'ImportController@processImportItems')->name('import.process.items'); */

@@ -211,18 +211,22 @@ class Invoice extends Model
                 return 'Crédito.';
 
                 break;
+
             case 1:
                 return 'Contado.';
 
                 break;
+
             case 2:
                 return 'Pendiente de pago.';
 
                 break;
+
             case 3:
                 return 'Cargo al paciente.';
 
                 break;
+
             default:
                 // code...
                 break;
@@ -236,26 +240,32 @@ class Invoice extends Model
                 return 'Nota de crédito pendiente.';
 
                 break;
+
             case 1:
                 return 'Completa.';
 
                 break;
+
             case 2:
                 return 'Pendiente de pago.';
 
                 break;
+
             case 3:
                 return 'Pendiente de asignar productos.';
 
                 break;
+
             case 4:
                 return 'Pendiente de facturar.';
 
                 break;
+
             case 5:
                 return 'Pendiente de revisar.';
 
                 break;
+
             default:
                 // code...
                 break;
@@ -265,6 +275,11 @@ class Invoice extends Model
     public function patient()
     {
         return $this->belongsTo('App\Patient');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo('App\Location');
     }
 
     public function insured()

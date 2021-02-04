@@ -14,6 +14,8 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('location_id')->default(1);
+
             $table->string('series')->nullable();
             $table->string('number')->nullable();
             $table->string('code', 50)->unique();
@@ -43,6 +45,8 @@ class CreateInvoicesTable extends Migration
             $table->text('comments')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
+            $table->foreign('location_id')->references('id')->on('locations')->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

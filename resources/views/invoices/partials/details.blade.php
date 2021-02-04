@@ -172,6 +172,7 @@
 
 
     </div> --}}
+
     <div class="form-row">
         {{--  Comments  --}}
         <div class="col-md-12 col-auto form-group">
@@ -210,6 +211,7 @@
 
         </div>
     </div>
+    @include('locations.components.details', ['location'=>$invoice->location])
     <div class="form-row">
         @include('components.currencySwitch', ['USD' => 1])
     </div>
