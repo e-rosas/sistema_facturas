@@ -1,7 +1,9 @@
 {{-- Table of services --}}
-<div  class="table-responsive">
-    <table id="diagnoses_table" class="table align-services-center table-flush">
-        <thead class="thead-dark">
+
+<div class="table-responsive">
+    <h5>Diagnósticos</h5>
+    <table id="diagnoses_table" class="table align-items-center table-flush">
+        <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Código') }}</th>
                 <th scope="col">{{ __('Nombre') }}</th>
@@ -13,7 +15,7 @@
                 <td>{{ $diagnosis->diagnosis_code}}</td>
                 <td>{{ $diagnosis->diagnosis->name}}</td>
             </tr>
-                
+
             @endforeach
         </tbody>
     </table>

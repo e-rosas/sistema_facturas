@@ -48,6 +48,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('invoices/find', 'InvoiceController@find')->name('invoices.find');
     Route::patch('invoices/update_status', 'InvoiceController@updateStatus')->name('invoices.status');
     Route::patch('invoices/update_patient', 'InvoiceController@updatePatient')->name('invoices.patient');
+    Route::patch('invoices/update_location', 'InvoiceController@updateLocation')->name('invoices.location');
+
     Route::patch('invoices/update_details', 'InvoiceController@updateDetails')->name('invoices.details');
     Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
 
@@ -141,6 +143,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('charts/stats', 'ReportController@invoiceStats')->name('charts.invoices');
 
     Route::resource('locations', 'LocationController');
+    Route::post('locations/search', 'LocationController@searchLocation')->name('locations.search');
 
     /* Route::get('/import_items', 'ImportController@getImportItems')->name('import.items');
     Route::post('/import_parse_items', 'ImportController@parseImportItems')->name('import.parse.items');

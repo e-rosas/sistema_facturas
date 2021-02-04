@@ -40,29 +40,29 @@
                     </div>
 
                 </div>
+
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+
+
                 @if ($invoice->status != 1)
-                <div class="col-md-3 col-auto text-right">
-                    <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-primary">Editar servicios</a>
-                </div>
-                @endif
-                @if ($invoice->status != 1)
-                <div class="col-md-3 col-auto text-right">
+                <div class="col-md-3 col-auto">
                     <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal"
                         data-target="#modal-details">Editar detalles</i></button>
                     <br />
                 </div>
                 @endif
-                <div class="col-md-2 col-auto text-right">
+                <div class="col-md-9 col-auto text-right">
                     <button type="button" data-toggle="modal" data-target="#modal-person"
-                        class="btn btn-sm btn-primary">{{ __('Cambiar paciente') }}</button>
+                        class="btn btn-sm btn-outline-primary">{{ __('Cambiar paciente') }}</button>
                 </div>
                 @include('components.selectPersonModal')
 
                 @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])
-
             </div>
-        </div>
-        <div class="card-body">
             <div class="form-row">
                 {{--  Concept  --}}
                 <div class="col-md-6 col-auto form-group">
@@ -212,6 +212,14 @@
         </div>
     </div>
     @include('locations.components.details', ['location'=>$invoice->location])
+    <div class="row">
+        <div class="col-md-4 col-auto">
+            <button type="button" data-toggle="modal" data-target="#modal-location"
+                class="btn btn-sm btn-outline-default">{{ __('Cambiar ubicación') }}</button>
+        </div>
+        @include('components.selectLocationModal')
+    </div>
+
     <div class="form-row">
         @include('components.currencySwitch', ['USD' => 1])
     </div>

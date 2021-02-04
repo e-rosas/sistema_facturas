@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 use App\Location;
+use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
@@ -84,5 +85,24 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
+    }
+
+    public function searchLocation(Request $request)
+    {
+        $search = $request->search;
+        $locations = Location::query()
+            ->whereLike(['name'], $search)
+            ->get()->take(8)
+        ;
+        $response = [];
+        foreach ($locations as $location) {
+            $response[] = [
+                'id' => $location->id,
+                'text' => $location->name,
+            ];
+        }
+        echo json_encode($response);
+
+        exit;
     }
 }

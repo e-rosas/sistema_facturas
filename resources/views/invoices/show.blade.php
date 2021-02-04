@@ -86,12 +86,22 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="tab-services" role="tabpanel"
                     aria-labelledby="tab-services-tab">
-                    <div class="col-md-12 col-auto text-right">
-                        <button id="view-services" type="button" class="btn btn-sm btn-info" data-toggle="modal"
-                            data-target="#modal-services">Lista</i></button>
-                        <br />
-                        @include('invoices.partials.servicesModal')
+                    <div class="form-row">
+                        @if ($invoice->status != 1)
+                        <div class="col-md-9 col-auto">
+                            <a href="{{ route('invoices.edit', $invoice) }}"
+                                class="btn btn-sm btn-outline-secondary">Editar
+                                servicios</a>
+                        </div>
+                        @endif
+                        <div class="col-md-3 col-auto text-right">
+                            <button id="view-services" type="button" class="btn btn-sm btn-outline-info"
+                                data-toggle="modal" data-target="#modal-services">Lista</i></button>
+                            <br />
+                            @include('invoices.partials.servicesModal')
+                        </div>
                     </div>
+
                     @include('components.tableDiagnosesCodes')
                     <br />
                     @include('components.servicesTable')

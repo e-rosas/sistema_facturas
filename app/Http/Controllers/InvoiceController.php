@@ -7,6 +7,7 @@ use App\DiagnosisService;
 use App\Events\InvoiceEvent;
 use App\Http\Requests\InvoiceRequest;
 use App\Http\Requests\UpdateInvoiceDetailsRequest;
+use App\Http\Requests\UpdateInvoiceLocation;
 use App\Http\Requests\UpdateInvoicePatient;
 use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceDentalDetailsResource;
@@ -302,6 +303,19 @@ class InvoiceController extends Controller
         $update_stats->updateStats($old_patient_id); //update stats for old patient
 
         return back()->withStatus(__('Paciente actualizado exitosamente.'));
+    }
+
+    public function updateLocation(UpdateInvoiceLocation $request)
+    {
+        $new_location_id = $request->location_id;
+        $invoice_id = $request->invoice_id;
+
+        $invoice = Invoice::findOrFail($invoice_id);
+
+        $invoice->location_id = $new_location_id;
+        $invoice->save();
+
+        return back()->withStatus(__('Ubicación actualizado exitosamente.'));
     }
 
     /**
