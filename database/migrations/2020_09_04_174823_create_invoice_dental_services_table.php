@@ -17,6 +17,7 @@ class CreateInvoiceDentalServicesTable extends Migration
             $table->string('tooth_system')->nullable();
             $table->string('tooth_numbers')->nullable();
             $table->string('tooth_surfaces')->nullable();
+            $table->boolean('missing')->default(false);
             $table->foreign('diagnosis_service_id')->references('id')->on('diagnosis_services')->onDelete('cascade');
             $table->timestamps();
         });

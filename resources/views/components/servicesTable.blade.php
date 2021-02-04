@@ -62,6 +62,7 @@
                 document.getElementById("modal-dental-service-tooth-system").innerHTML = response.tooth_system;
                 document.getElementById("modal-dental-service-tooth-surfaces").innerHTML = response.tooth_surfaces;
                 document.getElementById("modal-dental-service-tooth-numbers").innerHTML = response.tooth_numbers;
+                document.getElementById("modal-dental-service-tooth-missing").innerHTML = response.missing ? 'Si' : 'No';
                 $('#modal-dental-service').modal('show')
             }
         });

@@ -633,7 +633,7 @@
         tooth_system = "";
         tooth_numbers = "";
         tooth_surfaces = "";
-
+        missing = false;
         constructor(service_id, description, price, discounted_price, quantity, id,
             DOS,DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
@@ -860,6 +860,7 @@
         service.tooth_system = document.getElementById("modal-dental-service-tooth-system").value;
         service.tooth_surfaces = document.getElementById("modal-dental-service-tooth-surfaces").value;
         service.tooth_numbers = document.getElementById("modal-dental-service-tooth-numbers").value;
+        service.missing = document.getElementById("modal-dental-service-tooth-missing").checked;
     }
 
     function displayDentalDetails(service) {
@@ -870,6 +871,7 @@
         document.getElementById("modal-dental-service-tooth-system").value = service.tooth_system;
         document.getElementById("modal-dental-service-tooth-surfaces").value = service.tooth_surfaces;
         document.getElementById("modal-dental-service-tooth-numbers").value = service.tooth_numbers;
+        document.getElementById("modal-dental-service-tooth-missing").checked = service.missing;
     }
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre){
@@ -934,7 +936,7 @@
     }
 
     function addDentalServiceToCartFromInvoice(service_id, description, price, discounted_price,
-    quantity, id, DOS, items, descripcion, code, pointers, DOS_to, oral_cavity, tooth_numbers, tooth_surfaces, tooth_system) {
+    quantity, id, DOS, items, descripcion, code, pointers, DOS_to, oral_cavity, tooth_numbers, tooth_surfaces, tooth_system, missing) {
 
         var service = new Service(service_id, description, price, discounted_price, quantity,
         services.length, DOS, DOS_to, descripcion, code, pointers);
@@ -942,6 +944,7 @@
         service.tooth_numbers = tooth_numbers;
         service.tooth_surfaces = tooth_surfaces;
         service.tooth_system = tooth_system;
+        service.missing = missing;
         for(var i in items){
             var tax = false;
             if(items[i].itax > 0) tax = true;
@@ -1034,7 +1037,7 @@
                     response[i].price, response[i].discounted_price, response[i].quantity,
                     response[i].id, response[i].DOS, response[i].items,
                     response[i].descripcion, response[i].code, response[i].diagnoses_pointers, response[i].DOS_to,
-                    response[i].dental.oral_cavity, response[i].dental.tooth_numbers, response[i].dental.tooth_surfaces, response[i].dental.tooth_system);
+                    response[i].dental.oral_cavity, response[i].dental.tooth_numbers, response[i].dental.tooth_surfaces, response[i].dental.tooth_system, response[i].dental.missing);
             }
             displayCart();
 

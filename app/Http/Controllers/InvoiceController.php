@@ -216,6 +216,8 @@ class InvoiceController extends Controller
                 $dental_service->tooth_system = $service['tooth_system'];
                 $dental_service->tooth_numbers = $service['tooth_numbers'];
                 $dental_service->tooth_surfaces = $service['tooth_surfaces'];
+                $dental_service->missing = $service['missing'];
+
                 $dental_service->save();
             }
         }

@@ -733,6 +733,7 @@
         tooth_system = "";
         tooth_numbers = "";
         tooth_surfaces = "";
+        missing = false;
         constructor(service_id, description, price, discounted_price, quantity, id,
             DOS, DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
@@ -759,6 +760,7 @@
             this.tooth_system = "";
             this.tooth_numbers = "";
             this.tooth_surfaces = "";
+            this.missing = false;
         }
 
         get date() {
@@ -957,6 +959,7 @@
         service.tooth_system = document.getElementById("modal-dental-service-tooth-system").value;
         service.tooth_surfaces = document.getElementById("modal-dental-service-tooth-surfaces").value;
         service.tooth_numbers = document.getElementById("modal-dental-service-tooth-numbers").value;
+        service.missing = document.getElementById("modal-dental-service-tooth-missing").checked;
     }
 
     function displayDentalDetails(service) {
@@ -966,6 +969,7 @@
         document.getElementById("modal-dental-service-tooth-system").value = service.tooth_system;
         document.getElementById("modal-dental-service-tooth-surfaces").value = service.tooth_surfaces;
         document.getElementById("modal-dental-service-tooth-numbers").value = service.tooth_numbers;
+        document.getElementById("modal-dental-service-tooth-missing").checked = service.missing;
     }
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre) {

@@ -29,15 +29,20 @@
                         </div>
                         <div class="form-row">
                             {{-- Tooth surfaces --}}
-                            <div class="col-md-6 col-auto">
+                            <div class="col-md-4 col-auto">
                                 <h5 for="modal-dental-service-tooth-surfaces">{{ __('Superficies dentales') }}</h5>
                                 <label id="modal-dental-service-tooth-surfaces"></label>
                             </div>
                             {{-- Tooth numbers --}}
-                            <div class="col-md-6 col-auto">
+                            <div class="col-md-4 col-auto">
                                 <h5 for="modal-dental-service-tooth-numbers">{{ __('Letra(s) o numero(s) del diente') }}
                                 </h5>
                                 <label id="modal-dental-service-tooth-numbers"></label>
+                            </div>
+                            <div class="col-md-4 col-auto">
+                                <h5 for="modal-dental-service-tooth-missing">{{ __('¿Diente faltante?') }}
+                                </h5>
+                                <label id="modal-dental-service-tooth-missing"></label>
                             </div>
                         </div>
                     </div>

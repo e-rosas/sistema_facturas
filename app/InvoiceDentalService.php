@@ -11,6 +11,7 @@ class InvoiceDentalService extends Model
         'tooth_system',
         'tooth_numbers',
         'tooth_surfaces',
+        'missing',
     ];
 
     protected $casts = [
@@ -19,6 +20,7 @@ class InvoiceDentalService extends Model
         'tooth_system' => 'string',
         'tooth_numbers' => 'string',
         'tooth_surfaces' => 'string',
+        'missing' => 'boolean',
     ];
 
     public function service()

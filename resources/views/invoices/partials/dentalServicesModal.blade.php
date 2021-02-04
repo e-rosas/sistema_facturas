@@ -54,6 +54,20 @@
                                     class="form-control" placeholder="{{ __('Letra(s) o numero(s) del diente') }}">
                             </div>
                         </div>
+                        {{-- Missing --}}
+                        <div class="form-group">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-tooth"></i></span>
+                                </div>
+                                <div class="custom-control custom-control-alternative custom-checkbox mb-3">
+                                    <input type="checkbox" name="tooth-missing" id="modal-dental-service-tooth-missing"
+                                        class="custom-control-input">
+                                    <label class="custom-control-label"
+                                        for="tooth-missing">{{ __('¿Diente faltante?') }}</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
