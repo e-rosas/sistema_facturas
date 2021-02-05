@@ -1764,12 +1764,14 @@ T32:
                 'style' => '',
                 'value' => $services[$i]->quantity,
             ];
+            if($services[$i]->dental->missing) {
 	   $services_list['T'.($services[$i]->dental->tooth_numbers)] = [
                 'size' => 8,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => 'X',
-            ];
+            ]; 
+          }
         }
 
         $total_services = ['Invoice_Total' => [
@@ -1851,13 +1853,14 @@ T32:
     {
         $coordinates = $this->coordinates;
         for ($i = 0; $i < count($services); ++$i) {
-            //get number from array
-            $n = $services[$i]->dental->tooth_numbers;
-            if(is_numeric($n)){
-            //search for it in slots
-            $coordinates = $coordinates.$this->teeth_slots[($n - 1)];
+            if($services[$i]->dental->missing) {
+               //get number from array
+               $n = $services[$i]->dental->tooth_numbers;
+               if(is_numeric($n) && $n < 33){
+               //search for it in slots
+               $coordinates = $coordinates.$this->teeth_slots[($n - 1)];
+              }
             }
-            
         }
 
         return $coordinates;
@@ -2262,12 +2265,6 @@ T32:
                     'family' => 'Arial',
                     'style' => '',
                     'value' => $insured->insurer->cityZIP(),
-                ],
-                'INSURANCE_PHONE' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer_phone_number,
                 ],
             ];
             $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;

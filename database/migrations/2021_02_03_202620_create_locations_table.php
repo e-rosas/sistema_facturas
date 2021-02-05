@@ -19,6 +19,12 @@ class CreateLocationsTable extends Migration
             $table->string('third_line', 38)->nullable();
             $table->string('fourth_line', 38);
             $table->string('phone_number')->nullable();
+
+            $table->string('billing_first_line', 38);
+            $table->string('billing_second_line', 38);
+            $table->string('billing_third_line', 38)->nullable();
+            $table->string('billing_fourth_line', 38);
+
             $table->boolean('default')->default(false);
 
             $table->timestamps();

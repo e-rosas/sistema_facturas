@@ -354,6 +354,87 @@ INSURED_POLICY:
           ury: 722.921
         width: 153.094
         height: 13.816
+
+
+BILLING_PHONE: 
+     llx: 479.619
+     lly: 92.1034
+     urx: 567.513
+     ury: 100.423
+   width: 87.894
+  height: 8.3196
+
+
+LINE_1: 
+     llx: 179.893
+     lly: 83.0155
+     urx: 369.897
+     ury: 92.4552
+   width: 190.004
+  height: 9.4397
+
+
+LINE_2: 
+     llx: 179.193
+     lly: 73.5051
+     urx: 369.897
+     ury: 81.8483
+   width: 190.704
+  height: 8.3432
+
+
+LINE_3: 
+     llx: 180.302
+     lly: 63.177
+     urx: 370.246
+     ury: 72.3257
+   width: 189.944
+  height: 9.1487
+
+
+LINE_4: 
+     llx: 180.827
+     lly: 53.1673
+     urx: 370.771
+     ury: 62.316
+   width: 189.944
+  height: 9.1487
+
+
+BILLING_LINE_1: 
+     llx: 376.03
+     lly: 82.0523
+     urx: 566.034
+     ury: 91.492
+   width: 190.004
+  height: 9.4397
+
+
+BILLING_LINE_2: 
+     llx: 375.33
+     lly: 72.5419
+     urx: 566.034
+     ury: 80.8851
+   width: 190.704
+  height: 8.3432
+
+
+BILLING_LINE_3: 
+     llx: 376.438
+     lly: 62.2137
+     urx: 566.383
+     ury: 71.3625
+   width: 189.945
+  height: 9.1488
+
+
+BILLING_LINE_4: 
+     llx: 376.964
+     lly: 52.2041
+     urx: 566.908
+     ury: 61.3528
+   width: 189.944
+  height: 9.1487
         ';
 
     private $invoice;
@@ -1495,6 +1576,65 @@ INSURED_POLICY:
                 'style' => 'B',
                 'value' => 'X',
             ],
+            'BILLING_PHONE' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->phone_number,
+            ],
+            'BILLING_PHONE' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->phone_number,
+            ],
+            'LINE_1' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->first_line,
+            ],
+            'LINE_2' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->second_line,
+            ],
+            'LINE_3' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->requiresThirdLine(),
+            ],
+            'LINE_4' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->fourth_line,
+            ],
+            'BILLING_LINE_1' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->billing_first_line,
+            ],
+            'BILLING_LINE_2' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->billing_second_line,
+            ],
+            'BILLING_LINE_3' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->billing_third_line,
+            ],'BILLING_LINE_4' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->location->billing_fourth_line,
+            ],
         ];
         if ($this->invoice->patient->insured) {
             $insured = $this->invoice->patient->insuree;
@@ -1762,7 +1902,7 @@ INSURED_POLICY:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => 'B',
-                    'value' => $insured->insurer->phone_number,
+                    'value' => $insured->insurer_phone_number,
                 ],
             ];
             $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;

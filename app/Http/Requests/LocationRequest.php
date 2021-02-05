@@ -31,6 +31,10 @@ class LocationRequest extends FormRequest
             'third_line' => 'max:38',
             'fourth_line' => 'max:38|required',
             'default' => 'boolean',
+            'billing_first_line' => 'max:38|required',
+            'billing_second_line' => 'max:38|required',
+            'billing_third_line' => 'max:38',
+            'billing_fourth_line' => 'max:38',
         ];
     }
 }

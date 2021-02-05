@@ -15,6 +15,10 @@ class Location extends Model
         'third_line',
         'fourth_line',
         'phone_number',
+        'billing_first_line',
+        'billing_second_line',
+        'billing_third_line',
+        'billing_fourth_line',
     ];
 
     public function requiresThirdLine()
