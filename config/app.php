@@ -16,6 +16,7 @@ return [
 
     'initial' => env('INVOICE_INITIAL', 'B'),
     'nombre' => env('NAME', 'HM -'),
+    'old' => env('OLD', false),
 
     /*
     |--------------------------------------------------------------------------

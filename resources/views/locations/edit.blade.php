@@ -111,6 +111,65 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="form-group{{ $errors->has('billing_first_line') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-billing_first_line">Línea 1</label>
+                                <input type="text" name="billing_first_line" id="input-billing_first_line"
+                                    class="form-control form-control-alternative{{ $errors->has('billing_first_line') ? ' is-invalid' : '' }}"
+                                    placeholder="Hospital Mexico..." value="{{  $location->billing_first_line }}"
+                                    required>
+
+                                @if ($errors->has('billing_first_line'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('billing_first_line') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="form-group{{ $errors->has('billing_second_line') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="input-billing_second_line">Línea 2</label>
+                                <input type="text" name="billing_second_line" id="input-billing_second_line"
+                                    class="form-control form-control-alternative{{ $errors->has('billing_second_line') ? ' is-invalid' : '' }}"
+                                    placeholder="Calle, número de calle..." value="{{ $location->billing_second_line }}"
+                                    required>
+
+                                @if ($errors->has('billing_second_line'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('billing_second_line') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                            <div class="form-row">
+                                <div
+                                    class="col-auto form-group{{ $errors->has('billing_third_line') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-billing_third_line">Línea 3
+                                        (opcional)</label>
+                                    <input type="text" name="billing_third_line" id="input-billing_third_line"
+                                        class="form-control form-control-alternative{{ $errors->has('billing_third_line') ? ' is-invalid' : '' }}"
+                                        placeholder="Colonia (en caso de falta de espacio)"
+                                        value="{{ $location->billing_third_line }}">
+
+                                    @if ($errors->has('billing_third_line'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('billing_third_line') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div
+                                    class="col-auto form-group{{ $errors->has('billing_fourth_line') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-billing_fourth_line">Línea 4</label>
+                                    <input type="text" name="billing_fourth_line" id="input-billing_fourth_line"
+                                        class="form-control form-control-alternative{{ $errors->has('billing_fourth_line') ? ' is-invalid' : '' }}"
+                                        placeholder="Ciudad, estado, C.P." value="{{ $location->billing_fourth_line }}"
+                                        required>
+
+                                    @if ($errors->has('billing_fourth_line'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('billing_fourth_line') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
 
                             <div class="custom-control custom-control-alternative custom-checkbox mb-3">
                                 <input type="checkbox" name="default" id="input-default" class="custom-control-input"

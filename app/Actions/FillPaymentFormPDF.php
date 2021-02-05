@@ -358,7 +358,7 @@ INSURED_POLICY:
 
 BILLING_PHONE: 
      llx: 479.619
-     lly: 92.1034
+     lly: 142.1034
      urx: 567.513
      ury: 100.423
    width: 87.894
@@ -367,7 +367,7 @@ BILLING_PHONE:
 
 LINE_1: 
      llx: 179.893
-     lly: 83.0155
+     lly: 133.0155
      urx: 369.897
      ury: 92.4552
    width: 190.004
@@ -376,7 +376,7 @@ LINE_1:
 
 LINE_2: 
      llx: 179.193
-     lly: 73.5051
+     lly: 123.5051
      urx: 369.897
      ury: 81.8483
    width: 190.704
@@ -385,7 +385,7 @@ LINE_2:
 
 LINE_3: 
      llx: 180.302
-     lly: 63.177
+     lly: 113.177
      urx: 370.246
      ury: 72.3257
    width: 189.944
@@ -394,7 +394,7 @@ LINE_3:
 
 LINE_4: 
      llx: 180.827
-     lly: 53.1673
+     lly: 103.1673
      urx: 370.771
      ury: 62.316
    width: 189.944
@@ -403,7 +403,7 @@ LINE_4:
 
 BILLING_LINE_1: 
      llx: 376.03
-     lly: 82.0523
+     lly: 132.0523
      urx: 566.034
      ury: 91.492
    width: 190.004
@@ -412,7 +412,7 @@ BILLING_LINE_1:
 
 BILLING_LINE_2: 
      llx: 375.33
-     lly: 72.5419
+     lly: 122.5419
      urx: 566.034
      ury: 80.8851
    width: 190.704
@@ -421,7 +421,7 @@ BILLING_LINE_2:
 
 BILLING_LINE_3: 
      llx: 376.438
-     lly: 62.2137
+     lly: 112.2137
      urx: 566.383
      ury: 71.3625
    width: 189.945
@@ -430,7 +430,7 @@ BILLING_LINE_3:
 
 BILLING_LINE_4: 
      llx: 376.964
-     lly: 52.2041
+     lly: 102.2041
      urx: 566.908
      ury: 61.3528
    width: 189.944
@@ -1266,11 +1266,22 @@ BILLING_LINE_4:
         $this->addDiagnosisSlots(count($invoice->diagnoses));
     }
 
+    public function getForm() 
+    {
+       if(config('app.old')) { 
+            return  storage_path('app/pdf/formOld.pdf');
+       } else {
+            return  storage_path('app/pdf/form.pdf');
+         }
+
+    }
+    
+
     public function fill($output)
     {
         $this->getInvoiceData();
         $pages = ceil(count($this->invoice->services2) / 6);
-        $form = storage_path('app/pdf/form.pdf');
+        $form = $this->getForm();
         for ($i = 0; $i < $pages; ++$i) {
             $services = $this->invoice->services2->slice($i * 6, 6)->values();
             $this->fillPage($form, $services, $i);
@@ -1290,7 +1301,7 @@ BILLING_LINE_4:
        
         
         
-        $form = storage_path('app/pdf/form.pdf');
+        $form = $this->getForm();
         for ($i = 0; $i < $pages; ++$i) {
             $services = $this->invoice->services2->slice($i * 6, 6)->values();
             $this->fillPage($form, $services, $i);

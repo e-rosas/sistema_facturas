@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Insuree;
-use App\Insurer;
 use Illuminate\Http\Request;
 
 class InsureeController extends Controller
@@ -64,7 +63,7 @@ class InsureeController extends Controller
 
     public function updateInsurerPhone()
     {
-        $insurees = Insurer::with('insurer')->get();
+        $insurees = Insuree::with('insurer')->get();
         foreach ($insurees as $insuree) {
             $insuree->insurer_phone_number = $insuree->insurer->phone_number;
             $insuree->save();
