@@ -358,7 +358,7 @@ INSURED_POLICY:
 
 BILLING_PHONE: 
      llx: 479.619
-     lly: 142.1034
+     lly: 140.1034
      urx: 567.513
      ury: 100.423
    width: 87.894
