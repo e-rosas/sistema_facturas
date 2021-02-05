@@ -14,16 +14,16 @@ class CreateLocationsTable extends Migration
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('first_line', 38);
-            $table->string('second_line', 38);
-            $table->string('third_line', 38)->nullable();
-            $table->string('fourth_line', 38);
+            $table->string('first_line', 43);
+            $table->string('second_line', 43);
+            $table->string('third_line', 43)->nullable();
+            $table->string('fourth_line', 43);
             $table->string('phone_number')->nullable();
 
-            $table->string('billing_first_line', 38);
-            $table->string('billing_second_line', 38);
-            $table->string('billing_third_line', 38)->nullable();
-            $table->string('billing_fourth_line', 38);
+            $table->string('billing_first_line', 43);
+            $table->string('billing_second_line', 43);
+            $table->string('billing_third_line', 43)->nullable();
+            $table->string('billing_fourth_line', 43)->nullable();
 
             $table->boolean('default')->default(false);
 

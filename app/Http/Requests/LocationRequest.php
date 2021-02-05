@@ -25,16 +25,16 @@ class LocationRequest extends FormRequest
     {
         return [
             'name' => 'max:100|required',
-            'first_line' => 'max:38|required',
-            'second_line' => 'max:38|required',
-            'phone_number' => 'max:12',
-            'third_line' => 'max:38',
-            'fourth_line' => 'max:38|required',
+            'first_line' => 'max:43|required',
+            'second_line' => 'max:43|required',
+            'phone_number' => 'max:25',
+            'third_line' => 'max:43',
+            'fourth_line' => 'max:43|required',
             'default' => 'boolean',
-            'billing_first_line' => 'max:38|required',
-            'billing_second_line' => 'max:38|required',
-            'billing_third_line' => 'max:38',
-            'billing_fourth_line' => 'max:38',
+            'billing_first_line' => 'max:43|required',
+            'billing_second_line' => 'max:43|required',
+            'billing_third_line' => 'max:43',
+            'billing_fourth_line' => 'max:43',
         ];
     }
 }

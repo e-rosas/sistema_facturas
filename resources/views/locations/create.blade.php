@@ -113,7 +113,8 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('billing_first_line') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="input-billing_first_line">Línea 1</label>
+                                <label class="form-control-label" for="input-billing_first_line">Billing Línea
+                                    1</label>
                                 <input type="text" name="billing_first_line" id="input-billing_first_line"
                                     class="form-control form-control-alternative{{ $errors->has('billing_first_line') ? ' is-invalid' : '' }}"
                                     placeholder="Hospital Mexico..." value="{{  old('billing_first_line') }}" required>
@@ -125,7 +126,8 @@
                                 @endif
                             </div>
                             <div class="form-group{{ $errors->has('billing_second_line') ? ' has-danger' : '' }}">
-                                <label class="form-control-label" for="input-billing_second_line">Línea 2</label>
+                                <label class="form-control-label" for="input-billing_second_line">Billing Línea
+                                    2</label>
                                 <input type="text" name="billing_second_line" id="input-billing_second_line"
                                     class="form-control form-control-alternative{{ $errors->has('billing_second_line') ? ' is-invalid' : '' }}"
                                     placeholder="Calle, número de calle..." value="{{ old('billing_second_line') }}"
@@ -140,7 +142,7 @@
                             <div class="form-row">
                                 <div
                                     class="col-md-12 col-auto form-group{{ $errors->has('billing_third_line') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-billing_third_line">Línea 3
+                                    <label class="form-control-label" for="input-billing_third_line">Billing Línea 3
                                         (opcional)</label>
                                     <input type="text" name="billing_third_line" id="input-billing_third_line"
                                         class="form-control form-control-alternative{{ $errors->has('billing_third_line') ? ' is-invalid' : '' }}"
@@ -157,7 +159,8 @@
                             <div class="form-row">
                                 <div
                                     class="col-md-12 col-auto form-group{{ $errors->has('billing_fourth_line') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-billing_fourth_line">Línea 4</label>
+                                    <label class="form-control-label" for="input-billing_fourth_line">Billing Línea 4
+                                        (opcional)</label>
                                     <input type="text" name="billing_fourth_line" id="input-billing_fourth_line"
                                         class="form-control form-control-alternative{{ $errors->has('billing_fourth_line') ? ' is-invalid' : '' }}"
                                         placeholder="Ciudad, estado, C.P." value="{{ old('billing_fourth_line') }}">
