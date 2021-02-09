@@ -190,6 +190,7 @@ class PatientController extends Controller
             $patient->insuree->insurer_id = $validated['insurer_id'];
             $patient->insuree->insurance_id = $validated['insurance_id'];
             $patient->insuree->group_number = $validated['group_number'];
+            $patient->insuree->insurer_phone_number = $validated['insurer_phone_number'];
 
             $patient->insuree->save();
             $dependents = Dependent::with('patient')->where('insuree_id', $patient->id)->get();

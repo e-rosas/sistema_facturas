@@ -43,6 +43,7 @@ class UpdatePatientRequest extends FormRequest
             'group_number' => 'max:50',
             'insuree_id' => 'numeric',
             'relationship' => 'numeric',
+            'insurer_phone_number' => 'max:50',
         ];
     }
 }
