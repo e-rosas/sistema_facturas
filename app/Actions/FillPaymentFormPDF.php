@@ -435,7 +435,33 @@ BILLING_LINE_4:
      ury: 61.3528
    width: 189.944
   height: 9.1487
-        ';
+
+
+ACCEPT_ASSIGNMENT_YES: 
+     llx: 286.924
+     lly: 151.982
+     urx: 297.554
+     ury: 113.006
+   width: 10.63
+  height: 11.024
+
+
+ACCEPT_ASSIGNMENT_NO: 
+     llx: 323.103
+     lly: 151.752
+     urx: 333.733
+     ury: 112.776
+   width: 10.63
+  height: 11.024
+
+
+INVOICE_DOS: 
+     llx: 91.0909
+     lly: 96.9112
+     urx: 173.345
+     ury: 58.6922
+   width: 82.2541
+  height: 11.781';
 
     private $invoice;
     private $data;
@@ -1645,6 +1671,21 @@ BILLING_LINE_4:
                 'family' => 'Arial',
                 'style' => 'B',
                 'value' => $this->invoice->location->billing_fourth_line,
+            ],'ACCEPT_ASSIGNMENT_YES' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => ($this->invoice->accept_assignment) ? 'X' : '',
+            ],'ACCEPT_ASSIGNMENT_NO' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => ($this->invoice->accept_assignment) ? '' : 'X',
+            ],'INVOICE_DOS' => [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => 'B',
+                'value' => $this->invoice->DOS->format("m/d/Y"),
             ],
         ];
         if ($this->invoice->patient->insured) {

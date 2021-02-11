@@ -328,6 +328,12 @@
                         <input type="checkbox" name="input-cash" id="input-cash" class="custom-control-input"
                             style="display: none">
                         @endif
+                        <div class="col-lg-2 custom-control custom-checkbox">
+                            <input type="checkbox" name="input-accept_assignment" id="input-accept_assignment"
+                                class="custom-control-input">
+                            <label class="custom-control-label" for="input-accept_assignment">¿Aceptar
+                                asignación?</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1130,7 +1136,7 @@
         var doctor = document.getElementById("input-doctor").value;
         var DOS = document.getElementById("input-date_service-to").value;
         var isCash = document.getElementById("input-cash").checked ? 1 : 0;
-
+        var isAccepted = document.getElementById("input-accept_assignment").checked ? 1 : 0;
         var appliance_placed = document.getElementById("input-placed").value;
         var prior_placement = document.getElementById("input-prior-placement").value;
         var accident_date = document.getElementById("input-accident").value;
@@ -1176,6 +1182,7 @@
                 "registered": (number == "Pendiente") ? 0 : 1,
                 "cash": isCash,
                 "dental": dental,
+                "accept_assignment": isAccepted,
                 "appliance_placed": appliance_placed,
                 "prior_placement": prior_placement,
                 "accident": accident_date,

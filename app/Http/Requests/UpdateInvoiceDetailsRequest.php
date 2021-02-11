@@ -36,6 +36,7 @@ class UpdateInvoiceDetailsRequest extends FormRequest
             'exchange_rate' => 'numeric|required|between:0,999999999.999',
             'hospitalization' => 'boolean',
             'cash' => 'boolean',
+            'accept_assignment' => 'boolean',
         ];
     }
 }

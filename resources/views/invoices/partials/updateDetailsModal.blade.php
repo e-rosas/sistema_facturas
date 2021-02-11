@@ -160,7 +160,7 @@
                             <div class="form-row">
                                 <div class="col-lg-1"></div>
                                 {{-- hosp --}}
-                                <div class="col-lg-2 custom-control custom-checkbox">
+                                <div class="col-lg-4 custom-control custom-checkbox">
                                     <input type="checkbox" name="input-hospitalization" id="input-hospitalization"
                                         class="custom-control-input" {{ $invoice->hospitalization ? 'checked' : '' }}>
                                     <label class="custom-control-label"
@@ -176,6 +176,12 @@
                                 <input type="checkbox" name="update-cash" id="update-cash" class="custom-control-input"
                                     style="display: none">
                                 @endif
+                                <div class="col-lg-4 custom-control custom-checkbox">
+                                    <input type="checkbox" name="input-accept_assignment" id="input-accept_assignment"
+                                        class="custom-control-input" {{ $invoice->accept_assignment ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="input-accept_assignment">¿Aceptar
+                                        asignación?</label>
+                                </div>
 
                             </div>
                             <div class="text-center">
@@ -194,6 +200,7 @@
 
 <script>
     function sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor, isHospitalization, DOS, cash){
+        var isAccepted = document.getElementById("input-accept_assignment").checked ? 1 : 0;
         $.ajax({
             url: "{{route('invoices.details')}}",
             dataType: 'json',
@@ -211,7 +218,8 @@
                 "doctor": doctor,
                 "hospitalization": isHospitalization,
                 "DOS": DOS,
-                "cash": cash
+                "cash": cash,
+                "accept_assignment": isAccepted,
             },
         success: function (response) {
             displayDetails(response.data);
@@ -251,18 +259,8 @@
         var doctor = document.getElementById("input-doctor").value;
         var comments = document.getElementById("input-comments").value;
         var DOS = document.getElementById("input-DOS").value;
-        var cash = document.getElementById("update-cash").checked;
-        var isHospitalization = document.getElementById("input-hospitalization").checked;
-        if(isHospitalization){
-            isHospitalization = 1;
-        }else{
-            isHospitalization = 0;
-        }
-        if(cash){
-            cash = 1;
-        }else{
-            cash = 0;
-        }
+        var cash = document.getElementById("update-cash").checked ? 1 : 0;
+        var isHospitalization = document.getElementById("input-hospitalization").checked ? 1 : 0;
 
         if(exchange_rate > 0){
             sendDetails(exchange_rate, date, comments, series, concept, code, number, doctor, isHospitalization, DOS, cash);

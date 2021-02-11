@@ -46,6 +46,7 @@ class InvoiceRequest extends FormRequest
             'hospitalization' => 'boolean',
             'registered' => 'boolean',
             'dental' => 'boolean',
+            'accept_assignment' => 'boolean',
         ];
     }
 }

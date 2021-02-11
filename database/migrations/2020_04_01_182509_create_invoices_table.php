@@ -41,6 +41,8 @@ class CreateInvoicesTable extends Migration
             $table->string('doctor')->default('Pendiente');
             $table->boolean('dental')->default(0);
 
+            $table->boolean('accept_assignment')->default(0);
+
             $table->tinyInteger('type')->default(0);
             $table->text('comments')->nullable();
             $table->tinyInteger('status')->default(0);

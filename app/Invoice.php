@@ -39,6 +39,7 @@ class Invoice extends Model
         'registered',
         'dental',
         'cash',
+        'accept_assignment',
     ];
     /**
      * The event map for the model.
@@ -69,6 +70,7 @@ class Invoice extends Model
         'amount_credit' => 'decimal:13',
         'type' => 'integer',
         'registered' => 'boolean',
+        'accept_assignment' => 'boolean',
     ];
 
     protected $dates = ['date', 'created_at', 'updated_at', 'DOS'];

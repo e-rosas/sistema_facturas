@@ -1744,7 +1744,7 @@ T32:
                 'size' => 8,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $modifier,
+                'value' => $services[$i]->shortDescription(),
             ];
             $services_list['29a_Diag_Pointer'.($i + 1)] = [
                 'size' => 8,
@@ -1788,12 +1788,14 @@ T32:
     private function fillPage($form, $services, $page)
     {
         $data = $this->invoice_data;
+	
         $coordinates = $this->addServicesSlots(count($services)) . $this->addTeethSlots($services);
-
+	
         $data = $data + $this->addServices($services);
 
 
         $converter = new Converter($coordinates);
+	//dd($converter);
         $converter->loadPagesWithFieldsCount();
         $coords = $converter->formatFieldsAsJSON();
         $fields = json_decode($coords, true);
@@ -1851,7 +1853,7 @@ T32:
 
     private function addTeethSlots($services)
     {
-        $coordinates = $this->coordinates;
+        $coordinates = '';
         for ($i = 0; $i < count($services); ++$i) {
             if($services[$i]->dental->missing) {
                //get number from array

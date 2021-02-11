@@ -142,4 +142,9 @@ class DiagnosisService extends Model
     {
         return $this->service->clave();
     }
+
+    public function shortDescription()
+    {
+        return substr($this->description, 0, 30);
+    }
 }
