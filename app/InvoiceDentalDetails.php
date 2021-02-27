@@ -17,6 +17,7 @@ class InvoiceDentalDetails extends Model
         'accident',
         'auto_accident_state',
         'license',
+        'tooth_numbers'
     ];
 
     protected $casts = [
@@ -28,6 +29,7 @@ class InvoiceDentalDetails extends Model
         'treatment_resulting_from' => 'integer',
         'months_remaining' => 'integer',
         'prosthesis_replacement' => 'boolean',
+        'tooth_numbers' => 'string',
     ];
     protected $dates = [
         'appliance_placed',

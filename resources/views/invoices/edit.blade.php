@@ -792,6 +792,7 @@
     enclosures = 0;
     orthodontics = 0;
     license = "";
+    tooth_numbers = "";
     auto_accident_state = "";
     treatment_resulting_from = "";
     months_remaining = "";

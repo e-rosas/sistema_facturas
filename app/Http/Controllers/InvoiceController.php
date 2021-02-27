@@ -167,7 +167,7 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create($validated);
 
-        if ($validated['dental']) {
+        if ($validated['dental']) { 
             $dental = new InvoiceDentalDetails();
             $dental->invoice_id = $invoice->id;
             $dental->enclosures = $request->enclosures;
@@ -180,6 +180,7 @@ class InvoiceController extends Controller
             $dental->accident = $request->accident;
             $dental->auto_accident_state = $request->auto_accident_state;
             $dental->license = $request->license;
+            $dental->tooth_numbers = $request->tooth_numbers;
             $dental->save();
         }
 

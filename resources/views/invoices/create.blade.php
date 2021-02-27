@@ -435,8 +435,15 @@
                         </div>
                         {{--  License --}}
                         <div class="col-md-4 col-auto form-group">
-                            <label class="form-control-label" for="input-license">Licencia (dentista)</label>
+                            <label class="form-control-label" for="input-license">Licencia (separar por coma)</label>
                             <input type="text" name="input-license" id="input-license"
+                                class="form-control form-control-alternative">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label class="form-control-label" for="input-tooth-numbers">Dientes (separar por coma)</label>
+                            <input type="text" name="input-tooth-numbers" id="input-tooth-numbers"
                                 class="form-control form-control-alternative">
                         </div>
                     </div>
@@ -897,6 +904,7 @@
     enclosures = 0;
     orthodontics = 0;
     license = "";
+    tooth_numbers = "";
     auto_accident_state = "";
     treatment_resulting_from = "";
     months_remaining = "";
@@ -1145,6 +1153,7 @@
             enclosures = document.getElementById("input-enclosures").checked ? 1 : 0;
             orthodontics = document.getElementById("input-orthodontics").checked ? 1 : 0;
             license = document.getElementById("input-license").value;
+            tooth_numbers = document.getElementById("input-tooth-numbers").value;
             auto_accident_state = document.getElementById("input-accident-state").value;
             treatment_resulting_from = document.getElementById("input-treatment").value;
             months_remaining = document.getElementById("input-months").value;

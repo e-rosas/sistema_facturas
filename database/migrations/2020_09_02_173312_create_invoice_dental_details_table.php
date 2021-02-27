@@ -23,6 +23,7 @@ class CreateInvoiceDentalDetailsTable extends Migration
             $table->date('accident')->nullable();
             $table->string('auto_accident_state')->nullable();
             $table->string('license');
+            $table->string('tooth_numbers')->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();
         });
