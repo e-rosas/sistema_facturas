@@ -132,12 +132,33 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="tabs-calls" role="tabpanel" aria-labelledby="tabs-calls-tab">
-                    <div class="col-md-12 col-auto text-right">
-                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
-                            data-target="#modal-call">{{ __('Agregar') }}</i></button>
-                        <br />
-                        @include('components.callsModal',['invoice_id'=>$invoice->id])
+                    <div class="row m-1">
+                        <div class="col-md-4">
+                            <select class="custom-select" id="call-status" onchange="filterCalls(this.value)">
+
+                                <option value="11" selected>{{ __('Todas') }}</option>
+                                <option value="0">{{ __('En proceso') }}</option>
+                                <option value="1">{{ __('Deducibles') }}</option>
+                                <option value="2">{{ __('Negada por cargos no cubiertos') }}</option>
+                                <option value="3">{{ __('Pago') }}</option>
+                                <option value="4">{{ __('Negada por fuera de tiempo') }}</option>
+                                <option value="5">{{ __('Otro') }}</option>
+                                <option value="6">{{ __('Pago pendiente') }}</option>
+                                <option value="7">{{ __('Información pendiente') }}</option>
+                                <option value="8">{{ __('Cobro no encontrado') }}</option>
+                                <option value="9">{{ __('Medicamente innecesaria') }}</option>
+                                <option value="10">{{ __('En apelación') }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8 col-auto text-right">
+                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                                data-target="#modal-call">{{ __('Agregar') }}</i></button>
+                            <br />
+                            @include('components.callsModal',['invoice_id'=>$invoice->id])
+                        </div>
                     </div>
+                    
+
                     @include('components.callsTable', ['calls'=>$invoice->calls])
                     @include('calls.partials.editCallModal')
                 </div>

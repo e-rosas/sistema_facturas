@@ -1,6 +1,6 @@
 {{-- Table of calls --}}
 <div class="table-responsive">
-    <table id="calls_table" class="table align-services-center table-flush">
+    <table id="calls_table" class="table align-items-center table-flush">
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Número') }}</th>
@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($calls as $call)
+           {{--  @foreach ($calls as $call)
             <tr>
                 <td>{{ $call->number}}</td>
                 <td>
@@ -36,12 +36,52 @@
                     </button>
                 </td>
             </tr>
-            @endforeach
+            @endforeach --}}
         </tbody>
     </table>
 </div>
 <div class="card-footer py-4">
     <nav class="d-flex justify-content-end" aria-label="...">
-
+        <h5>Cantidad de llamadas:  </h5>
+        <h5 id="callsCount">0</h5>
     </nav>
 </div>
+@push('js')
+    <script>
+         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+         var calls = [];
+
+         function getCalls() {
+            $.ajax({
+            url: "{{route('invoice.calls')}}",
+            dataType: 'json',
+            type:"post",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'invoice_id': {{ $invoice->id }},
+            },
+            success: function (response) {
+                calls = response.data;
+                displayCalls(response.data);
+                //displayStats();
+
+                }
+            });
+            return false;
+         }
+
+         function filterCalls(state){
+            filteredCalls = [];
+             if(state < 11){
+                filteredCalls = calls.filter((call) => {
+                    return call.status_n == state;
+                });
+             } else {
+                 filteredCalls = calls;
+             }
+             displayCalls(filteredCalls);
+             
+         }
+         getCalls();
+    </script>
+@endpush

@@ -207,11 +207,21 @@ class CallController extends Controller
         return new CallResource($call);
     }
 
+    public function allInvoiceCalls(Request $request)
+    {
+        $calls = Call::with('invoice')->where('invoice_id', $request['invoice_id'])
+            ->orderBy('date', 'desc')
+            ->get()
+        ;
+
+        return CallResource::collection($calls);
+    }
+
     private function invoiceCalls($invoice_id)
     {
         $calls = Call::where('invoice_id', $invoice_id)
             ->orderBy('date', 'desc')
-            ->paginate(15)
+            ->paginate(30)
         ;
 
         return CallResource::collection($calls);

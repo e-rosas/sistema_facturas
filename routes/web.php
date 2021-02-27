@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('calls/find', 'CallController@find')->name('calls.find');
     Route::patch('calls/update', 'CallController@update')->name('calls.update');
     Route::delete('calls/destroy', 'CallController@delete')->name('calls.destroy');
+    Route::post('invoices/calls', 'CallController@allInvoiceCalls')->name('invoice.calls');
 
     Route::get('charges', 'ChargeController@index')->name('charges.index');
     Route::post('charges/add', 'ChargeController@store')->name('charges.store');

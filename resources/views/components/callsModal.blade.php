@@ -77,6 +77,11 @@
                                 <option value="3">{{ __('Pago') }}</option>
                                 <option value="4">{{ __('Negada por fuera de tiempo') }}</option>
                                 <option value="5">{{ __('Otro') }}</option>
+                                <option value="6">{{ __('Pago pendiente') }}</option>
+                                <option value="7">{{ __('Información pendiente') }}</option>
+                                <option value="8">{{ __('Cobro no encontrado') }}</option>
+                                <option value="9">{{ __('Medicamente innecesaria') }}</option>
+                                <option value="10">{{ __('En apelación') }}</option>
                             </select>
                         </div>
                     </div>
@@ -97,7 +102,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button id="save_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
+                        <button id="save_call" class="btn btn-block btn-success">{{ __('Guardar') }}</button>
                     </div>
                 </div>
             </div>
@@ -144,22 +149,21 @@
 
     }
 
-    function displayCalls(data){
-        var calls = data;
+    function displayCalls(callsData){
         var output = "";
 
-        for(var i = 0; i < calls.length; i++){
-            output += "<tr value="+calls[i].id+">"
-                + "<td>" + calls[i].number + "</td>"
-                + "<td>" + calls[i].invoice + "</td>"
-                + "<td>" + calls[i].date + "</td>"
-                + "<td>" + calls[i].status + "</td>"
-                + "<td>" + calls[i].comments+ "</td>"
-                +'<td class="text-right"><button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
-                +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall(\'' + calls[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
+        for(var i = 0; i < callsData.length; i++){
+            output += "<tr value="+callsData[i].id+">"
+                + "<td>" + callsData[i].number + "</td>"
+                + "<td>" + callsData[i].invoice + "</td>"
+                + "<td>" + callsData[i].date + "</td>"
+                + "<td>" + callsData[i].status + "</td>"
+                + "<td>" + callsData[i].comments+ "</td>"
+                +'<td class="text-right"><button class="btn btn-icon btn-info btn-sm"  type="button" onClick="showEditCallModal(\'' + callsData[i].id + '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>'
+                +'<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="DeleteCall(\'' + callsData[i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>'
                 +"</td></tr>";
         }
-
+        $('#callsCount').html(' ' + callsData.length);
         $('#calls_table tbody').html(output);
     }
 

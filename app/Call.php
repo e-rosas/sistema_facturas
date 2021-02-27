@@ -57,6 +57,26 @@ class Call extends Model
                 return __('Otro');
 
                 break;
+            case 6:
+                return __('Pago pendiente');
+
+                break;
+            case 7:
+                return __('Información pendiente');
+
+                break;
+            case 8:
+                return __('Cobro no encontrado');
+
+                break;
+            case 9:
+                return __('Medicamente innecesaria');
+
+                break;
+            case 10:
+                return __('En apelación');
+
+                break;
             default:
                 // code...
                 break;

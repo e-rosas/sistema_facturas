@@ -69,6 +69,11 @@
                                         <option value="3">{{ __('Pagada') }}</option>
                                         <option value="4">{{ __('Negada por fuera de tiempo') }}</option>
                                         <option value="5">{{ __('Otro') }}</option>
+                                        <option value="6">{{ __('Pago pendiente') }}</option>
+                                        <option value="7">{{ __('Información pendiente') }}</option>
+                                        <option value="8">{{ __('Cobro no encontrado') }}</option>
+                                        <option value="9">{{ __('Medicamente innecesaria') }}</option>
+                                        <option value="10">{{ __('En apelación') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -89,7 +94,7 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button id="update_call" class="btn btn-block btn-success">{{ __('Save') }}</button>
+                                <button id="update_call" class="btn btn-block btn-success">{{ __('Guardar') }}</button>
                             </div>
                         </div>
                     </div>
