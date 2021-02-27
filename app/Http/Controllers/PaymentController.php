@@ -133,7 +133,7 @@ class PaymentController extends Controller
         $payments = Payment::with('invoice')
             ->where('invoice_id', $payment->invoice_id)
             ->orderBy('date', 'desc')
-            ->paginate(15)
+            ->paginate(25)
         ;
 
         return PaymentResource::collection($payments);
@@ -150,7 +150,7 @@ class PaymentController extends Controller
 
         $payments = Payment::with('invoice')->where('invoice_id', $invoice_id)
             ->orderBy('date', 'desc')
-            ->paginate(15)
+            ->paginate(25)
         ;
 
         return PaymentResource::collection($payments);

@@ -59,6 +59,11 @@ class VerifyPaymentAmount
         return true;
     }
 
+    public function resetInvoiceType()
+    {
+        # code...
+    }
+
     private function updateInvoice($new_amount_due)
     {
         if (0 == $new_amount_due) {
