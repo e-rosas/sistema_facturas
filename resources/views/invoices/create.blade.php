@@ -983,7 +983,7 @@
         document.getElementById("modal-dental-service-tooth-system").value = service.tooth_system;
         document.getElementById("modal-dental-service-tooth-surfaces").value = service.tooth_surfaces;
         document.getElementById("modal-dental-service-tooth-numbers").value = service.tooth_numbers;
-        document.getElementById("modal-dental-service-tooth-missing").checked = service.missing;
+        document.getElementById("modal-dental-service-tooth-missing").checked = service.missing ? 1 : 0;
     }
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre) {
@@ -1201,7 +1201,8 @@
                 "auto_accident_state": auto_accident_state,
                 "treatment_resulting_from": treatment_resulting_from,
                 "months_remaining": months_remaining,
-                "prosthesis_replacement": prosthesis_replacement
+                "prosthesis_replacement": prosthesis_replacement,
+                "tooth_numbers": tooth_numbers
             },
             success: function (response) {
                 setTimeout(function () {

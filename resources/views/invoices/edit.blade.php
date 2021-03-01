@@ -351,6 +351,13 @@
                                 class="form-control form-control-alternative">
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label class="form-control-label" for="input-tooth-numbers">Dientes (separar por coma)</label>
+                            <input type="text" name="input-tooth-numbers" id="input-tooth-numbers"
+                                class="form-control form-control-alternative">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -861,7 +868,7 @@
         service.tooth_system = document.getElementById("modal-dental-service-tooth-system").value;
         service.tooth_surfaces = document.getElementById("modal-dental-service-tooth-surfaces").value;
         service.tooth_numbers = document.getElementById("modal-dental-service-tooth-numbers").value;
-        service.missing = document.getElementById("modal-dental-service-tooth-missing").checked;
+        service.missing = document.getElementById("modal-dental-service-tooth-missing").checked ? 1 : 0;
     }
 
     function displayDentalDetails(service) {
@@ -1090,6 +1097,7 @@
             document.getElementById("input-accident").value = details.accident2;
             document.getElementById("input-accident-state").value = details.auto_accident_state;
             document.getElementById("input-license").value = details.license;
+            document.getElementById("input-tooth-numbers").value = details.tooth_numbers;
             }
         });
         return false;
@@ -1180,6 +1188,7 @@
             enclosures = document.getElementById("input-enclosures").checked ? 1 : 0;
             orthodontics = document.getElementById("input-orthodontics").checked ? 1 : 0;
             license = document.getElementById("input-license").value;
+            tooth_numbers = document.getElementById("input-tooth-numbers").value;
             auto_accident_state = document.getElementById("input-accident-state").value;
             treatment_resulting_from = document.getElementById("input-treatment").value;
             months_remaining = document.getElementById("input-months").value;
@@ -1211,7 +1220,8 @@
                 "auto_accident_state": auto_accident_state,
                 "treatment_resulting_from": treatment_resulting_from,
                 "months_remaining": months_remaining,
-                "prosthesis_replacement": prosthesis_replacement
+                "prosthesis_replacement": prosthesis_replacement,
+                "tooth_numbers": tooth_numbers
             },
         success: function (response) {
             setTimeout(function() {

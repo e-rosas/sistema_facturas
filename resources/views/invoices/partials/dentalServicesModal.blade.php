@@ -64,7 +64,7 @@
                                     <input type="checkbox" name="tooth-missing" id="modal-dental-service-tooth-missing"
                                         class="custom-control-input">
                                     <label class="custom-control-label"
-                                        for="tooth-missing">{{ __('¿Diente faltante?') }}</label>
+                                        for="modal-dental-service-tooth-missing">{{ __('¿Diente faltante?') }}</label>
                                 </div>
                             </div>
                         </div>
