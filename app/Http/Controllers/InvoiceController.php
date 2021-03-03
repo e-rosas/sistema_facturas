@@ -289,6 +289,27 @@ class InvoiceController extends Controller
         return new InvoiceDetailsResource($invoice);
     }
 
+    public function updateDentalDetails(Request $request)
+    {
+        $dental = InvoiceDentalDetails::where('invoice_id', $request->invoice_id)->firstOrFail();
+        $dental->enclosures = $request->enclosures;
+        $dental->orthodontics = $request->orthodontics;
+        $dental->appliance_placed = $request->appliance_placed;
+        $dental->months_remaining = $request->months_remaining;
+        $dental->prosthesis_replacement = $request->prosthesis_replacement;
+        $dental->treatment_resulting_from = $request->treatment_resulting_from;
+        $dental->prior_placement = $request->prior_placement;
+        $dental->accident = $request->accident;
+        $dental->auto_accident_state = $request->auto_accident_state;
+        $dental->license = $request->license;
+        $dental->tooth_numbers = $request->tooth_numbers;
+        $dental->update();
+
+
+
+        return new InvoiceDentalDetailsResource($dental);
+    }
+
     public function updatePatient(UpdateInvoicePatient $request)
     {
         $new_patient_id = $request->patient_id;
@@ -353,6 +374,7 @@ class InvoiceController extends Controller
             $dental->accident = $request->accident;
             $dental->auto_accident_state = $request->auto_accident_state;
             $dental->license = $request->license;
+            $dental->tooth_numbers = $request->tooth_numbers;
             $dental->save();
         }
 
@@ -369,6 +391,7 @@ class InvoiceController extends Controller
             $dental->accident = $request->accident;
             $dental->auto_accident_state = $request->auto_accident_state;
             $dental->license = $request->license;
+            $dental->tooth_numbers = $request->tooth_numbers;
             $dental->save();
         }
 

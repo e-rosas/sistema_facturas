@@ -31,6 +31,7 @@ class InvoiceDentalDetailsResource extends JsonResource
             'treatment' => $this->treatment(),
             'auto_accident_state' => $this->auto_accident_state,
             'license' => $this->license,
+            'tooth_numbers' => $this->tooth_numbers,
         ];
     }
 }

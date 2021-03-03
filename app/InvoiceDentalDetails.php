@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class InvoiceDentalDetails extends Model
 {
+    protected $primaryKey = 'invoice_id';
+
     public $fillable = [
         'enclosures',
         'orthodontics',

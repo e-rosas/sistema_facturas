@@ -3,7 +3,7 @@
     <div class="card bg-secondary shadow">
         <div class="card-header bg-red border-0">
             <div class="row">
-                <div class="col-md-2 col-auto">
+                <div class="col-md-10 col-auto">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
                 </div>
                 <div class="col-md-2 text-right">

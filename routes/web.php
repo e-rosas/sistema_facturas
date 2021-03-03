@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('invoices/update_location', 'InvoiceController@updateLocation')->name('invoices.location');
 
     Route::patch('invoices/update_details', 'InvoiceController@updateDetails')->name('invoices.details');
+    Route::patch('invoices/update_dental_details', 'InvoiceController@updateDentalDetails')->name('invoices.dentalDetails');
     Route::post('invoices/search_number', 'InvoiceController@searchNumber')->name('invoices.searchNumber');
 
     Route::post('patients/find', 'SearchPatientController@findPatient')->name('patients.find');

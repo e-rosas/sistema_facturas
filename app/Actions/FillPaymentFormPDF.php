@@ -311,13 +311,13 @@ INSURED_POLICY:
       height: 12.218
     
     
-    DOCTOR: 
-         llx: 24
-         lly: 106.2901
-         urx: 176.055
-         ury: 70.2538
-       width: 97.055
-      height: 13.9637
+      DOCTOR1: 
+          llx: 24
+          lly: 107.6951
+          urx: 174.59801
+          ury: 70.2538
+        width: 150.59801
+      height: 5.5587
 
 
     INSURANCE_NAME: 
@@ -461,7 +461,25 @@ INVOICE_DOS:
      urx: 173.345
      ury: 58.6922
    width: 82.2541
-  height: 11.781';
+  height: 11.781
+
+
+  DOCTOR2: 
+       llx: 24.4573
+       lly: 101.0145
+       urx: 173.87399
+       ury: 63.5732
+     width: 149.41669
+    height: 5.5587
+  
+  
+  DOCTOR3: 
+       llx: 24.5036
+       lly: 104.6247
+       urx: 173.92101
+       ury: 57.1834
+     width: 149.41741
+    height: 5.5587';
 
     private $invoice;
     private $data;
@@ -1509,14 +1527,27 @@ INVOICE_DOS:
 
     private function getInvoiceData()
     {
+      $doctors = explode("{", $this->invoice->doctor);
         //return
         $this->invoice_data = [
-            'DOCTOR' => [
-                'size' => 9,
+            'DOCTOR1' => [
+                'size' => 7,
                 'family' => 'Arial',
-                'style' => 'B',
-                'value' => $this->invoice->doctor,
+                'style' => '',
+                'value' => $doctors[0],
             ],
+            'DOCTOR2' => [
+              'size' => 7,
+              'family' => 'Arial',
+              'style' => '',
+              'value' => $doctors[0],
+          ],
+          'DOCTOR3' => [
+            'size' => 7,
+            'family' => 'Arial',
+            'style' => '',
+            'value' => $doctors[0],
+        ],
             'INVOICE_PAID' => [
                 'size' => 9,
                 'family' => 'Arial',

@@ -251,7 +251,6 @@
         </div>
     </div>
     <div class="row" id="dental-details">
-        {{--  Dental Details  --}}
         <div class="col-xl-12 order-xl-1">
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
@@ -263,7 +262,6 @@
                 </div>
                 <div class="card-body">
                     <div class="form-row ">
-                        {{-- Enclosures --}}
                         <div class="col-lg-1"></div>
                         <div class="col-lg-3 custom-control custom-checkbox mb-3">
                             <input type="checkbox" name="input-enclosures" id="input-enclosures"
@@ -284,7 +282,6 @@
                         </div>
                     </div>
                     <div id="orthodontics-details" class="form-row">
-                        {{-- Appliance date --}}
                         <div class="col-md-6 col-auto form-group">
                             <label class="form-control-label" for="input-placed">Fecha de colocación de aparato</label>
                             <div class="input-group input-group-alternative">
@@ -295,7 +292,6 @@
                                     type="date" required>
                             </div>
                         </div>
-                        {{-- Months remaining --}}
                         <div class="col-md-4 col-auto form-group">
                             <label class="form-control-label" for="input-months">Meses restantes</label>
                             <input type="number" name="months-remaining" id="input-months"
@@ -303,7 +299,6 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        {{-- Prior placement date --}}
                         <div class="col-md-6 col-auto form-group">
                             <label class="form-control-label" for="input-prior-placement">Fecha de colocación
                                 previa</label>
@@ -326,8 +321,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        {{-- Accident date --}}
-                        <div class="col-md-4 col-auto form-group">
+                        <div class="col-md-6 col-auto form-group">
                             <label class="form-control-label" for="input-accident">Fecha de accidente</label>
                             <div class="input-group input-group-alternative">
                                 <div class="input-group-prepend">
@@ -337,21 +331,20 @@
                                     type="date" required>
                             </div>
                         </div>
-                        {{--  Auto Accident State --}}
-                        <div class="col-md-4 col-auto form-group">
+                        <div class="col-md-6 col-auto form-group">
                             <label class="form-control-label" for="input-accident-state">Estado de accidente
                                 automovilístico</label>
                             <input type="text" name="input-accident-state" id="input-accident-state"
                                 class="form-control form-control-alternative">
                         </div>
-                        {{--  License --}}
-                        <div class="col-md-4 col-auto form-group">
+                        
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 col-auto form-group">
                             <label class="form-control-label" for="input-license">Licencia (dentista)</label>
                             <input type="text" name="input-license" id="input-license"
                                 class="form-control form-control-alternative">
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="col-md-6">
                             <label class="form-control-label" for="input-tooth-numbers">Dientes (separar por coma)</label>
                             <input type="text" name="input-tooth-numbers" id="input-tooth-numbers"
