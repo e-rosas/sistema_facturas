@@ -313,8 +313,8 @@ INSURED_POLICY:
     
       DOCTOR1: 
           llx: 24
-          lly: 107.6951
-          urx: 174.59801
+          lly: 108.6951
+          urx: 178.59801
           ury: 70.2538
         width: 150.59801
       height: 5.5587
@@ -456,7 +456,7 @@ ACCEPT_ASSIGNMENT_NO:
 
 
 INVOICE_DOS: 
-     llx: 91.0909
+     llx: 125.0909
      lly: 96.9112
      urx: 173.345
      ury: 58.6922
@@ -1374,79 +1374,79 @@ INVOICE_DOS:
             $services_list['S'.($i + 1).'_FROM_MM'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $services[$i]->DOS->format('m'),
             ];
             $services_list['S'.($i + 1).'_FROM_DD'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $services[$i]->DOS->format('d'),
             ];
             $services_list['S'.($i + 1).'_FROM_YY'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $services[$i]->DOS->format('y'),
             ];
             $services_list['S'.($i + 1).'_TO_MM'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $services[$i]->DOS_to->format('m'),
             ];
             $services_list['S'.($i + 1).'_TO_DD'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $services[$i]->DOS_to->format('d'),
             ];
             $services_list['S'.($i + 1).'_TO_YY'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $services[$i]->DOS_to->format('y'),
             ];
             $services_list['S'.($i + 1).'_PLACE'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => '11',
             ];
             $services_list['S'.($i + 1).'_EMG'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => 'N',
             ];
             $services_list['S'.($i + 1).'_CODE'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $code,
             ];
             $services_list['S'.($i + 1).'_NAME'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $modifier,
             ];
             $services_list['S'.($i + 1).'_POINTERS'] = [
                 'size' => 7,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $services[$i]->pointers_alphabet,
             ];
             $services_list['S'.($i + 1).'_TOTAL'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => number_format($services[$i]->total_discounted_price, 2),
             ];
             $services_list['S'.($i + 1).'_UNITS'] = [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $services[$i]->quantity,
             ];
         }
@@ -1454,7 +1454,7 @@ INVOICE_DOS:
         $total_services = ['INVOICE_TOTAL' => [
             'size' => 9,
             'family' => 'Arial',
-            'style' => 'B',
+            'style' => '',
             'value' => number_format($total, 2),
         ]];
 
@@ -1534,7 +1534,7 @@ INVOICE_DOS:
                 'size' => 7,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $doctors[0],
+                'value' => $doctors[1] ?? '',
             ],
             'DOCTOR2' => [
               'size' => 7,
@@ -1546,176 +1546,176 @@ INVOICE_DOS:
             'size' => 7,
             'family' => 'Arial',
             'style' => '',
-            'value' => $doctors[0],
+            'value' => $doctors[2] ?? '',
         ],
             'INVOICE_PAID' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => 0,
             ], /*
             'INVOICE_TOTAL' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => number_format($this->invoice->total_with_discounts, 2),
             ], */
             'INVOICE_NUMBER' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->code,
             ],
             'PATIENT_PHONE' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->phone_number,
             ],
             'PATIENT_ZIP' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->zip_code,
             ],
             'PATIENT_DATE' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->DOS->format('m-d-Y'),
             ],
             'PATIENT_YY' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->birth_date->format('y'),
             ],
             'PATIENT_DD' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->birth_date->format('d'),
             ],
             'PATIENT_MM' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->birth_date->format('m'),
             ],
             'STATE' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->state,
             ],
             'PATIENT_NAME' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->name(),
             ],
             'CITY' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->city,
             ],
             'PATIENT_ADDRESS' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->patient->address(),
             ],
             'SEXF' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => (1 == $this->invoice->patient->gender) ? 'X' : '',
             ],
             'SEXM' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => (1 == $this->invoice->patient->gender) ? '' : 'X',
             ],
             'OTHER' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => 'X',
             ],
             'BILLING_PHONE' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->phone_number,
             ],
             'BILLING_PHONE' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->phone_number,
             ],
             'LINE_1' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->first_line,
             ],
             'LINE_2' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->second_line,
             ],
             'LINE_3' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->requiresThirdLine(),
             ],
             'LINE_4' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->fourth_line,
             ],
             'BILLING_LINE_1' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->billing_first_line,
             ],
             'BILLING_LINE_2' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->billing_second_line,
             ],
             'BILLING_LINE_3' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->billing_third_line,
             ],'BILLING_LINE_4' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->location->billing_fourth_line,
             ],'ACCEPT_ASSIGNMENT_YES' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => ($this->invoice->accept_assignment) ? 'X' : '',
             ],'ACCEPT_ASSIGNMENT_NO' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => ($this->invoice->accept_assignment) ? '' : 'X',
             ],'INVOICE_DOS' => [
                 'size' => 9,
                 'family' => 'Arial',
-                'style' => 'B',
+                'style' => '',
                 'value' => $this->invoice->DOS->format("m/d/Y"),
             ],
         ];
@@ -1727,103 +1727,103 @@ INVOICE_DOS:
                 'INSURED_ID' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurance_id,
                 ],
                 'INSURED_PHONE' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->phone_number,
                 ],
                 'INSURED_POLICY' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->group_number,
                 ],
                 'INSURED_ZIP' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->zip_code,
                 ],
                 'INSURED_YY' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->birth_date->format('y'),
                 ],
                 'INSURED_DD' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->birth_date->format('d'),
                 ],
                 'INSURED_MM' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->birth_date->format('m'),
                 ],
                 'INSURED_STATE' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->state,
                 ],
                 'INSURED_NAME' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->name(),
                 ],
                 'INSURED_CITY' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->city,
                 ],
                 'INSURED_ADDRESS' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->patient->address(),
                 ],
                 'SELF' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => 'X',
                 ],
                 'CHILD' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => '',
                 ],
                 'SPOUSE' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => '',
                 ],
                 'R_OTHER' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => '',
                 ],
                 'INSURED_SEXF' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => (1 == $this->invoice->patient->gender) ? 'X' : '',
                 ],
                 'INSURED_SEXM' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => (1 == $this->invoice->patient->gender) ? '' : 'X',
                 ],
             ];
@@ -1832,25 +1832,25 @@ INVOICE_DOS:
                 'INSURANCE_NAME' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurer->name,
                 ],
                 'INSURANCE_ADDRESS' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurer->address,
                 ],
                 'INSURANCE_CITY_ZIP' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurer->addressDetails(),
                 ],
                 'INSURANCE_PHONE' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurer_phone_number,
                 ],
             ];
@@ -1862,103 +1862,103 @@ INVOICE_DOS:
                 'INSURED_ID' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurance_id,
                 ],
                 'INSURED_PHONE' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->phone_number,
                 ],
                 'INSURED_POLICY' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->group_number,
                 ],
                 'INSURED_ZIP' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->zip_code,
                 ],
                 'INSURED_YY' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->birth_date->format('y'),
                 ],
                 'INSURED_DD' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->birth_date->format('d'),
                 ],
                 'INSURED_MM' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->birth_date->format('m'),
                 ],
                 'INSURED_STATE' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->state,
                 ],
                 'INSURED_NAME' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->name(),
                 ],
                 'INSURED_CITY' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->city,
                 ],
                 'INSURED_ADDRESS' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->patient->address(),
                 ],
                 'SELF' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => '',
                 ],
                 'CHILD' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => (1 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
                 'SPOUSE' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => (2 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
                 'R_OTHER' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => (0 == $this->invoice->patient->dependent->relationship) ? 'X' : '',
                 ],
                 'INSURED_SEXF' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => (1 == $insured->patient->gender) ? 'X' : '',
                 ],
                 'INSURED_SEXM' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => (1 == $insured->patient->gender) ? '' : 'X',
                 ],
             ];
@@ -1966,25 +1966,25 @@ INVOICE_DOS:
                 'INSURANCE_NAME' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurer->name,
                 ],
                 'INSURANCE_ADDRESS' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurer->address,
                 ],
                 'INSURANCE_CITY_ZIP' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurer->cityZIP(),
                 ],
                 'INSURANCE_PHONE' => [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $insured->insurer_phone_number,
                 ],
             ];
@@ -1998,84 +1998,84 @@ INVOICE_DOS:
                 $diagnosis_list['DA'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (1 == $i) {
                 $diagnosis_list['DB'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (2 == $i) {
                 $diagnosis_list['DC'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (3 == $i) {
                 $diagnosis_list['DD'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (4 == $i) {
                 $diagnosis_list['DE'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (5 == $i) {
                 $diagnosis_list['DF'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (6 == $i) {
                 $diagnosis_list['DG'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (7 == $i) {
                 $diagnosis_list['DH'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (8 == $i) {
                 $diagnosis_list['DI'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (9 == $i) {
                 $diagnosis_list['DJ'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (10 == $i) {
                 $diagnosis_list['DK'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             } elseif (11 == $i) {
                 $diagnosis_list['DL'] = [
                     'size' => 9,
                     'family' => 'Arial',
-                    'style' => 'B',
+                    'style' => '',
                     'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
                 ];
             }

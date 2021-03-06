@@ -366,7 +366,7 @@ DENTIST_SIGNATURE:
 
 
 DENTIST_SIGNATURE_DATE: 
-     llx: 498.70901
+     llx: 548.70901
      lly: 95.7052
      urx: 577.40698
      ury: 106.491
@@ -1765,13 +1765,23 @@ T32:
                 'value' => $services[$i]->quantity,
             ];
             if($services[$i]->dental->missing) {
-	   $services_list['T'.($services[$i]->dental->tooth_numbers)] = [
+	            $services_list['T'.($services[$i]->dental->tooth_numbers)] = [
                 'size' => 8,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => 'X',
-            ]; 
+              ]; 
           }
+        }
+        $missing_teeth = explode(",", $this->invoice->dental_details->tooth_numbers);
+        for ($i=0; $i < count($missing_teeth); $i++) { 
+          $services_list['T'.($missing_teeth[$i])] = [
+            'size' => 8,
+            'family' => 'Arial',
+            'style' => '',
+            'value' => 'X',
+          ]; 
+          
         }
 
         $total_services = ['Invoice_Total' => [
@@ -1790,12 +1800,15 @@ T32:
         $data = $this->invoice_data;
 	
         $coordinates = $this->addServicesSlots(count($services)) . $this->addTeethSlots($services);
+
+        if($this->invoice->dental_details->tooth_numbers){
+          $coordinates = $coordinates . $this->addMissingTeethSlots(explode(",", $this->invoice->dental_details->tooth_numbers));
+        }
 	
         $data = $data + $this->addServices($services);
 
 
         $converter = new Converter($coordinates);
-	//dd($converter);
         $converter->loadPagesWithFieldsCount();
         $coords = $converter->formatFieldsAsJSON();
         $fields = json_decode($coords, true);
@@ -1851,6 +1864,21 @@ T32:
         return $coordinates;
     }
 
+    private function addMissingTeethSlots($tooth_numbers)
+    {
+        $coordinates = '';
+        for ($i = 0; $i < count($tooth_numbers); ++$i) {
+               //get number from array
+               $n = $tooth_numbers[$i];
+               if(is_numeric($n) && $n < 33){
+               //search for it in slots
+               $coordinates = $coordinates.$this->teeth_slots[($n - 1)];
+              }
+        }
+
+        return $coordinates;
+    }
+
     private function addTeethSlots($services)
     {
         $coordinates = '';
@@ -1873,13 +1901,13 @@ T32:
         //return
         $this->invoice_data = [
             'DENTIST_SIGNATURE' => [
-                'size' => 9,
+                'size' => 7,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->doctor,
+                'value' => str_replace('{', ", ",$this->invoice->doctor),
             ],
 	   'DENTIST_SIGNATURE_DATE' => [
-                'size' => 9,
+                'size' => 7,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => $this->invoice->DOS->format('m/d/y'),
@@ -1897,13 +1925,13 @@ T32:
                 'value' => $this->invoice->DOS->format('m/d/y'),
             ],
 	    'DENTIST_LICENSE' => [
-                'size' => 9,
+                'size' => 7,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => $this->invoice->dental_details->license,
             ], 
 	    'License_Number' => [
-                'size' => 9,
+                'size' => 7,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => $this->invoice->dental_details->license,
@@ -2282,91 +2310,7 @@ T32:
                 'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
             ];
 
-            /* if (0 == $i) {
-                $diagnosis_list['DA'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (1 == $i) {
-                $diagnosis_list['DB'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (2 == $i) {
-                $diagnosis_list['DC'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (3 == $i) {
-                $diagnosis_list['DD'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (4 == $i) {
-                $diagnosis_list['DE'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (5 == $i) {
-                $diagnosis_list['DF'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (6 == $i) {
-                $diagnosis_list['DG'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (7 == $i) {
-                $diagnosis_list['DH'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (8 == $i) {
-                $diagnosis_list['DI'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (9 == $i) {
-                $diagnosis_list['DJ'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (10 == $i) {
-                $diagnosis_list['DK'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } elseif (11 == $i) {
-                $diagnosis_list['DL'] = [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $this->invoice->diagnoses[$i]->diagnosis_code,
-                ];
-            } */
+            
         }
 
         $this->invoice_data = $this->invoice_data + $diagnosis_list;
