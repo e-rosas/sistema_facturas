@@ -69,11 +69,15 @@ class Payment extends Model
     {
         switch ($this->type) {
             case 0:
-                return 'Normal.';
+                return 'Aseguranza.';
 
                 break;
             case 1:
                 return 'Cargo a paciente.';
+
+                break;
+            case 2:
+                return 'Paciente.';
 
                 break;
             default:

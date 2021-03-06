@@ -75,8 +75,15 @@ class PaymentController extends Controller
             $validated['number'] = 'Pendiente'; //$validated['invoice_number'].'- P'.rand(1, 1000);
         }
 
+        $type = $validatePayment->paymentType();
+
+
+        if( $type > 0) {  //a charge 
+            $validated['type'] = $type;
+        }
+
         if ($concept < 2) {
-            $validated['type'] = $validatePayment->paymentType();
+           
             $validated['concept'] = $concept;
             Payment::create($validated);
         }
@@ -121,6 +128,8 @@ class PaymentController extends Controller
 
         $validatePayment = new VerifyPaymentAmount($validated['amount_paid'], $payment->invoice_id);
         $concept = $validatePayment->verifyUpdatePayment($payment->amount_paid);
+
+       
 
         if ($concept < 2) {
             if (is_null($validated['number'])) {

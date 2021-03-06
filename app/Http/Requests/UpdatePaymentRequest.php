@@ -31,6 +31,7 @@ class UpdatePaymentRequest extends FormRequest
             'method' => 'max:255',
             'number' => 'max:255',
             'date' => 'date',
+            'type' => 'numeric'
         ];
     }
 }

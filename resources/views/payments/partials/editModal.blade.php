@@ -66,6 +66,13 @@
                                     <option value='1' >Cheque</option>
                                 </select>
                             </div>
+                            <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="update-payment-type">¿Quién pagó?</label>
+                                <select id='update-payment-type' class="custom-select" name="type">
+                                    <option value='0' selected>Aseguranza</option>
+                                    <option value='2'>Paciente</option>
+                                </select>
+                            </div>
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -111,12 +118,12 @@
         success: function (response) {
                 displayPaymentModal(response.data.id, response.data.number,
                     response.data.date2, response.data.amount_paid, 
-                    response.data.comments,response.data.method2, response.data.exchange_rate);
+                    response.data.comments,response.data.method2, response.data.exchange_rate, response.data.type2);
             }
         });
         return false;
     }
-    function displayPaymentModal(payment_id, number, date, amount, comments, method2, exchange_rate){
+    function displayPaymentModal(payment_id, number, date, amount, comments, method2, exchange_rate, type2){
         document.getElementById("update-payment-id").value = payment_id;
         document.getElementById("update-payment-number").value = number;
         document.getElementById("update-payment-date").value = date;
@@ -124,9 +131,10 @@
         document.getElementById("update-payment-comments").value = comments;
         document.getElementById("update-payment-exchange_rate").value = parseFloat(exchange_rate.replace(/,/g, ''));;
         document.getElementById("update-payment-method").value = method2;
+        document.getElementById("update-payment-type").value = type2;
 
       }
-    function updatePayment(id, amount, date, comments, method, exchange_rate, number){
+    function updatePayment(id, amount, date, comments, method, exchange_rate, number, type){
         $.ajax({
             url: "{{route('payments.update')}}",
             dataType: 'json',
@@ -139,7 +147,8 @@
                 "comments": comments,
                 "method": method,
                 "number": number,
-                "exchange_rate": exchange_rate
+                "exchange_rate": exchange_rate,
+                "type": type
             },
         success: function (response) {
             DisplayPayments(response.data);
@@ -167,7 +176,8 @@
 
                 var method = document.getElementById("update-payment-method").value;
                 var exchange_rate = document.getElementById("update-payment-exchange_rate").value;
-                updatePayment(payment_id, amount, date, comments, method, exchange_rate, number);
+                var type = document.getElementById("update-payment-type").value;
+                updatePayment(payment_id, amount, date, comments, method, exchange_rate, number, type);
             }
 
         });

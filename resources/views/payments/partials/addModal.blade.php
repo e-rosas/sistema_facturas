@@ -76,6 +76,14 @@
                                 </select>
                             </div>
 
+                            <div class="form-group{{ $errors->has('type') ? ' has-danger' : '' }}">
+                                <label class="form-control-label" for="payment-type">¿Quién pagó?</label>
+                                <select id='payment-type' class="custom-select" name="type">
+                                    <option value='0' selected>Aseguranza</option>
+                                    <option value='2'>Paciente</option>
+                                </select>
+                            </div>
+
                             {{--  comments  --}}
                             <div class="form-group {{ $errors->has('comments') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -133,7 +141,7 @@
         });
         return false;
     }
-    function sendPayment(method, exchange_rate, amount, date, comments, number){
+    function sendPayment(method, exchange_rate, amount, date, comments, number, type){
         $.ajax({
             url: "{{route('payments.store')}}",
             dataType: 'json',
@@ -148,6 +156,7 @@
                 "date": date,
                 "comments": comments,
                 "number": number,
+                "type": type
             },
         success: function (response) {
             DisplayPayments(response.data);
@@ -214,7 +223,8 @@
             var method = document.getElementById("payment-method").value;
             var comments = document.getElementById("payment-comments").value;
             var number = document.getElementById("payment-number").value;
-            sendPayment(method , exchange_rate, amount, date, comments, number);
+            var type = document.getElementById("payment-type").value;
+            sendPayment(method , exchange_rate, amount, date, comments, number, type);
         }
         else {
             alert("Falta introducir cantidad de pago y/o tipo de cambio.")

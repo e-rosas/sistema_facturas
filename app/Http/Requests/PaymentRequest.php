@@ -32,6 +32,7 @@ class PaymentRequest extends FormRequest
             'invoice_number' => 'required',
             'date' => 'date',
             'invoice_id' => 'required',
+            'type' => 'numeric'
         ];
     }
 }
