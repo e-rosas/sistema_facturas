@@ -36,7 +36,7 @@
                                 <option value='0' {{ $type == 0 ? 'selected' : '' }}>Nota de crédito.</option>
                                 <option value='1' {{ $type == 1 ? 'selected' : '' }}>Un solo pago completo.</option>
                                 <option value='2' {{ $type == 2 ? 'selected' : '' }}>Pendiente de pago.</option>
-                                <option value='3' {{ $status == 3 ? 'selected' : '' }}>Cargo al paciente.</option>
+                                <option value='3' {{ $type == 3 ? 'selected' : '' }}>Cargo al paciente.</option>
                             </select>
                         </div>
                         <div class="col-lg-5">

@@ -95,9 +95,9 @@ class CalculateTotalsOfInvoices
             $invoice->amount_paid = $total_payments->amount_paid;
             $invoice->amount_credit = $credit;
             $invoice->amount_due = $invoice->total_with_discounts - $invoice->amount_paid - $credit;
-            if($invoice->amount_paid == 0){
+            /* if($invoice->amount_paid == 0){
                 $invoice->type = 2;
-            }
+            } */
             $invoice->save();
 
             $this->sumInvoiceStats($invoice);
