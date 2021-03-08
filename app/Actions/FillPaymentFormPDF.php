@@ -1716,7 +1716,7 @@ INVOICE_DOS:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->DOS->format("m/d/Y"),
+                'value' => config('app.old') ? $this->invoice->date->format("m/d/Y") : $this->invoice->DOS->format("m/d/Y"),
             ],
         ];
         if ($this->invoice->patient->insured) {
