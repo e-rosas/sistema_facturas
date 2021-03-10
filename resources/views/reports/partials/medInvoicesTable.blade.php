@@ -3,10 +3,9 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('Fecha') }}</th>
-                <th scope="col">{{ __('Serie') }}</th>
-                <th scope="col">{{ __('Folio') }}</th>
-                <th scope="col">{{ __('Concepto') }}</th>
+                <th scope="col">{{ __('Factura') }}</th>              
                 <th scope="col">{{ __('Paciente') }}</th>
+                {{-- <th scope="col">{{ __('Aseguranza') }}</th> --}}
                 <th scope="col">{{ __('Cargos') }}</th>
                 <th scope="col">{{ __('Abonos') }}</th>
                 <th scope="col">{{ __('Saldo') }}</th>
@@ -19,14 +18,13 @@
             @foreach ($invoices as $invoice)
             <tr>
                 <td>{{ $invoice->date->format('M-d-Y') }}</td>
-                <td>{{ $invoice->series }}</td>
-                <td><a href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>
-                <td>{{ $invoice->concept }}</td>
+                <td><a href="{{ route('invoices.show', $invoice) }}">{{ $invoice->number }}</a></td>              
                 <td>
                     <a href="{{ route('patients.show', $invoice->patient) }}">
                         {{ $invoice->patient->full_name}}
                     </a>
                 </td>
+                {{-- <td>{{ $invoice->concept }}</td> --}}
                 <td><span class="MXN"> {{ $invoice->totalF() }} </span><span class="USD" style="display: none">
                         {{ $invoice->totalDiscounted() }} </span></td>
                 <td><span class="MXN"> {{ $invoice->amountPaidMXN() }} </span><span class="USD" style="display: none">
@@ -54,10 +52,8 @@
                 <td>{{ $payment->number }}</td>
                 <td>{{ $payment->concept()}}</td>
                 <td></td>
-                <td></td>
                 <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD" style="display: none">
                         {{ $payment->amountPaid() }} </span></td>
-                <td></td>
                 <td></td>
                 <td>{{ $payment->exchangeRate() }}</td>
                 <td></td>
@@ -70,10 +66,8 @@
                 <td>{{ $invoice->credit->number}}</td>
                 <td>{{ $invoice->credit->concept()}}</td>
                 <td></td>
-                <td></td>
                 <td><span class="MXN"> {{ $invoice->credit->total() }} </span><span class="USD" style="display: none">
                         {{ $invoice->credit->amountDue() }} </span></td>
-                <td></td>
                 <td></td>
                 <td>{{ $invoice->credit->exchangeRate() }}</td>
                 <td></td>

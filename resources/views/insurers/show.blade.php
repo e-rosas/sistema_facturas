@@ -18,20 +18,7 @@
     </div>
     <div class="row mt-5">
         <div class="col-xl-9">
-            <form method="get" action="{{ route('insurers.show', $insurer) }}">
-                <div class="form-row">
-                    <div class="col-md-11 col-auto">
-                        <input name="search" class="form-control" type="search" placeholder="Buscar..."
-                            value="{{ $search ?? '' }}">
-                    </div>
-                    {{--  refresh  --}}
-                    <div class="col-md-1 col-auto text-right">
-                        <button type="submit" class="btn btn-primary btn-fab btn-icon">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
+            
             <div class="card  mb-4 mb-xl-0">
                 <div class="card-header border-0">
                     <div class="row align-items-center">
@@ -41,6 +28,20 @@
 
                     </div>
                 </div>
+                <form method="get" action="{{ route('insurers.show', $insurer) }}">
+                    <div class="form-row m-2">
+                        <div class="col-md-11 col-auto">
+                            <input name="search" class="form-control" type="search" placeholder="Nombre, NSS, o ID de aseguranza..."
+                                value="{{ $search ?? '' }}">
+                        </div>
+                        {{--  refresh  --}}
+                        <div class="col-md-1 col-auto text-right">
+                            <button type="submit" class="btn btn-primary btn-fab btn-icon">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
                 <div class="table-responsive" id="patients-table">
                     <table class="table align-items-center table-flush table-hover">
                         <thead class="thead-light">
@@ -74,28 +75,28 @@
 
                                 </td>
                             </tr>
-                            @if ($insuree->dependents)
-                            @foreach ($insuree->dependents as $dependent)
-                            <tr class="table-info">
-                                <td> <a
-                                        href="{{ route('patients.show', $dependent->patient) }}">{{ $dependent->patient->full_name }}</a>
-                                </td>
-                                <td>{{ $dependent->patient->birth_date->format('d-m-Y')  }}</td>
-                                <td></td>
-                                <td></td>
-                                <td class="td-actions text-right">
-                                    <a class="btn btn-success btn-sm btn-icon" rel="tooltip" type="button"
-                                        href="{{ route('patients.show', $dependent->patient) }}">
-                                        <i class="fas fa-eye "></i>
-                                    </a>
-                                    <a class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
-                                        href="{{ route('patients.edit', $dependent->patient) }}">
-                                        <i class="fas fa-pencil-alt fa-2"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                            @endif
+                                @if ($insuree->dependents)
+                                    @foreach ($insuree->dependents as $dependent)
+                                    <tr class="table-info">
+                                        <td> <a
+                                                href="{{ route('patients.show', $dependent->patient) }}">{{ $dependent->patient->full_name }}</a>
+                                        </td>
+                                        <td>{{ $dependent->patient->birth_date->format('d-m-Y')  }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="td-actions text-right">
+                                            <a class="btn btn-success btn-sm btn-icon" rel="tooltip" type="button"
+                                                href="{{ route('patients.show', $dependent->patient) }}">
+                                                <i class="fas fa-eye "></i>
+                                            </a>
+                                            <a class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
+                                                href="{{ route('patients.edit', $dependent->patient) }}">
+                                                <i class="fas fa-pencil-alt fa-2"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @endif
 
                             @endforeach
                         </tbody>

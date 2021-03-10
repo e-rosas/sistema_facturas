@@ -73,16 +73,18 @@ class InsurerController extends Controller
             $search = '';
         }
 
-        $insurees = Insuree::with('patient')->where('insurer_id', $insurer->id)
+        $insurees = Insuree::with('patient', 'dependents.patient')->where('insurer_id', $insurer->id)
             ->whereLike(['nss', 'insurance_id', 'patient.full_name'], $search)
-            ->paginate(20)
+            ->paginate(10)
         ;
 
-        foreach ($insurees as $insuree) {
+      //  dd($insurees);
+
+        /* foreach ($insurees as $insuree) {
             $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->patient_id)
                 ->get()
             ;
-        }
+        } */
 
         /* foreach ($insurees as $insuree) {
             $invoicess = Invoice::with('payments', 'patient', 'credit')

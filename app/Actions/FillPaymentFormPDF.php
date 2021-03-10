@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FillPaymentFormPDF
 {
-    private $coordinates = '134 widget annotations found on page 1.
+    private $coordinates = '142 widget annotations found on page 1.
     ----------------------------------------------
     
     INSURED_ID: 
@@ -1324,10 +1324,16 @@ INVOICE_DOS:
     public function fill($output)
     {
         $this->getInvoiceData();
-        $pages = ceil(count($this->invoice->services2) / 6);
+        $amount_services = count($this->invoice->services2);
+        $pages = ceil($amount_services / 6);
         $form = $this->getForm();
+        
         for ($i = 0; $i < $pages; ++$i) {
-            $services = $this->invoice->services2->slice($i * 6, 6)->values();
+          $remaining = ($amount_services - $i * 6);
+          $take = ($remaining > 6 ? 6 : $remaining);
+          $services = $this->invoice->services2->slice($i * 6, $take)->values();
+            
+            
             $this->fillPage($form, $services, $i);
         }
         $merge = new MergePDFs($pages);
@@ -1337,7 +1343,8 @@ INVOICE_DOS:
     public function saveFill()
     {
         $this->getInvoiceData();
-        $pages = ceil(count($this->invoice->services2) / 6);
+        $amount_services = count($this->invoice->services2);
+        $pages = ceil($amount_services / 6);
         $directory = 'pdf/patients/'.$this->invoice->patient_id.'/invoices/';
         
         
@@ -1463,6 +1470,8 @@ INVOICE_DOS:
 
     private function fillPage($form, $services, $page)
     {
+      
+
         $data = $this->invoice_data;
         $coordinates = $this->addServicesSlots(count($services));
 
@@ -1471,23 +1480,32 @@ INVOICE_DOS:
         $converter = new Converter($coordinates);
         $converter->loadPagesWithFieldsCount();
         $coords = $converter->formatFieldsAsJSON();
+        
         $fields = json_decode($coords, true);
+        
         $fieldEntities = [];
+
+        
 
         foreach ($fields as $field) {
             $fieldEntities[] = Field::fieldFromArray($field);
         }
+
+        
         
         $path = 'app/pdf/invoice/newForm'.$page.'.pdf';
+       
         Storage::put($path, '');
         $newForm = storage_path($path);
         $pdfGenerator = new PDFGenerator($fieldEntities, $data, 'P', 'pt', 'A4');
+        //dd($pdfGenerator);
 
         try {
             $pdfGenerator->start($form, $newForm);
-        } catch (\Throwable $th) {
+        } catch (\Throwable $th) { dd($th);
             throw $th;
         }
+        //dd($page);
     }
 
     private function realPointers($diagnosis_pointers, $alphabet)
@@ -2082,6 +2100,7 @@ INVOICE_DOS:
         }
 
         $this->invoice_data = $this->invoice_data + $diagnosis_list;
+        
         //add data
     }
 }
