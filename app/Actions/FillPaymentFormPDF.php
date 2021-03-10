@@ -313,7 +313,7 @@ INSURED_POLICY:
     
       DOCTOR1: 
           llx: 24
-          lly: 108.6951
+          lly: 109.6951
           urx: 178.59801
           ury: 70.2538
         width: 150.59801
@@ -475,7 +475,7 @@ INVOICE_DOS:
   
   DOCTOR3: 
        llx: 24.5036
-       lly: 104.6247
+       lly: 91.6247
        urx: 173.92101
        ury: 57.1834
      width: 149.41741
