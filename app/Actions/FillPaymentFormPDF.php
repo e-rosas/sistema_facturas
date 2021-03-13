@@ -1324,7 +1324,7 @@ INVOICE_DOS:
     public function fill($output)
     {
         $this->getInvoiceData();
-        $amount_services = count($this->invoice->services2);
+        $amount_services = count($this->invoice->services2()->orderBy('id')->get());
         $pages = ceil($amount_services / 6);
         $form = $this->getForm();
         
