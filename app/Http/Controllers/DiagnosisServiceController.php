@@ -75,7 +75,7 @@ class DiagnosisServiceController extends Controller
     {
         $invoice_id = $request->invoice_id;
         $services = DiagnosisService::with('items')
-            ->where('invoice_id', $invoice_id)->get();
+            ->where('invoice_id', $invoice_id)->orderBy('id')->get();
 
         echo json_encode($services);
         exit;
@@ -85,7 +85,7 @@ class DiagnosisServiceController extends Controller
     {
         $invoice_id = $request->invoice_id;
         $services = DiagnosisService::with('items', 'dental')
-            ->where('invoice_id', $invoice_id)->get();
+            ->where('invoice_id', $invoice_id)->orderBy('id')->get();
 
         echo json_encode($services);
         exit;

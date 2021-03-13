@@ -15,7 +15,7 @@ class InvoiceDiagnosisController extends Controller
     public function getInvoiceDiagnoses(Request $request)
     {
         $invoice_id = $request->invoice_id;
-        $diagnoses = InvoiceDiagnosis::where('invoice_id', $invoice_id)->get();
+        $diagnoses = InvoiceDiagnosis::where('invoice_id', $invoice_id)->orderBy('id')->get();
 
         return InvoiceDiagnosisResource::collection($diagnoses);
     }

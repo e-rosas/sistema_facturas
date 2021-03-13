@@ -32,7 +32,7 @@ class UpdatePatientRequest extends FormRequest
             'street_number' => 'max:255',
             'city' => 'max:255',
             'state' => 'max:255',
-            'zip_code' => 'required',
+            'zip_code' => 'max:5',
             'phone_number' => 'max:255',
             'email' => 'max:255',
             'deductible' => 'numeric',
