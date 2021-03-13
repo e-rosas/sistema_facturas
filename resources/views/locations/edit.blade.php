@@ -66,7 +66,7 @@
                                 @endif
                             </div>
                             <div class="form-row">
-                                <div class="col-auto form-group{{ $errors->has('third_line') ? ' has-danger' : '' }}">
+                                <div class="col-md-12 col-auto form-group{{ $errors->has('third_line') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-third_line">Línea 3 (opcional)</label>
                                     <input type="text" name="third_line" id="input-third_line"
                                         class="form-control form-control-alternative{{ $errors->has('third_line') ? ' is-invalid' : '' }}"
@@ -81,12 +81,12 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-auto form-group{{ $errors->has('fourth_line') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-fourth_line">Línea 4</label>
+                                <div class="col-md-12  col-auto form-group{{ $errors->has('fourth_line') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label" for="input-fourth_line">Línea 4 (opcional)</label>
                                     <input type="text" name="fourth_line" id="input-fourth_line"
                                         class="form-control form-control-alternative{{ $errors->has('fourth_line') ? ' is-invalid' : '' }}"
                                         placeholder="Ciudad, estado, C.P." value="{{ $location->fourth_line }}"
-                                        required>
+                                        >
 
                                     @if ($errors->has('fourth_line'))
                                     <span class="invalid-feedback" role="alert">
@@ -140,7 +140,7 @@
                             </div>
                             <div class="form-row">
                                 <div
-                                    class="col-auto form-group{{ $errors->has('billing_third_line') ? ' has-danger' : '' }}">
+                                    class="col-md-12  col-auto form-group{{ $errors->has('billing_third_line') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-billing_third_line">Billing Línea 3
                                         (opcional)</label>
                                     <input type="text" name="billing_third_line" id="input-billing_third_line"
@@ -157,13 +157,13 @@
                             </div>
                             <div class="form-row">
                                 <div
-                                    class="col-auto form-group{{ $errors->has('billing_fourth_line') ? ' has-danger' : '' }}">
+                                    class="col-md-12  col-auto form-group{{ $errors->has('billing_fourth_line') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-billing_fourth_line">Billing Línea
-                                        4</label>
+                                        4 (opcional)</label>
                                     <input type="text" name="billing_fourth_line" id="input-billing_fourth_line"
                                         class="form-control form-control-alternative{{ $errors->has('billing_fourth_line') ? ' is-invalid' : '' }}"
                                         placeholder="Ciudad, estado, C.P." value="{{ $location->billing_fourth_line }}"
-                                        required>
+                                        >
 
                                     @if ($errors->has('billing_fourth_line'))
                                     <span class="invalid-feedback" role="alert">

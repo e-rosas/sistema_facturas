@@ -17,7 +17,7 @@ class CreateLocationsTable extends Migration
             $table->string('first_line', 43);
             $table->string('second_line', 43);
             $table->string('third_line', 43)->nullable();
-            $table->string('fourth_line', 43);
+            $table->string('fourth_line', 43)->nullable();
             $table->string('phone_number')->nullable();
 
             $table->string('billing_first_line', 43);

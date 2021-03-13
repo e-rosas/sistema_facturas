@@ -29,7 +29,7 @@ class UpdateLocationRequest extends FormRequest
             'second_line' => 'max:38|required',
             'phone_number' => 'max:12',
             'third_line' => 'max:38',
-            'fourth_line' => 'max:38|required',
+            'fourth_line' => 'max:38',
             'default' => 'required',
             'billing_first_line' => 'max:38|required',
             'billing_second_line' => 'max:38|required',

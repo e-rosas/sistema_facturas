@@ -83,10 +83,10 @@
                             <div class="form-row">
                                 <div
                                     class="col-md-12 col-auto form-group{{ $errors->has('fourth_line') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="input-fourth_line">Línea 4</label>
+                                    <label class="form-control-label" for="input-fourth_line">Línea 4 (opcional)</label>
                                     <input type="text" name="fourth_line" id="input-fourth_line"
                                         class="form-control form-control-alternative{{ $errors->has('fourth_line') ? ' is-invalid' : '' }}"
-                                        placeholder="Ciudad, estado, C.P." value="{{ old('fourth_line') }}" required>
+                                        placeholder="Ciudad, estado, C.P." value="{{ old('fourth_line') }}">
 
                                     @if ($errors->has('fourth_line'))
                                     <span class="invalid-feedback" role="alert">
