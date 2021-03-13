@@ -143,6 +143,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('insurees/find', 'SearchPatientController@findInsuree')->name('insurees.find');
 
     Route::post('charts/stats', 'ReportController@invoiceStats')->name('charts.invoices');
+    Route::post('charts/insurer', 'ReportController@insurerStats')->name('charts.insurer');
 
     Route::resource('locations', 'LocationController');
     Route::post('locations/search', 'LocationController@searchLocation')->name('locations.search');

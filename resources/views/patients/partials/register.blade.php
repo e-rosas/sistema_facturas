@@ -93,7 +93,7 @@
                     <div class="form-group{{ $errors->has('zip_code') ? ' has-danger' : '' }} col-md-4 col-auto">
                         <label class="form-control-label" for="input-zip_code">Código Postal</label>
                         <input type="text" name="zip_code" id="input-zip_code" class="form-control form-control-alternative{{ $errors->has('zip_code') ? ' is-invalid' : '' }}" 
-                            placeholder="Código Postal" value="{{ old('zip_code') }}" required>
+                            placeholder="Código Postal" value="{{ old('zip_code') }}">
                     
                         @if ($errors->has('zip_code'))
                             <span class="invalid-feedback" role="alert">

@@ -4,19 +4,34 @@
 @include('layouts.headers.header', ['title' => $insurer->name, 'description' => $insurer->code ])
 
 <div class="container-fluid mt--7">
-    <div class="row">
-        {{-- <div class="col-xl-12 mb-5 mb-xl-0 card-group">
-                @include('components.invoiceStatsCard', ['id' => 'total','title' => 'Total', 'value' => $stats->getTotal()])
-                @include('components.invoiceStatsCard', ['id' => 'amount-paid','title' => 'Amount paid', 'value' => $stats->getAmount_paid()])
-                @include('components.invoiceStatsCard', ['id' => 'amount-due','title' => 'Amount due (insurance)', 'value' => $stats->getAmount_due()])
-                @include('components.invoiceStatsCard', ['id' => 'personal-due','title' => 'Amount due (personal)', 'value' => $stats->getPersonalAmountDue()])
-                @if ($stats->status==2)
-                    @include('components.invoiceStatsCard', ['id' => 'total-total-due','title' => 'Amount due', 'value' => $stats->getTotalAmountDue()])
-                @endif
-            </div> --}}
+    {{-- Search row --}}
+    
+    {{-- <div class="row">
+        <div class="col-xl-12 mb-5 mb-xl-0 card-group">
+            @include('components.invoiceStatsCard', ['idUSD' => 'totalUSD','title' => 'Total', 'USD' => 0, 'value' =>
+            0, 'idMXN' => 'totalMXN', 'valueMXN' => 0])
+            @include('components.invoiceStatsCard', ['idUSD' => 'amount-paid','title' => 'Pagado', 'bg' => 'bg-green',
+            'USD' => 0,'value' => 0, 'idMXN' => 'amount-paidMXN', 'valueMXN' =>
+            0])
+            @include('components.invoiceStatsCard', ['idUSD' => 'amount-credit','title' => 'Crédito', 'bg' => 'bg-info',
+            'USD' => 0,'value' => 0, 'idMXN' => 'amount-creditMXN', 'valueMXN' =>
+            0])
+            @include('components.invoiceStatsCard', ['idUSD' => 'amount-due','title' => 'Debe', 'bg' => 'bg-yellow',
+            'USD' => 0,'value' => 0, 'idMXN' => 'amount-dueMXN', 'valueMXN' =>
+            0])
 
+        </div>
+
+    </div> --}}
+    <div class="row">
+        {{--  refresh  --}}
+        {{-- <div class="col-md-9 text-right mt-2">
+            <button id="refresh" type="button" class="btn btn-info" onclick="RefreshInsurerStats()">
+                Actualizar
+            </button>
+        </div> --}}
     </div>
-    <div class="row mt-5">
+    <div class="row mt-2">
         <div class="col-xl-9">
             
             <div class="card  mb-4 mb-xl-0">
@@ -75,7 +90,7 @@
 
                                 </td>
                             </tr>
-                                @if ($insuree->dependents)
+                               {{--  @if ($insuree->dependents)
                                     @foreach ($insuree->dependents as $dependent)
                                     <tr class="table-info">
                                         <td> <a
@@ -96,7 +111,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                @endif
+                                @endif --}}
 
                             @endforeach
                         </tbody>
@@ -154,3 +169,23 @@
     </div>
 </div>
 @endsection
+@push('js')
+    <script>
+        function RefreshInsurerStats() {
+            $.ajax({
+                url: "{{route('charts.insurer')}}",
+                dataType: 'json',
+                type: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'insurer_id': {{ $insurer->id }}
+
+                },
+                success: function (response) {
+                    console.log(response);
+                }
+            });
+            return false;
+        }
+    </script>
+@endpush

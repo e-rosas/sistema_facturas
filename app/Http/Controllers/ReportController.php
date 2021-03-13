@@ -174,4 +174,25 @@ class ReportController extends Controller
 
         return json_encode($stats);
     }
+
+    public function insurerStats(Request $request)
+    {
+        $insuree_ids = DB::table('insurees')
+            ->select('patient_id')
+            ->where('insurer_id', $request->insurer_id)
+            ->get()->pluck('patient_id')->toArray()
+        ;
+        $dependent_ids = DB::table('dependents')
+            ->select('patient_id')
+            ->whereIntegerInRaw('insuree_id', $insuree_ids)
+            ->get()->pluck('patient_id')->toArray()
+        ;
+        $ids = array_merge( $insuree_ids, $dependent_ids);
+        $stats = DB::table('person_stats')
+            ->select([DB::raw('(SUM(amount_due)) as amount_due'),
+            DB::raw('(SUM(amount_paid)) as amount_paid'),])
+            ->whereIntegerInRaw('patient_id', $ids)
+            ->get();
+        return json_encode($stats);
+    }
 }
