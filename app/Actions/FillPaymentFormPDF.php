@@ -1997,7 +1997,7 @@ INVOICE_DOS:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
-                    'value' => $insured->insurer->cityZIP(),
+                    'value' => $insured->insurer->addressDetails(),
                 ],
                 'INSURANCE_PHONE' => [
                     'size' => 9,
