@@ -1324,14 +1324,15 @@ INVOICE_DOS:
     public function fill($output)
     {
         $this->getInvoiceData();
-        $amount_services = count($this->invoice->services2()->orderBy('id')->get());
+        $invoice_services = $this->invoice->services2()->orderBy('id')->get();
+        $amount_services = count($invoice_services);
         $pages = ceil($amount_services / 6);
         $form = $this->getForm();
         
         for ($i = 0; $i < $pages; ++$i) {
           $remaining = ($amount_services - $i * 6);
           $take = ($remaining > 6 ? 6 : $remaining);
-          $services = $this->invoice->services2->slice($i * 6, $take)->values();
+          $services = $invoice_services->slice($i * 6, $take)->values();
             
             
             $this->fillPage($form, $services, $i);
