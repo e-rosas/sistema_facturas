@@ -900,13 +900,13 @@
      // Add to cart
      function addServiceToCart(service_id, description, price, discounted_price,
          quantity, id, descripcion, code, pointers) {
-        for(var service in this.services) {
+        /* for(var service in this.services) {
             if(this.services[service].service_id === service_id) {
                 this.services[service].quantity += Number(quantity);
                 displayCart();
                 return;
             }
-        }
+        } */
 
         var DOS = document.getElementById("input-date_service").value;
         var DOS_to = document.getElementById("input-date_service-to").value;

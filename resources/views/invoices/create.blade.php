@@ -973,7 +973,7 @@
         service.tooth_system = document.getElementById("modal-dental-service-tooth-system").value;
         service.tooth_surfaces = document.getElementById("modal-dental-service-tooth-surfaces").value;
         service.tooth_numbers = document.getElementById("modal-dental-service-tooth-numbers").value;
-        service.missing = document.getElementById("modal-dental-service-tooth-missing").checked;
+        service.missing = document.getElementById("modal-dental-service-tooth-missing").checked ? 1 : 0;
     }
 
     function displayDentalDetails(service) {
@@ -983,7 +983,7 @@
         document.getElementById("modal-dental-service-tooth-system").value = service.tooth_system;
         document.getElementById("modal-dental-service-tooth-surfaces").value = service.tooth_surfaces;
         document.getElementById("modal-dental-service-tooth-numbers").value = service.tooth_numbers;
-        document.getElementById("modal-dental-service-tooth-missing").checked = service.missing ? 1 : 0;
+        document.getElementById("modal-dental-service-tooth-missing").checked = service.missing;
     }
 
     function addDiagnosis(diagnosis_id, diagnosis_code, name, nombre) {
@@ -1029,13 +1029,13 @@
 
     function addServiceToCart(service_id, description, price, discounted_price,
         quantity, id, descripcion, code, pointers) {
-        for (var service in this.services) {
+        /* for (var service in this.services) {
             if (this.services[service].id === id) {
                 this.services[service].quantity += Number(quantity);
                 displayCart();
                 return;
             }
-        }
+        } */
 
         var DOS = document.getElementById("input-date_service").value;
         var DOS_to = document.getElementById("input-date_service-to").value;
