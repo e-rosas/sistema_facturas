@@ -746,7 +746,7 @@
         tooth_system = "";
         tooth_numbers = "";
         tooth_surfaces = "";
-        missing = false;
+        missing = 0;
         constructor(service_id, description, price, discounted_price, quantity, id,
             DOS, DOS_to, descripcion, code, pointers) {
             this.service_id = service_id;
@@ -773,7 +773,7 @@
             this.tooth_system = "";
             this.tooth_numbers = "";
             this.tooth_surfaces = "";
-            this.missing = false;
+            this.missing = 0;
         }
 
         get date() {
