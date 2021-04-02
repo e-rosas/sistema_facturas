@@ -133,118 +133,140 @@
                     </button>
                 </div>
             </div>
-            @if ($invoice->dental)
-            @include('invoices.partials.dentalServiceInfoModal')
-            <div class="form-row">
-                <div class="col-xl-12">
-                    @include('invoices.partials.dentalDetails', ['dental' => $invoice->dental_details])
-                </div>
 
-            </div>
-            @endif
-
-            <div class="form-row">
-                <div class="col-md-3">
-                    @if (config('app.initial') == "C")
-                    <div class="col-lg-2 custom-control custom-checkbox">
-                        <input type="checkbox" name="cash" id="cash" class="custom-control-input"
-                            {{ $invoice->cash ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="cash">Cash</label>
-                    </div>
-                    @else
-                    <input type="checkbox" name="cash" id="cash" class="custom-control-input" style="display: none">
+            <div class="nav-wrapper">
+                <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link mb-sm-3 mb-md-0 active" id="tab-general-tab" data-toggle="tab" href="#tab-general"
+                            role="tab" aria-controls="tab-general" aria-selected="true"><i
+                                class="fas fa-procedures mr-2"></i>{{ __('Datos generales') }}</a>
+                    </li>
+                    @if ($invoice->dental)
+                    <li class="nav-item">
+                        <a class="nav-link mb-sm-3 mb-md-0" id="tab-dental-tab" data-toggle="tab" href="#tab-dental"
+                            role="tab" aria-controls="tab-dental" aria-selected="false"><i
+                                class="fas fa-dollar-sign  mr-2"></i>{{ __('Dental') }}</a>
+                    </li>
+                    @include('invoices.partials.dentalServiceInfoModal')
                     @endif
-                </div>
+                    @if ($invoice->hospitalization)
+                    <li class="nav-item">
+                        <a class="nav-link mb-sm-3 mb-md-0" id="tab-hospitalization-tab" data-toggle="tab" href="#tab-hospitalization" role="tab"
+                            aria-controls="tab-hospitalization" aria-selected="false"><i
+                                class="fas fa-money-check-alt mr-2"></i>{{ __('Hospitalización') }}</a>
+                    </li>
+                    @endif
+                </ul>
             </div>
-            {{--  <div class="form-row">
 
-                <div class="col-md-4 col-auto form-group">
-                    <label class="form-control-label" for="label-amount_paid">{{ __('Amount paid') }}</label>
-            <label id="label-amount_paid">{{ $invoice->amount_paid }}</label>
+            <div class="tab-content" id="invoice-data">
+                <div class="tab-pane fade show active" id="tab-general" role="tabpanel" aria-labelledby="tab-general-tab">
+                    <div class="card shadow">
+                        <div class="card-header bg-secondary border-0">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3  class="card-title text-uppercase  mb-0">Datos generales</h3>
+                                </div>
 
-        </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                @if (config('app.initial') == "C")
+                                <div class="col-lg-2 custom-control custom-checkbox">
+                                    <input type="checkbox" name="cash" id="cash" class="custom-control-input"
+                                        {{ $invoice->cash ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="cash">Cash</label>
+                                </div>
+                                @else
+                                <input type="checkbox" name="cash" id="cash" class="custom-control-input" style="display: none">
+                                @endif
+                            </div>
+                        </div>
+            
+                        <div class="form-row">
+                            {{--  Comments  --}}
+                            <div class="col-md-12 col-auto form-group">
+                                <label class="form-control-label" for="label-comments">Observaciones</label>
+                                <label id="label-comments">{{ $invoice->comments }}</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            {{--  Doctor  --}}
+                            <div class="col-md-12 col-auto form-group">
+                                <label class="form-control-label" for="label-doctor">Doctor</label>
+                                <label id="label-doctor">{{ $invoice->doctor }}</label>
+                            </div>
+            
+                        </div>
+                        <div class="form-row">
+                            {{--  tax  --}}
+                            <div class="col-md-3 col-auto form-group">
+                                <label class="form-control-label" for="label-tax">IVA</label>
+                                <span class="MXN" style="display: none"> {{ $invoice->IVAF() }} </span><span class="USD">
+                                    {{ $invoice->discountedTax() }} </span>
+            
+                            </div>
+                            {{--  sub_total  --}}
+                            <div class="col-md-3 col-auto form-group">
+                                <label class="form-control-label" for="label-sub_total">Subtotal</label>
+                                <span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD">
+                                    {{ $invoice->subtotalDiscounted() }} </span>
+            
+                            </div>
+                            {{--  total  --}}
+                            <div class="col-md-3 col-auto form-group">
+                                <label class="form-control-label" for="label-total">Total</label>
+                                <span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD">
+                                    {{ $invoice->totalDiscounted() }} </span>
+            
+                            </div>
+                        </div>
+                        @include('locations.components.details', ['location'=>$invoice->location])
+                        <div class="row">
+                            <div class="col-md-4 col-auto">
+                                <button type="button" data-toggle="modal" data-target="#modal-location"
+                                    class="btn btn-sm btn-outline-default">{{ __('Cambiar ubicación') }}</button>
+                            </div>
+                            @include('components.selectLocationModal')
+                        </div>
+            
+                        <div class="form-row">
+                            @include('components.currencySwitch', ['USD' => 1])
+                        </div>
+                    </div>
+                </div>
+                @if ($invoice->dental)
+                <div class="tab-pane fade" id="tab-dental" role="tabpanel" aria-labelledby="tab-dental-tab">
+                    <div class="form-row">
+                        <div class="col-xl-12">
+                            @include('invoices.partials.dentalDetails', ['dental' => $invoice->dental_details])
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if ($invoice->hospitalization)
+                <div class="tab-pane fade" id="tab-hospitalization" role="tabpanel" aria-labelledby="tab-hospitalization-tab">
+                    <div class="form-row">
+                        <div class="col-xl-12">
+                            @include('invoices.partials.hospitalizationDetails', ['dental' => $invoice->hospitalization_details])
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
 
-        <div class="col-md-4 col-auto form-group">
-            <label class="form-control-label" for="label-amount_due">{{ __('Amount due') }}</label>
-            <label id="label-amount_due">{{ $invoice->getAmountDue() }}</label>
 
-        </div>
+            
+           
+            
+            
 
-
-    </div> --}}
-
-    <div class="form-row">
-        {{--  Comments  --}}
-        <div class="col-md-12 col-auto form-group">
-            <label class="form-control-label" for="label-comments">Observaciones</label>
-            <label id="label-comments">{{ $invoice->comments }}</label>
+            
         </div>
     </div>
-    <div class="form-row">
-        {{--  Doctor  --}}
-        <div class="col-md-12 col-auto form-group">
-            <label class="form-control-label" for="label-doctor">Doctor</label>
-            <label id="label-doctor">{{ $invoice->doctor }}</label>
-        </div>
-
-    </div>
-    <div class="form-row">
-        {{--  tax  --}}
-        <div class="col-md-3 col-auto form-group">
-            <label class="form-control-label" for="label-tax">IVA</label>
-            <span class="MXN" style="display: none"> {{ $invoice->IVAF() }} </span><span class="USD">
-                {{ $invoice->discountedTax() }} </span>
-
-        </div>
-        {{--  sub_total  --}}
-        <div class="col-md-3 col-auto form-group">
-            <label class="form-control-label" for="label-sub_total">Subtotal</label>
-            <span class="MXN" style="display: none"> {{ $invoice->subtotalF() }} </span><span class="USD">
-                {{ $invoice->subtotalDiscounted() }} </span>
-
-        </div>
-        {{--  total  --}}
-        <div class="col-md-3 col-auto form-group">
-            <label class="form-control-label" for="label-total">Total</label>
-            <span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD">
-                {{ $invoice->totalDiscounted() }} </span>
-
-        </div>
-    </div>
-    @include('locations.components.details', ['location'=>$invoice->location])
-    <div class="row">
-        <div class="col-md-4 col-auto">
-            <button type="button" data-toggle="modal" data-target="#modal-location"
-                class="btn btn-sm btn-outline-default">{{ __('Cambiar ubicación') }}</button>
-        </div>
-        @include('components.selectLocationModal')
-    </div>
-
-    <div class="form-row">
-        @include('components.currencySwitch', ['USD' => 1])
-    </div>
-    {{-- <div class="form-row">
-
-                <div class="col-md-3 col-auto form-group">
-                    <label class="form-control-label" for="label-dtax">IVA con descuento</label>
-                    <label id="label-dtax">{{ $invoice->dtax }}</label>
-
-</div>
-
-<div class="col-md-3 col-auto form-group">
-    <label class="form-control-label" for="label-sub_total_with_discounts">Subtotal con descuento</label>
-    <label id="label-num">{{ $invoice->sub_total_discounted }}</label>
-
-</div>
-
-<div class="col-md-3 col-auto form-group">
-    <label class="form-control-label" for="label-total_with_discounts">Total con descuento</label>
-    <label id="label-num">{{ $invoice->total_with_discounts }}</label>
-
-</div>
-</div> --}}
-</div>
-</div>
 </div>
 @push('js')
 <script>
