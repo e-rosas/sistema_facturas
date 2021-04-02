@@ -339,4 +339,8 @@ class Invoice extends Model
     {
         return $this->hasOne('App\InvoiceDentalDetails');
     }
+    public function hospitalization_details()
+    {
+        return $this->hasOne('App\InvoiceHospitalizationDetails');
+    }
 }
