@@ -68,14 +68,16 @@
                                 <span class="custom-toggle-slider rounded-circle"></span>
                             </label>
                         </div>
-                        {{--  @if ($invoice->status != 1)
-                                <div class="col-4 col-auto text-right">
-                                    <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-details">Editar detalles</i></button>
-                                    <br />
-                                </div>
-                            @endif
+                        <div class="col-4 custom-control custom-checkbox">
+                            <label for="dental">Hospitalización</label>
+                            <label class="custom-toggle">
+                                <input type="checkbox" id="input-hospitalization" name="input-hospitalization" class="custom-control-input"
+                                    onclick="changeHospitalizationStatusConfirmation(this.checked)">
+                                .
+                                <span class="custom-toggle-slider rounded-circle"></span>
+                            </label>
+                        </div>
 
-                            @include('invoices.partials.updateDetailsModal',['invoice'=>$invoice])  --}}
 
                     </div>
                 </div>
@@ -643,8 +645,8 @@
             this.price = this.base_price;
             this.discounted_price = this.base_discounted_price;
             this.quantity = Number(quantity);
-            this.total_price = Number(quantity * price);
-            this.total_discounted_price = Number(quantity * discounted_price);
+            this.total_price = hospitalization ? price : Number(quantity * price);
+            this.total_discounted_price = hospitalization ? discounted_price :  Number(quantity * discounted_price);
             this.id = id;
             this.descripcion = descripcion;
             this.code = code;
@@ -653,7 +655,9 @@
             this.date3 = getCorrectDate(DOS_to);
             this.DOS_to = this.date3.toISOString().split('T')[0]+' '+this.date3.toTimeString().split(' ')[0];
             this.diagnoses_pointers = pointers;
+            console.log(hospitalization);
         }
+
 
         get date(){
             return this.date2.toLocaleDateString();
@@ -712,8 +716,8 @@
 
             this.tax = 0;
             this.dtax = 0;
-            this.sub_total = this.base_price * this.quantity;
-            this.sub_total_discounted = this.base_discounted_price * this.quantity;
+            this.sub_total =  hospitalization ? this.base_price : this.base_price * this.quantity;
+            this.sub_total_discounted =  hospitalization ? this.base_discounted_price : this.base_discounted_price * this.quantity;
             this.total_price = this.sub_total;
             this.total_discounted_price = this.sub_total_discounted;
 
@@ -788,7 +792,7 @@
     total = 0;
     total_with_discounts = 0;
     dental = {!! $invoice->dental !!};
-
+    hospitalization = {!! $invoice->hospitalization !!};
     enclosures = 0;
     orthodontics = 0;
     license = "";
@@ -816,17 +820,7 @@
         }
     }
     function changeDentalStatus(status){
-        var dentalSection = document.getElementById("dental-details");
-        if(status){
-            dental = 1;
-
-        //alert("Se ha cambiado a dental.");
-        }else {
-        //alert("No dental");
-            dental = 0;
-
-
-        }
+        dental = status ? 1 : 0;
         showDentalSection(status);
         displayCart();
     }
@@ -835,14 +829,25 @@
         var dentalSection = document.getElementById("dental-details");
         var dentalCheckbox = document.getElementById("dental");
         dentalCheckbox.checked = show;
-        if(show){
-            dentalSection.style.display = 'block';
+        dentalSection.style.display = show ? 'block' : 'none';
+    }
 
-        }
-        else {
-            dentalSection.style.display = 'none';
+    function changeHospitalizationStatusConfirmation(status){
+        var r = confirm("¿Desea continuar?");
+        if (r == true) {
+            changeHospitalizationStatus(status);
         }
     }
+
+    function changeHospitalizationStatus(status){
+        var hospitalizationCheckbox = document.getElementById("input-hospitalization");
+        hospitalizationCheckbox.checked = status;
+        hospitalization = status ? 1 : 0;
+        this.services = [];
+        displayCart();
+    }
+
+    
 
     function showDentalServiceModal(id) {
         selectedServiceId = id;
@@ -1317,7 +1322,7 @@
         document.getElementById("input-accident").value = today;
         getInvoiceDiagnoses({!! $invoice->id !!});
         showDentalSection(dental);
-
+        changeHospitalizationStatus(hospitalization);
         if(dental){
             getInvoiceDentalServices({!! $invoice->id !!});
             getInvoiceDentalDetails({!! $invoice->id !!});

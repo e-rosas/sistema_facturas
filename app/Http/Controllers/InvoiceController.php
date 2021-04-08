@@ -80,7 +80,6 @@ class InvoiceController extends Controller
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('date', 'desc')
-                ->paginate($perPage)
         ;
         } elseif ($type >= 4 && $status < 6) {
             $invoices = Invoice::with('patient')
@@ -89,7 +88,6 @@ class InvoiceController extends Controller
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('date', 'desc')
-                ->paginate($perPage)
         ;
         } elseif ($type < 4 && $status >= 6) {
             $invoices = Invoice::with('patient')
@@ -98,7 +96,6 @@ class InvoiceController extends Controller
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('date', 'desc')
-                ->paginate($perPage)
         ;
         } else {
             $invoices = Invoice::with('patient')
@@ -106,11 +103,19 @@ class InvoiceController extends Controller
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
                 ->orderBy('date', 'desc')
-                ->paginate($perPage)
             ;
         }
 
-        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start'));
+        $hospitalization = 0;
+
+        if(!is_null($request['hospitalization'])) {
+            $hospitalization = 1;
+            $invoices->where('hospitalization', 1);
+        }
+
+        $invoices = $invoices->paginate($perPage);
+
+        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start', 'hospitalization'));
     }
 
     /**
@@ -489,6 +494,19 @@ class InvoiceController extends Controller
         foreach ($invoices as $invoice) {
             $invoice->status = 2;
             $invoice->save();
+        }
+    }
+
+    public function updateHospitalizations()
+    {
+        $invoices = Invoice::where('hospitalization', 1)->get();
+        foreach ($invoices as $invoice) {
+            $hosp = new InvoiceHospitalizationDetails();
+            $hosp->invoice_id = $invoice->id;
+            $hosp->bill_type = "";
+            $hosp->diagnosis_codes = "";
+            $hosp->breakdown = false;
+            $hosp->save();
         }
     }
 

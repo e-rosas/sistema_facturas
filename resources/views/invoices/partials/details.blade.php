@@ -1,11 +1,18 @@
 {{--  Details  --}}
 <div class="col-xl-12 order-xl-1">
     <div class="card bg-secondary shadow">
-        <div class="card-header bg-red border-0">
+        <div class="card-header bg-secondary border-0">
             <div class="row">
-                <div class="col-md-10 col-auto">
-                    <h3 style="color:white" class="card-title text-uppercase  mb-0">Factura</h3>
+                <div class="col-md-8 col-auto">
+                    <h3  class="card-title text-uppercase  mb-0">Factura</h3>
                 </div>
+                @if ($invoice->status != 1)
+                <div class="col-md-2 col-auto">
+                    <button id="edit-details" type="button" class="btn btn-sm btn-outline-default" data-toggle="modal"
+                        data-target="#modal-details">Editar detalles</i></button>
+                    <br />
+                </div>
+                @endif
                 <div class="col-md-2 text-right">
                     <div class="dropdown">
                         <a class="btn  btn-success btn-sm" href="#" role="button" data-toggle="dropdown"
@@ -48,14 +55,8 @@
             <div class="form-row">
 
 
-                @if ($invoice->status != 1)
-                <div class="col-md-3 col-auto">
-                    <button id="edit-details" type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                        data-target="#modal-details">Editar detalles</i></button>
-                    <br />
-                </div>
-                @endif
-                <div class="col-md-9 col-auto text-right">
+               
+                <div class="col-md-12 col-auto text-right">
                     <button type="button" data-toggle="modal" data-target="#modal-person"
                         class="btn btn-sm btn-outline-primary">{{ __('Cambiar paciente') }}</button>
                 </div>
@@ -251,7 +252,7 @@
                 <div class="tab-pane fade" id="tab-hospitalization" role="tabpanel" aria-labelledby="tab-hospitalization-tab">
                     <div class="form-row">
                         <div class="col-xl-12">
-                            @include('invoices.partials.hospitalizationDetails', ['dental' => $invoice->hospitalization_details])
+                            @include('invoices.partials.hospitalizationDetails', ['hospitalization' => $invoice->hospitalization_details])
                         </div>
                     </div>
                 </div>

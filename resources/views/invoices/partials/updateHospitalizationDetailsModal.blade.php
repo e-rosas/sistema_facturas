@@ -12,14 +12,14 @@
                             <div class="form-row">
                                  {{--  bill_type --}}
                                  <div class="col-md-12 col-auto form-group">
-                                    <label class="form-control-label" for="input-bill_type">Código de tipo</label>
+                                    <label class="form-control-label" for="input-bill_type">Tipo (Código)</label>
                                     <input type="text" name="input-bill_type" id="input-bill_type"
                                         class="form-control form-control-alternative" value="{{ $hospitalization->bill_type }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                <div class="col-md-12">
-                                   <label class="form-control-label" for="input-diagnosis_codes">Códigos DX</label>
+                                   <label class="form-control-label" for="input-diagnosis_codes">Procedimientos (Código-Fecha)</label>
                                    <input type="text" name="input-diagnosis_codes" id="input-diagnosis_codes"
                                        class="form-control form-control-alternative" value="{{ $hospitalization->diagnosis_codes }}">
                                </div>
@@ -70,9 +70,10 @@
 
     function displayHospitalizationDetails(data){
         var details = data;
-        document.getElementById("input-breakdown").checked = details.breakdown;
-        document.getElementById("input-bill_type").value = details.bill_type;
-        document.getElementById("input-diagnosis_codes").value = details.diagnosis_codes;
+        console.log(details);
+        document.getElementById("breakdown").innerHTML = details.breakdown == 1 ? 'Si' : 'No';
+        document.getElementById("bill_type").innerHTML = details.bill_type;
+        document.getElementById("diagnosis_codes").innerHTML = details.diagnosis_codes;
 
     }
 

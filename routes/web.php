@@ -136,6 +136,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('invoices/{invoice}/categories', 'PDFController@categories')->name('invoice.categories');
     Route::post('invoices/{invoice}/pdf', 'PaymentFormController@fill')->name('invoice.pdf');
     Route::post('invoices/{invoice}/dental', 'PaymentFormController@fillDental')->name('invoice.pdf.dental');
+    Route::post('invoices/{invoice}/hospitalization_pdf', 'PaymentFormController@fillHospitalization')->name('invoice.pdf.hospitalization');
     Route::get('patients/{patient}/letter', 'PDFController@letter')->name('patient.letter');
     Route::get('invoices/{invoice}/letter', 'PDFController@invoiceLetter')->name('invoice.letter');
     Route::get('patients/{patient}/letter/send', 'MailController@letter')->name('patient.letter.send');
@@ -167,7 +168,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/diagnosis_codes', 'DiagnosisController@updateCodes'); */
     Route::get('/update_patients_stats', 'PatientController@updateStats');
-    //Route::get('/update_registered', 'InvoiceController@updateRegistered');
+    Route::get('/update_hospitalizations', 'InvoiceController@updateHospitalizations');
 
     Route::get('/update_insurees_phones', 'InsureeController@updateInsurerPhone');
 

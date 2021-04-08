@@ -56,7 +56,7 @@
             <div class="card bg-secondary shadow">
                 <div class="card-header bg-white border-0">
                     <div class="row align-items-center">
-                        <div class="col-8 col-auto">
+                        <div class="col-4 col-auto">
                             <h3 class="mb-0">Factura</h3>
                         </div>
                         <div class="col-4 col-auto">
@@ -68,12 +68,21 @@
                                 <span class="custom-toggle-slider rounded-circle"></span>
                             </label>
                         </div>
+                        <div class="col-4 custom-control custom-checkbox">
+                            <label for="dental">Hospitalización</label>
+                            <label class="custom-toggle">
+                                <input type="checkbox" id="input-hospitalization" name="input-hospitalization" class="custom-control-input"
+                                    onclick="changeHospitalizationStatusConfirmation(this.checked)">
+                                .
+                                <span class="custom-toggle-slider rounded-circle"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="form-row">
                         {{--  number --}}
-                        <div class="col-md-2 col-auto form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
+                        <div class="col-md-4 col-auto form-group{{ $errors->has('number') ? ' has-danger' : '' }}">
                             <label class="form-control-label" for="input-number">Folio CONTPAQ</label>
                             <input type="text" name="number" id="input-number"
                                 class="form-control form-control-alternative{{ $errors->has('number') ? ' is-invalid' : '' }}"
@@ -85,7 +94,7 @@
                             </span>
                             @endif
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <label class="form-control-label" for="search-code">Buscar factura</label>
                             <button id="search_number" name="search-code" class="btn btn-info btn-fab btn-icon"
                                 onclick="searchNumber()">
@@ -93,7 +102,7 @@
                             </button>
                         </div>
                         {{--  series --}}
-                        <div class="col-md-2 col-auto form-group{{ $errors->has('series') ? ' has-danger' : '' }}">
+                        <div class="col-md-4 col-auto form-group{{ $errors->has('series') ? ' has-danger' : '' }}">
                             <label class="form-control-label" for="input-series">Serie</label>
                             <input type="text" name="series" id="input-series"
                                 class="form-control form-control-alternative{{ $errors->has('series') ? ' is-invalid' : '' }}"
@@ -105,19 +114,7 @@
                             </span>
                             @endif
                         </div>
-                        {{--  concept --}}
-                        <div class="col-md-5 col-auto form-group{{ $errors->has('concept') ? ' has-danger' : '' }}">
-                            <label class="form-control-label" for="input-concept">Concepto</label>
-                            <input type="text" name="concept" id="input-concept"
-                                class="form-control form-control-alternative{{ $errors->has('concept') ? ' is-invalid' : '' }}"
-                                placeholder="Concepto" value="Factura dolares Aseguranza">
-
-                            @if ($errors->has('concept'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('concept') }}</strong>
-                            </span>
-                            @endif
-                        </div>
+                        
 
 
                     </div>
@@ -132,6 +129,19 @@
                             @if ($errors->has('currency'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('currency') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        {{--  concept --}}
+                        <div class="col-md-5 col-auto form-group{{ $errors->has('concept') ? ' has-danger' : '' }}">
+                            <label class="form-control-label" for="input-concept">Concepto</label>
+                            <input type="text" name="concept" id="input-concept"
+                                class="form-control form-control-alternative{{ $errors->has('concept') ? ' is-invalid' : '' }}"
+                                placeholder="Concepto" value="Factura dolares Aseguranza">
+
+                            @if ($errors->has('concept'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('concept') }}</strong>
                             </span>
                             @endif
                         </div>
@@ -150,7 +160,7 @@
                             </span>
                             @endif
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <label class="form-control-label" for="search-claim">Buscar cobro</label>
                             <button id="search_claim" name="search-claim" class="btn btn-info btn-fab btn-icon"
                                 onclick="searchClaim()">
@@ -176,7 +186,7 @@
                             @endif
                         </div>
                         {{--  exchange_rate --}}
-                        <div class="col-md-2 form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
+                        <div class="col-md-3 form-group{{ $errors->has('exchange_rate') ? ' has-danger' : '' }}">
                             <label class="form-control-label" for="invoice-exchange_rate">Cambio</label>
                             <input type="numeric" name="exchange_rate" id="invoice-exchange_rate"
                                 class="form-control form-control-alternative{{ $errors->has('exchange_rate') ? ' is-invalid' : '' }}"
@@ -188,8 +198,12 @@
                             </span>
                             @endif
                         </div>
+                        
+
+                    </div>
+                    <div class="form-row">
                         {{--  amount_due  --}}
-                        <div class="col-md-2 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
+                        <div class="col-md-6 col-auto form-group{{ $errors->has('amount_due') ? ' has-danger' : '' }}">
                             <label class="form-control-label" for="input-amount_due">Debe</label>
                             <input type="numeric" name="amount_due" id="input-amount_due"
                                 class="form-control form-control-alternative{{ $errors->has('amount_due') ? ' is-invalid' : '' }}"
@@ -201,7 +215,6 @@
                             </span>
                             @endif
                         </div>
-
                     </div>
                     <div class="form-row">
                         {{--  tax  --}}
@@ -313,12 +326,7 @@
                     </div>
                     <div class="form-row">
                         <div class="col-lg-1"></div>
-                        {{-- hosp --}}
-                        <div class="col-lg-2 custom-control custom-checkbox">
-                            <input type="checkbox" name="input-hospitalization" id="input-hospitalization"
-                                class="custom-control-input">
-                            <label class="custom-control-label" for="input-hospitalization">Hospitalización</label>
-                        </div>
+                        
                         @if (config('app.initial') == "C")
                         <div class="col-lg-2 custom-control custom-checkbox">
                             <input type="checkbox" name="input-cash" id="input-cash" class="custom-control-input">
@@ -444,6 +452,44 @@
                         <div class="col-md-6">
                             <label class="form-control-label" for="input-tooth-numbers">Dientes (separar por coma)</label>
                             <input type="text" name="input-tooth-numbers" id="input-tooth-numbers"
+                                class="form-control form-control-alternative">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="hospitalization-details">
+        {{--  hospitalization Details  --}}
+        <div class="col-xl-12 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                    <div class="row align-items-center">
+                        <div class="col-8 col-auto">
+                            <h3 class="mb-0">Hospitalización</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2 custom-control custom-checkbox mb-3">
+                            <input type="checkbox" name="input-breakdown" id="input-breakdown"
+                                class="custom-control-input">
+                            <label class="custom-control-label" for="input-breakdown">Desglose</label>
+                        </div>
+                        {{--  bill_type --}}
+                        <div class="col-md-9 col-auto form-group">
+                            <label class="form-control-label" for="input-bill_type">Tipo (Código)</label>
+                            <input type="text" name="input-bill_type" id="input-bill_type"
+                                class="form-control form-control-alternative" value="">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label class="form-control-label" for="input-diagnosis_codes">Procedimientos (Código-Fecha, separar con coma)</label>
+                            <input type="text" name="input-diagnosis_codes" id="input-diagnosis_codes"
                                 class="form-control form-control-alternative">
                         </div>
                     </div>
@@ -742,6 +788,14 @@
         diagnoses_pointers = "";
         DOS = new Date();
         DOS_to = this.DOS;
+
+        items_sub_total = 0;
+        items_sub_total_discounted = 0;
+        items_total_price = 0;
+        items_total_discounted_price = 0;
+
+
+
         oral_cavity = "";
         tooth_system = "";
         tooth_numbers = "";
@@ -756,8 +810,8 @@
             this.price = this.base_price;
             this.discounted_price = this.base_discounted_price;
             this.quantity = Number(quantity);
-            this.total_price = Number(quantity * price);
-            this.total_discounted_price = Number(quantity * discounted_price);
+            this.total_price = hospitalization ? price : Number(quantity * price);
+            this.total_discounted_price = hospitalization ? discounted_price :  Number(quantity * discounted_price);
             this.id = id;
             this.descripcion = descripcion;
             this.code = code;
@@ -766,6 +820,7 @@
             this.date3 = getCorrectDate(DOS_to);
             this.DOS_to = this.date3.toISOString().split('T')[0] + ' ' + this.date3.toTimeString().split(' ')[0];
             this.diagnoses_pointers = pointers;
+            console.log("HOSP: ", hospitalization);
         }
 
         clearDentalDetails(){
@@ -832,19 +887,26 @@
 
             this.tax = 0;
             this.dtax = 0;
-            this.sub_total = this.base_price * this.quantity;
-            this.sub_total_discounted = this.base_discounted_price * this.quantity;
+
+            
+            this.sub_total =  hospitalization ? this.base_price : this.base_price * this.quantity;
+            this.sub_total_discounted =  hospitalization ? this.base_discounted_price : this.base_discounted_price * this.quantity;
             this.total_price = this.sub_total;
             this.total_discounted_price = this.sub_total_discounted;
+
+            this.items_sub_total = 0;
+            this.items_sub_total_discounted = 0;
+            this.items_total_price = 0;
+            this.items_total_discounted_price = 0;
 
             for (var item in this.items) {
                 this.items[item].calcTotals();
                 this.tax += this.items[item].itax;
                 this.dtax += this.items[item].idtax;
-                this.sub_total += this.items[item].sub_total_price;
-                this.sub_total_discounted += this.items[item].sub_total_discounted_price;
-                this.total_price += this.items[item].total_price;
-                this.total_discounted_price += this.items[item].total_discounted_price;
+                this.items_sub_total += this.items[item].sub_total_price;
+                this.items_sub_total_discounted += this.items[item].sub_total_discounted_price;
+                this.items_total_price += this.items[item].total_price;
+                this.items_total_discounted_price += this.items[item].total_discounted_price;
             }
         }
 
@@ -901,6 +963,7 @@
     total = 0;
     total_with_discounts = 0;
     dental = 0;
+    hospitalization = 0;
     enclosures = 0;
     orthodontics = 0;
     license = "";
@@ -909,6 +972,9 @@
     treatment_resulting_from = "";
     months_remaining = "";
     prosthesis_replacement = 0;
+    breakdown = 0;
+    diagnosis_codes = "";
+    bill_type = "";
 
     function changeOrthodonticsStatus(status){
         var orthoDetails = document.getElementById("orthodontics-details");
@@ -928,32 +994,41 @@
         }
     }
     function changeDentalStatus(status){
-        var dentalSection = document.getElementById("dental-details");
-        if(status){
-            dental = 1;
-
-            //alert("Se ha cambiado a dental.");
-        }else {
-            //alert("No dental");
-            dental = 0;
-
-
-        }
+        dental = status ? 1 : 0;
+       
         showDentalSection(status);
         displayCart();
     }
+
+
 
     function showDentalSection(show){
         var dentalSection = document.getElementById("dental-details");
         var dentalCheckbox = document.getElementById("dental");
         dentalCheckbox.checked = show;
-        if(show){
-            dentalSection.style.display = 'block';
 
+        dentalSection.style.display = show ? 'block' : 'none';
+    }
+
+    function changeHospitalizationStatusConfirmation(status){
+        var r = confirm("¿Desea continuar?");
+        if (r == true) {
+            changeHospitalizationStatus(status);
         }
-        else {
-            dentalSection.style.display = 'none';
-        }
+    }
+
+    function changeHospitalizationStatus(status){
+        hospitalization = status ? 1 : 0;
+        this.services = [];
+        displayCart();
+        showHospitalizationSection(status);
+    }
+
+    function showHospitalizationSection(show){
+        var hospitalizationSection = document.getElementById("hospitalization-details");
+        var hospitalizationCheckbox = document.getElementById("input-hospitalization");
+        hospitalizationCheckbox.checked = show;
+        hospitalizationSection.style.display = show ? 'block' : 'none';
     }
 
     function showDentalServiceModal(id) {
@@ -1160,6 +1235,14 @@
             prosthesis_replacement = document.getElementById("input-prosthesis").checked ? 1 : 0;
         }
 
+        if(isHospitalization){
+
+            breakdown = document.getElementById("input-breakdown").checked ? 1 : 0;
+            bill_type = document.getElementById("input-bill_type").value;
+            diagnosis_codes = document.getElementById("input-diagnosis_codes").value;
+
+        }
+
 
         $.ajax({
             url: "{{route('invoices.store')}}",
@@ -1202,7 +1285,10 @@
                 "treatment_resulting_from": treatment_resulting_from,
                 "months_remaining": months_remaining,
                 "prosthesis_replacement": prosthesis_replacement,
-                "tooth_numbers": tooth_numbers
+                "tooth_numbers": tooth_numbers,
+                "breakdown": breakdown,
+                "diagnosis_codes": diagnosis_codes,
+                "bill_type": bill_type
             },
             success: function (response) {
                 setTimeout(function () {
@@ -1364,6 +1450,7 @@
 
     getExchangeRate(today);
     showDentalSection(dental);
+    showHospitalizationSection(0);
     changeOrthodonticsStatus(0);
     $(document).ready(function () {
         document.getElementById("input-date").value = today;

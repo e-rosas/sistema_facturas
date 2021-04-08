@@ -1,13 +1,13 @@
 <div>
     <div class="card shadow">
 
-        <div class="card-header bg-primary border-0">
+        <div class="card-header bg-secondary border-0">
             <div class="row">
                 <div class="col-md-8">
-                    <h3 style="color:white" class="card-title text-uppercase  mb-0">Hospitalización</h3>
+                    <h3 class="card-title text-uppercase  mb-0">Hospitalización</h3>
                 </div>
                 <div class="col-md-2 text-right">
-                    <button id="edit-hospitalization-details" type="button" class="btn btn-sm btn-secondary" data-toggle="modal"
+                    <button id="edit-hospitalization-details" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal"
                         data-target="#modal-hospitalization-details">Editar detalles</i></button>
                     <br />
                 </div>
@@ -46,7 +46,7 @@
                     <label id="bill_type">{{ $hospitalization->bill_type  }}</label>
                 </div>
                 <div class="col-lg-7">
-                    <label class="form-control-label" for="diagnosis_codes">Códigos DX</label>
+                    <label class="form-control-label" for="diagnosis_codes">Procedimientos (Código-Fecha)</label>
                     <label class="label" id="diagnosis_codes">{{ $hospitalization->diagnosis_codes  }}</label>
                 </div>
                 <div class="col-lg-2">

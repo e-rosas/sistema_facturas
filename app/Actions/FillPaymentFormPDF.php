@@ -1493,7 +1493,6 @@ INVOICE_DOS:
         }
 
         
-        
         $path = 'app/pdf/invoice/newForm'.$page.'.pdf';
        
         Storage::put($path, '');

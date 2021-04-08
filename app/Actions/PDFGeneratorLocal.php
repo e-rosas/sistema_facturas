@@ -116,6 +116,8 @@ class PDFGeneratorLocal
     {
         $currentPage = null;
 
+        
+
         foreach ($fields as $field) {
             // Keep in mind that due to FPDF limitations, we can't move to previous/next page without hacking FPDF himself..
             // ensure we are on the good page, but fields HAVE TO be ordered by page number
@@ -138,6 +140,7 @@ class PDFGeneratorLocal
             // 20 is fpdf offset for new pages
             $offset = 20;
             $this->fpdf->Cell($field->getWidth(), $field->getHeight() + $offset, utf8_decode($field->getValue()));
+            //dd($this->fpdf);
         }
     }
 

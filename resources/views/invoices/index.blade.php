@@ -83,6 +83,11 @@
                             <br />
                             @include('components.currencySwitch', ['USD' => 1])
                         </div>
+                        <div class="col-lg-3">
+                            <input type="checkbox" name="hospitalization" id="hospitalization"
+                                class="custom-control-input" {{ $hospitalization ? 'checked' : '' }}>
+                            <label class="custom-control-label" for="hospitalization">Hospitalización</label>
+                        </div>
                     </div>
                     <br />
                     <div class="form-row">

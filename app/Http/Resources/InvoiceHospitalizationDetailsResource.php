@@ -19,6 +19,6 @@ class InvoiceHospitalizationDetailsResource extends JsonResource
             'bill_type' => $this->bill_type,
             'diagnosis_codes' => $this->diagnosis_codes,
             'breakdown' => $this->breakdown,
-        ]
+        ];
     }
 }
