@@ -925,9 +925,10 @@ P18:
     {
         $this->getInvoiceData();
         $pages = 1;
+        $invoice_services = $this->invoice->services2()->orderBy('id')->get();
         $form = storage_path('app/pdf/hospitalizationForm.pdf');
         for ($i = 0; $i < $pages; ++$i) {
-            $services = $this->invoice->services2->slice($i * 10, 10)->values();
+            $services = $invoice_services->slice($i * 10, 10)->values();
             $this->fillPage($form, $services, $i);
         }
         $merge = new MergePDFs($pages);
@@ -970,7 +971,7 @@ P18:
                 'size' => 8,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $services[$i]->DOS->format('m/d/y'),
+                'value' => $services[$i]->DOS->format('m/d/Y'),
             ];
             $services_list['S_CODE'.($i + 1)] = [
                 'size' => 8,
@@ -999,14 +1000,14 @@ P18:
         }
 
         $total_services = ['INVOICE_TOTAL_1' => [
-            'size' => 8,
+            'size' => 10,
             'family' => 'Arial',
             'style' => '',
             'value' => '$ '. number_format($total, 2),
         ]];
 
         $total_services = $total_services + ['INVOICE_TOTAL' => [
-          'size' => 8,
+          'size' => 10,
           'family' => 'Arial',
           'style' => '',
           'value' => '$ '. number_format($total, 2),
@@ -1049,7 +1050,7 @@ P18:
     private function addProcedures($procedures) {
       $procedures_list = [];
       for ($i=0; $i < count($procedures); $i++) { 
-        $procedure = explode('-', $procedures[$i]);
+        $procedure = explode('{', $procedures[$i]);
         $code = '';
         $date = '';
         if (count($procedure) > 1) {
@@ -1059,21 +1060,21 @@ P18:
           $code = $procedure[0];
         }
 
-        $proceduress_list['PCODE'.($i + 1)] = [
-            'size' => 8,
+        $procedures_list['PCODE'.($i + 1)] = [
+            'size' => 9,
             'family' => 'Arial',
             'style' => '',
             'value' => $code,
         ];
-        $proceduress_list['PDATE'.($i + 1)] = [
-            'size' => 8,
+        $procedures_list['PDATE'.($i + 1)] = [
+            'size' => 9,
             'family' => 'Arial',
             'style' => '',
             'value' => $date,
         ];
         
       }
-      return $proceduress_list;
+      return $procedures_list;
     }
 
     private function fillPage($form, $services, $page)
@@ -1174,7 +1175,7 @@ P18:
         //return
         $this->invoice_data = [
             'INVOICE_TOTAL_1' => [
-                'size' => 7,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => number_format($this->invoice->total_with_discounts, 2),
@@ -1189,13 +1190,13 @@ P18:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->DOS->format('m/d/y'),
+                'value' => $this->invoice->DOS->format('m/d/Y'),
             ],
             'INVOICE_TO_DATE' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->services2[0]->DOS_to->format('m/d/y'),
+                'value' => $this->invoice->services2[0]->DOS_to->format('m/d/Y'),
             ],
             'INVOICE_TOTAL' => [
                 'size' => 9,
@@ -1207,7 +1208,7 @@ P18:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->patient->birth_date->format('m/d/y'),
+                'value' => $this->invoice->patient->birth_date->format('m/d/Y'),
             ],
             'PATIENT_NAME' => [
                 'size' => 9,
@@ -1219,7 +1220,7 @@ P18:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->patient->address(),
+                'value' => $this->invoice->patient->address() . ' ' . $this->invoice->patient->addressDetails(),
             ],
             'PATIENT_ADDRESS_1' => [
               'size' => 9,
@@ -1243,7 +1244,7 @@ P18:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->DOS->format('m/d/y'),
+                'value' => $this->invoice->DOS->format('m/d/Y'),
             ],
 	          'PATIENT_NAME_2' => [
                 'size' => 9,
@@ -1286,7 +1287,7 @@ P18:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
-                    'value' => $this->invoice->patient->birth_date->format('m/d/y'),
+                    'value' => $this->invoice->patient->birth_date->format('m/d/Y'),
                 ],
                 'INSURED_NAME' => [
                     'size' => 9,
@@ -1399,7 +1400,7 @@ P18:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
-                    'value' => $insured->insurer->cityZIP(),
+                    'value' => $insured->insurer->addressDetails(),
                 ],
             ];
             $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;

@@ -154,7 +154,7 @@
                     <li class="nav-item">
                         <a class="nav-link mb-sm-3 mb-md-0" id="tab-hospitalization-tab" data-toggle="tab" href="#tab-hospitalization" role="tab"
                             aria-controls="tab-hospitalization" aria-selected="false"><i
-                                class="fas fa-money-check-alt mr-2"></i>{{ __('Hospitalización') }}</a>
+                                class="fas fa-hospital mr-2"></i>{{ __('Hospitalización') }}</a>
                     </li>
                     @endif
                 </ul>

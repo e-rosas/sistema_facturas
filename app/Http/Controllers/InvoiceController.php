@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Insuree;
-use App\Invoice;
-use App\Patient;
-use Carbon\Carbon;
-use App\ItemService;
-use App\DiagnosisService;
-use App\InvoiceDiagnosis;
-use App\Events\InvoiceEvent;
-use Illuminate\Http\Request;
-use App\InvoiceDentalDetails;
-use App\InvoiceDentalService;
 use App\Actions\PrepareInvoicePDF;
-use Illuminate\Support\Facades\DB;
-use App\Listeners\UpdatePersonStats;
+use App\DiagnosisService;
+use App\Events\InvoiceEvent;
 use App\Http\Requests\InvoiceRequest;
-use App\InvoiceHospitalizationDetails;
+use App\Http\Requests\UpdateInvoiceDetailsRequest;
+use App\Http\Requests\UpdateInvoiceLocation;
 use App\Http\Requests\UpdateInvoicePatient;
 use App\Http\Requests\UpdateInvoiceRequest;
-use App\Http\Requests\UpdateInvoiceLocation;
-use App\Http\Resources\InvoiceStatsResource;
+use App\Http\Resources\InvoiceDentalDetailsResource;
 use App\Http\Resources\InvoiceDetailsResource;
 use App\Http\Resources\InvoiceDiagnosesResource;
-use App\Http\Requests\UpdateInvoiceDetailsRequest;
-use App\Http\Resources\InvoiceDentalDetailsResource;
 use App\Http\Resources\InvoiceHospitalizationDetailsResource;
+use App\Http\Resources\InvoiceStatsResource;
+use App\Insuree;
+use App\Invoice;
+use App\InvoiceDentalDetails;
+use App\InvoiceDentalService;
+use App\InvoiceDiagnosis;
+use App\InvoiceHospitalizationDetails;
+use App\ItemService;
+use App\Listeners\UpdatePersonStats;
+use App\Patient;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
@@ -108,7 +108,7 @@ class InvoiceController extends Controller
 
         $hospitalization = 0;
 
-        if(!is_null($request['hospitalization'])) {
+        if (!is_null($request['hospitalization'])) {
             $hospitalization = 1;
             $invoices->where('hospitalization', 1);
         }
@@ -174,7 +174,7 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create($validated);
 
-        if ($validated['dental']) { 
+        if ($validated['dental']) {
             $dental = new InvoiceDentalDetails();
             $dental->invoice_id = $invoice->id;
             $dental->enclosures = $request->enclosures;
@@ -190,7 +190,7 @@ class InvoiceController extends Controller
             $dental->tooth_numbers = $request->tooth_numbers;
             $dental->save();
         }
-        if ($validated['hospitalization']) { 
+        if ($validated['hospitalization']) {
             $hosp = new InvoiceHospitalizationDetails();
             $hosp->invoice_id = $invoice->id;
             $hosp->bill_type = $request->bill_type;
@@ -248,9 +248,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        
-        $invoice = $invoice->load('patient', 'payments',  'location', 'diagnoses.diagnosis');
-        
+        $invoice = $invoice->load('patient', 'payments', 'location', 'diagnoses.diagnosis');
 
         $pdf = new PrepareInvoicePDF($invoice);
         $categories = $pdf->serviceCategories();
@@ -268,7 +266,7 @@ class InvoiceController extends Controller
 
             //return view('invoices.show', compact('invoice', 'insuree', 'today'));
         }
-        
+
         return view('invoices.show', compact('invoice', 'insuree', 'today', 'categories'));
     }
 
@@ -318,8 +316,6 @@ class InvoiceController extends Controller
         $dental->tooth_numbers = $request->tooth_numbers;
         $dental->update();
 
-
-
         return new InvoiceDentalDetailsResource($dental);
     }
 
@@ -330,8 +326,6 @@ class InvoiceController extends Controller
         $hosp->diagnosis_codes = $request->diagnosis_codes;
         $hosp->breakdown = $request->breakdown;
         $hosp->update();
-
-
 
         return new InvoiceHospitalizationDetailsResource($hosp);
     }
@@ -503,8 +497,8 @@ class InvoiceController extends Controller
         foreach ($invoices as $invoice) {
             $hosp = new InvoiceHospitalizationDetails();
             $hosp->invoice_id = $invoice->id;
-            $hosp->bill_type = "";
-            $hosp->diagnosis_codes = "";
+            $hosp->bill_type = '';
+            $hosp->diagnosis_codes = '';
             $hosp->breakdown = false;
             $hosp->save();
         }

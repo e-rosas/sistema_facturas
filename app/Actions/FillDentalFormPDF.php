@@ -1708,7 +1708,7 @@ T32:
                 'size' => 8,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $services[$i]->DOS->format('m/d/y'),
+                'value' => $services[$i]->DOS->format('m/d/Y'),
             ];
             $services_list['25_Area_of_Oral_Cavity'.($i + 1)] = [
                'size' => 8,
@@ -1910,19 +1910,19 @@ T32:
                 'size' => 7,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->DOS->format('m/d/y'),
+                'value' => $this->invoice->DOS->format('m/d/Y'),
             ],
 	   'PATIENT_SIGNATURE_DATE' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->DOS->format('m/d/y'),
+                'value' => $this->invoice->DOS->format('m/d/Y'),
             ],
 	   'SUBSCRIBER_SIGNATURE_DATE' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->DOS->format('m/d/y'),
+                'value' => $this->invoice->DOS->format('m/d/Y'),
             ],
 	    'DENTIST_LICENSE' => [
                 'size' => 7,
@@ -1946,7 +1946,7 @@ T32:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => $this->invoice->patient->birth_date->format('m/d/y'),
+                'value' => $this->invoice->patient->birth_date->format('m/d/Y'),
             ],
             'Patient_Name' => [
                 'size' => 9,
@@ -2018,7 +2018,7 @@ T32:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => ($this->invoice->dental_details->orthodontics) ? $this->invoice->dental_details->appliance_placed->format('m/d/y') : '',
+                'value' => ($this->invoice->dental_details->orthodontics) ? $this->invoice->dental_details->appliance_placed->format('m/d/Y') : '',
             ],
             'Months_Treatment' => [
                 'size' => 9,
@@ -2042,7 +2042,7 @@ T32:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => ($this->invoice->dental_details->prosthesis_replacement) ? $this->invoice->dental_details->prior_placement->format('m/d/y') : '',
+                'value' => ($this->invoice->dental_details->prosthesis_replacement) ? $this->invoice->dental_details->prior_placement->format('m/d/Y') : '',
             ],
             'T_0' => [
                 'size' => 9,
@@ -2066,7 +2066,7 @@ T32:
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
-                'value' => (1 == $this->invoice->dental_details->treatment_resulting_from) ? $this->invoice->dental_details->accident->format('m/d/y') : '',
+                'value' => (1 == $this->invoice->dental_details->treatment_resulting_from) ? $this->invoice->dental_details->accident->format('m/d/Y') : '',
             ],
             'Accident_State' => [
                 'size' => 9,
@@ -2103,7 +2103,7 @@ T32:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
-                    'value' => $this->invoice->patient->birth_date->format('m/d/y'),
+                    'value' => $this->invoice->patient->birth_date->format('m/d/Y'),
                 ],
                 'Insurer_Name' => [
                     'size' => 9,
@@ -2214,7 +2214,7 @@ T32:
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
-                    'value' => $insured->patient->birth_date->format('m/d/y'),
+                    'value' => $insured->patient->birth_date->format('m/d/Y'),
                 ],
                 'Insurer_Name' => [
                     'size' => 9,
