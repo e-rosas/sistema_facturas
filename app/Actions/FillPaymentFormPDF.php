@@ -1303,6 +1303,7 @@ INVOICE_DOS:
             width: 18.297
            height: 11.948',
     ];
+    public $withDescription = false;
 
     public function __construct(Invoice $invoice)
     {
@@ -1378,6 +1379,9 @@ INVOICE_DOS:
             } else {
                 $code = $service[0];
             }
+            if($this->withDescription) {
+              $modifier = $services[$i]->shortDescription();
+            }
             $services[$i]->pointers_alphabet = $this->realPointers($services[$i]->diagnoses_pointers, $alphabet);
             $services_list['S'.($i + 1).'_FROM_MM'] = [
                 'size' => 9,
@@ -1434,7 +1438,7 @@ INVOICE_DOS:
                 'value' => $code,
             ];
             $services_list['S'.($i + 1).'_NAME'] = [
-                'size' => 9,
+                'size' => 7,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => $modifier,

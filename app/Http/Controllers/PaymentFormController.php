@@ -13,8 +13,10 @@ class PaymentFormController extends Controller
     public function fill(Invoice $invoice, Request $request)
     {
         $output = $request['output'];
-
+        $description = $request->has('description');
         $filler = new FillPaymentFormPDF($invoice);
+        $filler->withDescription = $description;
+        
         $filler->fill($output);
     }
 

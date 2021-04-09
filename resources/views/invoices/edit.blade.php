@@ -69,7 +69,7 @@
                             </label>
                         </div>
                         <div class="col-4 custom-control custom-checkbox">
-                            <label for="dental">Hospitalización</label>
+                            <label for="input-hospitalization">Hospitalización</label>
                             <label class="custom-toggle">
                                 <input type="checkbox" id="input-hospitalization" name="input-hospitalization" class="custom-control-input"
                                     onclick="changeHospitalizationStatusConfirmation(this.checked)">

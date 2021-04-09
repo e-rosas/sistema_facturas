@@ -28,8 +28,22 @@
                             <form target="_blank" method="post" action="{{ route('invoice.pdf', $invoice) }}">
                                 @csrf
                                 <input type="hidden" name="output" value="I">
+                                @if (config('app.initial') == "C")
+                                <div class="ml-3">
+                                    <small class="text-muted">Con nombre</small>
+                                    <label class="custom-toggle">
+                                        <input type="checkbox" name="description" class="custom-control-input">
+                                        .
+                                        <span class="custom-toggle-slider rounded-circle"></span>
+                                    </label>
+                                </div>
+                                   
+                                @endif
+                              
                                 <button type="submit" class="dropdown-item">Ver</button>
+                                
                             </form>
+                            
                             <form target="_blank" method="post"
                                 action="{{ route('invoice.hospitalization', $invoice) }}">
                                 @csrf
