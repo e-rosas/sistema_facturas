@@ -79,7 +79,7 @@ class InvoiceController extends Controller
 
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
-                ->orderBy('date', 'desc')
+                
         ;
         } elseif ($type >= 4 && $status < 6) {
             $invoices = Invoice::with('patient')
@@ -87,7 +87,7 @@ class InvoiceController extends Controller
 
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
-                ->orderBy('date', 'desc')
+                
         ;
         } elseif ($type < 4 && $status >= 6) {
             $invoices = Invoice::with('patient')
@@ -95,14 +95,14 @@ class InvoiceController extends Controller
 
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
-                ->orderBy('date', 'desc')
+                
         ;
         } else {
             $invoices = Invoice::with('patient')
 
                 ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
                 ->whereBetween('date', [$start, $end])
-                ->orderBy('date', 'desc')
+                
             ;
         }
 
@@ -113,9 +113,16 @@ class InvoiceController extends Controller
             $invoices->where('hospitalization', 1);
         }
 
-        $invoices = $invoices->paginate($perPage);
+        $dental = 0;
 
-        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start', 'hospitalization'));
+        if (!is_null($request['dental'])) {
+            $dental = 1;
+            $invoices->where('dental', 1);
+        }
+
+        $invoices = $invoices->orderBy('date', 'desc')->paginate($perPage);
+
+        return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start', 'hospitalization', 'dental'));
     }
 
     /**

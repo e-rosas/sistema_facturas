@@ -58,7 +58,7 @@
                     <div class="form-row">
 
                         {{--  start_date  --}}
-                        <div class="col-lg-3 col-auto">
+                        <div class="col-lg-2 col-auto">
                             <label for="start">{{ __('Fecha de servicio de') }}</label>
                             <div class="input-group input-group-alternative">
                                 <div class="input-group-prepend">
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         {{--  end_date  --}}
-                        <div class="col-lg-3 col-auto">
+                        <div class="col-lg-2 col-auto">
                             <label for="end">{{ __('hasta') }}</label>
                             <div class="input-group input-group-alternative">
                                 <div class="input-group-prepend">
@@ -87,6 +87,11 @@
                             <input type="checkbox" name="hospitalization" id="hospitalization"
                                 class="custom-control-input" {{ $hospitalization ? 'checked' : '' }}>
                             <label class="custom-control-label" for="hospitalization">Hospitalización</label>
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="checkbox" name="dental" id="dental"
+                                class="custom-control-input" {{ $dental ? 'checked' : '' }}>
+                            <label class="custom-control-label" for="dental">Dental</label>
                         </div>
                     </div>
                     <br />
