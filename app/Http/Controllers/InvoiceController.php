@@ -60,15 +60,15 @@ class InvoiceController extends Controller
             $invoices->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search);
         }
 
-        $type = 4;
+        $type = $request['type'];
 
-        if (!is_null($request['type'])) {
+        if ($type && $type < 4) {
             $type = $request['type'];
             $invoices->where('type', $type);
         }
 
-        $status = 6;
-        if (!is_null($request['status'])) {
+        $status = $request['status'];
+        if ($status && $status < 6) {
             $status = $request['status'];
             $invoices->where('status', $status);
         }
@@ -87,7 +87,7 @@ class InvoiceController extends Controller
             $invoices->where('dental', 1);
         }
 
-        $invoices = $invoices->orderBy('date', 'desc')->paginate($perPage);
+       $invoices = $invoices->paginate($perPage);
 
         return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start', 'hospitalization', 'dental'));
     }
