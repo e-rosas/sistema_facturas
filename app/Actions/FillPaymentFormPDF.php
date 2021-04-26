@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FillPaymentFormPDF
 {
-    private $coordinates = '142 widget annotations found on page 1.
+    private $coordinates = '152 widget annotations found on page 1.
     ----------------------------------------------
     
     INSURED_ID: 
@@ -711,7 +711,16 @@ INVOICE_DOS:
              urx: 458.163
              ury: 256.543
            width: 18.296
-          height: 11.949',
+          height: 11.949
+
+
+S1_ANESTHESIA: 
+     llx: 20.8887
+     lly: 306.955
+     urx: 242.969
+     ury: 267.583
+   width: 222.0803
+  height: 10.628',
         '
 
 
@@ -829,7 +838,16 @@ INVOICE_DOS:
              urx: 458.248
              ury: 233.347
            width: 18.297
-          height: 11.948',
+          height: 11.948
+
+
+S2_ANESTHESIA: 
+     llx: 20.7055
+     lly: 282.585
+     urx: 242.786
+     ury: 243.213
+   width: 222.0805
+  height: 10.628',
         '
 
 
@@ -947,7 +965,16 @@ INVOICE_DOS:
              urx: 458.703
              ury: 208.511
            width: 18.297
-          height: 11.949',
+          height: 11.949
+
+
+S3_ANESTHESIA: 
+     llx: 20.4306
+     lly: 259.223
+     urx: 242.511
+     ury: 219.85
+   width: 222.0804
+  height: 10.627',
         '
 
 
@@ -1065,7 +1092,16 @@ INVOICE_DOS:
              urx: 458.994
              ury: 184.657
            width: 18.297
-          height: 11.949',
+          height: 11.949
+
+
+S4_ANESTHESIA: 
+     llx: 20.2474
+     lly: 234.853
+     urx: 242.328
+     ury: 195.48
+   width: 222.0806
+  height: 10.627',
         '
 
 
@@ -1183,7 +1219,16 @@ INVOICE_DOS:
              urx: 459.284
              ury: 161.129
            width: 18.296
-          height: 11.948',
+          height: 11.948
+
+
+S5_ANESTHESIA: 
+     llx: 20.306
+     lly: 211.34
+     urx: 242.386
+     ury: 171.968
+   width: 222.08
+  height: 10.628',
         '
 
 
@@ -1301,7 +1346,16 @@ INVOICE_DOS:
               urx: 459.739
               ury: 136.947
             width: 18.297
-           height: 11.948',
+           height: 11.948
+
+
+S6_ANESTHESIA: 
+     llx: 20.1228
+     lly: 186.97
+     urx: 242.203
+     ury: 147.597
+   width: 222.0802
+  height: 10.627',
     ];
     public $withDescription = false;
 
@@ -1382,6 +1436,10 @@ INVOICE_DOS:
             if($this->withDescription) {
               $modifier = $services[$i]->shortDescription();
             }
+	   $anesthesia = "";
+	   if($this->invoice->hospitalization) {
+	       $anesthesia = explode('-', $services[$i]->anesthesia_minutes_range);
+ 	   }
             $services[$i]->pointers_alphabet = $this->realPointers($services[$i]->diagnoses_pointers, $alphabet);
             $services_list['S'.($i + 1).'_FROM_MM'] = [
                 'size' => 9,
@@ -1460,6 +1518,12 @@ INVOICE_DOS:
                 'family' => 'Arial',
                 'style' => '',
                 'value' => $services[$i]->quantity,
+            ];
+	  $services_list['S'.($i + 1).'_ANESTHESIA'] = [
+                'size' => 9,
+                'family' => 'Arial',
+                'style' => '',
+                'value' => (count($anesthesia) > 1) ? 'ANESTHESIA TIME FROM ' . $anesthesia[0] . ' TO ' . $anesthesia[1] : '',
             ];
         }
 
