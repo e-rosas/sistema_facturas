@@ -1438,7 +1438,7 @@ INVOICE_DOS:
                 'value' => $code,
             ];
             $services_list['S'.($i + 1).'_NAME'] = [
-                'size' => 7,
+                'size' => 8,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => $modifier,

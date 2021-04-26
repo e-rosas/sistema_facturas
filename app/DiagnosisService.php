@@ -28,6 +28,7 @@ class DiagnosisService extends Model
         'DOS_to',
         'invoice_id',
         'diagnoses_pointers',
+        'anesthesia_minutes_range'
     ];
     public static $rules = [
         'service_id' => 'required',

@@ -1068,16 +1068,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.37.0",
+            "version": "v8.38.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "cf4082973abc796ec285190f0603380021f6d26f"
+                "reference": "26a73532c54d2c090692bf2e3e64e449669053ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/cf4082973abc796ec285190f0603380021f6d26f",
-                "reference": "cf4082973abc796ec285190f0603380021f6d26f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/26a73532c54d2c090692bf2e3e64e449669053ba",
+                "reference": "26a73532c54d2c090692bf2e3e64e449669053ba",
                 "shasum": ""
             },
             "require": {
@@ -1232,7 +1232,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-04-13T13:49:49+00:00"
+            "time": "2021-04-20T13:50:21+00:00"
         },
         {
             "name": "laravel/helpers",
@@ -2779,17 +2779,21 @@
         },
         {
             "name": "setasign/fpdf",
-            "version": "1.8.2",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Setasign/FPDF.git",
-                "reference": "d77904018090c17dc9f3ab6e944679a7a47e710a"
+                "reference": "6a83253ece0df1c5b6c05fe7a900c660ae38afc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/d77904018090c17dc9f3ab6e944679a7a47e710a",
-                "reference": "d77904018090c17dc9f3ab6e944679a7a47e710a",
+                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/6a83253ece0df1c5b6c05fe7a900c660ae38afc3",
+                "reference": "6a83253ece0df1c5b6c05fe7a900c660ae38afc3",
                 "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "ext-zlib": "*"
             },
             "type": "library",
             "autoload": {
@@ -2815,9 +2819,9 @@
                 "pdf"
             ],
             "support": {
-                "source": "https://github.com/Setasign/FPDF/tree/1.8.2"
+                "source": "https://github.com/Setasign/FPDF/tree/1.8.3"
             },
-            "time": "2019-12-08T10:32:10+00:00"
+            "time": "2021-04-20T09:49:57+00:00"
         },
         {
             "name": "setasign/fpdi",

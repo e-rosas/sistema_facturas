@@ -43,12 +43,6 @@ class InvoiceController extends Controller
             $perPage = 15;
         }
 
-        /* if (!is_null($request->dental)) {
-            $dental = $request->dental;
-        } else {
-            $dental = 2;
-        } */
-
         if (!empty($request['start'] && !empty($request['end']))) {
             $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
@@ -57,53 +51,26 @@ class InvoiceController extends Controller
             $start = Carbon::today()->subYears(3);
         }
 
-        if (is_null($request['search'])) {
-            $search = '';
-        } else {
+        $invoices = Invoice::with('patient')->whereBetween('date', [$start, $end]);
+
+        $search = '';
+
+        if (!is_null($request['search'])) {
             $search = $request['search'];
+            $invoices->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search);
         }
-        if (is_null($request['type'])) {
-            $type = 4;
-        } else {
+
+        $type = 4;
+
+        if (!is_null($request['type'])) {
             $type = $request['type'];
+            $invoices->where('type', $type);
         }
-        if (is_null($request['status'])) {
-            $status = 6;
-        } else {
+
+        $status = 6;
+        if (!is_null($request['status'])) {
             $status = $request['status'];
-        }
-
-        if ($type < 4 && $status < 6) {
-            $invoices = Invoice::with('patient')
-                ->where([['type', $type], ['status', $status]])
-
-                ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
-                ->whereBetween('date', [$start, $end])
-                
-        ;
-        } elseif ($type >= 4 && $status < 6) {
-            $invoices = Invoice::with('patient')
-                ->where('status', $status)
-
-                ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
-                ->whereBetween('date', [$start, $end])
-                
-        ;
-        } elseif ($type < 4 && $status >= 6) {
-            $invoices = Invoice::with('patient')
-                ->where('type', $type)
-
-                ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
-                ->whereBetween('date', [$start, $end])
-                
-        ;
-        } else {
-            $invoices = Invoice::with('patient')
-
-                ->whereLike(['number', 'code', 'patient.full_name', 'comments'], $search)
-                ->whereBetween('date', [$start, $end])
-                
-            ;
+            $invoices->where('status', $status);
         }
 
         $hospitalization = 0;

@@ -25,7 +25,7 @@
                 <td>{{ $service->description}}</td>
                 <td>{{ $service->diagnoses_pointers}}</td>
                 <td>{{ $service->DOS->format('M-d-Y') }}</td>
-                <td>{{ $service->DOS_to->format('M-d-Y') }}</td>
+                <td>{{ $service->DOS_to->format('M-d-Y') }} {{ $service->anesthesia_minutes_range }}</td>
                 <td><span class="MXN" style="display: none"> {{ $service->totalPriceMXN($invoice->exchange_rate) }}
                     </span><span class="USD"> {{ $service->totalPrice() }} </span> </td>
                 @if ($invoice->dental)

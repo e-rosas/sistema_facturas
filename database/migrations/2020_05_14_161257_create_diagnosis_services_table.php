@@ -30,6 +30,7 @@ class CreateDiagnosisServicesTable extends Migration
             $table->date('DOS'); //date of service from
             $table->date('DOS_to'); //date of service to
             $table->string('diagnoses_pointers');
+            $table->string('anesthesia_minutes_range')->nullable(); //only for hospitalizations
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();

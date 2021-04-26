@@ -421,9 +421,7 @@
                 </div>
                 <div class="card-body">
                     {{-- Selecting service --}}
-                    <div class="col-xl-12 order-xl-1">
-                        @include('components.searchServices')
-                    </div>
+                    @include('components.searchServices')
                     <br />
                     <div class="form-row">
                         {{--  date  --}}
@@ -468,10 +466,17 @@
                             @endif
                         </div>
                         {{-- Add --}}
-                        <div class=" col-lg-1 col-md-3 form-group col-auto text-right">
+                        <div class=" col-lg-3 col-md-3 form-group col-auto text-right">
                             <label class="form-control-label"></label>
                             <button type="button" id="add_service"
                                 class="btn btn-outline-success btn-lg">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="form-row" id="hospitalization-anesthesia">
+                        <div class="col-lg-6 col-auto form-group">
+                            <label class="form-control-label" for="hospitalization-minutes">Anestesia (Hora inicial - Hora final)</label>
+                            <input type="text" name="hospitalization-minutes" id="hospitalization-minutes"
+                                class="form-control form-control-alternative" placeholder="" >
                         </div>
                     </div>
                     {{-- Table of services --}}
@@ -636,8 +641,11 @@
         tooth_numbers = "";
         tooth_surfaces = "";
         missing = false;
+
+        anesthesia_minutes_range = "";
+
         constructor(service_id, description, price, discounted_price, quantity, id,
-            DOS,DOS_to, descripcion, code, pointers) {
+            DOS,DOS_to, descripcion, code, pointers, anesthesia) {
             this.service_id = service_id;
             this.description = description;
             this.base_price = Number(price);
@@ -655,7 +663,7 @@
             this.date3 = getCorrectDate(DOS_to);
             this.DOS_to = this.date3.toISOString().split('T')[0]+' '+this.date3.toTimeString().split(' ')[0];
             this.diagnoses_pointers = pointers;
-            console.log(hospitalization);
+            this.anesthesia_minutes_range = anesthesia;
         }
 
 
@@ -845,6 +853,14 @@
         hospitalization = status ? 1 : 0;
         this.services = [];
         displayCart();
+        showHospitalizationSection(status);
+    }
+
+    function showHospitalizationSection(show){
+        var hospitalizationAnesthesia = document.getElementById("hospitalization-anesthesia");
+        var hospitalizationCheckbox = document.getElementById("input-hospitalization");
+        hospitalizationCheckbox.checked = show;
+        hospitalizationAnesthesia.style.display = show ? 'block' : 'none';
     }
 
     
@@ -915,8 +931,10 @@
 
         var DOS = document.getElementById("input-date_service").value;
         var DOS_to = document.getElementById("input-date_service-to").value;
+        var anesthesia = document.getElementById("hospitalization-minutes").value;
+        
         var service = new Service(service_id, description, price, discounted_price,
-            quantity, id, DOS,DOS_to, descripcion, code, pointers);
+            quantity, id, DOS,DOS_to, descripcion, code, pointers, anesthesia);
         this.services.push(service);
         displayCart();
     }
