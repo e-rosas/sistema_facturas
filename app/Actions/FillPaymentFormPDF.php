@@ -1436,7 +1436,7 @@ S6_ANESTHESIA:
             if($this->withDescription) {
               $modifier = $services[$i]->shortDescription();
             }
-	   $anesthesia = "";
+	   $anesthesia = [];
 	   if($this->invoice->hospitalization) {
 	       $anesthesia = explode('-', $services[$i]->anesthesia_minutes_range);
  	   }
