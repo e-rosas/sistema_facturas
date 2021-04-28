@@ -13,7 +13,7 @@ class AddInsuranceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class AddInsuranceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'group_number' => 'max:50',
+            'insurance_id' => 'required',
+            'insurer_group_phone_number' => 'max:25',
+            'insurer_id' => 'required',
+            'insuree_id' => 'required',
+            'type' => 'required',
+            'status' => 'required',
+            'comments' => 'max:900',
         ];
     }
 }

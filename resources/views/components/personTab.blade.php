@@ -16,11 +16,16 @@
                 {{ __('Pagos') }}</a>
         </li>
         @if ($patient->insured)
-        <li class="nav-item">
-            <a class="nav-link mb-sm-3 mb-md-0" id="tabs-dependents-tab" data-toggle="tab" href="#tabs-dependents"
-                role="tab" aria-controls="tabs-dependents" aria-selected="false"><i
-                    class="fas fa-user-friends mr-2"></i> {{ __('Dependientes') }}</a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-dependents-tab" data-toggle="tab" href="#tabs-dependents"
+                    role="tab" aria-controls="tabs-dependents" aria-selected="false"><i
+                        class="fas fa-user-friends mr-2"></i> {{ __('Dependientes') }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-insurances-tab" data-toggle="tab" href="#tabs-insurances"
+                    role="tab" aria-controls="tabs-insurances" aria-selected="false"><i
+                        class="fas fa-user-friends mr-2"></i> {{ __('Aseguranzas') }}</a>
+            </li>
         @endif
         <li class="nav-item">
             <a class="nav-link mb-sm-3 mb-md-0" id="tabs-document-tab" data-toggle="tab" href="#tab-document" role="tab"
@@ -59,28 +64,36 @@
                         </thead>
                         <tbody>
                             @foreach ($payments as $payment)
-                            <tr class="{{ $payment->type == 1 ? 'table-info' : '' }}">
-                                <td>
-                                    <a href="{{ route('invoices.show', $payment->invoice) }}">
-                                        {{ $payment->invoice->code()}}
-                                    </a>
-                                </td>
-                                <td>{{ $payment->type() }}</td>
-                                <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD"
-                                        style="display: none"> {{ $payment->amountPaid() }} </span></td>
-                                <td>{{ $payment->comments}}</td>
-                            </tr>
+                                <tr class="{{ $payment->type == 1 ? 'table-info' : '' }}">
+                                    <td>
+                                        <a href="{{ route('invoices.show', $payment->invoice) }}">
+                                            {{ $payment->invoice->code() }}
+                                        </a>
+                                    </td>
+                                    <td>{{ $payment->type() }}</td>
+                                    <td><span class="MXN"> {{ $payment->total() }} </span><span class="USD"
+                                            style="display: none"> {{ $payment->amountPaid() }} </span></td>
+                                    <td>{{ $payment->comments }}</td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
             @if ($patient->insured)
-            <div class="tab-pane fade" id="tabs-dependents" role="tabpanel" aria-labelledby="tabs-dependents-tab">
-                <div class="col-md-12 col-auto text-right">
-                    @include('components.dependentsTable', ['dependents' => $dependents])
+                <div class="tab-pane fade" id="tabs-dependents" role="tabpanel" aria-labelledby="tabs-dependents-tab">
+                    <div class="col-md-12 col-auto text-right">
+                        @include('components.dependentsTable', ['dependents' => $dependents])
+                    </div>
                 </div>
-            </div>
+                <div class="tab-pane fade" id="tabs-insurances" role="tabpanel" aria-labelledby="tabs-insurances-tab">
+                    <div class="col-md-12 col-auto text-right">
+                        <button id="add-insurance" type="button" class="btn btn-sm btn-success" data-toggle="modal"
+                            data-target="#modal-insurance">Agregar</i></button>
+                        <br />
+                        @include('insurances.table', ['insurances' => $insurances])
+                    </div>
+                </div>
             @endif
             <div class="tab-pane fade" id="tab-document" role="tabpanel" aria-labelledby="tab-document-tab">
                 <div class="col-md-12 col-auto text-right">

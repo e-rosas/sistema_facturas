@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\SelectInsurance;
+use App\Http\Requests\AddInsuranceRequest;
+use App\Http\Requests\UpdateInsuranceRequest;
+use App\Http\Requests\UpdateInsurer;
+use App\Http\Resources\InsuranceResource;
 use App\Insurance;
 use Illuminate\Http\Request;
 
@@ -23,9 +28,17 @@ class InsuranceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddInsuranceRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $insurance = Insurance::create($validated);
+        if($validated['status'] == 0) {
+            $deactivate = new SelectInsurance();
+            $deactivate->deactivateInsurances($validated['insuree_id'], $insurance->id);
+        }
+
+        return new InsuranceResource($insurance);
+
     }
 
     /**
@@ -46,9 +59,16 @@ class InsuranceController extends Controller
      * @param  \App\Insurance  $insurance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Insurance $insurance)
+    public function update(UpdateInsuranceRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $id = $request->id;
+
+        $insurance = Insurance::findOrFail($id);
+        $insurance->fill($validated);
+        $insurance->save();
+
+        return new InsuranceResource($insurance);
     }
 
     /**
@@ -57,8 +77,38 @@ class InsuranceController extends Controller
      * @param  \App\Insurance  $insurance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Insurance $insurance)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+
+        $insurance = Insurance::findOrFail($id);
+        $insurance->delete();
+
+        return 204;
+    }
+
+    public function find(Request $request)
+    {
+        
+        $id = $request->id;
+
+        $insurance = Insurance::findOrFail($id);
+
+        return new InsuranceResource($insurance);
+    }
+
+    public function select(Request $request)
+    {
+        $id = $request->id;
+
+        $insurance = Insurance::findOrFail($id);
+        $insurance->status = 0;
+        $insurance->save();
+
+        $deactivate = new SelectInsurance();
+        $deactivate->deactivateInsurances($insurance->insuree_id, $insurance->id);
+
+        return new InsuranceResource($insurance);
+
     }
 }

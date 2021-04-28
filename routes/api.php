@@ -11,5 +11,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('insurees/{insuree}/insurances', 'InsuranceController');
+    Route::apiResource('insurances', 'InsuranceController');
+    Route::post('insurances/find', 'InsuranceController@find')->name('insurances.find');
+    Route::post('insurances/select', 'InsuranceController@select')->name('insurances.select');
 });

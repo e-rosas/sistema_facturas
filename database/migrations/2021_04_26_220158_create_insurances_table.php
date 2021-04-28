@@ -20,12 +20,11 @@ class CreateInsurancesTable extends Migration
             $table->string('group_number', 20)->nullable();
             $table->string('insurance_id', 50)->unique();
             $table->tinyInteger('type')->default(0);
-            $table->boolean('active');
-            $table->date('active_since')->nullable();
-            $table->date('active_until')->nullable();
+            $table->tinyInteger('status')->default(0);
             $table->string('group_phone_number')->nullable();
             $table->foreign('insuree_id')->references('patient_id')->on('insurees')->cascadeOnDelete();
             $table->foreign('insurer_id')->references('id')->on('insurers')->cascadeOnDelete();
+            $table->text('comments')->nullable();
             $table->timestamps();
         });
     }
