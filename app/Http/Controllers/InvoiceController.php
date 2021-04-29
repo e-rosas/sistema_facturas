@@ -149,7 +149,7 @@ class InvoiceController extends Controller
         }
 
         $selectInsurance = new SelectInsurance();
-        $validated['insurance_id']= $selectInsurance->activeInsurance($validated['patient_id'])->insurance_id;
+        $validated['insurance_id']= $selectInsurance->activeInsurance($validated['patient_id'])->id;
 
 
         $invoice = Invoice::create($validated);
@@ -479,6 +479,8 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
+        $invoice->delete();
+        return back()->withStatus(__('Cobro eliminado exitosamente.'));
     }
 
     public function updateRegistered()

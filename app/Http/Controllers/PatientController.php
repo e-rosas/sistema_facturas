@@ -227,6 +227,8 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
+        $patient->delete();
+        return back()->withStatus(__('Paciente eliminado exitosamente.'));
     }
 
     public function updateStats()

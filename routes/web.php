@@ -174,7 +174,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/diagnosis_codes', 'DiagnosisController@updateCodes'); */
     Route::get('/update_patients_stats', 'PatientController@updateStats');
-    Route::get('/update_insurances', 'PatientController@migrateInsurance');
     Route::get('/migrate_invoices', 'PatientController@addInsuranceToInvoices');
     //Route::get('/update_hospitalizations', 'InvoiceController@updateHospitalizations');
 
