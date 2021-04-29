@@ -479,8 +479,11 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
+        $old_patient_id = $invoice->patient_id;
         $invoice->delete();
-        return back()->withStatus(__('Cobro eliminado exitosamente.'));
+        $update_stats = new UpdatePersonStats();
+        $update_stats->updateStats($old_patient_id); //update stats for old patient
+        return redirect()->route('invoices.index')->withStatus(__('Cobro eliminado exitosamente.'));
     }
 
     public function updateRegistered()

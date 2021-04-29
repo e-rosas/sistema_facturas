@@ -102,7 +102,13 @@
                         href="{{ route('patients.edit', $patient) }}">
                         <i class="fas fa-pencil-alt fa-2"></i>
                     </a>
-                    <br>
+                    <div class="m-2">
+                        <form  method="post" onsubmit="return confirm('Confirmar eliminación del paciente. TODOS LOS COBROS, PAGOS, LLAMADAS, DOCUMENTOS, Y CARTAS SERÁN ELIMINADOS. SI EL PACIENTE TIENE DEPENDIENTES ESTOS TAMBIÉN SERÁN ELIMINADOS.');" action="{{ route('patients.destroy', $patient) }}">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-sm btn-danger">ELIMINAR</button>
+                        </form>
+                    </div>
                     <h3>Estado de cuenta</h3>
                     <form method="get" action="{{ route('patient.letter', $patient) }}">
                         @csrf

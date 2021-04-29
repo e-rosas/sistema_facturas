@@ -33,7 +33,7 @@
     </div>
 
     <div class="row">
-        @include('components.patientInfo', ['patient' => $invoice->patient, 'type' => 'Paciente'])
+        @include('components.patientInfo', ['patient' => $invoice->patient, 'type' => 'Paciente', 'update' => true])
         @include('components.insurerInfo', ['insurer' => $invoice->insurance->insurer, 'update' => true])
         @if (!$invoice->patient->insured)
         @include('components.patientInfo', ['patient' => $insuree->patient, 'type' => 'Asegurado'])

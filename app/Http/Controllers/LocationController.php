@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
+use App\Invoice;
 use App\Location;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,8 @@ class LocationController extends Controller
      */
     public function show(Location $location)
     {
-        return view('locations.show', compact('location'));
+        $invoices = Invoice::where('location_id', $location->id)->paginate(20);
+        return view('locations.show', compact('location', 'invoices'));
     }
 
     /**
@@ -85,6 +87,8 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
+        $location->delete();
+        return redirect()->route('locations.index')->withStatus(__('Ubicación eliminada exitosamente.'));
     }
 
     public function searchLocation(Request $request)

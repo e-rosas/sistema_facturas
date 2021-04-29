@@ -145,6 +145,8 @@ class InsurerController extends Controller
      */
     public function destroy(Insurer $insurer)
     {
+        $insurer->delete();
+        return redirect()->route('insurers.index')->withStatus(__('Aseguranza eliminada exitosamente.'));
     }
 
     public function find(Request $request)

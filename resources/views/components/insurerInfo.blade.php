@@ -6,8 +6,8 @@
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Aseguranza</h3>
                 </div>
                 @if ($update ?? false)
-                    <div class="col-4">
-                        <button id="edit-insurance" type="button" class="btn btn-sm btn-outline-default" data-toggle="modal"
+                    <div class="col-4 text-right">
+                        <button id="edit-insurance" type="button" class="btn btn-sm btn-default" data-toggle="modal"
                         data-target="#modal-change-insurance">Cambiar</i></button>
                     <br />
                     </div>

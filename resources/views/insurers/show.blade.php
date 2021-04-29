@@ -1,12 +1,12 @@
 @extends('layouts.app', ['title' => 'Aseguranzas'])
 
 @section('content')
-@include('layouts.headers.header', ['title' => $insurer->name, 'description' => $insurer->code ])
+    @include('layouts.headers.header', ['title' => $insurer->name, 'description' => $insurer->code ])
 
-<div class="container-fluid mt--7">
-    {{-- Search row --}}
-    
-    {{-- <div class="row">
+    <div class="container-fluid mt--7">
+        {{-- Search row --}}
+
+        {{-- <div class="row">
         <div class="col-xl-12 mb-5 mb-xl-0 card-group">
             @include('components.invoiceStatsCard', ['idUSD' => 'totalUSD','title' => 'Total', 'USD' => 0, 'value' =>
             0, 'idMXN' => 'totalMXN', 'valueMXN' => 0])
@@ -23,157 +23,137 @@
         </div>
 
     </div> --}}
-    <div class="row">
-        {{--  refresh  --}}
-        {{-- <div class="col-md-9 text-right mt-2">
+        <div class="row">
+            {{-- refresh --}}
+            {{-- <div class="col-md-9 text-right mt-2">
             <button id="refresh" type="button" class="btn btn-info" onclick="RefreshInsurerStats()">
                 Actualizar
             </button>
         </div> --}}
-    </div>
-    <div class="row mt-2">
-        <div class="col-xl-9">
-            
-            <div class="card  mb-4 mb-xl-0">
-                <div class="card-header border-0">
-                    <div class="row align-items-center">
-                        <div class="col-8 col-auto">
-                            <h3 class="mb-0">Asegurados</h3>
-                        </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xl-9">
 
-                    </div>
-                </div>
-                <form method="get" action="{{ route('insurers.show', $insurer) }}">
-                    <div class="form-row m-2">
-                        <div class="col-md-11 col-auto">
-                            <input name="search" class="form-control" type="search" placeholder="Nombre, NSS, o ID de aseguranza..."
-                                value="{{ $search ?? '' }}">
-                        </div>
-                        {{--  refresh  --}}
-                        <div class="col-md-1 col-auto text-right">
-                            <button type="submit" class="btn btn-primary btn-fab btn-icon">
-                                <i class="fas fa-search"></i>
-                            </button>
+                <div class="card  mb-4 mb-xl-0">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8 col-auto">
+                                <h3 class="mb-0">Asegurados</h3>
+                            </div>
+
                         </div>
                     </div>
-                </form>
-                <div class="table-responsive" id="patients-table">
-                    <table class="table align-items-center table-flush table-hover">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">NSS</th>
-                                <th scope="col">Fecha Nacimiento</th>
-                                <th scope="col">ID de Aseguranza</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($insurees as $insuree)
-                            <tr>
-                                <td> <a
-                                        href="{{ route('patients.show', $insuree->patient) }}">{{ $insuree->patient->full_name }}</a>
-                                </td>
-                                <td>{{ $insuree->nss }}</td>
-                                <td>{{ $insuree->patient->birth_date->format('d-m-Y') }}</td>
-                                <td>{{ $insuree->insurance_id }}</td>
-                                <td class="td-actions text-right">
-
-                                    <a class="btn btn-success btn-sm btn-icon" rel="tooltip" type="button"
-                                        href="{{ route('patients.show', $insuree->patient) }}">
-                                        <i class="fas fa-eye "></i>
-                                    </a>
-                                    <a class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
-                                        href="{{ route('patients.edit', $insuree->patient) }}">
-                                        <i class="fas fa-pencil-alt fa-2"></i>
-                                    </a>
-
-                                </td>
-                            </tr>
-                               {{--  @if ($insuree->dependents)
-                                    @foreach ($insuree->dependents as $dependent)
-                                    <tr class="table-info">
+                    <form method="get" action="{{ route('insurers.show', $insurer) }}">
+                        <div class="form-row m-2">
+                            <div class="col-md-11 col-auto">
+                                <input name="search" class="form-control" type="search"
+                                    placeholder="Nombre, NSS, o ID de aseguranza..." value="{{ $search ?? '' }}">
+                            </div>
+                            {{-- refresh --}}
+                            <div class="col-md-1 col-auto text-right">
+                                <button type="submit" class="btn btn-primary btn-fab btn-icon">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive" id="patients-table">
+                        <table class="table align-items-center table-flush table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">NSS</th>
+                                    <th scope="col">Fecha Nacimiento</th>
+                                    <th scope="col">ID de Aseguranza</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($insurees as $insuree)
+                                    <tr>
                                         <td> <a
-                                                href="{{ route('patients.show', $dependent->patient) }}">{{ $dependent->patient->full_name }}</a>
+                                                href="{{ route('patients.show', $insuree->patient) }}">{{ $insuree->patient->full_name }}</a>
                                         </td>
-                                        <td>{{ $dependent->patient->birth_date->format('d-m-Y')  }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ $insuree->nss }}</td>
+                                        <td>{{ $insuree->patient->birth_date->format('d-m-Y') }}</td>
+                                        <td>{{ $insuree->insurance_id }}</td>
                                         <td class="td-actions text-right">
+
                                             <a class="btn btn-success btn-sm btn-icon" rel="tooltip" type="button"
-                                                href="{{ route('patients.show', $dependent->patient) }}">
+                                                href="{{ route('patients.show', $insuree->patient) }}">
                                                 <i class="fas fa-eye "></i>
                                             </a>
                                             <a class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
-                                                href="{{ route('patients.edit', $dependent->patient) }}">
+                                                href="{{ route('patients.edit', $insuree->patient) }}">
                                                 <i class="fas fa-pencil-alt fa-2"></i>
                                             </a>
+
                                         </td>
                                     </tr>
-                                    @endforeach
-                                @endif --}}
 
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer py-4">
-                    <nav class="d-flex justify-content-end" aria-label="...">
-                        {{ $insurees->appends(['search'=>$search])->links() }}
-                    </nav>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer py-4">
+                        <nav class="d-flex justify-content-end" aria-label="...">
+                            {{ $insurees->appends(['search' => $search])->links() }}
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-3 order-xl-2 mb-5 mb-xl-0">
-            <div class="card card-profile shadow">
-                <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                    <h3>
-                        {{ $insurer->name }}
-                    </h3>
-                    {{-- <form  method="post" action="{{ route('reports.invoices') }}" >
-                    @csrf
-                    <div class="form-group col-md-12 col-auto">
-                        <input type="hidden" value=" {{ $insurer->id }} " name="person_data_id"
-                            id="input-person_data_id" class="custom-control-input">
-                        <button type="submit" class="btn btn-success mt-4 btn-block">{{ __('PDF') }}</button>
+            <div class="col-xl-3 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <h3>
+                            {{ $insurer->name }}
+                        </h3>
+                        <div class="m-2">
+                            <form method="post"
+                                onsubmit="return confirm('Confirmar eliminación de la aseguranza. TODOS LOS PACIENTES, COBROS, PAGOS, LLAMADAS, DOCUMENTOS, Y CARTAS SERÁN ELIMINADOS.');"
+                                action="{{ route('insurers.destroy', $insurer) }}">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-sm btn-danger">ELIMINAR</button>
+                            </form>
+                        </div>
                     </div>
-                    </form> --}}
-                </div>
-                <div class="card-body pt-0 pt-md-4">
-                    <div class="row">
-                        <div class="col">
-                            <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                                <div>
-                                    <h2>{{ $insurer->name }}</h2>
+
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                                    <div>
+                                        <h2>{{ $insurer->name }}</h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <div class="h4 font-weight-300">
-                            <span> {{ $insurer->address }} </span>
-                        </div>
-                        <div class="h4 font-weight-300">
-                            <span> {{ $insurer->addressDetails() }} </span>
-                        </div>
-                        <div class="h4 font-weight-300">
-                            <span> {{ $insurer->phone_number }} </span>
-                        </div>
-                        <div class="h4 font-weight-300">
-                            <a href="mailto:{{$insurer->email}}">{{$insurer->email}}</a>
+                        <div class="text-center">
+                            <div class="h4 font-weight-300">
+                                <span> {{ $insurer->address }} </span>
+                            </div>
+                            <div class="h4 font-weight-300">
+                                <span> {{ $insurer->addressDetails() }} </span>
+                            </div>
+                            <div class="h4 font-weight-300">
+                                <span> {{ $insurer->phone_number }} </span>
+                            </div>
+                            <div class="h4 font-weight-300">
+                                <a href="mailto:{{ $insurer->email }}">{{ $insurer->email }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 @push('js')
     <script>
         function RefreshInsurerStats() {
             $.ajax({
-                url: "{{route('charts.insurer')}}",
+                url: "{{ route('charts.insurer') }}",
                 dataType: 'json',
                 type: "post",
                 data: {
@@ -181,11 +161,12 @@
                     'insurer_id': {{ $insurer->id }}
 
                 },
-                success: function (response) {
+                success: function(response) {
                     console.log(response);
                 }
             });
             return false;
         }
+
     </script>
 @endpush

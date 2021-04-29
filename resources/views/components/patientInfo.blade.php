@@ -5,16 +5,14 @@
                 <div class="col-8 col-auto">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">{{ $type ?? ''}}</h3>
                 </div>
+                @if ($update ?? false)
+                <div class="col-md-4 col-auto text-right">
+                    <button type="button" data-toggle="modal" data-target="#modal-person"
+                        class="btn btn-sm btn-secondary">{{ __('Cambiar') }}</button>
+                </div>
+                @endif
             </div>
         </div>
-        {{--  <div class="form-row justify-content-center bg-primary">
-            <div class="col-lg-12">
-                <div class=" text-justify">
-                    <h2 style="color:white" class="card-title text-uppercase mb-0">Paciente</h2>
-
-                </div>
-            </div>
-        </div>  --}}
         <div class="card-body pt-0 pt-md-4">
             <div class="text-center">
                 <h3>
