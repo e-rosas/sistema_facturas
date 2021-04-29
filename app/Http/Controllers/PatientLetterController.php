@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePatientLetterRequest;
 use App\Http\Resources\PatientLetterResource;
+use App\Insuree;
 use App\PatientLetter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

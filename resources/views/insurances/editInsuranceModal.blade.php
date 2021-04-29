@@ -44,7 +44,7 @@
 
                             {{-- Group phone number --}}
                             <div class="form-group">
-                                <div class="col-md-8 form-group">
+                                <div class="form-group">
                                     <label class="form-control-label" for="update-insurer-phone-number">Teléfono de
                                         grupo
                                         de
@@ -52,11 +52,11 @@
                                     <input type="text" name="insurer_phone_number" id="update-insurer-phone-number"
                                         class="form-control form-control-alternative{{ $errors->has('insurer_phone_number') ? ' is-invalid' : '' }}"
                                         placeholder="Teléfono de grupo de aseguranza" value="">
-                                    @endif
                                 </div>
 
                             </div>
                             {{-- Type --}}
+                            
                             <div class="form-group">
                                 <label class="form-control-label" for="update-insurance-type">Tipo</label>
                                 <select id='update-insurance-type' class="custom-select" name="update-insurance-type">
@@ -65,14 +65,15 @@
                                 </select>
                             </div>
                             {{-- Status --}}
-                            <div class="form-group">
+                            <input type="hidden" id='update-insurance-status'>
+                            {{-- <div class="form-group">
                                 <label class="form-control-label" for="update-insurance-status">Estado</label>
                                 <select id='update-insurance-status' class="custom-select"
                                     name="update-insurance-status">
                                     <option value='0' selected>Activa</option>
                                     <option value='1'>Vencida</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             {{-- comments --}}
                             <div class="form-group">
                                 <div class="input-group input-group-alternative">
@@ -85,7 +86,7 @@
                             </div>
                             <input type="hidden" id="update-insurance">
                             <div class="text-center">
-                                <button onclick="saveInsurance()" id="save-insurance"
+                                <button onclick="updateInsurance()" id="save-insurance"
                                     class="btn btn-success mt-4">Guardar</button>
                             </div>
                         </div>
@@ -113,6 +114,7 @@
                         response.data.insurer_id, response.data.group_number,
                         response.data.insurer_group_phone_number, response.data.type2, response.data
                         .status2, response.data.comments);
+                    $('#modal-update-insurance').modal('show');
                 }
             });
             return false;
@@ -130,7 +132,7 @@
 
         }
 
-        function updateInsurance(insuranceID, insurerID, groupNumber, groupPhoneNumber, type, status, comments, id) {
+        function sendUpdateInsurance(insuranceID, insurerID, groupNumber, groupPhoneNumber, type, status, comments, id) {
             $.ajax({
                 url: "{{ route('insurances.update') }}",
                 dataType: 'json',
@@ -141,7 +143,7 @@
                     "group_number": groupNumber,
                     "insurer_group_phone_number": groupPhoneNumber,
                     "insurer_id": insurerID,
-                    "insuree_id": "{{ $insuree->patient_id }}",
+                    "insuree_id": "{{ $patient->insuree->patient_id }}",
                     "status": status,
                     "comments": comments,
                     "type": type,
@@ -149,13 +151,14 @@
                 },
                 success: function(response) {
                     $('#modal-update-insurance').modal('hide');
+                    displayInsurances(response.data);
 
                 }
             });
             return false;
         }
 
-        function saveInsurance() {
+        function updateInsurance() {
 
             var insuranceID = document.getElementById("update-insurance_id").value;
             var insurerID = document.getElementById("update-insurer-id").value;
@@ -168,7 +171,7 @@
             if (insuranceID.length < 1) {
                 return;
             } else {
-                updateInsurance(insuranceID, insurerID, groupNumber, groupPhoneNumber, type, status, comments, id);
+                sendUpdateInsurance(insuranceID, insurerID, groupNumber, groupPhoneNumber, type, status, comments, id);
             }
 
         }

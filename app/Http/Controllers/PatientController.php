@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Actions\CalculateTotalsOfInvoices;
+use App\Actions\SelectInsurance;
 use App\Dependent;
 use App\Http\Requests\PatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
+use App\Insurance;
 use App\Insuree;
 use App\Insurer;
 use App\Invoice;
@@ -14,6 +16,7 @@ use App\Patient;
 use App\PatientLetter;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PatientController extends Controller
 {
@@ -36,7 +39,7 @@ class PatientController extends Controller
             $search = $request['search'];
         }
 
-        $insurees = Insuree::with('patient', 'insurer')->whereLike(['nss', 'insurance_id', 'patient.full_name'], $search)->paginate($perPage);
+        $insurees = Insuree::with('patient')->whereLike(['nss', 'patient.full_name'], $search)->paginate($perPage);
         //dd($insurees);
         foreach ($insurees as $insuree) {
             $insuree->dependents = Dependent::with('patient')->where('insuree_id', $insuree->patient_id)
@@ -86,19 +89,30 @@ class PatientController extends Controller
             $insuree = new Insuree();
             $insuree->patient_id = $patient->id;
             $insuree->insurer_id = $validated['insurer_id'];
-            $insuree->insurance_id = $validated['insurance_id'];
             $insuree->nss = $validated['insurance_id'];
-            $insuree->group_number = $validated['group_number'];
+            $insuree->insurance_id = $validated['insurance_id'];
+            $insuree->group_number = $validated['group_number'] ?? '';
+            $insurance = new Insurance();
+
+            $insurance->insurance_id = $validated['insurance_id'];
+
+            $insurance->group_number = $validated['group_number'] ?? '';
 
             //No custom phone_number -> take insurer's number
             if (null == $validated['insurer_phone_number']) {
                 $insurer = Insurer::findOrFail($validated['insurer_id']);
-                $insuree->insurer_phone_number = $insurer->phone_number;
+                $insurance->group_phone_number = $insurer->phone_number;
             } else {
-                $insuree->insurer_phone_number = $validated['insurer_phone_number'];
+                $insurance->group_phone_number = $validated['insurer_phone_number'];
             }
 
             $insuree->save();
+            $insurance->insuree_id = $patient->id;
+            $insurance->insurer_id = $validated['insurer_id'];
+            $insurance->type = $request->type;
+            $insurance->status = $request->status;
+            $insurance->comments = $request->comments;
+            $insurance->save();
         } else {
             $dependent = new Dependent();
             $dependent->patient_id = $patient->id;
@@ -125,13 +139,15 @@ class PatientController extends Controller
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);
         $invoices_totals->totals();
 
-        $calls = [];
-        $payments = [];
         $dependents = [];
+        $insurances = [];
+        $insurers = [];
         $insuree = 0;
 
         if ($patient->insured) {
             $dependents = Dependent::with('patient')->where('insuree_id', $patient->id)->get();
+            $insurances = Insurance::with('insurer')->where('insuree_id', $patient->id)->get();
+            $insurers = Insurer::orderBy('name', 'asc')->get();
         } else {
             $insuree = Insuree::with('patient', 'insurer')
                 ->where('patient_id', $patient->dependent->insuree_id)
@@ -141,20 +157,11 @@ class PatientController extends Controller
 
         $letters = PatientLetter::where('patient_id', $patient->id)->orderBy('date', 'desc')->get();
 
-        foreach ($invoices as $invoice) {
-            foreach ($invoice->calls as $call) {
-                array_push($calls, $call);
-            }
-
-            foreach ($invoice->payments as $payment) {
-                array_push($payments, $payment);
-            }
-        }
 
         $end = Carbon::today()->addDay();
         $start = Carbon::today()->subMonths(1);
 
-        return view('patients.show', compact('patient', 'invoices', 'invoices_totals', 'calls', 'payments', 'dependents', 'insuree', 'end', 'start', 'letters'));
+        return view('patients.show', compact('patient', 'invoices', 'invoices_totals',  'dependents', 'insuree', 'end', 'start', 'letters', 'insurances', 'insurers'));
     }
 
     /**
@@ -228,6 +235,36 @@ class PatientController extends Controller
         foreach ($patients as $patient) {
             $stats = new UpdatePersonStats();
             $stats->updateStats($patient->id);
+        }
+    }
+
+    public function migrateInsurance()
+    {
+        $insureds = Insuree::all();
+        foreach ($insureds as $insured) {
+            $insurance = new Insurance();
+            $insurance->insuree_id = $insured->patient_id;
+            $insurance->insurer_id = $insured->insurer_id;
+            $insurance->group_phone_number = $insured->insurer_phone_number;
+            $insurance->group_number = $insured->group_number;
+            $insurance->insurance_id = $insured->insurance_id;
+            $insurance->type = 0;
+            $insurance->status = 0;
+            $insurance->comments = '';
+            $insurance->save();
+        }
+    }
+
+    public function addInsuranceToInvoices()
+    {
+        $patients = Patient::all();
+        $selectInsurance = new SelectInsurance();
+        foreach ($patients as $patient) {
+            $insurance = $selectInsurance->activeInsurance2($patient);
+            DB::table('invoices')
+                ->where('patient_id', $patient->id)
+                ->update(['insurance_id' => $insurance->id])
+            ;
         }
     }
 }

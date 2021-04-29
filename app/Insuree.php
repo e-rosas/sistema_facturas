@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Insuree extends Model
 {
     public $dependents;
+    public $insurance;
     public $fillable = [
         'patient_id',
         'insurer_id',
@@ -35,6 +36,14 @@ class Insuree extends Model
     public function insurances()
     {
         return $this->hasMany('App\Insurance', 'insuree_id', 'patient_id');
+    }
+
+    public function insurance()
+    {
+        if(!$this->insurance){
+            $this->insurance = Insurance::where('insuree_id', $this->patient_id)->where('status', 0)->first();
+        }
+        return $this->insurance;
     }
 
     public function fullName()

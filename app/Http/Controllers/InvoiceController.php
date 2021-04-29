@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\PrepareInvoicePDF;
+use App\Actions\SelectInsurance;
 use App\DiagnosisService;
 use App\Events\InvoiceEvent;
 use App\Http\Requests\InvoiceRequest;
@@ -15,6 +16,7 @@ use App\Http\Resources\InvoiceDetailsResource;
 use App\Http\Resources\InvoiceDiagnosesResource;
 use App\Http\Resources\InvoiceHospitalizationDetailsResource;
 use App\Http\Resources\InvoiceStatsResource;
+use App\Insurance;
 use App\Insuree;
 use App\Invoice;
 use App\InvoiceDentalDetails;
@@ -146,6 +148,10 @@ class InvoiceController extends Controller
             $validated['cash'] = 1;
         }
 
+        $selectInsurance = new SelectInsurance();
+        $validated['insurance_id']= $selectInsurance->activeInsurance($validated['patient_id'])->insurance_id;
+
+
         $invoice = Invoice::create($validated);
 
         if ($validated['dental']) {
@@ -222,7 +228,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        $invoice = $invoice->load('patient', 'payments', 'location', 'diagnoses.diagnosis');
+        $invoice = $invoice->load('patient', 'payments', 'location', 'diagnoses.diagnosis', 'insurance');
 
         $pdf = new PrepareInvoicePDF($invoice);
         $categories = $pdf->serviceCategories();
@@ -232,16 +238,22 @@ class InvoiceController extends Controller
 
         $insuree = [];
 
+        $insurances = [];
+
         if (!$invoice->patient->insured) {
-            $insuree = Insuree::with('patient', 'insurer')
+            $insuree = Insuree::with('patient')
                 ->where('patient_id', $invoice->patient->dependent->insuree_id)
                 ->first()
             ;
+            $insurances = Insurance::with('insurer')->where('insuree_id', $invoice->patient->dependent->insuree_id)->get();
 
             //return view('invoices.show', compact('invoice', 'insuree', 'today'));
         }
+        else {
+            $insurances = Insurance::with('insurer')->where('insuree_id', $invoice->patient->id)->get();
+        }
 
-        return view('invoices.show', compact('invoice', 'insuree', 'today', 'categories'));
+        return view('invoices.show', compact('invoice', 'insuree', 'today', 'categories', 'insurances'));
     }
 
     /**
@@ -304,6 +316,17 @@ class InvoiceController extends Controller
         return new InvoiceHospitalizationDetailsResource($hosp);
     }
 
+    public function newInsurance(Request $request)
+    {
+        $new_insurance_id = $request->insurance_id;
+        $invoice_id = $request->invoice_id;
+        $invoice = Invoice::findOrFail($invoice_id);
+        Insurance::findOrFail($new_insurance_id);
+        $invoice->insurance_id = $new_insurance_id;
+        $invoice->save();
+        return back()->withStatus(__('Aseguranza actualizada exitosamente.'));
+    }
+
     public function updatePatient(UpdateInvoicePatient $request)
     {
         $new_patient_id = $request->patient_id;
@@ -314,6 +337,8 @@ class InvoiceController extends Controller
         $old_patient_id = $invoice->patient_id;
 
         $invoice->patient_id = $new_patient->id;
+        $selectInsurance = new SelectInsurance();
+        $invoice->insurance_id = $selectInsurance->activeInsurance($new_patient->id)->insurance_id;
         $invoice->save();
 
         event(new InvoiceEvent($invoice)); //update stats for new patient
@@ -477,6 +502,7 @@ class InvoiceController extends Controller
             $hosp->save();
         }
     }
+
 
     public function searchNumber(Request $request)
     {

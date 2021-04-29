@@ -15,22 +15,23 @@
             @foreach ($insurances as $insurance)
                 <tr class="{{ $insurance->status == 0 ? 'table-success' : '' }}">
                     <td>{{ $insurance->insurance_id }}</td>
-                    <td>{{ $insurance->insurance->name }}</td>
+                    <td>{{ $insurance->insurer->name }}</td>
                     <td>{{ $insurance->type() }}</td>
                     <td>{{ $insurance->group_number }}</td>
                     <td>
                         <div class="custom-control custom-radio mb-3">
                             <input name="insurance-active" class="custom-control-input"
-                                {{ $insurance->status == 0 ? 'checked' : '' }} type="radio">
+                                {{ $insurance->status == 0 ? ' checked disabled' : '' }} id="insurance-active-{{ $insurance->id }}" type="radio" onchange="selectInsurance({{ $insurance->id }})">
+                            <label class="custom-control-label" for="insurance-active-{{ $insurance->id }}"></label>
                         </div>
                     </td>
                     <td class="td-actions text-right">
                         <button class="btn btn-info btn-sm btn-icon" rel="tooltip" type="button"
-                            onClick="showEditInsuranceModal({{ $insurance->id }})">
+                            onClick="getInsurance({{ $insurance->id }})">
                             <i class="fas fa-pencil-alt fa-2 "></i>
                         </button>
                         <button rel="tooltip" class="btn btn-danger btn-sm btn-icon" type="button"
-                            onClick="deleteInsurance({{ $insurance->id }})">
+                            onClick="deleteInsurance({{ $insurance->id }})" {{ $insurance->status == 0 ? ' disabled' : '' }}>
                             <i class="fa fa-trash"></i>
                         </button>
                     </td>
@@ -48,21 +49,25 @@
             var output = "";
             var bg = "";
             var length = insurances.length;
+            var disabled = "";
             for (var i = 0; i < length; i++) {
-                bg = insurances[i].status2 == 2 ? "table-success" : "";
-                output += "<tr class=" + bg + " value=" + insurances[i].id + ">" +
+                disabled = insurances[i].status2 == 0 ? "disabled" : "";
+                bg = insurances[i].status2 == 0 ? "table-success" : "";
+                output += "<tr class="+bg+" value=" + insurances[i].id+">" +
                     "<td>" + insurances[i].insurance_id + "</td>" +
-                    "<td>" + insurances[i].insurer.name + "</td>" +
+                    "<td>" + insurances[i].insurer + "</td>" +
                     "<td>" + insurances[i].type + "</td>" +
                     "<td>" + insurances[i].group_number + "</td>" +
-                    "<td> <div class='custom-control custom-radio mb-3'> <input name='insurance-active' class='custom-control-input'" +
-                    insurances[i].active + "type='radio'></div></td>" +
-                    '<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="showEditInsuranceModal(\'' +
+                    '<td> <div class="custom-control custom-radio mb-3"> <input name="insurance-active" class="custom-control-input"' +
+                    insurances[i].active + ' type="radio" id=insurance-active-\'' +insurances[i].id + '\' onChange="selectInsurance(\'' +
+                    insurances[i].id +
+                    '\')"'+ disabled +'><label class="custom-control-label" for="insurance-active-\'' +insurances[i].id + '\'"> </label></div></td>' +
+                    '<td class="text-right"><button class="btn btn-info btn-sm btn-icon"  type="button" onClick="getInsurance(\'' +
                     insurances[i].id +
                     '\')"><span class="btn-inner--icon"><i class="fas fa-pencil-alt fa-2"></i></span></button>' +
                     '<button class="btn btn-danger btn-sm btn-icon"  type="button" onClick="deleteInsurance(\'' +
                     insurances[
-                        i].id + '\')"><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>' +
+                        i].id + '\')"'+ disabled +'><span class="btn-inner--icon"><i class="fa fa-trash"></i></span></button></td>' +
                     "</tr>";
             }
             $('#insurances-table tbody').html(output);
@@ -84,10 +89,11 @@
                     }
                 });
                 return false;
-            }
+            } 
         }
 
         function selectInsurance(id) {
+            var previousSelected =  $("input[name=insurance-active]:checked");
             var r = confirm("Activar la aseguranza?");
             if (r) {
                 $.ajax({
@@ -102,6 +108,11 @@
                         displayInsurances(response.data);
                     }
                 });
+                return false;
+            }else {
+               
+                previousSelected.checked = true;
+                document.getElementById("insurance-active-"+id).checked = false;
                 return false;
             }
         }

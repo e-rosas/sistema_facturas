@@ -5,6 +5,13 @@
                 <div class="col-8 col-auto">
                     <h3 style="color:white" class="card-title text-uppercase  mb-0">Aseguranza</h3>
                 </div>
+                @if ($update ?? false)
+                    <div class="col-4">
+                        <button id="edit-insurance" type="button" class="btn btn-sm btn-outline-default" data-toggle="modal"
+                        data-target="#modal-change-insurance">Cambiar</i></button>
+                    <br />
+                    </div>
+                @endif
             </div>
         </div>
         <div class="card-body pt-0 pt-md-4">

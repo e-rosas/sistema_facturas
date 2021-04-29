@@ -34,13 +34,11 @@
 
     <div class="row">
         @include('components.patientInfo', ['patient' => $invoice->patient, 'type' => 'Paciente'])
-        @if ($invoice->patient->insured)
-        @include('components.insurerInfo', ['insurer' => $invoice->patient->insuree->insurer])
-        @else
+        @include('components.insurerInfo', ['insurer' => $invoice->insurance->insurer, 'update' => true])
+        @if (!$invoice->patient->insured)
         @include('components.patientInfo', ['patient' => $insuree->patient, 'type' => 'Asegurado'])
-        @include('components.insurerInfo', ['insurer' => $insuree->insurer])
         @endif
-
+        @include('invoices.partials.changeInsurance')
     </div>
     <br />
     <div class="row">

@@ -315,7 +315,7 @@
                             <label class="form-control-label" for="input-doctor">Doctor</label>
                             <input type="text" name="doctor" id="input-doctor"
                                 class="form-control form-control-alternative{{ $errors->has('doctor') ? ' is-invalid' : '' }}"
-                                placeholder="Nombre, MD" value="">
+                                placeholder="Nombre, MD" value=""  placeholder="Separar con {, sin espacios">
 
                             @if ($errors->has('doctor'))
                             <span class="invalid-feedback" role="alert">
@@ -445,14 +445,14 @@
                         <div class="col-md-4 col-auto form-group">
                             <label class="form-control-label" for="input-license">Licencia (separar por coma)</label>
                             <input type="text" name="input-license" id="input-license"
-                                class="form-control form-control-alternative">
+                                class="form-control form-control-alternative"  placeholder="Separar con , , sin espacios">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-6">
                             <label class="form-control-label" for="input-tooth-numbers">Dientes (separar por coma)</label>
                             <input type="text" name="input-tooth-numbers" id="input-tooth-numbers"
-                                class="form-control form-control-alternative">
+                                class="form-control form-control-alternative"  placeholder="Separar con , , sin espacios">
                         </div>
                     </div>
                 </div>
@@ -475,7 +475,7 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-2 custom-control custom-checkbox mb-3">
                             <input type="checkbox" name="input-breakdown" id="input-breakdown"
-                                class="custom-control-input">
+                                class="custom-control-input" >
                             <label class="custom-control-label" for="input-breakdown">Desglose</label>
                         </div>
                         {{--  bill_type --}}
@@ -488,9 +488,9 @@
                     
                     <div class="form-row">
                         <div class="col-md-12">
-                            <label class="form-control-label" for="input-diagnosis_codes">Procedimientos (Código-Fecha, separar con coma)</label>
+                            <label class="form-control-label" for="input-diagnosis_codes">Procedimientos (Código{Fecha, separar con coma)</label>
                             <input type="text" name="input-diagnosis_codes" id="input-diagnosis_codes"
-                                class="form-control form-control-alternative">
+                                class="form-control form-control-alternative"  placeholder="Separar con coma , sin espacios">
                         </div>
                     </div>
                 </div>
@@ -615,7 +615,7 @@
                         <div class="col-lg-6 col-auto form-group">
                             <label class="form-control-label" for="hospitalization-minutes">Anestesia (Hora inicial - Hora final)</label>
                             <input type="text" name="hospitalization-minutes" id="hospitalization-minutes"
-                                class="form-control form-control-alternative" placeholder="" >
+                                class="form-control form-control-alternative" placeholder="Separar con -, sin espacios" >
                         </div>
                     </div>
                     {{-- Table of services --}}

@@ -40,6 +40,7 @@ class Invoice extends Model
         'dental',
         'cash',
         'accept_assignment',
+        'insurance_id'
     ];
     /**
      * The event map for the model.
@@ -284,19 +285,25 @@ class Invoice extends Model
         return $this->belongsTo('App\Location');
     }
 
+    public function insurance()
+    {
+        return $this->belongsTo('App\Insurance');
+    }
+
     public function insured()
     {
         if ($this->patient->insured) {
             return $this->patient;
         }
 
-        $beneficiary = Dependent::where('patient_id', $this->patient->id)->first();
+        $beneficiary = Dependent::where('patient_id', $this->patient_id)->first();
 
         return Patient::where('id', $beneficiary->insuree_id)->first();
     }
 
     public function services()
     {
+        //DO NOT USE
         return $this->hasMany('App\InvoiceService');
     }
 

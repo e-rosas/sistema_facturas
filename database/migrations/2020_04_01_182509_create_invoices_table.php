@@ -15,7 +15,7 @@ class CreateInvoicesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('patient_id');
             $table->unsignedBigInteger('location_id')->default(1);
-
+            $table->unsignedBigInteger('insurance_id');
             $table->string('series')->nullable();
             $table->string('number')->nullable();
             $table->string('code', 50)->unique();
@@ -48,7 +48,7 @@ class CreateInvoicesTable extends Migration
             $table->tinyInteger('status')->default(0);
             $table->foreign('patient_id')->references('id')->on('patients')->cascadeOnDelete();
             $table->foreign('location_id')->references('id')->on('locations')->cascadeOnDelete();
-
+            $table->foreign('insurance_id')->references('id')->on('insurances')->cascadeOnDelete();
             $table->timestamps();
         });
     }

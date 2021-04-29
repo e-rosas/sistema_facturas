@@ -89,8 +89,6 @@
                                 <th scope="col">NSS</th>
                                 <th scope="col">Teléfono</th>
                                 <th scope="col">Fecha Nacimiento</th>
-                                <th scope="col">ID de Aseguranza</th>
-                                <th scope="col">Aseguranza</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -103,12 +101,6 @@
                                 <td>{{ $insuree->nss }}</td>
                                 <td>{{ $insuree->patient->phone_number }}</td>
                                 <td>{{ $insuree->patient->birth_date->format('d-m-Y') }}</td>
-                                <td>{{ $insuree->insurance_id }}</td>
-                                <td>
-                                    <a href="{{ route('insurers.show', $insuree->insurer) }}">
-                                        {{ $insuree->insurer->name }}
-                                    </a>
-                                </td>
                                 <td class="td-actions text-right">
 
                                     <a class="btn btn-success btn-sm btn-icon" rel="tooltip" type="button"
@@ -133,8 +125,6 @@
                                 </td>
                                 <td>{{ $dependent->patient->phone_number }}</td>
                                 <td>{{ $dependent->patient->birth_date->format('d-m-Y')  }}</td>
-                                <td></td>
-                                <td></td>
                                 <td class="td-actions text-right">
                                     <a class="btn btn-success btn-sm btn-icon" rel="tooltip" type="button"
                                         href="{{ route('patients.show', $dependent->patient) }}">

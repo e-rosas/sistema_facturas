@@ -1496,7 +1496,7 @@ S6_ANESTHESIA:
                 'value' => $code,
             ];
             $services_list['S'.($i + 1).'_NAME'] = [
-                'size' => 8,
+                'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
                 'value' => $modifier,
@@ -1804,29 +1804,53 @@ S6_ANESTHESIA:
                 'style' => '',
                 'value' =>  $this->invoice->DOS->format("m/d/Y"),
             ],
+		'INSURANCE_NAME' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->name,
+                ],
+                'INSURANCE_ADDRESS' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->address,
+                ],
+                'INSURANCE_CITY_ZIP' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->addressDetails(),
+                ],
+                'INSURANCE_PHONE' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->group_phone_number,
+                ],
+		'INSURED_POLICY' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->group_number,
+                ],
+		'INSURED_ID' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurance_id,
+                ],
         ];
         if ($this->invoice->patient->insured) {
             $insured = $this->invoice->patient->insuree;
 
             //add insured data
             $insured_data = [
-                'INSURED_ID' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
                 'INSURED_PHONE' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
                     'value' => $this->invoice->patient->phone_number,
-                ],
-                'INSURED_POLICY' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->group_number,
                 ],
                 'INSURED_ZIP' => [
                     'size' => 9,
@@ -1914,54 +1938,17 @@ S6_ANESTHESIA:
                 ],
             ];
 
-            $insurance_data = [
-                'INSURANCE_NAME' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->name,
-                ],
-                'INSURANCE_ADDRESS' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->address,
-                ],
-                'INSURANCE_CITY_ZIP' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->addressDetails(),
-                ],
-                'INSURANCE_PHONE' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer_phone_number,
-                ],
-            ];
+            
 
-            $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;
+            $this->invoice_data = $this->invoice_data + $insured_data;
         } else {
             $insured = Insuree::where('patient_id', $this->invoice->patient->dependent->insuree_id)->first();
             $insured_data = [
-                'INSURED_ID' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
                 'INSURED_PHONE' => [
                     'size' => 9,
                     'family' => 'Arial',
                     'style' => '',
                     'value' => $insured->patient->phone_number,
-                ],
-                'INSURED_POLICY' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->group_number,
                 ],
                 'INSURED_ZIP' => [
                     'size' => 9,
@@ -2048,33 +2035,7 @@ S6_ANESTHESIA:
                     'value' => (1 == $insured->patient->gender) ? '' : 'X',
                 ],
             ];
-            $insurance_data = [
-                'INSURANCE_NAME' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->name,
-                ],
-                'INSURANCE_ADDRESS' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->address,
-                ],
-                'INSURANCE_CITY_ZIP' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->addressDetails(),
-                ],
-                'INSURANCE_PHONE' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer_phone_number,
-                ],
-            ];
-            $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;
+            $this->invoice_data = $this->invoice_data + $insured_data;
         }
 
         $diagnosis_list = [];

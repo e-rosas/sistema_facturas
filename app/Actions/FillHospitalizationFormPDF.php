@@ -1246,7 +1246,7 @@ P18:
                 'style' => '',
                 'value' => $this->invoice->DOS->format('m/d/Y'),
             ],
-	          'PATIENT_NAME_2' => [
+	   'PATIENT_NAME_2' => [
                 'size' => 9,
                 'family' => 'Arial',
                 'style' => '',
@@ -1258,6 +1258,42 @@ P18:
                 'style' => '',
                 'value' => ($this->invoice->hospitalization_details->bill_type),
             ],
+	    'INSURER_ID' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurance_id,
+                ],
+                'INSURER_ID2' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurance_id,
+                ],
+                'GROUP_NUMBER' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->group_number,
+                ],
+	      'INSURANCE_ADDRESS_1' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->name,
+                ],
+                'INSURANCE_ADDRESS_2' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->address,
+                ],
+                'INSURANCE_ADDRESS_3' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->addressDetails(),
+                ],
         ];
 
         if ($this->invoice->patient->insured) {
@@ -1265,24 +1301,7 @@ P18:
 
             //add insured data
             $insured_data = [
-                'INSURER_ID' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
-                'INSURER_ID2' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
-                'GROUP_NUMBER' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->group_number,
-                ],
+                
                 'Insurer_DOB' => [
                     'size' => 9,
                     'family' => 'Arial',
@@ -1314,50 +1333,11 @@ P18:
                     'value' => '',
                 ],
             ];
-
-            $insurance_data = [
-                'INSURANCE_ADDRESS_1' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->name,
-                ],
-                'INSURANCE_ADDRESS_2' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->address,
-                ],
-                'INSURANCE_ADDRESS_3' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->addressDetails(),
-                ],
-            ];
-
-            $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;
+            $this->invoice_data = $this->invoice_data + $insured_data;
         } else {
             $insured = Insuree::where('patient_id', $this->invoice->patient->dependent->insuree_id)->first();
             $insured_data = [
-                'INSURER_ID' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
-                'INSURER_ID2' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
-                'GROUP_NUMBER' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->group_number,
-                ],
+              
                 'INSURED_NAME' => [
                     'size' => 9,
                     'family' => 'Arial',
@@ -1383,27 +1363,8 @@ P18:
                     'value' => '',
                 ],
             ];
-            $insurance_data = [
-                'INSURANCE_ADDRESS_1' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->name,
-                ],
-                'INSURANCE_ADDRESS_2' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->address,
-                ],
-                'INSURANCE_ADDRESS_3' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->addressDetails(),
-                ],
-            ];
-            $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;
+            
+            $this->invoice_data = $this->invoice_data + $insured_data;
         }
 
         $diagnosis_list = [];

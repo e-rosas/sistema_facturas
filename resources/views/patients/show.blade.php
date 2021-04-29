@@ -65,10 +65,10 @@
                             <span class="h4 font-weight-400 mb-2">{{ $insuree->insurer->email }}</span>
                             @else
                             <span class="h2 font-weight-bold mb-0"> <a
-                                    href="{{ route('insurers.show', $patient->insuree->insurer) }}">
-                                    {{ $patient->insuree->insurer->name }}</a></span>
+                                    href="{{ route('insurers.show', $patient->insuree->insurance()->insurer) }}">
+                                    {{ $patient->insuree->insurance()->insurer->name }}</a></span>
                             <br />
-                            <span class="h4 font-weight-400 mb-2">{{ $patient->insuree->insurer->email }}</span>
+                            <span class="h4 font-weight-400 mb-2">{{ $patient->insuree->insurance()->insurer->email }}</span>
                             @endif
 
                         </div>
@@ -83,7 +83,7 @@
                         <div class="col"><span class="h3 font-weight-bold mb-0">{{ $patient->insuree->nss }}</span>
                         </div>
                         <div class="col"><span
-                                class="h3 font-weight-bold mb-0">{{ $patient->insuree->group_number }}</span>
+                                class="h3 font-weight-bold mb-0">{{ $patient->insuree->insurance()->group_number }}</span>
                         </div>
                     </div>
                     @endif

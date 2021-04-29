@@ -11,10 +11,12 @@ class Insurance extends Model
     public $fillable = [
         'group_number',
         'insurance_id',
-        'active',
-        'active_since',
-        'active_until',
-        'insurer_group_phone_number'
+        'comments',
+        'type',
+        'status',
+        'group_phone_number',
+        'insuree_id',
+        'insurer_id'
     ];
     public function insuree()
     {
@@ -22,6 +24,38 @@ class Insurance extends Model
     }
     public function insurer()
     {
-        return $this->belongsTo('App\Model\Insurer', 'insurer_id');
+        return $this->belongsTo('App\Insurer');
+    }
+    public function type()
+    {
+        switch ($this->type) {
+            case 0:
+                return 'Médica.';
+
+                break;
+            case 1:
+                return 'Dental.';
+
+                break;
+            default:
+                // code...
+                break;
+        }
+    }
+    public function status()
+    {
+        switch ($this->status) {
+            case 0:
+                return 'Activa.';
+
+                break;
+            case 1:
+                return 'Vencida.';
+
+                break;
+            default:
+                // code...
+                break;
+        }
     }
 }

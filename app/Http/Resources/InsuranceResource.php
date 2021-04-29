@@ -27,6 +27,7 @@ class InsuranceResource extends JsonResource
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'type' => $this->type(),
             'type2' => $this->type,
+            'active' => $this->status == 0 ? 'checked' : '',
         ];
     }
 }

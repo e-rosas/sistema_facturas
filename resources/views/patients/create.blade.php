@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div
-                                        class="col-md-8 form-group{{ $errors->has('insurer_phone_number') ? ' has-danger' : '' }}">
+                                        class="col-md-4 form-group{{ $errors->has('insurer_phone_number') ? ' has-danger' : '' }}">
                                         <label class="form-control-label" for="input-insurer_phone_number">Teléfono de grupo
                                             de
                                             aseguranza</label>
@@ -84,6 +84,33 @@
                                                 <strong>{{ $errors->first('insurer_phone_number') }}</strong>
                                             </span>
                                         @endif
+                                    </div>
+                                    {{-- Type --}}
+                                    <div class="col-md-4 form-group">
+                                        <label class="form-control-label" for="insurance-type">Tipo</label>
+                                        <select id='insurance-type' class="custom-select" name="type">
+                                            <option value='0' selected>Médica</option>
+                                            <option value='1'>Dental</option>
+                                        </select>
+                                    </div>
+                                    {{-- Status --}}
+                                    <div class="col-md-4 form-group">
+                                        <label class="form-control-label" for="insurance-status">Estado</label>
+                                        <select id='insurance-status' class="custom-select" name="status">
+                                            <option value='0' selected>Activa</option>
+                                            <option value='1'>Vencida</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-12 form-group">
+                                        <div class="input-group input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                            </div>
+                                            <textarea type="text" rows="3" name="comments" id="insurance-comments"
+                                                class="form-control" value="" placeholder="Notas"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             @else

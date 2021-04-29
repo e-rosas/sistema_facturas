@@ -150,6 +150,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('locations', 'LocationController');
     Route::post('locations/search', 'LocationController@searchLocation')->name('locations.search');
 
+    Route::resource('insurances', 'InsuranceController')->except(['update', 'destroy']);
+    Route::patch('insurances', 'InsuranceController@update')->name('insurances.update');
+    Route::delete('insurances', 'InsuranceController@destroy')->name('insurances.destroy');
+    Route::post('insurances/find', 'InsuranceController@find')->name('insurances.find');
+    Route::post('insurances/select', 'InsuranceController@select')->name('insurances.select');
+    Route::patch('invoices/insurance', 'InvoiceController@newInsurance')->name('invoices.insurance');
     /* Route::get('/import_items', 'ImportController@getImportItems')->name('import.items');
     Route::post('/import_parse_items', 'ImportController@parseImportItems')->name('import.parse.items');
     Route::post('/import_process_items', 'ImportController@processImportItems')->name('import.process.items'); */
@@ -168,6 +174,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/diagnosis_codes', 'DiagnosisController@updateCodes'); */
     Route::get('/update_patients_stats', 'PatientController@updateStats');
+    Route::get('/update_insurances', 'PatientController@migrateInsurance');
+    Route::get('/migrate_invoices', 'PatientController@addInsuranceToInvoices');
     //Route::get('/update_hospitalizations', 'InvoiceController@updateHospitalizations');
 
    // Route::get('/update_insurees_phones', 'InsureeController@updateInsurerPhone');

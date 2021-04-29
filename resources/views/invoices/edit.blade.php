@@ -476,7 +476,7 @@
                         <div class="col-lg-6 col-auto form-group">
                             <label class="form-control-label" for="hospitalization-minutes">Anestesia (Hora inicial - Hora final)</label>
                             <input type="text" name="hospitalization-minutes" id="hospitalization-minutes"
-                                class="form-control form-control-alternative" placeholder="" >
+                                class="form-control form-control-alternative" placeholder="Separar con -, sin espacios" >
                         </div>
                     </div>
                     {{-- Table of services --}}

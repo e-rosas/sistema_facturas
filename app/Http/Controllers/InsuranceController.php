@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateInsurer;
 use App\Http\Resources\InsuranceResource;
 use App\Insurance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InsuranceController extends Controller
 {
@@ -37,7 +38,7 @@ class InsuranceController extends Controller
             $deactivate->deactivateInsurances($validated['insuree_id'], $insurance->id);
         }
 
-        return new InsuranceResource($insurance);
+        return $this->insureeInsurances($insurance->insuree_id);
 
     }
 
@@ -68,7 +69,7 @@ class InsuranceController extends Controller
         $insurance->fill($validated);
         $insurance->save();
 
-        return new InsuranceResource($insurance);
+        return $this->insureeInsurances($insurance->insuree_id);
     }
 
     /**
@@ -82,9 +83,13 @@ class InsuranceController extends Controller
         $id = $request->id;
 
         $insurance = Insurance::findOrFail($id);
-        $insurance->delete();
+        $insurances = DB::table('insurances')->where('insuree_id', $insurance->insuree_id)->count();
+        if($insurances > 1) {
+            $insurance->delete();
+        }
+        
 
-        return 204;
+        return $this->insureeInsurances($insurance->insuree_id);
     }
 
     public function find(Request $request)
@@ -108,7 +113,16 @@ class InsuranceController extends Controller
         $deactivate = new SelectInsurance();
         $deactivate->deactivateInsurances($insurance->insuree_id, $insurance->id);
 
-        return new InsuranceResource($insurance);
+        return $this->insureeInsurances($insurance->insuree_id);
 
+    }
+    private function insureeInsurances($insuree_id)
+    {
+        $insurances = Insurance::where('insuree_id', $insuree_id)
+            ->orderBy('status')
+            ->get()
+        ;
+
+        return InsuranceResource::collection($insurances);
     }
 }

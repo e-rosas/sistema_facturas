@@ -33,7 +33,7 @@
                                 <label for="input-group-number" class="col-auto col-form-label">Número de grupo</label>
                                 <input type="text" name="input-group-number" id="input-group-number"
                                     class="form-control form-control-alternative" placeholder="Número de grupo"
-                                    value="{{ old('group_number') }}">
+                                    value="">
 
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('insurance_id') }}</strong>
@@ -43,14 +43,13 @@
 
                             {{-- Group phone number --}}
                             <div class="form-group">
-                                <div class="col-md-8 form-group">
+                                <div class="form-group">
                                     <label class="form-control-label" for="input-insurer-phone-number">Teléfono de grupo
                                         de
                                         aseguranza</label>
                                     <input type="text" name="insurer-phone-number" id="input-insurer-phone-number"
                                         class="form-control form-control-alternative"
                                         placeholder="Teléfono de grupo de aseguranza" value="">
-                                    @endif
                                 </div>
 
                             </div>
@@ -106,13 +105,14 @@
                     "group_number": groupNumber,
                     "insurer_group_phone_number": groupPhoneNumber,
                     "insurer_id": insurerID,
-                    "insuree_id": "{{ $insuree->patient_id }}",
+                    "insuree_id": "{{ $patient->insuree->patient_id }}",
                     "status": status,
                     "comments": comments,
                     "type": type
                 },
                 success: function(response) {
                     $('#modal-insurance').modal('hide');
+                    displayInsurances(response.data);
 
                 }
             });

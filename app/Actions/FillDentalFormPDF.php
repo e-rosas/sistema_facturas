@@ -2074,6 +2074,42 @@ T32:
                 'style' => '',
                 'value' => (1 == $this->invoice->dental_details->treatment_resulting_from) ? $this->invoice->dental_details->auto_accident_state : '',
             ],
+	   'Insurance_ID' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurance_id,
+                ],
+                'Patient_Insurance' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurance_id,
+                ],
+                'Insurer_Policy_Number' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->group_number,
+                ],
+	       'Company_Name' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->name,
+                ],
+                'Company_Address' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->address,
+                ],
+                'Company_City_State_Zip' => [
+                    'size' => 9,
+                    'family' => 'Arial',
+                    'style' => '',
+                    'value' => $this->invoice->insurance->insurer->addressDetails(),
+                ],
         ];
 
         if ($this->invoice->patient->insured) {
@@ -2081,24 +2117,7 @@ T32:
 
             //add insured data
             $insured_data = [
-                'Insurance_ID' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
-                'Patient_Insurance' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
-                'Insurer_Policy_Number' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->group_number,
-                ],
+                
                 'Insurer_DOB' => [
                     'size' => 9,
                     'family' => 'Arial',
@@ -2167,49 +2186,10 @@ T32:
                 ],
             ];
 
-            $insurance_data = [
-                'Company_Name' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->name,
-                ],
-                'Company_Address' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->address,
-                ],
-                'Company_City_State_Zip' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->addressDetails(),
-                ],
-            ];
-
-            $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;
+            $this->invoice_data = $this->invoice_data + $insured_data;
         } else {
             $insured = Insuree::where('patient_id', $this->invoice->patient->dependent->insuree_id)->first();
             $insured_data = [
-                'Insurance_ID' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
-                'Patient_Insurance' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurance_id,
-                ],
-                'Insurer_Policy_Number' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->group_number,
-                ],
                 'Insurer_DOB' => [
                     'size' => 9,
                     'family' => 'Arial',
@@ -2277,27 +2257,8 @@ T32:
                     'value' => '',
                 ],
             ];
-            $insurance_data = [
-                'Company_Name' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->name,
-                ],
-                'Company_Address' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->address,
-                ],
-                'Company_City_State_Zip' => [
-                    'size' => 9,
-                    'family' => 'Arial',
-                    'style' => '',
-                    'value' => $insured->insurer->cityZIP(),
-                ],
-            ];
-            $this->invoice_data = $this->invoice_data + $insured_data + $insurance_data;
+            
+            $this->invoice_data = $this->invoice_data + $insured_data;
         }
 
         $diagnosis_list = [];

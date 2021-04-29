@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Actions;
+
+use App\Dependent;
 use App\Insurance;
+use App\Patient;
 use Illuminate\Support\Facades\DB;
 
 class SelectInsurance {
@@ -13,6 +16,27 @@ class SelectInsurance {
         ->where('insuree_id', $insuree_id)
         ->where('id', '!=', $insurance_id)
         ->update(['status' => 1]);
+    }
+
+    public function activeInsurance($patient_id)
+    {
+        $patient = Patient::findOrFail($patient_id);
+        if($patient->insured) {
+            return Insurance::where('insuree_id', $patient_id)->where('status', 0)->first();
+        } else {
+            $dependent = Dependent::where('patient_id', $patient_id)->first();
+            return Insurance::where('insuree_id', $dependent->insuree_id)->where('status', 0)->first();
+        }
+    }
+
+    public function activeInsurance2(Patient $patient)
+    {
+        if($patient->insured) {
+            return Insurance::where('insuree_id', $patient->id)->where('status', 0)->first();
+        } else {
+            $dependent = Dependent::where('patient_id', $patient->id)->first();
+            return Insurance::where('insuree_id', $dependent->insuree_id)->where('status', 0)->first();
+        }
     }
 
 }
