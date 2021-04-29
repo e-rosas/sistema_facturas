@@ -110,7 +110,7 @@
       </div>
       <br> <br> <br> <br>
       <div class="invoice-company-info">
-        <p style="text-align:left; ">{{ $insuree->insurer->name }}
+        <p style="text-align:left; ">{{ $insuree->insurance->insurer->name }}
         </p>
         <p style="text-align:left; font-weight: bold;">Insured ID #: <span
             style="font-weight: 400;">{{ $insuree->insurance_id }}</span>

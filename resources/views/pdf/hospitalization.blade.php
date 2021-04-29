@@ -91,7 +91,7 @@
         <p style="text-align:left; font-weight: bold;">PATIENT&#39S NAME: <span
             style="font-weight: 400;">{{ $patient->name() }}</span>
           <span style="float:right;">
-            INSURED&#39S I.D NUMBER: <span style="font-weight: 400;">{{ $insured->insurance_id }}</span>
+            INSURED&#39S I.D NUMBER: <span style="font-weight: 400;">{{ $insured->insurance()->insurance_id }}</span>
           </span>
         </p>
         <p style="font-weight: bold;">PATIENT&#39S DATE OF BIRTH: <span style="font-weight: 400;">

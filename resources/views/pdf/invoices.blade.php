@@ -237,7 +237,7 @@
                             <th class="h-discounted">{{ __('Discounted') }}</th>
                         </tr>
                     </thead>
-                    @foreach ($invoice->services as $service)
+                    @foreach ($invoice->services2 as $service)
                         <tr>
                             <td>
                                 <p class="expense-title description">

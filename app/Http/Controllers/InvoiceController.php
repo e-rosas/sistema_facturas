@@ -486,6 +486,13 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index')->withStatus(__('Cobro eliminado exitosamente.'));
     }
 
+    public function changeStatus(Invoice $invoice, Request $request)
+    {
+        $invoice->type = $request->type;
+        $invoice->save();
+        return redirect()->route('invoices.show', $invoice)->withStatus(__('Tipo actualizado exitosamente.'));
+    }
+
     public function updateRegistered()
     {
         $invoices = Invoice::where([['status', '3'], ['number', '!=', 'Pendiente'], ['amount_paid', '0']])->get();

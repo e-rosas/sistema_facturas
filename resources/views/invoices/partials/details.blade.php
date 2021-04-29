@@ -7,7 +7,8 @@
                     <h3 class="card-title text-uppercase  mb-0">Cobro</h3>
                 </div>
                 <div class="col-md-6 text-left">
-                    <form  method="post" onsubmit="return confirm('Confirmar eliminación');" action="{{ route('invoices.destroy', $invoice) }}">
+                    <form method="post" onsubmit="return confirm('Confirmar eliminación');"
+                        action="{{ route('invoices.destroy', $invoice) }}">
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-sm btn-danger">ELIMINAR COBRO</button>
@@ -93,6 +94,28 @@
                 </div>
             </div>
             <div class="form-row">
+                {{-- status --}}
+                <div class="col-md-4 col-auto form-group">
+                    <label class="form-control-label" for="label-status">Estado</label>
+                    <label id="label-status">{{ $invoice->status() }}</label>
+                </div>
+                <div class="col-md-4 col-auto form-group">
+                    <select id='new-status' class="custom-select" name="status">
+                        <option value='10'>Cambiar estado</option>
+                        <option value='0'>Nota de crédito pendiente.</option>
+                        <option value='1'>Completa.</option>
+                        <option value='2'>Pendiente de pago.</option>
+                        <option value='3'>Pendiente de asignar productos.</option>
+                        <option value='4'>Pendiente de facturar.</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button id="update-status" onclick="updateStatus()" class="btn btn-success btn-lg btn-block">
+                        Cambiar
+                    </button>
+                </div>
+            </div>
+            <div class="form-row">
                 {{-- code --}}
                 <div class="col-md-3 col-auto form-group">
                     <label class="form-control-label" for="label-code">No. de Cobro</label>
@@ -119,35 +142,31 @@
                 </div>
 
             </div>
-            <div class="form-row">
-                {{-- type --}}
-                <div class="col-md-5 col-auto form-group">
-                    <label class="form-control-label" for="label-type">Tipo</label>
-                    <label id="invoice-type">{{ $invoice->type() }}</label>
-                </div>
-
-            </div>
-            <div class="form-row">
-                {{-- status --}}
-                <div class="col-md-4 col-auto form-group">
-                    <label class="form-control-label" for="label-status">Estado</label>
-                    <label id="label-status">{{ $invoice->status() }}</label>
-                </div>
-                <div class="col-md-4 col-auto form-group">
-                    <select id='new-status' class="custom-select" name="status">
-                        <option value='10'>Cambiar estado</option>
-                        <option value='0'>Nota de crédito pendiente.</option>
-                        <option value='1'>Completa.</option>
-                        <option value='2'>Pendiente de pago.</option>
-                        <option value='3'>Pendiente de asignar productos.</option>
-                        <option value='4'>Pendiente de facturar.</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <button id="update-status" onclick="updateStatus()" class="btn btn-success btn-lg btn-block">
-                        Cambiar
-                    </button>
-                </div>
+            
+            <div class="form-group">
+                <form class="form-row" role="form" method="post" action="{{ route('invoices.type', $invoice) }}"
+                    autocomplete="off">
+                    @csrf
+                    @method('patch')
+                    <input readonly type="hidden" name="invoice_id" class="form-control"
+                        value={{ $invoice->id }} required>
+                    {{-- type --}}
+                    <div class="col-md-4 col-auto form-group">
+                        <label class="form-control-label" for="label-type">Tipo</label>
+                        <label id="invoice-type">{{ $invoice->type() }}</label>
+                    </div>
+                    <div class="col-md-4 col-auto form-group">
+                        <select class="custom-select" name="type">
+                            <option value='2' {{ $invoice->type == 2 ? 'selected' : '' }}>Pendiente de pago.</option>
+                            <option value='4' {{ $invoice->type == 4 ? 'selected' : '' }}>Deducible.</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" onclick="return confirm('Confirmar cambio de tipo.');"" class="btn btn-outline-success  btn-block">
+                            Cambiar
+                        </button>
+                    </div>
+                </form>
             </div>
 
             <div class="nav-wrapper">

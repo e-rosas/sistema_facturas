@@ -229,6 +229,10 @@ class Invoice extends Model
                 return 'Cargo al paciente.';
 
                 break;
+            case 4:
+                return 'Deducible.';
+
+                break;
 
             default:
                 // code...
