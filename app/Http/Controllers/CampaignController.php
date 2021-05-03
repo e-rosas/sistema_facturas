@@ -62,11 +62,13 @@ class CampaignController extends Controller
 
         //dd($insurance_ids);
 
+        $end = Carbon::today()->addDay();
+        $start = Carbon::today()->subMonths(1);
         $sentInsurances = DB::table('insurances')->whereIn('id', $insurance_ids)->get();
 
         $notSentInsurances = DB::table('insurances')->whereNotIn('id', $insurance_ids)->get();
 
-        return view('campaigns.show', compact(['campaign', 'sentInsurances', 'notSentInsurances']));
+        return view('campaigns.show', compact(['campaign', 'sentInsurances', 'notSentInsurances', 'end', 'start']));
     }
 
     public function send(Request $request)

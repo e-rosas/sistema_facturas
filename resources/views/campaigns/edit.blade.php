@@ -1,8 +1,7 @@
 @extends('layouts.app', ['title' =>'Editar campaña'])
 
 @section('content')
-@include('layouts.headers.cards')
-
+@include('layouts.headers.header', ['title' => 'Editar campaña'])
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
@@ -25,7 +24,7 @@
                                 </div>
                             @endif
                         </div>
-                        <form method="post" action="{{ route('campaigns.update') }}" autocomplete="off">
+                        <form method="post" action="{{ route('campaigns.update', $campaign) }}" autocomplete="off">
                             @csrf
 
                             <h6 class="heading-small text-muted mb-4">Datos de la campaña</h6>
@@ -67,7 +66,7 @@
                                             </div>
                                             <input name="date" id="input-date"
                                                 class="form-control form-control-alternative{{ $errors->has('date') ? ' is-invalid' : '' }}"
-                                                type="date" required value="{{ $campaign->date }}">
+                                                type="date" required value="{{ $campaign->date->format('Y-m-d') }}">
                                         </div>
                                         @if ($errors->has('date'))
                                             <span class="invalid-feedback" role="alert">
@@ -83,7 +82,7 @@
                                             </div>
                                             <input name="to_date" id="input-to_date"
                                                 class="form-control form-control-alternative{{ $errors->has('to_date') ? ' is-invalid' : '' }}"
-                                                type="date" required value="{{ $campaign->to_date }}">
+                                                type="date" required value="{{ $campaign->to_date->format('Y-m-d') }}">
                                         </div>
                                         @if ($errors->has('to_date'))
                                             <span class="invalid-feedback" role="alert">
