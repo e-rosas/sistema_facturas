@@ -64,6 +64,7 @@ class PreparePatientLetter
         $nf = new NumberFormatter('en', NumberFormatter::SPELLOUT);
 
         $total_spelled = $nf->format($this->invoiceTotal);
+        
 
         $this->invoiceTotal = number_format($this->invoiceTotal, 2);
 
