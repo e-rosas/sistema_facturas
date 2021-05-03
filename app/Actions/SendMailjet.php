@@ -47,39 +47,8 @@ class SendMailjet
 
         // Read the response
 
-        if ($response->success()) {
-            $e = new Email();
-            $e->campaign_id = $campaign->id;
-            $e->patient_id = $patient->id;
-            $e->insurance_id = $insurance->id;
-            $e->user_id = $user_id;
-            $e->date = Carbon::now();
-            $e->save();
+        return $response->success();
 
-            return true;
-        }
-
-
-        return false;
-        /* $mj = Mailjet::getClient();
-        $pdf = (base64_encode(file_get_contents(($letter))));
-        $body = [
-            'FromEmail' => env('MAIL_FROM_ADDRESS'),
-            'FromName' => env('MAIL_FROM_NAME'),
-            'Subject' => 'CLAIM STATUS - '.$patient->full_name . ' DOB ' .$patient->birth_date->format('m-d-Y'),
-            'MJ-TemplateID' => $campaign->template,
-            'MJ-TemplateLanguage' => true,
-            'Vars' => json_decode('{"test": "TEST2"}', true),
-            'Recipients' => [['Email' => 'hospmex.sistemas@gmail.com']],
-            'Attachments' => [['ContentType' => 'application/pdf',
-                'Filename' => 'letter.pdf',
-                'Base64Content' => $pdf, ]],
-        ];
-        $response = $mj->post(Resources::$Email, ['body' => $body]);
-        if ($response->success()) {
-            var_dump($response->getData());
-        } else {
-            dd($response);
-        } */
+        
     }
 }

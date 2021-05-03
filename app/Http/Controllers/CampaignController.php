@@ -95,25 +95,25 @@ class CampaignController extends Controller
                     $preparePatientLetter->invoiceTotal = 0;
                     $invoices = $preparePatientLetter->getInsurancePatientInvoices($insurance, $patient, $start, $end);
                     if (count($invoices) > 0) {
-                        // $letter = $preparePatientLetter->prepareLetter($insurance, $patient, $invoices);
+                        $letter = $preparePatientLetter->prepareLetter($insurance, $patient, $invoices);
 
-                        //if ($mailjet->sendCampaignEmail($campaign, $insurance, $patient, $letter, $user_id)) {
-                        $patient_letter = new PatientLetter();
-                        $patient_letter->patient_id = $patient->id;
-                        $patient_letter->date = Carbon::today();
-                        $patient_letter->content = $preparePatientLetter->invoiceContent;
-                        $patient->comments = 'Total: '.$preparePatientLetter->invoiceTotal.' Periodo: '.$start->format('M-d-Y').' - '.$end->format('M-d-Y');
-                        $patient_letter->status = 0;
-                        $patient_letter->save();
+                        if ($mailjet->sendCampaignEmail($campaign, $insurance, $patient, $letter, $user_id)) {
+                            $patient_letter = new PatientLetter();
+                            $patient_letter->patient_id = $patient->id;
+                            $patient_letter->date = Carbon::today();
+                            $patient_letter->content = $preparePatientLetter->invoiceContent;
+                            $patient->comments = 'Total: '.$preparePatientLetter->invoiceTotal.' Periodo: '.$start->format('M-d-Y').' - '.$end->format('M-d-Y');
+                            $patient_letter->status = 0;
+                            $patient_letter->save();
 
-                        $e = new Email();
-                        $e->campaign_id = $campaign->id;
-                        $e->patient_id = $patient->id;
-                        $e->insurance_id = $insurance->id;
-                        $e->user_id = $user_id;
-                        $e->date = Carbon::now();
-                        $e->save();
-                        // }
+                            $e = new Email();
+                            $e->campaign_id = $campaign->id;
+                            $e->patient_id = $patient->id;
+                            $e->insurance_id = $insurance->id;
+                            $e->user_id = $user_id;
+                            $e->date = Carbon::now();
+                            $e->save();
+                        }
                     }
                 }
             }
