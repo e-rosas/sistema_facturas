@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\CalculateTotalsOfInvoices;
 use App\Actions\SelectInsurance;
+use App\Campaign;
 use App\Dependent;
 use App\Http\Requests\PatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
@@ -139,6 +140,8 @@ class PatientController extends Controller
         $invoices_totals = new CalculateTotalsOfInvoices($invoices);
         $invoices_totals->totals();
 
+        $campaigns = Campaign::all();
+
         $dependents = [];
         $insurances = [];
         $insurers = [];
@@ -161,7 +164,7 @@ class PatientController extends Controller
         $end = Carbon::today()->addDay();
         $start = Carbon::today()->subMonths(1);
 
-        return view('patients.show', compact('patient', 'invoices', 'invoices_totals',  'dependents', 'insuree', 'end', 'start', 'letters', 'insurances', 'insurers'));
+        return view('patients.show', compact('patient', 'campaigns', 'invoices', 'invoices_totals',  'dependents', 'insuree', 'end', 'start', 'letters', 'insurances', 'insurers'));
     }
 
     /**

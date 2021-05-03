@@ -131,6 +131,11 @@
                         <i class="fas fa-map-marker-alt text-blue"></i> Ubicaciones
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('campaigns.index') }}">
+                        <i class="fas fa-mail-bulk mr-2 text-green"></i> Campañas
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

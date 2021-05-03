@@ -139,7 +139,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('invoices/{invoice}/hospitalization_pdf', 'PaymentFormController@fillHospitalization')->name('invoice.pdf.hospitalization');
     Route::get('patients/{patient}/letter', 'PDFController@letter')->name('patient.letter');
     Route::get('invoices/{invoice}/letter', 'PDFController@invoiceLetter')->name('invoice.letter');
-    Route::get('patients/{patient}/letter/send', 'MailController@letter')->name('patient.letter.send');
+    Route::post('patients/{patient}/letter/send', 'MailController@letter')->name('patient.letter.send');
 
     Route::post('insurees/search', 'SearchPatientController@searchInsuree')->name('insurees.search');
     Route::post('insurees/find', 'SearchPatientController@findInsuree')->name('insurees.find');
@@ -156,35 +156,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('insurances/find', 'InsuranceController@find')->name('insurances.find');
     Route::post('insurances/select', 'InsuranceController@select')->name('insurances.select');
     Route::patch('invoices/insurance', 'InvoiceController@newInsurance')->name('invoices.insurance');
-    /* Route::get('/import_items', 'ImportController@getImportItems')->name('import.items');
-    Route::post('/import_parse_items', 'ImportController@parseImportItems')->name('import.parse.items');
-    Route::post('/import_process_items', 'ImportController@processImportItems')->name('import.process.items'); */
-
-    /* Route::get('/import_rates', 'ImportController@getImportRates')->name('import.rates');
-    Route::post('/import_parse_rates', 'ImportController@parseImportRates')->name('import.parse.rates');
-    Route::post('/import_process_rates', 'ImportController@processImportRates')->name('import.process.rates'); */
 
     Route::get('/import_letters', 'ImportController@getImportLetters')->name('import.letters');
     Route::post('/import_parse_letters', 'ImportController@parseImportLetters')->name('import.parse.letters');
-    //Route::post('/import_process_rates', 'ImportController@processImportRates')->name('import.process.rates');
-
-    /* Route::get('/import_patients', 'ImportController@getImportPatients')->name('import.patients');
-    Route::post('/import_parse_patients', 'ImportController@parseImportPatients')->name('import.parse.patients');
-    Route::post('/import_process_patients', 'ImportController@processImportPatients')->name('import.process.patients');
-
-    Route::get('/diagnosis_codes', 'DiagnosisController@updateCodes'); */
     Route::get('/update_patients_stats', 'PatientController@updateStats');
     Route::get('/migrate_invoices', 'PatientController@addInsuranceToInvoices');
-    //Route::get('/update_hospitalizations', 'InvoiceController@updateHospitalizations');
 
-   // Route::get('/update_insurees_phones', 'InsureeController@updateInsurerPhone');
+    Route::resource('campaigns', 'CampaignController');
+    Route::post('campaign/send', 'CampaignController@send')->name('campaign.send');
 
-    /* Route::get('/import_invoices', 'ImportController@getImportInvoices')->name('import.invoices');
-    Route::post('/import_parse_invoices', 'ImportController@parseImportInvoices')->name('import.parse.invoices');
-    Route::post('/import_process_invoices', 'ImportController@processImportInvoices')->name('import.process.invoices');
-
-    Route::get('invoice/update_amount_due', 'InvoiceController@updateAmountDue');
-
-    Route::get('invoice/update_services', 'InvoiceServiceController@updatePrices')->name('invoice.updateServices');
-    Route::any('invoices_migrate_hm', 'InvoiceDiagnosisController@migrate')->name('invoices.migrate'); */
+    Route::resource('emails', 'EmailController');
 });

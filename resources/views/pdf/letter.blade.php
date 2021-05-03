@@ -110,10 +110,10 @@
       </div>
       <br> <br> <br> <br>
       <div class="invoice-company-info">
-        <p style="text-align:left; ">{{ $insuree->insurance->insurer->name }}
+        <p style="text-align:left; ">{{ $insurance->insurer->name }}
         </p>
         <p style="text-align:left; font-weight: bold;">Insured ID #: <span
-            style="font-weight: 400;">{{ $insuree->insurance_id }}</span>
+            style="font-weight: 400;">{{ $insurance->insurance_id }}</span>
         </p>
         <p style="text-align:left; font-weight: bold;">Insured&#39s name: <span
             style="font-weight: 400;">{{ $insuree->patient->name() }}</span>
@@ -122,7 +122,7 @@
           </span>
         </p>
         <p style="text-align:left; font-weight: bold;">Insurance: <span
-            style="font-weight: 400;">{{ $insuree->insurer->name }}</span>
+            style="font-weight: 400;">{{ $insurance->insurer->name }}</span>
           <span style="float:right;">
             Date of Birth: <span style="font-weight: 400;">{{ $patient->birth_date->format('m/d/Y') }}</span>
           </span>
@@ -209,7 +209,7 @@
   </div>
   <div>
     <p>If you have any questions, feel free to contact us at <b>619 482-8608, 619 482-0953</b>, or via e-mail
-      address at <a href="hospitalmexicoclaims@gmail.com">hospitalmexicoclaims@gmail.com</a> with Yamileth and
+      address at <a href="{{  env('MAIL_FROM_ADDRESS') }}">{{  env('MAIL_FROM_ADDRESS') }}</a> with Yamileth and
       Silvia.
     </p>
     <p>We thank you in advance for your cooperation regarding this matter.</p>

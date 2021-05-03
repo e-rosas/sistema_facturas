@@ -29,6 +29,19 @@ class SelectInsurance {
         }
     }
 
+    public function patientInsurances(Patient $patient)
+    {
+        $insurances = Insurance::with('insurer');
+        if($patient->insured) {
+            $insurances->where('insuree_id', $patient->id);
+        } else {
+            $dependent = Dependent::where('patient_id', $patient->id)->first();
+            $insurances->where('insuree_id', $dependent->insuree_id);
+        }
+
+        return $insurances->get();
+    }
+
     public function activeInsurance2(Patient $patient)
     {
         if($patient->insured) {

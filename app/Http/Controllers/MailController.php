@@ -2,103 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\MergePDFs;
-use App\Insuree;
-use App\Invoice;
-use App\Jobs\SendPatientLetterEmail;
-use App\Mail\PatientLetter;
+use App\Actions\PreparePatientLetter;
+use App\Actions\SelectInsurance;
+use App\Actions\SendMailjet;
+use App\Campaign;
 use App\Patient;
 use App\PatientLetter as AppPatientLetter;
-use Barryvdh\DomPDF\Facade as BarryPDF;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
-use NumberFormatter;
 
 class MailController extends Controller
 {
     public function letter(Patient $patient, Request $request)
     {
+        $campaign = Campaign::findOrFail($request->campaign_id);
+
+        $user_id = $request->user()->id;
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
 
-        $invoices = Invoice::where([['patient_id', $patient->id],
-            ['type', 2], ['registered', 1], ])
-            ->whereBetween('date', [$start, $end])
-            ->get()
-        ;
+        $selectInsurance = new SelectInsurance();
+        $insurances = $selectInsurance->patientInsurances($patient);
+
+        $invoices = new Collection();
+
+        $preparePatientLetter = new PreparePatientLetter();
+
+        foreach ($insurances as $insurance) {
+            if ('pendiente@pendiente.com' != $insurance->insurer->email) {
+                $insuranceInvoices = $preparePatientLetter->getInsurancePatientInvoices($insurance, $patient, $start, $end);
+                $invoices = $invoices->merge($insuranceInvoices);
+            }
+        }
 
         if (count($invoices) < 1) {
             return response('Sin facturas registradas');
         }
 
-        $letterPDF = $this->prepareLetter($patient, $invoices);
+        $mailjet = new SendMailjet();
 
-        $store = storage_path('app/pdf/patients/'.$patient->id.'/temp/letter.pdf');
-        Storage::put('pdf/patients/'.$patient->id.'/temp/letter.pdf', '');
-
-        $letterPDF->save($store);
-
-        $merger = new MergePDFs(0);
-
-        $letter = $merger->mergeSimpleLetter($patient, false);
-
-        $patient_letter = new AppPatientLetter();
-        $patient_letter->patient_id = $patient->id;
-        $patient_letter->sent_on = Carbon::today();
-
-        $insurer_email = null;
-        if ($patient->insured) {
-            $insurer_email = $patient->insuree->insurer->email;
-        } else {
-            $insurer_email = $patient->dependent->insuree->insurer->email;
-        }
-        if (is_null($insurer_email)) {
-            return response('Correo de aseguranza no especificado.');
+        if ($request->letter) {
+            return $preparePatientLetter->prepareLetter($insurance, $patient, $invoices, true);
         }
 
-        $email = new PatientLetter($patient, $letter);
-        Mail::to('hospmex.sistemas@gmail.com')->send($email);
+        if ($request->mail) {
+            $letter = $preparePatientLetter->prepareLetter($insurance, $patient, $invoices);
 
-        //SendPatientLetterEmail::dispatch($patient, $letter, 'hospmex.sistemas@gmail.com');
-    }
+            if ($mailjet->sendCampaignEmail($campaign, $insurance, $patient, $letter, $user_id)) {
+                $patient_letter = new AppPatientLetter();
+                $patient_letter->patient_id = $patient->id;
+                $patient_letter->date = Carbon::today();
+                $patient_letter->content = $preparePatientLetter->invoiceContent;
+                $patient->comments = 'Total: '.$preparePatientLetter->invoiceTotal.' Periodo: '.$start->format('M-d-Y').' - '.$end->format('M-d-Y');
+                $patient_letter->status = 0;
+                $patient_letter->save();
 
-    private function prepareLetter(Patient $patient, $invoices)
-    {
-        if ($patient->insured) {
-            $insuree = Insuree::where('patient_id', $patient->id)->first();
-        } else {
-            $insuree = Insuree::with('patient', 'insurer')
-                ->where('patient_id', $patient->dependent->insuree_id)
-                ->first()
-            ;
+                return back()->withStatus(__('Carta enviada exitosamente.'));
+            }
+
+            return response('Error al enviar correo.');
         }
-
-        $datetime = Carbon::now();
-
-        $invoices_codes = '';
-        $invoices_total = 0;
-        foreach ($invoices as $invoice) {
-            $invoices_codes .= $invoice->code.', ';
-            $invoices_total += $invoice->total_with_discounts;
-        }
-        $nf = new NumberFormatter('en', NumberFormatter::SPELLOUT);
-
-        $total_spelled = $nf->format($invoices_total);
-
-        $invoices_total = number_format($invoices_total, 2);
-
-        view()->share([
-            'patient' => $patient,
-            'insuree' => $insuree,
-            'invoices' => $invoices,
-            'datetime' => $datetime,
-            'codes' => $invoices_codes,
-            'total' => $invoices_total,
-            'amount' => $total_spelled,
-        ]);
-
-        return BarryPDF::loadView('pdf.letter');
     }
 }
