@@ -59,6 +59,7 @@ class SendMailjet
             return true;
         }
 
+
         return false;
         /* $mj = Mailjet::getClient();
         $pdf = (base64_encode(file_get_contents(($letter))));
