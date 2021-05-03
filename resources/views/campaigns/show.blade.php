@@ -48,10 +48,9 @@
                             <div class="col-md-4 col-auto">
                                 <h3 class="mb-0">Correo enviado a</h3>
                             </div>
-                            {{-- <div class="col-md-7 text-right">
-                            <button type="button" class="btn btn-block btn-success" data-toggle="modal"
-                                data-target="#modal-call">Registrar nueva llamada</i></button>
-                        </div> --}}
+                            <div class="col-md-6 text-right">
+                                <h4>{{ count($sentInsurances) }}</h4>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -66,6 +65,9 @@
                         <div class="row align-items-center">
                             <div class="col-md-6 col-auto">
                                 <h3 class="mb-0">Correo no ha sido enviado a</h3>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <h4>{{ count($notSentInsurances) }}</h4>
                             </div>
                             {{-- <div class="col-md-7 text-right">
                                     <button type="button" class="btn btn-block btn-success" data-toggle="modal"

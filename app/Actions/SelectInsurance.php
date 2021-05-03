@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Dependent;
 use App\Insurance;
 use App\Patient;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class SelectInsurance {
@@ -29,7 +30,7 @@ class SelectInsurance {
         }
     }
 
-    public function patientInsurances(Patient $patient)
+    public function patientInsurances(Patient $patient) : Collection
     {
         $insurances = Insurance::with('insurer');
         if($patient->insured) {
