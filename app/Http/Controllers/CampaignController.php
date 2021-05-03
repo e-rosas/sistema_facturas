@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Actions\PreparePatientLetter;
 use App\Actions\SendMailjet;
 use App\Campaign;
-use App\Expediente;
 use App\Http\Requests\CampaignRequest;
 use App\Http\Requests\UpdateCampaignRequest;
 use App\Insurance;
@@ -86,43 +85,25 @@ class CampaignController extends Controller
 
         $mailjet = new SendMailjet();
 
-
-        
         foreach ($insurances as $insurance) {
             $insurer = $insurance->insurer;
-            if($insurer->email) {
+            if ('pendiente@pendiente.com' != $insurer->email) {
                 $patients = $preparePatientLetter->getInsurancePatients($insurance);
                 foreach ($patients as $patient) {
                     $invoices = $preparePatientLetter->getInsurancePatientInvoices($insurance, $patient, $start, $end);
-                    foreach ($patients as $patient) {
-                        $letter = $preparePatientLetter->prepareLetter($insurance, $patient, $invoices);
-                        if ($mailjet->sendCampaignEmail($campaign, $insurance, $patient, $letter, $user_id)) {
-                            $patient_letter = new PatientLetter();
-                            $patient_letter->patient_id = $patient->id;
-                            $patient_letter->date = Carbon::today();
-                            $patient_letter->content = $preparePatientLetter->invoiceContent;
-                            $patient->comments = 'Total: '.$preparePatientLetter->invoiceTotal.' Periodo: '.$start->format('M-d-Y').' - '.$end->format('M-d-Y');
-                            $patient_letter->status = 0;
-                            $patient_letter->save();
-            
-                            
-                        } else {
-
-                        }
-                        
+                    $letter = $preparePatientLetter->prepareLetter($insurance, $patient, $invoices);
+                    if ($mailjet->sendCampaignEmail($campaign, $insurance, $patient, $letter, $user_id)) {
+                        $patient_letter = new PatientLetter();
+                        $patient_letter->patient_id = $patient->id;
+                        $patient_letter->date = Carbon::today();
+                        $patient_letter->content = $preparePatientLetter->invoiceContent;
+                        $patient->comments = 'Total: '.$preparePatientLetter->invoiceTotal.' Periodo: '.$start->format('M-d-Y').' - '.$end->format('M-d-Y');
+                        $patient_letter->status = 0;
+                        $patient_letter->save();
                     }
                 }
             }
-
-            
-            
-            
-
         }
-
-       
-       
-        
 
         return redirect()->route('campaigns.show', [$campaign])->withStatus(__('Campaña enviada exitosamente.'));
     }
@@ -149,7 +130,7 @@ class CampaignController extends Controller
         $campaign->fill($validated);
         $campaign->save();
 
-        return redirect()->route('campaigns.edit', compact('campaigns'))
+        return redirect()->route('campaigns.edit', compact('campaign'))
             ->withStatus(__('Campaña modificada exitosamente.'))
         ;
     }

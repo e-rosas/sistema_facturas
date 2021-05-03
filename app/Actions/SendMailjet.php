@@ -27,14 +27,13 @@ class SendMailjet
                     ],
                     'To' => [
                         [
-                            'Email' => 'hospmex.sistemas@gmail.com',
+                            'Email' => $insurance->insurer->email,
                             //'Name' => 'You',
                         ],
                     ],
                     'Subject' => 'CLAIM STATUS - '.$patient->full_name.' DOB '.$patient->birth_date->format('m-d-Y'),
                     'TemplateID' => (int) $campaign->template,
                     'TemplateLanguage' => true,
-                    'Variables' => json_decode('{"test": "TEST2"}', true),
                     'Attachments' => [['ContentType' => 'application/pdf',
                         'Filename' => $patient->full_name.'.pdf',
                         'Base64Content' => $pdf, ]],

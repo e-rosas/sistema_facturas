@@ -26,7 +26,7 @@
                         </div>
                         <form method="post" action="{{ route('campaigns.update', $campaign) }}" autocomplete="off">
                             @csrf
-
+                            @method('patch')
                             <h6 class="heading-small text-muted mb-4">Datos de la campaña</h6>
                             <div class="pl-lg-4">
                                 {{-- Names --}}
