@@ -4,19 +4,18 @@ namespace App\Actions;
 
 use App\Dependent;
 use App\Insurance;
-use App\Insuree;
 use App\Invoice;
 use App\Patient;
-use Carbon\Carbon;
-use NumberFormatter;
 use Barryvdh\DomPDF\Facade as BarryPDF;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-use App\Actions\MergePDFs;
+use NumberFormatter;
 
 class PreparePatientLetter
 {
-    public $invoiceContent = "";
+    public $invoiceContent = '';
     public $invoiceTotal = 0;
+
     public function getInsurancePatients(Insurance $insurance)
     {
         $patients = [];
@@ -30,6 +29,13 @@ class PreparePatientLetter
         return $patients;
     }
 
+    public function getInsuranceInvoices(Insurance $insurance)
+    {
+        return Invoice::where([['insurance_id', $insurance->id]])
+            ->get()
+        ;
+    }
+
     public function getInsurancePatientInvoices(Insurance $insurance, Patient $patient, Carbon $start, Carbon $end)
     {
         $date = 'date';
@@ -39,8 +45,9 @@ class PreparePatientLetter
             $registered = 0;
             $date = 'DOS';
         }
+
         return Invoice::where([['insurance_id', $insurance->id],
-            ['type', 2], ['registered', $registered], ['patient_id', $patient->id], ])
+            ['type', 2], ['registered', $registered], ['patient_id', $patient->id], ['total_with_discounts', '>', 0], ])
             ->whereBetween($date, [$start, $end])
             ->get()
         ;
@@ -48,21 +55,17 @@ class PreparePatientLetter
 
     public function prepareLetter(Insurance $insurance, Patient $patient, $invoices, $download = false)
     {
-       
-
         $datetime = Carbon::now();
 
         foreach ($invoices as $invoice) {
             $this->invoiceContent .= $invoice->code.', ';
-           $this->invoiceTotal += $invoice->total_with_discounts;
+            $this->invoiceTotal += $invoice->total_with_discounts;
         }
         $nf = new NumberFormatter('en', NumberFormatter::SPELLOUT);
 
+        $total_spelled = $nf->format($this->invoiceTotal);
 
-        $total_spelled = $nf->format( $this->invoiceTotal);
-
-       $this->invoiceTotal = number_format( $this->invoiceTotal, 2);
-
+        $this->invoiceTotal = number_format($this->invoiceTotal, 2);
 
         view()->share([
             'patient' => $patient,
@@ -71,7 +74,7 @@ class PreparePatientLetter
             'invoices' => $invoices,
             'datetime' => $datetime,
             'codes' => $this->invoiceContent,
-            'total' =>$this->invoiceTotal,
+            'total' => $this->invoiceTotal,
             'amount' => $total_spelled,
         ]);
 
@@ -85,6 +88,5 @@ class PreparePatientLetter
         $merger = new MergePDFs(0);
 
         return $merger->mergeSimpleLetter($patient, $download);
-
     }
 }

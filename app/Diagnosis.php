@@ -11,4 +11,14 @@ class Diagnosis extends Model
         'name',
         'nombre',
     ];
+    /**
+     * Get all of the invoices for the Diagnosis
+     *
+     * 
+     */
+    public function invoices()
+    {
+        return $this->belongsToMany('App\Invoice', 'invoice_diagnoses');
+    }
+    
 }

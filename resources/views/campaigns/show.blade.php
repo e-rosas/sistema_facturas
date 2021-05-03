@@ -22,12 +22,12 @@
                         {{--  Dates --}}
                         <div class="col-md-6 col-auto ">
                             <label class="form-control-label" for="label-birth">Fecha de inicio</label>
-                            <label id="label-date">{{ $campaign->date->format('Y-M-d') }}</label>
+                            <label id="label-date">{{ $campaign->date->format('M-d-Y') }}</label>
 
                         </div>
                         <div class="col-md-6 col-auto ">
                             <label class="form-control-label" for="label-to_date">Hasta</label>
-                            <label id="label-to_date">{{ $campaign->to_date->format('Y-M-d') }}</label>
+                            <label id="label-to_date">{{ $campaign->to_date->format('M-d-Y') }}</label>
 
                         </div>
                     </div>

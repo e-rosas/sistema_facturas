@@ -5,16 +5,14 @@
                 <th scope="col">{{ __('Nombre') }}</th>
                 <th scope="col">{{ __('Teléfono') }}</th>
                 <th scope="col">{{ __('Fecha de nacimiento') }}</th>
-                <th scope="col">{{ __('Relación') }}</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($dependents as $dependent)
+            @foreach ($patients as $patient)
                 <tr>
-                    <td> <a href="{{ route('patients.show', $dependent->patient) }}">{{ $dependent->patient->full_name }}</a> </td>
-                    <td>{{ $dependent->patient->phone_number }}</td>
-                    <td>{{ $dependent->patient->birth_date->format('d-m-Y')  }}</td>
-                    <td>{{ $dependent->relationship() }}</td>
+                    <td> <a href="{{ route('patients.show', $patient) }}">{{ $patient->full_name }}</a> </td>
+                    <td>{{ $patient->phone_number }}</td>
+                    <td>{{ $patient->birth_date->format('d-m-Y')  }}</td>
                 </tr>
             @endforeach
         </tbody>

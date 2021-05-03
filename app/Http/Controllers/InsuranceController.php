@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\PreparePatientLetter;
 use App\Actions\SelectInsurance;
 use App\Http\Requests\AddInsuranceRequest;
 use App\Http\Requests\UpdateInsuranceRequest;
 use App\Http\Requests\UpdateInsurer;
 use App\Http\Resources\InsuranceResource;
 use App\Insurance;
+use App\Insuree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,7 +52,13 @@ class InsuranceController extends Controller
      */
     public function show(Insurance $insurance)
     {
-        //
+        $insuree = Insuree::with('patient')->where('patient_id', $insurance->insuree_id)->first();
+        $prepare = new PreparePatientLetter();
+        $patients = $prepare->getInsurancePatients($insurance);
+        $invoices = $prepare->getInsuranceInvoices($insurance);
+
+        return view('insurances.show', compact('insuree', 'insurance', 'patients', 'invoices'));
+
     }
 
     /**

@@ -71,9 +71,9 @@
                                         <td >{{ $diagnosis->nombre }}</td>
                                         <td>{{ $diagnosis->name }}</td>
                                         <td class="td-actions text-right">
-                                            {{-- <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('diagnoses.show', $diagnosis) }}">
+                                            <a class="btn btn-success btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('diagnoses.show', $diagnosis) }}">
                                                 <i class="fas fa-eye "></i>
-                                            </a> --}}
+                                            </a>
                                             <a  class="btn btn-info btn-sm btn-icon" rel="tooltip"  type="button" href="{{ route('diagnoses.edit', $diagnosis) }}">
                                                 <i class="fas fa-pencil-alt fa-2"></i>
                                             </a>

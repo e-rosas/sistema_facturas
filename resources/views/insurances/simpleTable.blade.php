@@ -4,21 +4,21 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">{{ __('ID Aseguranza') }}</th>
-                <th scope="col">{{ __('Tipo') }}</th>
                 <th scope="col">{{ __('Grupo') }}</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($insurances as $insurance)
                 <tr>
-                    <td>{{ $insurance->insurance_id }}</td>
-                    <td>{{ $insurance->type }}</td>
+                    <td> <a href="{{ route('insurances.show', $insurance->id) }}">{{ $insurance->insurance_id }}</a>
+                    </td>
                     <td>{{ $insurance->group_number }}</td>
-
+                    @if ($notSent)
+                        <td><input type="checkbox" name="insurances[]" value="{{ $insurance->id }}" checked></td>
+                    @endif
                 </tr>
-                @if ($notSent)
-                <td><input type="checkbox" name="insurances[]" value="{{ $insurance->id }}" checked></td>
-                @endif
+
             @endforeach
         </tbody>
     </table>

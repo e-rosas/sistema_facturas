@@ -64,6 +64,7 @@ class DiagnosisController extends Controller
      */
     public function show(Diagnosis $diagnosis)
     {
+        return view('diagnoses.show', compact('diagnosis'));
     }
 
     public function updateCodes()
