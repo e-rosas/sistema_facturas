@@ -89,7 +89,7 @@ class InvoiceController extends Controller
             $invoices->where('dental', 1);
         }
 
-       $invoices = $invoices->paginate($perPage);
+        $invoices = $invoices->paginate($perPage);
 
         return view('invoices.index', compact('invoices', 'search', 'perPage', 'type', 'status', 'end', 'start', 'hospitalization', 'dental'));
     }
@@ -149,8 +149,7 @@ class InvoiceController extends Controller
         }
 
         $selectInsurance = new SelectInsurance();
-        $validated['insurance_id']= $selectInsurance->activeInsurance($validated['patient_id'])->id;
-
+        $validated['insurance_id'] = $selectInsurance->activeInsurance($validated['patient_id'])->id;
 
         $invoice = Invoice::create($validated);
 
@@ -247,9 +246,8 @@ class InvoiceController extends Controller
             ;
             $insurances = Insurance::with('insurer')->where('insuree_id', $invoice->patient->dependent->insuree_id)->get();
 
-            //return view('invoices.show', compact('invoice', 'insuree', 'today'));
-        }
-        else {
+        //return view('invoices.show', compact('invoice', 'insuree', 'today'));
+        } else {
             $insurances = Insurance::with('insurer')->where('insuree_id', $invoice->patient->id)->get();
         }
 
@@ -282,6 +280,36 @@ class InvoiceController extends Controller
         $invoice->fill($validated);
 
         $invoice->save();
+
+        if ($invoice->hospitalization && !$validated['hospitalization']) {
+            InvoiceHospitalizationDetails::where('invoice_id', $invoice->id)->delete();
+        }
+
+        if ($validated['hospitalization'] && !$invoice->hospitalization) {
+            $oldHosp = InvoiceHospitalizationDetails::where('invoice_id', $invoice->id)->first();
+            if($oldHosp) {
+                $oldHosp->delete();
+            }
+            $hosp = new InvoiceHospitalizationDetails();
+            $hosp->invoice_id = $invoice->id;
+            $hosp->bill_type = $request->bill_type;
+            $hosp->diagnosis_codes = $request->diagnosis_codes;
+            $hosp->breakdown = $request->breakdown;
+            $hosp->save();
+        }
+         if ($validated['hospitalization'] && $invoice->hospitalization) {
+            $oldHosp = InvoiceHospitalizationDetails::where('invoice_id', $invoice->id)->first();
+            if($oldHosp) {
+                $oldHosp->delete();
+            }
+
+            $hosp = new InvoiceHospitalizationDetails();
+            $hosp->invoice_id = $invoice->id;
+            $hosp->bill_type = $request->bill_type;
+            $hosp->diagnosis_codes = $request->diagnosis_codes;
+            $hosp->breakdown = $request->breakdown;
+            $hosp->save();
+        }
 
         return new InvoiceDetailsResource($invoice);
     }
@@ -324,6 +352,7 @@ class InvoiceController extends Controller
         Insurance::findOrFail($new_insurance_id);
         $invoice->insurance_id = $new_insurance_id;
         $invoice->save();
+
         return back()->withStatus(__('Aseguranza actualizada exitosamente.'));
     }
 
@@ -398,6 +427,7 @@ class InvoiceController extends Controller
         }
 
         if (!$invoice->dental && $validated['dental']) {
+            
             $dental = new InvoiceDentalDetails();
             $dental->invoice_id = $invoice->id;
             $dental->enclosures = $request->enclosures;
@@ -412,6 +442,36 @@ class InvoiceController extends Controller
             $dental->license = $request->license;
             $dental->tooth_numbers = $request->tooth_numbers;
             $dental->save();
+        }
+
+        if ($invoice->hospitalization && !$validated['hospitalization']) {
+            InvoiceHospitalizationDetails::where('invoice_id', $invoice->id)->delete();
+        }
+
+        if ($validated['hospitalization'] && !$invoice->hospitalization) {
+            $oldHosp = InvoiceHospitalizationDetails::where('invoice_id', $invoice->id)->first();
+            if($oldHosp) {
+                $oldHosp->delete();
+            }
+            $hosp = new InvoiceHospitalizationDetails();
+            $hosp->invoice_id = $invoice->id;
+            $hosp->bill_type = $request->bill_type;
+            $hosp->diagnosis_codes = $request->diagnosis_codes;
+            $hosp->breakdown = $request->breakdown;
+            $hosp->save();
+        }
+         if ($validated['hospitalization'] && $invoice->hospitalization) {
+            $oldHosp = InvoiceHospitalizationDetails::where('invoice_id', $invoice->id)->first();
+            if($oldHosp) {
+                $oldHosp->delete();
+            }
+
+            $hosp = new InvoiceHospitalizationDetails();
+            $hosp->invoice_id = $invoice->id;
+            $hosp->bill_type = $request->bill_type;
+            $hosp->diagnosis_codes = $request->diagnosis_codes;
+            $hosp->breakdown = $request->breakdown;
+            $hosp->save();
         }
 
         $invoice->fill($validated);
@@ -483,6 +543,7 @@ class InvoiceController extends Controller
         $invoice->delete();
         $update_stats = new UpdatePersonStats();
         $update_stats->updateStats($old_patient_id); //update stats for old patient
+
         return redirect()->route('invoices.index')->withStatus(__('Cobro eliminado exitosamente.'));
     }
 
@@ -490,6 +551,7 @@ class InvoiceController extends Controller
     {
         $invoice->type = $request->type;
         $invoice->save();
+
         return redirect()->route('invoices.show', $invoice)->withStatus(__('Tipo actualizado exitosamente.'));
     }
 
@@ -514,7 +576,6 @@ class InvoiceController extends Controller
             $hosp->save();
         }
     }
-
 
     public function searchNumber(Request $request)
     {

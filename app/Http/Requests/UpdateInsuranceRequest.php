@@ -26,7 +26,7 @@ class UpdateInsuranceRequest extends FormRequest
         return [
             'group_number' => 'max:50',
             'insurance_id' => 'required',
-            'insurer_group_phone_number' => 'max:25',
+            'group_phone_number' => 'max:250',
             'insurer_id' => 'required',
             'insuree_id' => 'required',
             'type' => 'required',

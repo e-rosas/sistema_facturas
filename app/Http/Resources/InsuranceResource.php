@@ -23,7 +23,7 @@ class InsuranceResource extends JsonResource
             'insurer_id' => $this->insurer_id,
             'insuree_id' => $this->insuree_id,
             'insurer' => $this->insurer->name,
-            'insurer_group_phone_number' => $this->insurer_group_phone_number,
+            'insurer_group_phone_number' => $this->group_phone_number,
             'comments' => is_null($this->comments) ? '' : $this->comments,
             'type' => $this->type(),
             'type2' => $this->type,

@@ -141,7 +141,7 @@
                     "_token": "{{ csrf_token() }}",
                     "insurance_id": insuranceID,
                     "group_number": groupNumber,
-                    "insurer_group_phone_number": groupPhoneNumber,
+                    "group_phone_number": groupPhoneNumber,
                     "insurer_id": insurerID,
                     "insuree_id": "{{ $patient->insuree->patient_id }}",
                     "status": status,

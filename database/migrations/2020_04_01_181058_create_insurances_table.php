@@ -17,7 +17,7 @@ class CreateInsurancesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('insuree_id');
             $table->unsignedBigInteger('insurer_id');
-            $table->string('group_number', 20)->nullable();
+            $table->string('group_number', 50)->nullable();
             $table->string('insurance_id', 50)->unique();
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('status')->default(0);

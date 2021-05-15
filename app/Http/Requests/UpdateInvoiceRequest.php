@@ -32,6 +32,9 @@ class UpdateInvoiceRequest extends FormRequest
             'total' => 'numeric|required|between:0,999999999.999',
             'total_with_discounts' => 'numeric|required|between:0,999999999.999',
             'dental' => 'boolean',
+            'hospitalization' => 'boolean',
+            'DOS' => 'date',
+
         ];
     }
 }
