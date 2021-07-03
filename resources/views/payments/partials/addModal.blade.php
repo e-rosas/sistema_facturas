@@ -159,9 +159,15 @@
                 "type": type
             },
         success: function (response) {
+            const jsConfetti = new JSConfetti();
             DisplayPayments(response.data);
             displayStats();
             $('#modal-payment').modal('hide');
+
+            jsConfetti.addConfetti({
+                confettiNumber: 100,
+            });
+
 
             }
         });
@@ -197,6 +203,12 @@
         document.getElementById("invoice-statusMXN").innerHTML = response.data.status;
         document.getElementById("invoice-type").innerHTML = response.data.type;
         if(response.data.status_n == 1){ /*completed*/
+            const jsConfetti = new JSConfetti();
+            jsConfetti.addConfetti({
+                emojis: ['💥', '✨', '💫'],
+                emojiSize: 70,
+                confettiNumber: 40,
+            })
             document.getElementById("add-payment").style.display = 'none';
             document.getElementById("add-credit").style.display = 'none';
         }
@@ -234,5 +246,9 @@
 
     });
 </script>
+
+@endpush
+@push('headjs')
+<script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
 
 @endpush

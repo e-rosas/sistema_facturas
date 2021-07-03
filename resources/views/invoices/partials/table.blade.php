@@ -35,15 +35,18 @@
                     <td><span class="MXN" style="display: none"> {{ $invoice->totalF() }} </span><span class="USD">
                             {{ $invoice->totalDiscounted() }} </span></td>
                     <td class="td-actions text-right">
-                        <a class="btn btn-success btn-sm btn-icon" rel="tooltip" type="button"
+                        {{-- <a class="btn btn-success btn-sm btn-icon" rel="tooltip" type="button"
                             href="{{ route('invoices.show', $invoice) }}">
                             <i class="fas fa-eye "></i>
-                        </a>
+                        </a> --}}
                         <form method="post" onsubmit="return confirm('Confirmar eliminación');"
                             action="{{ route('invoices.destroy', $invoice) }}">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn btn-sm btn-danger">ELIMINAR</button>
+                            <button class="btn btn-icon btn-sm btn-danger" type="submit">
+                                <span class="btn-inner--icon"><i class="fas fa-trash"></i></span>
+                            </button>
+                            {{-- <button type="submit" class="btn btn-sm btn-danger">ELIMINAR</button> --}}
                         </form>
                     </td>
                 </tr>
