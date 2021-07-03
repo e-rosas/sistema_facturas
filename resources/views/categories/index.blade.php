@@ -39,7 +39,16 @@
                             <tbody>
                                 @foreach ($categories as $category)
                                 <tr>
-                                    <td>{{ $category->nombre }}</td>
+                                    <td>{{ $category->name }}</td>
+                                    <td class="text-right">
+                                        <a class="btn btn-icon btn-info btn-sm" type="button"
+                                            href="{{route('categories.edit', $category)}}">
+                                            <span class="btn-inner--icon">
+                                                <i class="fas fa-pencil-alt fa-2"></i>
+                                            </span>
+                                        </a>
+        
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

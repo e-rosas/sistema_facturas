@@ -10,9 +10,11 @@ class Category extends Model
     public $total;
     public $fillable = [
         'name',
+        'nombre'
     ];
     public static $rules = [
         'name' => 'required|max:255',
+        'nombre' => 'required|max:255',
     ];
     protected $casts = [
         'id' => 'integer',

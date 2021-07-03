@@ -54,8 +54,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $itemCategory)
+    public function edit(Category $category)
     {
+        return view('categories.edit', compact('category'));
+    
     }
 
     /**
@@ -63,8 +65,15 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $itemCategory)
+    public function update(Request $request, Category $category)
     {
+        $validated = $this->validateItemCategory();
+        $category->fill($validated);
+        $category->save();
+
+        return redirect()->route('categories.index', compact('category'))
+            ->withStatus(__('Categoría modificada exitosamente.'))
+        ;
     }
 
     /**
@@ -80,6 +89,7 @@ class CategoryController extends Controller
     {
         return request()->validate([
             'name' => ['required', 'max:255'],
+            'nombre' => ['required', 'max:255'],
         ]);
     }
 }

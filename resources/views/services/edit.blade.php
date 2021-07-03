@@ -122,7 +122,7 @@
                                         <label for="category_id" class="col-auto col-form-label">Categoría</label>
                                         <select class="custom-select form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" name="category_id">
                                         @foreach($categories as $category)
-                                            <option value="{{ $category->id }}" {{ $service->category_id == $category->id ? 'selected' : '' }}>{{ $category->nombre }}</option>
+                                            <option value="{{ $category->id }}" {{ $service->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                         @endforeach
                                         </select>
                                         @if ($errors)

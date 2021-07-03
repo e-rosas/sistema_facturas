@@ -10,7 +10,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8 col-auto">
-                                <h3 class="mb-0">Categorías</h3>
+                                <h3 class="mb-0">Editar Categoría</h3>
                             </div>
                             <div class="col-4 col-auto text-right">
                                 <a href="{{ route('categories.index') }}" class="btn btn-sm btn-primary">Regresar</a>
@@ -18,8 +18,9 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('categories.store') }}"  autocomplete="off">
+                        <form method="post" action="{{ route('categories.update', $category) }}"  autocomplete="off">
                             @csrf
+                            @method('patch')
                             
                             <h6 class="heading-small text-muted mb-4">Datos de Categoría</h6>
                             <div class="pl-lg-4">
@@ -27,7 +28,7 @@
                                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-name">Name</label>
                                     <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" 
-                                    placeholder="Name" value="{{ old('name') }}" required>
+                                    placeholder="Name" value="{{ $category->name }}" required>
                                 
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
@@ -38,8 +39,8 @@
                                 {{--  Nombre --}}
                                 <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-nombre">Nombre</label>
-                                    <input type="text" name="name" id="input-nombre" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" 
-                                    placeholder="Nombre" value="{{ old('nombre') }}" required>
+                                    <input type="text" name="nombre" id="input-nombre" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" 
+                                    placeholder="Nombre" value="{{ $category->nombre }}" required>
                                 
                                     @if ($errors->has('nombre'))
                                         <span class="invalid-feedback" role="alert">
