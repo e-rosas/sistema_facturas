@@ -119,8 +119,11 @@ class ServiceController extends Controller
         return request()->validate(Service::$rules);
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        return Excel::download(new ServicesExport, 'services.xlsx');
+        $language = $request->language;
+        $view = new ServicesExport();
+        $view->language = $language;
+        return Excel::download($view, 'services.xlsx');
     }
 }

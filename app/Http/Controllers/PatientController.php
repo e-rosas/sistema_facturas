@@ -85,6 +85,12 @@ class PatientController extends Controller
         $validated = $request->validated();
         $validated['full_name'] = $validated['last_name'].' '.$validated['name'];
 
+        $old = Insuree::where('nss', $validated['insurance_id'])->first();
+
+        if($old){
+            return redirect()->route('patients.index')->withStatus(__('ID de aseguranza ya existe.'));
+        }
+
         $patient = Patient::create($validated);
         if ($validated['insured'] > 0) {
             $insuree = new Insuree();

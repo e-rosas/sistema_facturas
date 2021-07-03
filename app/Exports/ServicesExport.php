@@ -9,11 +9,13 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class ServicesExport implements FromView, ShouldAutoSize
 {
-    
+    public $language = "E";
     public function view(): View
     {
         return view('exports.services', [
-            'categories' => Category::with('services2')->get()
+            'categories' => Category::with('services2')->get(),
+            'en' => $this->language == "E" ? true : false,
+
         ]);
     }
 }
