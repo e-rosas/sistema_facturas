@@ -43,6 +43,16 @@
 
                     </form>
 
+                    <form  target="_blank" action="{{ route('services.export') }}" method="post">
+                        @csrf
+                        <div class="form-row">
+                            {{--  Export --}}
+                            <div class="col-md-2 col-auto text-right">
+                                <button type="submit" class="btn btn-outline-success">Success</button>
+                            </div>
+                        </div>
+                    </form>
+
                     <div class="col-12">
                         @if (session('status'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">

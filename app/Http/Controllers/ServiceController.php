@@ -6,6 +6,9 @@ use App\Category;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Service;
 use Illuminate\Http\Request;
+use App\Actions\ExportServices;
+use App\Exports\ServicesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ServiceController extends Controller
 {
@@ -114,5 +117,10 @@ class ServiceController extends Controller
     protected function validateService()
     {
         return request()->validate(Service::$rules);
+    }
+
+    public function export()
+    {
+        return Excel::download(new ServicesExport, 'services.xlsx');
     }
 }

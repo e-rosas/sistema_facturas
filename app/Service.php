@@ -47,6 +47,11 @@ class Service extends Model
         return number_format($this->discounted_price, 4);
     }
 
+    public function priceShort()
+    {
+        return number_format($this->price, 2);
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Category');

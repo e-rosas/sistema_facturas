@@ -32,4 +32,9 @@ class Category extends Model
 
         return $this->name;
     }
+
+    public function services2()
+    {
+        return $this->hasMany('App\Service');
+    }
 }

@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('services/search', 'SearchProductController@searchService')->name('services.search');
     Route::post('services/find', 'SearchProductController@findService')->name('services.find');
     Route::post('services/findname', 'SearchProductController@findServiceName')->name('services.findName');
+    Route::post('services/export', 'ServiceController@export')->name('services.export');
 
     Route::post('diagnoses/search', 'SearchProductController@searchDiagnosis')->name('diagnoses.search');
     Route::post('diagnoses/find', 'SearchProductController@findDiagnosis')->name('diagnoses.find');
@@ -160,7 +161,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/import_letters', 'ImportController@getImportLetters')->name('import.letters');
     Route::post('/import_parse_letters', 'ImportController@parseImportLetters')->name('import.parse.letters');
     Route::get('/update_patients_stats', 'PatientController@updateStats');
-    Route::get('/migrate_invoices', 'PatientController@addInsuranceToInvoices');
+    //Route::get('/migrate_invoices', 'PatientController@addInsuranceToInvoices');
 
     Route::resource('campaigns', 'CampaignController');
     Route::post('campaign/send', 'CampaignController@send')->name('campaign.send');
