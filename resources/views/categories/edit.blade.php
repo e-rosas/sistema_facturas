@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => 'Categorías'])
 
 @section('content')
-    @include('layouts.headers.header', ['title' => 'Nueva Categoría'])   
+    @include('layouts.headers.header', ['title' => 'Editar Categoría'])   
 
     <div class="container-fluid mt--7">
         <div class="row">

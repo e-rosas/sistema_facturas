@@ -38,7 +38,7 @@
                                 {{--  Nombre --}}
                                 <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-nombre">Nombre</label>
-                                    <input type="text" name="name" id="input-nombre" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" 
+                                    <input type="text" name="nombre" id="input-nombre" class="form-control form-control-alternative{{ $errors->has('nombre') ? ' is-invalid' : '' }}" 
                                     placeholder="Nombre" value="{{ old('nombre') }}" required>
                                 
                                     @if ($errors->has('nombre'))
